@@ -15,12 +15,13 @@ self.addEventListener('activate', e => {
   self.clients.claim();
 });
 
+// Network-first: tenta buscar atualizado, se falhar usa cache (offline)
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(r => r || fetch(e.request).then(resp => {
+    fetch(e.request).then(resp => {
       const clone = resp.clone();
       caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
       return resp;
-    }))
+    }).catch(() => caches.match(e.request))
   );
 });
