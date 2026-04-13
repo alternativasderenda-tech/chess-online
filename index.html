@@ -3,6 +3,15 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-EEK1343CPW"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-EEK1343CPW');
+</script>
 <title>Xadrez Online Grátis - Aprenda a Jogar Xadrez do Zero | Tutorial Interativo</title>
 
 <!-- SEO Core -->
@@ -1528,8 +1537,19 @@ function executeMove(move) {
     if (inCheck(turn, board)) {
       const winner = turn === 'w' ? 'Pretas' : 'Brancas';
       setStatus(`Xeque-mate! ${winner} vencem! 🏆`);
+      const depthVal = document.getElementById('ai-depth').value;
+      const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert', 'tutorial': 'Aprendiz' };
+      const playerWon = (turn === 'b' && playerColor === 'w') || (turn === 'w' && playerColor === 'b');
+      trackEvent('game_over', {
+        result: 'checkmate',
+        winner: winner,
+        player_won: playerWon,
+        difficulty: diffNames[depthVal] || depthVal,
+        total_moves: fullMoves
+      });
     } else {
       setStatus('Empate por afogamento!');
+      trackEvent('game_over', { result: 'stalemate', total_moves: fullMoves });
     }
     return;
   }
@@ -2290,6 +2310,7 @@ const LESSONS = [
 ];
 
 function enterTutorialMode() {
+  trackEvent('tutorial_start', {});
   tutorialMode = true;
   currentLesson = 0;
   lessonGoalMet = false;
@@ -2319,6 +2340,7 @@ function loadLesson(index) {
   if (practiceHintTimer) { clearInterval(practiceHintTimer); practiceHintTimer = null; }
 
   const lesson = LESSONS[index];
+  trackEvent('lesson_view', { lesson_number: index + 1, lesson_title: lesson.title });
 
   // Update UI
   document.getElementById('tutorial-title').innerHTML = lesson.title;
@@ -2420,6 +2442,11 @@ function checkTutorialGoal() {
   if (lesson.goalCheck()) {
     lessonGoalMet = true;
     completedLessons.add(currentLesson);
+    trackEvent('lesson_completed', {
+      lesson_number: currentLesson + 1,
+      lesson_title: lesson.title,
+      total_completed: completedLessons.size
+    });
     const goalEl = document.getElementById('tutorial-goal');
     if (goalEl) {
       goalEl.classList.add('completed');
@@ -2559,6 +2586,12 @@ function getTutorialAIMove() {
   return safe[Math.floor(Math.random() * safe.length)];
 }
 
+// ======================== ANALYTICS ========================
+
+function trackEvent(name, params) {
+  if (typeof gtag === 'function') gtag('event', name, params);
+}
+
 // ======================== NEW GAME ========================
 
 function newGame() {
@@ -2573,6 +2606,13 @@ function newGame() {
 
   // Exit tutorial if switching away
   if (tutorialMode) exitTutorialMode();
+
+  const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert' };
+  trackEvent('new_game', {
+    difficulty: diffNames[depthVal] || depthVal,
+    play_as: document.getElementById('play-as').value,
+    time_control: document.getElementById('time-control').value
+  });
 
   initBoard();
   turn = 'w';
