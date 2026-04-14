@@ -888,8 +888,8 @@
         </select>
       </div>
       <div class="controls" style="margin-top: 10px;">
-        <button class="btn primary" onclick="newGame()">Novo Jogo</button>
-        <button class="btn" onclick="undoMove()">↩ Desfazer</button>
+        <button class="btn primary" onclick="newGameWithAd()">Novo Jogo</button>
+        <button class="btn" onclick="undoWithAd()">↩ Desfazer</button>
       </div>
     </div>
 
@@ -2584,6 +2584,42 @@ function getTutorialAIMove() {
     return true; // Just random for now
   });
   return safe[Math.floor(Math.random() * safe.length)];
+}
+
+// ======================== ADS ========================
+
+let undoCount = 0;
+let newGameCount = 0;
+
+// Vignette ad on Undo (shows overlay ad)
+function undoWithAd() {
+  undoCount++;
+  // First undo is free, then show ad every 2 undos
+  if (undoCount > 1 && undoCount % 2 === 0) {
+    // Trigger vignette ad
+    try {
+      const s = document.createElement('script');
+      s.dataset.zone = '10873451';
+      s.src = 'https://n6wxm.com/vignette.min.js';
+      document.body.appendChild(s);
+    } catch(e) {}
+  }
+  undoMove();
+}
+
+// Onclick ad on New Game (opens popunder)
+function newGameWithAd() {
+  newGameCount++;
+  // Show ad from 2nd new game onwards
+  if (newGameCount > 1) {
+    try {
+      const s = document.createElement('script');
+      s.dataset.zone = '10873452';
+      s.src = 'https://al5sm.com/tag.min.js';
+      document.body.appendChild(s);
+    } catch(e) {}
+  }
+  newGame();
 }
 
 // ======================== ANALYTICS ========================
