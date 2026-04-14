@@ -2426,6 +2426,10 @@ function loadLesson(index) {
   }
 
   setStatus(lesson.goal || 'Modo Tutorial — Aprendiz');
+
+  // Scroll to top for mobile — user sees instructions first
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  document.getElementById('tutorial-content').scrollTop = 0;
 }
 
 function nextLesson() {
