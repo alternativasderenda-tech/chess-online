@@ -937,11 +937,24 @@
     <div class="celeb-icon" id="go-icon">🏆</div>
     <h3 id="go-title">Vitória!</h3>
     <p id="go-text">Você venceu!</p>
-    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+    <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; max-width:360px;">
       <button class="btn primary" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;">Jogar Novamente</button>
       <button class="btn" onclick="closeGameOverPopup(); nextDifficulty();" style="min-width:140px;" id="go-next-btn">Próximo Nível →</button>
+      <button class="btn" onclick="startReplay();" style="min-width:140px;">▶ Ver Replay</button>
+      <button class="btn" onclick="downloadGame();" style="min-width:140px;">💾 Salvar Partida</button>
     </div>
   </div>
+</div>
+
+<!-- Replay Controls -->
+<div id="replay-bar" style="display:none; position:fixed; bottom:10px; left:50%; transform:translateX(-50%); background:var(--bg-card); border:1px solid var(--accent); border-radius:10px; padding:10px 14px; z-index:700; gap:8px; align-items:center; box-shadow:0 8px 24px rgba(0,0,0,0.5);">
+  <button class="btn" onclick="replayStep(-999)" style="min-width:40px;">⏮</button>
+  <button class="btn" onclick="replayStep(-1)" style="min-width:40px;">◀</button>
+  <button class="btn" onclick="replayTogglePlay()" id="replay-play-btn" style="min-width:50px;">▶</button>
+  <button class="btn" onclick="replayStep(1)" style="min-width:40px;">▶</button>
+  <button class="btn" onclick="replayStep(999)" style="min-width:40px;">⏭</button>
+  <span id="replay-pos" style="min-width:60px; text-align:center; font-size:12px; color:var(--text-muted);">0/0</span>
+  <button class="btn primary" onclick="exitReplay()" style="min-width:60px;">✕</button>
 </div>
 
 <!-- Promotion Modal -->
@@ -2605,6 +2618,173 @@ function getTutorialAIMove() {
     return true; // Just random for now
   });
   return safe[Math.floor(Math.random() * safe.length)];
+}
+
+// ======================== SAVE / REPLAY ========================
+
+function downloadGame() {
+  const now = new Date();
+  const date = now.toISOString().split('T')[0].replace(/-/g, '.');
+  const depthVal = document.getElementById('ai-depth').value;
+  const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert', 'tutorial': 'Aprendiz' };
+  const whiteName = document.getElementById('name-white').textContent;
+  const blackName = document.getElementById('name-black').textContent;
+
+  // Determine result
+  let result = '*';
+  if (gameOver) {
+    if (inCheck('w', board)) result = '0-1';
+    else if (inCheck('b', board)) result = '1-0';
+    else result = '1/2-1/2';
+  }
+
+  // Build PGN
+  let pgn = '';
+  pgn += `[Event "Partida Casual"]\n`;
+  pgn += `[Site "xadrezonline.vercel.app"]\n`;
+  pgn += `[Date "${date}"]\n`;
+  pgn += `[White "${whiteName}"]\n`;
+  pgn += `[Black "${blackName}"]\n`;
+  pgn += `[Result "${result}"]\n`;
+  pgn += `[Difficulty "${diffNames[depthVal] || depthVal}"]\n\n`;
+
+  // Moves
+  let movesText = '';
+  moveNotations.forEach((m, i) => {
+    movesText += `${i + 1}. ${m.w}`;
+    if (m.b) movesText += ` ${m.b}`;
+    movesText += ' ';
+  });
+  pgn += movesText.trim() + ' ' + result + '\n';
+
+  // Download
+  const blob = new Blob([pgn], { type: 'text/plain;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `partida-xadrez-${date.replace(/\./g, '')}.pgn`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+
+  trackEvent('game_saved', { difficulty: diffNames[depthVal] || depthVal, moves: moveNotations.length });
+}
+
+// Replay state
+let replayMode = false;
+let replaySnapshots = []; // board states for each position
+let replayIndex = 0;
+let replayPlayInterval = null;
+let savedGameState = null;
+
+function startReplay() {
+  if (stateHistory.length === 0) {
+    alert('Nenhum movimento para replay.');
+    return;
+  }
+  closeGameOverPopup();
+
+  // Save current game state
+  savedGameState = {
+    board: [...board],
+    castling: { ...castling },
+    enPassant, turn, halfMoves, fullMoves,
+    lastMoveFrom, lastMoveTo, gameOver,
+    selectedSquare, validMoves: [...validMoves]
+  };
+
+  // Build snapshots: initial position + each state after each move
+  replaySnapshots = [];
+  // Initial (before any move)
+  if (stateHistory.length > 0) {
+    replaySnapshots.push({
+      board: [...stateHistory[0].board],
+      lastMoveFrom: -1,
+      lastMoveTo: -1
+    });
+  }
+  // Each move result
+  for (let i = 0; i < stateHistory.length - 1; i++) {
+    replaySnapshots.push({
+      board: [...stateHistory[i + 1].board],
+      lastMoveFrom: stateHistory[i + 1].lastMoveFrom,
+      lastMoveTo: stateHistory[i + 1].lastMoveTo
+    });
+  }
+  // Final position (current board)
+  replaySnapshots.push({
+    board: [...board],
+    lastMoveFrom: lastMoveFrom,
+    lastMoveTo: lastMoveTo
+  });
+
+  replayMode = true;
+  replayIndex = 0;
+  document.getElementById('replay-bar').style.display = 'flex';
+  renderReplay();
+  trackEvent('replay_started', { moves: replaySnapshots.length });
+}
+
+function renderReplay() {
+  const snap = replaySnapshots[replayIndex];
+  if (!snap) return;
+  board = [...snap.board];
+  lastMoveFrom = snap.lastMoveFrom;
+  lastMoveTo = snap.lastMoveTo;
+  selectedSquare = -1;
+  validMoves = [];
+  renderBoard();
+  document.getElementById('replay-pos').textContent = `${replayIndex}/${replaySnapshots.length - 1}`;
+}
+
+function replayStep(delta) {
+  if (!replayMode) return;
+  if (delta === -999) replayIndex = 0;
+  else if (delta === 999) replayIndex = replaySnapshots.length - 1;
+  else replayIndex = Math.max(0, Math.min(replaySnapshots.length - 1, replayIndex + delta));
+  renderReplay();
+}
+
+function replayTogglePlay() {
+  const btn = document.getElementById('replay-play-btn');
+  if (replayPlayInterval) {
+    clearInterval(replayPlayInterval);
+    replayPlayInterval = null;
+    btn.textContent = '▶';
+  } else {
+    btn.textContent = '⏸';
+    replayPlayInterval = setInterval(() => {
+      if (replayIndex >= replaySnapshots.length - 1) {
+        clearInterval(replayPlayInterval);
+        replayPlayInterval = null;
+        btn.textContent = '▶';
+        return;
+      }
+      replayStep(1);
+    }, 900);
+  }
+}
+
+function exitReplay() {
+  if (replayPlayInterval) { clearInterval(replayPlayInterval); replayPlayInterval = null; }
+  replayMode = false;
+  document.getElementById('replay-bar').style.display = 'none';
+  document.getElementById('replay-play-btn').textContent = '▶';
+  // Restore original state
+  if (savedGameState) {
+    board = savedGameState.board;
+    castling = savedGameState.castling;
+    enPassant = savedGameState.enPassant;
+    turn = savedGameState.turn;
+    halfMoves = savedGameState.halfMoves;
+    fullMoves = savedGameState.fullMoves;
+    lastMoveFrom = savedGameState.lastMoveFrom;
+    lastMoveTo = savedGameState.lastMoveTo;
+    gameOver = savedGameState.gameOver;
+    renderBoard();
+    savedGameState = null;
+  }
 }
 
 // ======================== GAME OVER POPUP ========================
