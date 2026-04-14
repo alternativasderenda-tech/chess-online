@@ -7,7 +7,7 @@ self.lary = ""
 importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw')
 
 // PWA Cache
-const CACHE_NAME = 'xadrez-v2';
+const CACHE_NAME = 'xadrez-v3';
 const ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', e => {

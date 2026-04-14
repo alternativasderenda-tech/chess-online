@@ -790,8 +790,18 @@
     .ad-slot.horizontal { width: 120px; height: 240px; }
   }
 
+  .ad-mobile {
+    display: none;
+    width: 100%;
+    max-width: 520px;
+    min-height: 50px;
+    text-align: center;
+    margin: 4px auto;
+  }
+
   @media (max-width: 900px) {
     .ad-sidebar { display: none; }
+    .ad-mobile { display: block; }
   }
 
   @media (max-width: 900px) {
@@ -854,6 +864,11 @@
     </div>
 
     <div class="status-bar" id="status">Sua vez — Brancas jogam</div>
+
+    <!-- Ad Mobile (aparece só no celular) -->
+    <div class="ad-mobile" id="ad-mobile">
+      <script>(function(s){s.dataset.zone='10873461',s.src='https://nap5k.com/tag.min.js'})([document.documentElement, document.body].filter(Boolean).pop().appendChild(document.createElement('script')))</script>
+    </div>
   </div>
 
   <div class="sidebar">
