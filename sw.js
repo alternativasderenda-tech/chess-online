@@ -1,13 +1,5 @@
-// Monetag
-self.options = {
-    "domain": "5gvci.com",
-    "zoneId": 10873443
-}
-self.lary = ""
-importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw')
-
 // PWA Cache
-const CACHE_NAME = 'xadrez-v3';
+const CACHE_NAME = 'xadrez-v4';
 const ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png'];
 
 self.addEventListener('install', e => {
@@ -34,3 +26,10 @@ self.addEventListener('fetch', e => {
     }).catch(() => caches.match(e.request))
   );
 });
+
+// Monetag (depois do PWA para não interferir)
+try {
+  self.options = { "domain": "5gvci.com", "zoneId": 10873443 };
+  self.lary = "";
+  importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
+} catch(e) {}

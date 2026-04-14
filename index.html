@@ -29,14 +29,14 @@
 <meta property="og:url" content="https://xadrezonline.vercel.app/">
 <meta property="og:site_name" content="Xadrez Online">
 <meta property="og:locale" content="pt_BR">
-<meta property="og:image" content="https://xadrezonline.vercel.app/icon-512.svg">
+<meta property="og:image" content="https://xadrezonline.vercel.app/icon-512.png">
 <meta property="og:image:alt" content="Jogo de Xadrez Online com Tutorial Interativo">
 
 <!-- Twitter Card -->
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Xadrez Online Grátis - Aprenda e Jogue Agora">
 <meta name="twitter:description" content="Aprenda xadrez do zero com tutorial interativo. Jogue contra o computador, sem cadastro!">
-<meta name="twitter:image" content="https://xadrezonline.vercel.app/icon-512.svg">
+<meta name="twitter:image" content="https://xadrezonline.vercel.app/icon-512.png">
 
 <!-- PWA -->
 <link rel="manifest" href="manifest.json">
@@ -170,7 +170,8 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    overflow: hidden;
+    overflow-x: hidden;
+    overflow-y: auto;
   }
 
   .game-container {
@@ -805,8 +806,9 @@
   }
 
   @media (max-width: 900px) {
-    .game-container { flex-direction: column; }
-    .sidebar { width: 100%; max-width: 520px; max-height: none; }
+    .game-container { flex-direction: column; align-items: center; }
+    .sidebar { width: 100%; max-width: 520px; max-height: none; order: -1; }
+    .board-area { order: 0; }
     #board { width: min(520px, 92vw); height: min(520px, 92vw); }
     .square { font-size: min(48px, 9vw); }
   }
