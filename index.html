@@ -931,6 +931,19 @@
   </div>
 </div>
 
+<!-- Game Over Popup -->
+<div class="tutorial-celebration" id="gameover-popup">
+  <div class="celebration-card">
+    <div class="celeb-icon" id="go-icon">🏆</div>
+    <h3 id="go-title">Vitória!</h3>
+    <p id="go-text">Você venceu!</p>
+    <div style="display:flex; gap:10px; justify-content:center; flex-wrap:wrap;">
+      <button class="btn primary" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;">Jogar Novamente</button>
+      <button class="btn" onclick="closeGameOverPopup(); nextDifficulty();" style="min-width:140px;" id="go-next-btn">Próximo Nível →</button>
+    </div>
+  </div>
+</div>
+
 <!-- Promotion Modal -->
 <div class="modal-overlay" id="promo-modal">
   <div class="modal">
@@ -1543,9 +1556,15 @@ function executeMove(move) {
         difficulty: diffNames[depthVal] || depthVal,
         total_moves: fullMoves
       });
+      if (!tutorialMode) {
+        setTimeout(() => showGameOverPopup(playerWon, winner, diffNames[depthVal] || depthVal), 600);
+      }
     } else {
       setStatus('Empate por afogamento!');
       trackEvent('game_over', { result: 'stalemate', total_moves: fullMoves });
+      if (!tutorialMode) {
+        setTimeout(() => showGameOverPopup(null, null, null), 600);
+      }
     }
     return;
   }
@@ -1678,10 +1697,12 @@ function startTimer() {
     if (timerWhite <= 0) {
       gameOver = true; stopTimer();
       setStatus('Tempo esgotado! Pretas vencem! ⏱');
+      if (!tutorialMode) setTimeout(() => showGameOverPopup(playerColor === 'b', 'Pretas', null), 600);
     }
     if (timerBlack <= 0) {
       gameOver = true; stopTimer();
       setStatus('Tempo esgotado! Brancas vencem! ⏱');
+      if (!tutorialMode) setTimeout(() => showGameOverPopup(playerColor === 'w', 'Brancas', null), 600);
     }
   }, 1000);
 }
@@ -2584,6 +2605,66 @@ function getTutorialAIMove() {
     return true; // Just random for now
   });
   return safe[Math.floor(Math.random() * safe.length)];
+}
+
+// ======================== GAME OVER POPUP ========================
+
+function showGameOverPopup(playerWon, winner, difficulty) {
+  const popup = document.getElementById('gameover-popup');
+  const icon = document.getElementById('go-icon');
+  const title = document.getElementById('go-title');
+  const text = document.getElementById('go-text');
+  const nextBtn = document.getElementById('go-next-btn');
+
+  if (playerWon === null) {
+    // Draw
+    icon.textContent = '🤝';
+    title.textContent = 'Empate!';
+    text.textContent = 'Ninguém venceu desta vez. Tente novamente!';
+    nextBtn.style.display = 'none';
+  } else if (playerWon) {
+    // Player won
+    const msgs = [
+      `Incrível! Você derrotou a IA no ${difficulty}! 🔥`,
+      `Xeque-mate! A IA não teve chance no ${difficulty}!`,
+      `Vitória dominante no nível ${difficulty}! 💪`,
+      `Mestre! Você venceu no ${difficulty}!`
+    ];
+    icon.textContent = '🏆';
+    title.textContent = 'Você Venceu!';
+    text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+
+    // Show "next level" button only if not already at Expert
+    const depthVal = document.getElementById('ai-depth').value;
+    nextBtn.style.display = depthVal === '4' ? 'none' : '';
+  } else {
+    // Player lost
+    const msgs = [
+      'A IA levou a melhor desta vez. Tente novamente!',
+      'Quase! Uma revanche pode mudar tudo!',
+      'Não desista! Cada derrota é uma lição.'
+    ];
+    icon.textContent = '😤';
+    title.textContent = 'Derrota...';
+    text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    nextBtn.style.display = 'none';
+  }
+
+  popup.classList.add('show');
+}
+
+function closeGameOverPopup() {
+  document.getElementById('gameover-popup').classList.remove('show');
+}
+
+function nextDifficulty() {
+  const sel = document.getElementById('ai-depth');
+  const levels = ['1', '2', '3', '4'];
+  const current = levels.indexOf(sel.value);
+  if (current < levels.length - 1) {
+    sel.value = levels[current + 1];
+  }
+  newGame();
 }
 
 // ======================== ADS ========================
