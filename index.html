@@ -888,6 +888,10 @@
         <button class="btn primary" onclick="newGameWithAd()">Novo Jogo</button>
         <button class="btn" onclick="undoWithAd()">↩ Desfazer</button>
       </div>
+      <div class="controls" style="margin-top: 6px;">
+        <button class="btn" onclick="document.getElementById('pgn-input').click()">📂 Importar PGN</button>
+        <input type="file" id="pgn-input" accept=".pgn,.txt" style="display:none" onchange="importPGN(event)">
+      </div>
     </div>
 
     <div class="panel" style="flex:1; display:flex; flex-direction:column;" id="moves-panel">
@@ -2669,6 +2673,125 @@ function downloadGame() {
   URL.revokeObjectURL(url);
 
   trackEvent('game_saved', { difficulty: diffNames[depthVal] || depthVal, moves: moveNotations.length });
+}
+
+// ======================== PGN IMPORT ========================
+
+function importPGN(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      parseAndReplayPGN(e.target.result);
+    } catch(err) {
+      alert('Erro ao ler arquivo PGN: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function parseAndReplayPGN(pgnText) {
+  // Remove headers [Key "Value"]
+  let moveText = pgnText.replace(/\[[^\]]*\]/g, '').trim();
+  // Remove comments {...}
+  moveText = moveText.replace(/\{[^}]*\}/g, '');
+  // Remove variations (...)
+  moveText = moveText.replace(/\([^)]*\)/g, '');
+  // Remove result markers
+  moveText = moveText.replace(/(1-0|0-1|1\/2-1\/2|\*)/g, '');
+  // Remove move numbers like "1." or "15..."
+  moveText = moveText.replace(/\d+\.(\.\.)?/g, '');
+  // Normalize whitespace
+  const tokens = moveText.split(/\s+/).filter(t => t.length > 0);
+
+  if (tokens.length === 0) {
+    alert('Arquivo PGN vazio ou inválido.');
+    return;
+  }
+
+  // Setup fresh board and play through moves, collecting snapshots
+  const savedBoard = [...board];
+  const savedCastling = { ...castling };
+  const savedEP = enPassant;
+  const savedTurn = turn;
+
+  initBoard();
+  castling = { K: true, Q: true, k: true, q: true };
+  enPassant = -1;
+  turn = 'w';
+
+  const snapshots = [{ board: [...board], lastMoveFrom: -1, lastMoveTo: -1 }];
+  const importedNotations = [];
+  let skipped = 0;
+
+  for (const token of tokens) {
+    const clean = token.replace(/[+#!?]+$/g, '');
+    if (!clean) continue;
+
+    const legal = getLegalMoves(turn);
+    let matched = null;
+
+    for (const m of legal) {
+      const notation = toAlgebraic(m, legal).replace(/[+#]/g, '');
+      if (notation === clean) { matched = m; break; }
+    }
+
+    if (!matched) {
+      skipped++;
+      continue;
+    }
+
+    const result = makeMove(matched, board, castling);
+    board = result.board;
+    castling = result.castling;
+    enPassant = result.enPassant;
+    turn = turn === 'w' ? 'b' : 'w';
+
+    snapshots.push({
+      board: [...board],
+      lastMoveFrom: matched.from,
+      lastMoveTo: matched.to
+    });
+
+    if (importedNotations.length === 0 || importedNotations[importedNotations.length - 1].b) {
+      importedNotations.push({ w: clean, b: '' });
+    } else {
+      importedNotations[importedNotations.length - 1].b = clean;
+    }
+  }
+
+  if (snapshots.length === 1) {
+    // Nothing imported — restore
+    board = savedBoard; castling = savedCastling; enPassant = savedEP; turn = savedTurn;
+    renderBoard();
+    alert('Não foi possível ler nenhum movimento do arquivo.');
+    return;
+  }
+
+  // Save current state and enter replay
+  savedGameState = {
+    board: savedBoard, castling: savedCastling, enPassant: savedEP, turn: savedTurn,
+    halfMoves, fullMoves, lastMoveFrom, lastMoveTo, gameOver,
+    selectedSquare, validMoves: [...validMoves]
+  };
+
+  replaySnapshots = snapshots;
+  replayMode = true;
+  replayIndex = 0;
+  document.getElementById('replay-bar').style.display = 'flex';
+
+  // Update moves panel
+  moveNotations = importedNotations;
+  renderMoves();
+
+  renderReplay();
+  trackEvent('pgn_imported', { moves: snapshots.length - 1, skipped: skipped });
+
+  if (skipped > 0) {
+    setTimeout(() => alert(`Importado! ${snapshots.length - 1} lances carregados.${skipped > 0 ? ' ' + skipped + ' lances ignorados.' : ''}`), 100);
+  }
 }
 
 // Replay state
