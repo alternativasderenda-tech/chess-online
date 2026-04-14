@@ -2688,15 +2688,14 @@ function undoWithAd() {
   undoMove();
 }
 
-// Onclick ad on New Game (opens popunder)
+// New Game with vignette ad (non-intrusive)
 function newGameWithAd() {
   newGameCount++;
-  // Show ad from 2nd new game onwards
   if (newGameCount > 1) {
     try {
       const s = document.createElement('script');
-      s.dataset.zone = '10873452';
-      s.src = 'https://al5sm.com/tag.min.js';
+      s.dataset.zone = '10873451';
+      s.src = 'https://n6wxm.com/vignette.min.js';
       document.body.appendChild(s);
     } catch(e) {}
   }
