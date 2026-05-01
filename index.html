@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
 
+<!-- Supabase (auth + ranking) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EEK1343CPW"></script>
 <script>
@@ -801,9 +804,157 @@
     .panel h3 { font-size: 13px; margin-bottom: 6px; }
     .sidebar { gap: 6px; }
   }
+
+  /* ==================== AUTH HEADER + RANKING ==================== */
+  #auth-header {
+    position: fixed;
+    top: 10px;
+    right: 12px;
+    z-index: 800;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+  }
+  .auth-btn {
+    background: var(--bg-card);
+    border: 1px solid rgba(226,185,111,0.4);
+    color: var(--text-light);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+  .auth-btn:hover { border-color: var(--accent); background: rgba(226,185,111,0.12); }
+  .auth-btn.primary { background: var(--accent); color: #1a1a2e; border-color: var(--accent); }
+  .auth-btn.primary:hover { background: var(--accent2); }
+  #user-info {
+    display: none;
+    align-items: center;
+    gap: 6px;
+    background: var(--bg-card);
+    border: 1px solid rgba(226,185,111,0.3);
+    border-radius: 8px;
+    padding: 4px 6px 4px 10px;
+    font-size: 12px;
+  }
+  #user-name { font-weight: 600; max-width: 140px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  #btn-logout {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 11px;
+    padding: 2px 6px;
+    border-radius: 6px;
+  }
+  #btn-logout:hover { background: rgba(255,255,255,0.08); color: var(--text-light); }
+
+  /* Ranking modal */
+  .ranking-tabs, .ranking-subtabs {
+    display: flex;
+    gap: 4px;
+    margin-bottom: 10px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  .rank-tab, .rank-subtab {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-muted);
+    padding: 6px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    cursor: pointer;
+    font-family: inherit;
+    transition: all 0.15s;
+  }
+  .rank-tab:hover, .rank-subtab:hover { color: var(--text-light); border-color: rgba(226,185,111,0.3); }
+  .rank-tab.active, .rank-subtab.active {
+    background: var(--accent);
+    color: #1a1a2e;
+    border-color: var(--accent);
+    font-weight: 600;
+  }
+  .rank-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  .rank-table th {
+    text-align: left;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .rank-table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  .rank-table tr:nth-child(1) td { color: var(--accent); font-weight: 600; }
+  .rank-table tr:nth-child(2) td { color: #c0c0c0; }
+  .rank-table tr:nth-child(3) td { color: #cd7f32; }
+  .rank-table th:nth-child(3), .rank-table td:nth-child(3) { text-align: right; }
+  .rank-empty {
+    text-align: center;
+    color: var(--text-muted);
+    padding: 30px 10px;
+    font-size: 13px;
+  }
+  .score-feedback {
+    background: rgba(100,200,100,0.12);
+    border: 1px solid rgba(100,200,100,0.4);
+    color: #9be09b;
+    padding: 8px 12px;
+    border-radius: 8px;
+    font-size: 12px;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  @media (max-width: 600px) {
+    #auth-header { top: 6px; right: 6px; }
+    .auth-btn { padding: 5px 10px; font-size: 11px; }
+    #user-name { max-width: 90px; }
+  }
+
+  /* Footer */
+  .site-footer {
+    text-align: center;
+    padding: 14px 16px 10px;
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  .site-footer a {
+    color: var(--text-muted);
+    text-decoration: none;
+    margin: 0 8px;
+    transition: color 0.15s;
+  }
+  .site-footer a:hover { color: var(--accent); }
+  .site-footer .sep { opacity: 0.4; }
 </style>
 </head>
 <body>
+
+<!-- Auth Header (login + ranking) -->
+<div id="auth-header">
+  <button class="auth-btn" onclick="openRankingModal()">🏆 Ranking</button>
+  <button class="auth-btn primary" id="btn-login" onclick="loginWithGoogle()">Entrar com Google</button>
+  <div id="user-info">
+    <span id="user-name">👤 Jogador</span>
+    <button id="btn-logout" onclick="logout()" title="Sair">Sair</button>
+  </div>
+</div>
 
 <div id="drag-piece"></div>
 
@@ -891,6 +1042,7 @@
       <div class="controls" style="margin-top: 6px;">
         <button class="btn" onclick="document.getElementById('pgn-input').click()">📂 Importar PGN</button>
         <input type="file" id="pgn-input" accept=".pgn,.txt" style="display:none" onchange="importPGN(event)">
+        <button class="btn" onclick="openRankingModal()">🏆 Ranking</button>
       </div>
     </div>
 
@@ -925,6 +1077,15 @@
   </div>
 </div>
 
+<!-- Footer -->
+<footer class="site-footer">
+  <a href="/privacidade">Política de Privacidade</a>
+  <span class="sep">•</span>
+  <a href="/termos">Termos de Uso</a>
+  <span class="sep">•</span>
+  <a href="mailto:alternativasderenda@gmail.com">Contato</a>
+</footer>
+
 <!-- Tutorial Celebration -->
 <div class="tutorial-celebration" id="tutorial-celebration">
   <div class="celebration-card">
@@ -941,12 +1102,15 @@
     <div class="celeb-icon" id="go-icon">🏆</div>
     <h3 id="go-title">Vitória!</h3>
     <p id="go-text">Você venceu!</p>
+    <div id="go-score-info" style="display:none; font-size:13px; color:var(--text-muted); margin:6px 0 4px;"></div>
     <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; max-width:360px;">
+      <button class="btn primary" id="btn-register-score" onclick="registerCurrentScore()" style="display:none; min-width:160px;">🏆 Registrar no Ranking</button>
       <button class="btn primary" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;">Jogar Novamente</button>
       <button class="btn" onclick="closeGameOverPopup(); nextDifficulty();" style="min-width:140px;" id="go-next-btn">Próximo Nível →</button>
       <button class="btn" onclick="startReplay();" style="min-width:140px;">▶ Ver Replay</button>
       <button class="btn" onclick="downloadGame();" style="min-width:140px;">💾 Salvar Partida</button>
     </div>
+    <div id="go-score-feedback" style="display:none;" class="score-feedback"></div>
   </div>
 </div>
 
@@ -969,7 +1133,282 @@
   </div>
 </div>
 
+<!-- Ranking Modal -->
+<div class="modal-overlay" id="ranking-modal" style="display:none;">
+  <div class="modal" style="max-width:520px; width:92%; max-height:85vh; overflow-y:auto;">
+    <h3 style="margin-bottom:10px;">🏆 Ranking</h3>
+    <div class="ranking-tabs">
+      <button class="rank-tab active" data-diff="1">Fácil</button>
+      <button class="rank-tab" data-diff="2">Médio</button>
+      <button class="rank-tab" data-diff="3">Difícil</button>
+      <button class="rank-tab" data-diff="4">Expert</button>
+    </div>
+    <div class="ranking-subtabs">
+      <button class="rank-subtab active" data-type="wins">🏆 Mais vitórias</button>
+      <button class="rank-subtab" data-type="time">⚡ Vitória mais rápida</button>
+    </div>
+    <div id="ranking-list"><div class="rank-empty">Carregando...</div></div>
+    <div style="display:flex; justify-content:center; margin-top:14px;">
+      <button class="btn primary" onclick="closeRankingModal()" style="min-width:120px;">Fechar</button>
+    </div>
+  </div>
+</div>
+
 <script>
+// ======================== SUPABASE / AUTH / RANKING ========================
+
+const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrZ2NseWxkYmJnYmZqZ3lvZWVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MDkyNTgsImV4cCI6MjA5MzE4NTI1OH0.Pk5PEc9dbWBc4amjGa4AZgsNTyvg2728ZQwhxZOY4-E';
+
+let supa = null;
+let currentUser = null;
+
+function initSupabase() {
+  if (typeof window.supabase === 'undefined') {
+    console.warn('Supabase JS não carregou.');
+    return;
+  }
+  supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+  supa.auth.getSession().then(({ data: { session } }) => {
+    onAuthChange(session ? session.user : null);
+    checkPendingScore();
+  });
+
+  supa.auth.onAuthStateChange((event, session) => {
+    onAuthChange(session ? session.user : null);
+    if (event === 'SIGNED_IN') checkPendingScore();
+  });
+}
+
+function userDisplayName(u) {
+  if (!u) return 'Jogador';
+  const md = u.user_metadata || {};
+  return md.full_name || md.name || (u.email ? u.email.split('@')[0] : 'Jogador');
+}
+
+function onAuthChange(user) {
+  currentUser = user;
+  const btnLogin = document.getElementById('btn-login');
+  const userInfo = document.getElementById('user-info');
+  const userName = document.getElementById('user-name');
+  if (user) {
+    btnLogin.style.display = 'none';
+    userInfo.style.display = 'inline-flex';
+    userName.textContent = '👤 ' + userDisplayName(user);
+  } else {
+    btnLogin.style.display = 'inline-flex';
+    userInfo.style.display = 'none';
+  }
+}
+
+async function loginWithGoogle() {
+  if (!supa) { alert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  const { error } = await supa.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + window.location.pathname }
+  });
+  if (error) alert('Erro ao entrar: ' + error.message);
+}
+
+async function logout() {
+  if (!supa) return;
+  await supa.auth.signOut();
+}
+
+// === Player time tracking (independente do timer do jogo) ===
+let playerMsSpent = 0;
+let lastTurnStart = 0;
+
+function resetPlayerTime() { playerMsSpent = 0; lastTurnStart = 0; }
+function startPlayerTurnTimer() { lastTurnStart = Date.now(); }
+function endPlayerTurnTimer() {
+  if (lastTurnStart > 0) {
+    playerMsSpent += Date.now() - lastTurnStart;
+    lastTurnStart = 0;
+  }
+}
+
+// === Win capture + score submission ===
+let lastWinData = null;
+
+function captureWinData() {
+  endPlayerTurnTimer();
+  const playerSeconds = Math.max(1, Math.round(playerMsSpent / 1000));
+  const depthVal = document.getElementById('ai-depth').value;
+  const diffNum = parseInt(depthVal);
+  if (!Number.isInteger(diffNum) || diffNum < 1 || diffNum > 4) {
+    lastWinData = null;
+    return;
+  }
+  lastWinData = { difficulty: diffNum, player_seconds: playerSeconds };
+}
+
+async function registerCurrentScore() {
+  if (!lastWinData) return;
+  const btn = document.getElementById('btn-register-score');
+  const fb = document.getElementById('go-score-feedback');
+
+  if (!currentUser) {
+    sessionStorage.setItem('pendingScore', JSON.stringify(lastWinData));
+    return loginWithGoogle();
+  }
+  if (btn) { btn.disabled = true; btn.textContent = 'Registrando...'; }
+  const ok = await submitScore(lastWinData);
+  if (ok) {
+    if (btn) { btn.style.display = 'none'; }
+    if (fb) { fb.style.display = 'block'; fb.textContent = '✓ Pontuação registrada no ranking!'; }
+    lastWinData = null;
+  } else if (btn) {
+    btn.disabled = false;
+    btn.textContent = '🏆 Registrar no Ranking';
+  }
+}
+
+async function submitScore(data) {
+  if (!supa || !currentUser) return false;
+  const username = userDisplayName(currentUser);
+  const { error } = await supa.from('scores').insert({
+    user_id: currentUser.id,
+    username,
+    difficulty: data.difficulty,
+    player_seconds: data.player_seconds
+  });
+  if (error) {
+    console.error('submitScore error:', error);
+    alert('Erro ao registrar: ' + error.message);
+    return false;
+  }
+  if (typeof trackEvent === 'function') {
+    trackEvent('score_registered', { difficulty: data.difficulty, seconds: data.player_seconds });
+  }
+  return true;
+}
+
+function checkPendingScore() {
+  const pending = sessionStorage.getItem('pendingScore');
+  if (pending && currentUser) {
+    sessionStorage.removeItem('pendingScore');
+    try {
+      const data = JSON.parse(pending);
+      submitScore(data).then(ok => {
+        if (ok) {
+          alert('✓ Sua pontuação foi registrada no ranking!');
+        }
+      });
+    } catch (e) { console.error(e); }
+  }
+}
+
+// === Ranking modal ===
+let currentRankDiff = 1;
+let currentRankType = 'wins';
+
+function openRankingModal() {
+  document.getElementById('ranking-modal').style.display = 'flex';
+  loadRanking();
+  if (typeof trackEvent === 'function') trackEvent('ranking_opened', {});
+}
+
+function closeRankingModal() {
+  document.getElementById('ranking-modal').style.display = 'none';
+}
+
+function escapeHtml(s) {
+  return String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+}
+
+function fmtSeconds(s) {
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2,'0')}`;
+}
+
+async function loadRanking() {
+  const list = document.getElementById('ranking-list');
+  list.innerHTML = '<div class="rank-empty">Carregando...</div>';
+
+  if (!supa) {
+    list.innerHTML = '<div class="rank-empty">Sem conexão com o servidor.</div>';
+    return;
+  }
+
+  try {
+    if (currentRankType === 'wins') {
+      const { data, error } = await supa
+        .from('scores')
+        .select('username, user_id')
+        .eq('difficulty', currentRankDiff);
+      if (error) throw error;
+
+      const counts = {};
+      for (const s of data) {
+        if (!counts[s.user_id]) counts[s.user_id] = { username: s.username, count: 0 };
+        counts[s.user_id].count++;
+        // mantém o nome mais recente
+        counts[s.user_id].username = s.username;
+      }
+      const sorted = Object.values(counts).sort((a,b) => b.count - a.count).slice(0, 50);
+
+      if (sorted.length === 0) {
+        list.innerHTML = '<div class="rank-empty">Ainda não há vencedores neste nível. Seja o primeiro!</div>';
+        return;
+      }
+      list.innerHTML = `
+        <table class="rank-table">
+          <thead><tr><th>#</th><th>Jogador</th><th>Vitórias</th></tr></thead>
+          <tbody>${sorted.map((s,i) => `<tr><td>${i+1}</td><td>${escapeHtml(s.username)}</td><td>${s.count}</td></tr>`).join('')}</tbody>
+        </table>`;
+    } else {
+      const { data, error } = await supa
+        .from('scores')
+        .select('username, player_seconds')
+        .eq('difficulty', currentRankDiff)
+        .order('player_seconds', { ascending: true })
+        .limit(50);
+      if (error) throw error;
+
+      if (!data || data.length === 0) {
+        list.innerHTML = '<div class="rank-empty">Ainda não há vencedores neste nível. Seja o primeiro!</div>';
+        return;
+      }
+      list.innerHTML = `
+        <table class="rank-table">
+          <thead><tr><th>#</th><th>Jogador</th><th>Tempo</th></tr></thead>
+          <tbody>${data.map((s,i) => `<tr><td>${i+1}</td><td>${escapeHtml(s.username)}</td><td>${fmtSeconds(s.player_seconds)}</td></tr>`).join('')}</tbody>
+        </table>`;
+    }
+  } catch (err) {
+    console.error(err);
+    list.innerHTML = '<div class="rank-empty">Erro ao carregar ranking.</div>';
+  }
+}
+
+function initRankingTabs() {
+  document.querySelectorAll('.rank-tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.rank-tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentRankDiff = parseInt(tab.dataset.diff);
+      loadRanking();
+    });
+  });
+  document.querySelectorAll('.rank-subtab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.rank-subtab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      currentRankType = tab.dataset.type;
+      loadRanking();
+    });
+  });
+}
+
+// Init quando DOM e Supabase estiverem prontos
+window.addEventListener('DOMContentLoaded', () => {
+  initSupabase();
+  initRankingTabs();
+});
+
 // ======================== CHESS ENGINE ========================
 
 // Use filled (black) glyphs for both — color comes from CSS
@@ -1548,6 +1987,13 @@ function executeMove(move) {
   selectedSquare = -1;
   validMoves = [];
 
+  // Cronômetro do jogador (somente single-player conta pra ranking)
+  const playAsVal = document.getElementById('play-as').value;
+  if (playAsVal !== 'both') {
+    if (turn === playerColor) startPlayerTurnTimer();
+    else endPlayerTurnTimer();
+  }
+
   renderBoard();
   renderMoves();
   updateStatus();
@@ -1573,6 +2019,13 @@ function executeMove(move) {
         difficulty: diffNames[depthVal] || depthVal,
         total_moves: fullMoves
       });
+      // Captura tempo do jogador pra ranking (só vitórias single-player)
+      const playAsVal = document.getElementById('play-as').value;
+      if (playerWon && playAsVal !== 'both' && !tutorialMode) {
+        captureWinData();
+      } else {
+        lastWinData = null;
+      }
       if (!tutorialMode) {
         setTimeout(() => showGameOverPopup(playerWon, winner, diffNames[depthVal] || depthVal), 600);
       }
@@ -2918,6 +3371,21 @@ function showGameOverPopup(playerWon, winner, difficulty) {
   const title = document.getElementById('go-title');
   const text = document.getElementById('go-text');
   const nextBtn = document.getElementById('go-next-btn');
+  const regBtn = document.getElementById('btn-register-score');
+  const scoreInfo = document.getElementById('go-score-info');
+  const scoreFb = document.getElementById('go-score-feedback');
+
+  // Reset score UI
+  if (regBtn) { regBtn.style.display = 'none'; regBtn.disabled = false; regBtn.textContent = '🏆 Registrar no Ranking'; }
+  if (scoreInfo) scoreInfo.style.display = 'none';
+  if (scoreFb) scoreFb.style.display = 'none';
+
+  // Se foi vitória legítima e há dados capturados, mostra opção de registrar
+  if (playerWon && lastWinData && regBtn && scoreInfo) {
+    scoreInfo.textContent = `⏱ Seu tempo: ${fmtSeconds(lastWinData.player_seconds)} • Nível: ${difficulty}`;
+    scoreInfo.style.display = 'block';
+    regBtn.style.display = 'inline-flex';
+  }
 
   if (playerWon === null) {
     // Draw
@@ -3053,6 +3521,9 @@ function newGame() {
   playerColor = document.getElementById('play-as').value === 'b' ? 'b' : 'w';
   flipped = playerColor === 'b';
 
+  // Reset player-time tracking (somente single-player conta pra ranking)
+  resetPlayerTime();
+
   const playAs = document.getElementById('play-as').value;
   if (playAs === 'both') {
     document.getElementById('name-white').textContent = 'Jogador 1';
@@ -3073,6 +3544,10 @@ function newGame() {
   updateCaptured();
   updateHint();
 
+  // Esconde feedback do score (caso popup tenha ficado aberto antes)
+  const fb = document.getElementById('go-score-feedback');
+  if (fb) fb.style.display = 'none';
+
   // If player is black, AI moves first
   if (playAs !== 'both' && playerColor === 'b') {
     aiThinking = true;
@@ -3082,6 +3557,9 @@ function newGame() {
       if (aiMove) executeMove(aiMove);
       aiThinking = false;
     }, 100);
+  } else if (playAs !== 'both' && playerColor === 'w') {
+    // Jogador (brancas) começa — inicia cronômetro do jogador
+    startPlayerTurnTimer();
   }
 }
 
