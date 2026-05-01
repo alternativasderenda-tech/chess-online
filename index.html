@@ -816,12 +816,17 @@
     font-size: 19px;
     font-weight: 700;
     color: var(--accent);
-    text-decoration: none;
     letter-spacing: 0.3px;
     text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    margin: 0;
+    line-height: 1;
+  }
+  #site-brand a {
+    color: inherit;
+    text-decoration: none;
     transition: opacity 0.15s;
   }
-  #site-brand:hover { opacity: 0.85; }
+  #site-brand a:hover { opacity: 0.85; }
   #site-brand .brand-icon { margin-right: 2px; }
 
   #auth-header {
@@ -968,10 +973,12 @@
 </head>
 <body>
 
-<!-- Site Brand (logo) -->
-<a href="/" id="site-brand" aria-label="Xadrez Online — Voltar ao início">
-  <span class="brand-icon">♚</span><span class="brand-text">Xadrez Online</span>
-</a>
+<!-- Site Brand (logo + h1 primario) -->
+<h1 id="site-brand">
+  <a href="/" aria-label="Xadrez Online — Voltar ao início">
+    <span class="brand-icon">♚</span><span class="brand-text">Xadrez Online</span>
+  </a>
+</h1>
 
 <!-- Auth Header (login + ranking) -->
 <div id="auth-header">

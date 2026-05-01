@@ -1,6 +1,6 @@
 {
-  "name": "Xadrez - Aprenda e Jogue",
-  "short_name": "Xadrez",
+  "name": "Xadrez Online - Aprenda e Jogue",
+  "short_name": "Xadrez Online",
   "description": "Jogo de xadrez com tutorial interativo para aprender do zero",
   "start_url": "/",
   "id": "/",
