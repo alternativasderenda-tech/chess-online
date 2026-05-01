@@ -1,5 +1,5 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v5';
+const CACHE_NAME = 'xadrez-v6';
 const ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png', '/privacidade', '/termos'];
 
 self.addEventListener('install', e => {
