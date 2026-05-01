@@ -807,6 +807,23 @@
   }
 
   /* ==================== AUTH HEADER + RANKING ==================== */
+  #site-brand {
+    position: fixed;
+    top: 10px;
+    left: 14px;
+    z-index: 800;
+    font-family: 'Playfair Display', serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    letter-spacing: 0.3px;
+    text-shadow: 0 2px 12px rgba(0,0,0,0.4);
+    transition: opacity 0.15s;
+  }
+  #site-brand:hover { opacity: 0.85; }
+  #site-brand .brand-icon { margin-right: 2px; }
+
   #auth-header {
     position: fixed;
     top: 10px;
@@ -926,6 +943,10 @@
     #auth-header { top: 6px; right: 6px; }
     .auth-btn { padding: 5px 10px; font-size: 11px; }
     #user-name { max-width: 90px; }
+    #site-brand { font-size: 15px; top: 8px; left: 8px; }
+  }
+  @media (max-width: 380px) {
+    #site-brand .brand-text { display: none; }
   }
 
   /* Footer */
@@ -946,6 +967,11 @@
 </style>
 </head>
 <body>
+
+<!-- Site Brand (logo) -->
+<a href="/" id="site-brand" aria-label="Xadrez Online — Voltar ao início">
+  <span class="brand-icon">♚</span><span class="brand-text">Xadrez Online</span>
+</a>
 
 <!-- Auth Header (login + ranking) -->
 <div id="auth-header">
