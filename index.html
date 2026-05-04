@@ -791,11 +791,19 @@
   }
 
   @media (max-width: 900px) {
-    .game-container { flex-direction: column; align-items: center; }
+    .game-container { flex-direction: column; align-items: center; padding-top: 52px; }
     .sidebar { width: 100%; max-width: 520px; max-height: none; order: -1; }
     .board-area { order: 0; }
     #board { width: min(520px, 92vw); height: min(520px, 92vw); }
     .square { font-size: min(48px, 9vw); }
+    /* Backdrop solido nos elementos fixos pra nao sobrepor visualmente o conteudo ao scrollar */
+    #site-brand {
+      background: rgba(26, 26, 46, 0.85);
+      backdrop-filter: blur(8px);
+      -webkit-backdrop-filter: blur(8px);
+      padding: 5px 10px;
+      border-radius: 8px;
+    }
   }
   @media (max-height: 768px) {
     .player-bar { padding: 4px 10px; }
