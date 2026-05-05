@@ -62,11 +62,22 @@ create policy "auth users can create games"
   on games for insert
   with check (auth.uid() = white_user_id);
 
--- games: jogadores da partida podem atualizar (status, times etc)
+-- games: jogadores da partida podem atualizar; OU qualquer autenticado
+-- pode "claim" a vaga de pretas se ainda esta vazia e aguardando.
+-- with check garante que apos o update o usuario seja um dos jogadores.
 drop policy if exists "players can update own games" on games;
-create policy "players can update own games"
+drop policy if exists "players can update own games or join as black" on games;
+create policy "players can update own games or join as black"
   on games for update
-  using (auth.uid() = white_user_id or auth.uid() = black_user_id);
+  using (
+    auth.uid() = white_user_id
+    or auth.uid() = black_user_id
+    or (black_user_id is null and status = 'waiting')
+  )
+  with check (
+    auth.uid() = white_user_id
+    or auth.uid() = black_user_id
+  );
 
 -- moves: qualquer autenticado le (para o oponente receber via realtime)
 drop policy if exists "moves readable by all auth" on moves;
