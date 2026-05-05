@@ -1182,9 +1182,10 @@
 <div class="modal-overlay" id="share-game-modal" style="display:none;">
   <div class="modal" style="max-width:480px; width:92%;">
     <h3 style="margin-bottom:6px;">🎯 Compartilhar Partida</h3>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">
       Mande este link pro seu amigo. Quando ele abrir, a partida começa.
     </p>
+    <p id="share-color-info" style="font-size:12px; color:var(--accent); margin-bottom:14px;"></p>
     <div style="display:flex; gap:6px; margin-bottom:12px;">
       <input id="share-link-input" type="text" readonly
         style="flex:1; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); color:var(--text-light); padding:8px 10px; border-radius:6px; font-size:11px; font-family:monospace; min-width:0;">
@@ -1498,27 +1499,39 @@ async function createOnlineGame() {
   }
 
   const id = generateGameId();
-  const tc = parseInt(document.getElementById('time-control').value) || 600;
+  // Tempo: 0 = sem limite (preserva), invalido vira 600
+  let tc = parseInt(document.getElementById('time-control').value);
+  if (isNaN(tc) || tc < 0) tc = 600;
+  // Cor escolhida: 'w', 'b', ou 'both' (trata 'both' como branco)
+  const playAs = document.getElementById('play-as').value;
+  const creatorColor = playAs === 'b' ? 'b' : 'w';
   const username = userDisplayName(currentUser);
 
-  const { error } = await supa.from('games').insert({
+  const insertData = {
     id,
-    white_user_id: currentUser.id,
-    white_username: username,
     time_control: tc,
     status: 'waiting',
     current_turn: 'w'
-  });
+  };
+  if (creatorColor === 'w') {
+    insertData.white_user_id = currentUser.id;
+    insertData.white_username = username;
+  } else {
+    insertData.black_user_id = currentUser.id;
+    insertData.black_username = username;
+  }
+
+  const { error } = await supa.from('games').insert(insertData);
 
   if (error) {
     alert('Erro ao criar partida: ' + error.message);
     return;
   }
 
-  if (typeof trackEvent === 'function') trackEvent('online_game_created', { time_control: tc });
-  setupOnlineGame(id, 'w');
+  if (typeof trackEvent === 'function') trackEvent('online_game_created', { time_control: tc, creator_color: creatorColor });
+  setupOnlineGame(id, creatorColor);
   isWaitingForOpponent = true;
-  showShareModal(id);
+  showShareModal(id, creatorColor);
 }
 
 async function joinOnlineGame(gameId) {
@@ -1538,12 +1551,18 @@ async function joinOnlineGame(gameId) {
     return;
   }
 
-  // Reentrando como criador (white)
+  // Sincroniza o select de tempo com o da partida (visualmente correto)
+  if (typeof game.time_control === 'number') {
+    const tcSel = document.getElementById('time-control');
+    if (tcSel) tcSel.value = String(game.time_control);
+  }
+
+  // Reentrando como white (criador)
   if (game.white_user_id === currentUser.id) {
     setupOnlineGame(gameId, 'w');
     if (game.status === 'waiting') {
       isWaitingForOpponent = true;
-      showShareModal(gameId);
+      showShareModal(gameId, 'w');
     } else if (game.status === 'active') {
       opponentName = game.black_username;
       updateOnlinePlayerBars();
@@ -1551,12 +1570,17 @@ async function joinOnlineGame(gameId) {
     }
     return;
   }
-  // Reentrando como black
+  // Reentrando como black (criador OU joiner anterior)
   if (game.black_user_id === currentUser.id) {
     setupOnlineGame(gameId, 'b');
-    opponentName = game.white_username;
-    updateOnlinePlayerBars();
-    replayMovesFromDb(gameId);
+    if (game.status === 'waiting') {
+      isWaitingForOpponent = true;
+      showShareModal(gameId, 'b');
+    } else {
+      opponentName = game.white_username;
+      updateOnlinePlayerBars();
+      replayMovesFromDb(gameId);
+    }
     return;
   }
 
@@ -1566,16 +1590,24 @@ async function joinOnlineGame(gameId) {
     return;
   }
 
-  // Entra como black
+  // Determina qual slot esta vazio
+  const joinerColor = game.white_user_id ? 'b' : 'w';
   const username = userDisplayName(currentUser);
+  const updateData = {
+    status: 'active',
+    started_at: new Date().toISOString()
+  };
+  if (joinerColor === 'b') {
+    updateData.black_user_id = currentUser.id;
+    updateData.black_username = username;
+  } else {
+    updateData.white_user_id = currentUser.id;
+    updateData.white_username = username;
+  }
+
   const { error: updateErr } = await supa
     .from('games')
-    .update({
-      black_user_id: currentUser.id,
-      black_username: username,
-      status: 'active',
-      started_at: new Date().toISOString()
-    })
+    .update(updateData)
     .eq('id', gameId)
     .eq('status', 'waiting');
 
@@ -1584,9 +1616,9 @@ async function joinOnlineGame(gameId) {
     return;
   }
 
-  if (typeof trackEvent === 'function') trackEvent('online_game_joined', {});
-  setupOnlineGame(gameId, 'b');
-  opponentName = game.white_username;
+  if (typeof trackEvent === 'function') trackEvent('online_game_joined', { joiner_color: joinerColor });
+  setupOnlineGame(gameId, joinerColor);
+  opponentName = joinerColor === 'b' ? game.white_username : game.black_username;
   updateOnlinePlayerBars();
 }
 
@@ -1767,12 +1799,23 @@ async function sendMoveToServer(move, isGameOver, gameResult) {
   }
 }
 
-function showShareModal(gameId) {
+function showShareModal(gameId, creatorColor) {
   const url = window.location.origin + window.location.pathname + '?game=' + gameId;
   document.getElementById('share-link-input').value = url;
   const wa = document.getElementById('share-whatsapp');
   const text = encodeURIComponent('Vamos jogar xadrez? Entra aqui: ' + url);
   wa.href = 'https://wa.me/?text=' + text;
+  // Mostra qual cor o criador vai jogar
+  const colorInfo = document.getElementById('share-color-info');
+  if (colorInfo) {
+    if (creatorColor === 'w') {
+      colorInfo.textContent = '♔ Você jogará como Brancas (joga primeiro)';
+    } else if (creatorColor === 'b') {
+      colorInfo.textContent = '♚ Você jogará como Pretas (oponente joga primeiro)';
+    } else {
+      colorInfo.textContent = '';
+    }
+  }
   document.getElementById('share-game-modal').style.display = 'flex';
 }
 

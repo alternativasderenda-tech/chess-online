@@ -56,23 +56,27 @@ create policy "games readable by all auth"
   on games for select
   using (auth.role() = 'authenticated');
 
--- games: qualquer autenticado cria (criador vira white)
+-- games: qualquer autenticado cria (pode ser white OU black)
 drop policy if exists "auth users can create games" on games;
 create policy "auth users can create games"
   on games for insert
-  with check (auth.uid() = white_user_id);
+  with check (
+    auth.uid() = white_user_id
+    or auth.uid() = black_user_id
+  );
 
 -- games: jogadores da partida podem atualizar; OU qualquer autenticado
--- pode "claim" a vaga de pretas se ainda esta vazia e aguardando.
+-- pode "claim" um slot vazio se a partida estiver aguardando.
 -- with check garante que apos o update o usuario seja um dos jogadores.
 drop policy if exists "players can update own games" on games;
 drop policy if exists "players can update own games or join as black" on games;
-create policy "players can update own games or join as black"
+drop policy if exists "players can update or join open game" on games;
+create policy "players can update or join open game"
   on games for update
   using (
     auth.uid() = white_user_id
     or auth.uid() = black_user_id
-    or (black_user_id is null and status = 'waiting')
+    or (status = 'waiting' and (white_user_id is null or black_user_id is null))
   )
   with check (
     auth.uid() = white_user_id
