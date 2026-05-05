@@ -1086,6 +1086,9 @@
         <input type="file" id="pgn-input" accept=".pgn,.txt" style="display:none" onchange="importPGN(event)">
         <button class="btn" onclick="openRankingModal()">🏆 Ranking</button>
       </div>
+      <div class="controls" style="margin-top: 6px;">
+        <button class="btn primary" onclick="createOnlineGame()" style="grid-column: span 2;">🎯 Jogar com Amigo</button>
+      </div>
     </div>
 
     <div class="panel" style="flex:1; display:flex; flex-direction:column;" id="moves-panel">
@@ -1172,6 +1175,26 @@
   <div class="modal">
     <h3>Promover peão</h3>
     <div class="promo-options" id="promo-options"></div>
+  </div>
+</div>
+
+<!-- Share Game Modal -->
+<div class="modal-overlay" id="share-game-modal" style="display:none;">
+  <div class="modal" style="max-width:480px; width:92%;">
+    <h3 style="margin-bottom:6px;">🎯 Compartilhar Partida</h3>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px;">
+      Mande este link pro seu amigo. Quando ele abrir, a partida começa.
+    </p>
+    <div style="display:flex; gap:6px; margin-bottom:12px;">
+      <input id="share-link-input" type="text" readonly
+        style="flex:1; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); color:var(--text-light); padding:8px 10px; border-radius:6px; font-size:11px; font-family:monospace; min-width:0;">
+      <button class="btn primary" onclick="copyShareLink()" id="copy-link-btn" style="min-width:90px;">📋 Copiar</button>
+    </div>
+    <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
+      <a id="share-whatsapp" class="btn" target="_blank" rel="noopener" style="background:#25D366; color:white; min-width:140px; border:none;">💬 WhatsApp</a>
+      <button class="btn" onclick="cancelOnlineGame()" style="min-width:120px;">Cancelar</button>
+    </div>
+    <p id="waiting-status" style="text-align:center; color:var(--accent); font-size:13px; margin-top:14px;">⏳ Aguardando oponente...</p>
   </div>
 </div>
 
@@ -1340,6 +1363,18 @@ function checkPendingScore() {
       });
     } catch (e) { console.error(e); }
   }
+
+  // Acoes pendentes de pos-login (online game)
+  const postAction = sessionStorage.getItem('postLoginAction');
+  if (postAction && currentUser) {
+    sessionStorage.removeItem('postLoginAction');
+    if (postAction === 'createOnline') {
+      setTimeout(() => createOnlineGame(), 200);
+    } else if (postAction.startsWith('joinOnline:')) {
+      const gid = postAction.split(':')[1];
+      setTimeout(() => joinOnlineGame(gid), 200);
+    }
+  }
 }
 
 // === Ranking modal ===
@@ -1445,10 +1480,365 @@ function initRankingTabs() {
   });
 }
 
+// ======================== FRIEND MATCH (ONLINE) ========================
+
+function generateGameId() {
+  const chars = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let id = '';
+  for (let i = 0; i < 6; i++) id += chars[Math.floor(Math.random() * chars.length)];
+  return id;
+}
+
+async function createOnlineGame() {
+  if (!supa) { alert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!currentUser) {
+    if (!confirm('Pra jogar com amigos voce precisa entrar com Google. Entrar agora?')) return;
+    sessionStorage.setItem('postLoginAction', 'createOnline');
+    return loginWithGoogle();
+  }
+
+  const id = generateGameId();
+  const tc = parseInt(document.getElementById('time-control').value) || 600;
+  const username = userDisplayName(currentUser);
+
+  const { error } = await supa.from('games').insert({
+    id,
+    white_user_id: currentUser.id,
+    white_username: username,
+    time_control: tc,
+    status: 'waiting',
+    current_turn: 'w'
+  });
+
+  if (error) {
+    alert('Erro ao criar partida: ' + error.message);
+    return;
+  }
+
+  if (typeof trackEvent === 'function') trackEvent('online_game_created', { time_control: tc });
+  setupOnlineGame(id, 'w');
+  isWaitingForOpponent = true;
+  showShareModal(id);
+}
+
+async function joinOnlineGame(gameId) {
+  if (!supa) { alert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!currentUser) {
+    if (!confirm('Pra entrar na partida voce precisa entrar com Google. Entrar agora?')) return;
+    sessionStorage.setItem('postLoginAction', 'joinOnline:' + gameId);
+    return loginWithGoogle();
+  }
+
+  const { data: game, error: fetchErr } = await supa
+    .from('games').select('*').eq('id', gameId).single();
+
+  if (fetchErr || !game) {
+    alert('Partida nao encontrada ou ja encerrada.');
+    cleanGameUrlParam();
+    return;
+  }
+
+  // Reentrando como criador (white)
+  if (game.white_user_id === currentUser.id) {
+    setupOnlineGame(gameId, 'w');
+    if (game.status === 'waiting') {
+      isWaitingForOpponent = true;
+      showShareModal(gameId);
+    } else if (game.status === 'active') {
+      opponentName = game.black_username;
+      updateOnlinePlayerBars();
+      replayMovesFromDb(gameId);
+    }
+    return;
+  }
+  // Reentrando como black
+  if (game.black_user_id === currentUser.id) {
+    setupOnlineGame(gameId, 'b');
+    opponentName = game.white_username;
+    updateOnlinePlayerBars();
+    replayMovesFromDb(gameId);
+    return;
+  }
+
+  if (game.status !== 'waiting') {
+    alert('Esta partida ja esta em andamento ou encerrada.');
+    cleanGameUrlParam();
+    return;
+  }
+
+  // Entra como black
+  const username = userDisplayName(currentUser);
+  const { error: updateErr } = await supa
+    .from('games')
+    .update({
+      black_user_id: currentUser.id,
+      black_username: username,
+      status: 'active',
+      started_at: new Date().toISOString()
+    })
+    .eq('id', gameId)
+    .eq('status', 'waiting');
+
+  if (updateErr) {
+    alert('Erro ao entrar: ' + updateErr.message);
+    return;
+  }
+
+  if (typeof trackEvent === 'function') trackEvent('online_game_joined', {});
+  setupOnlineGame(gameId, 'b');
+  opponentName = game.white_username;
+  updateOnlinePlayerBars();
+}
+
+function setupOnlineGame(gameId, color) {
+  // Sair de tutorial caso esteja
+  if (typeof tutorialMode !== 'undefined' && tutorialMode && typeof exitTutorialMode === 'function') {
+    exitTutorialMode();
+  }
+
+  gameMode = 'online';
+  onlineGameId = gameId;
+  myOnlineColor = color;
+  playerColor = color;
+  flipped = (color === 'b');
+  onlineLastSeenMove = 0;
+  opponentName = null;
+
+  // Reset board
+  initBoard();
+  turn = 'w';
+  castling = { K: true, Q: true, k: true, q: true };
+  enPassant = -1;
+  halfMoves = 0;
+  fullMoves = 1;
+  moveHistory = [];
+  stateHistory = [];
+  moveNotations = [];
+  selectedSquare = -1;
+  validMoves = [];
+  lastMoveFrom = -1;
+  lastMoveTo = -1;
+  gameOver = false;
+  promotionPending = null;
+  aiThinking = false;
+
+  // Subscribe Realtime
+  subscribeToOnlineGame(gameId);
+
+  // UI
+  updateOnlinePlayerBars();
+  renderBoard();
+  renderMoves();
+  startTimer();
+  updateStatus();
+  updatePlayerBars();
+
+  // Atualiza URL com ?game= sem recarregar
+  const url = new URL(window.location.href);
+  url.searchParams.set('game', gameId);
+  url.hash = '';
+  window.history.replaceState({}, '', url);
+}
+
+async function replayMovesFromDb(gameId) {
+  // Re-aplica todos os moves ja existentes (caso reentre numa partida em andamento)
+  const { data: moves, error } = await supa
+    .from('moves').select('*').eq('game_id', gameId).order('move_number', { ascending: true });
+  if (error || !moves) return;
+  for (const m of moves) {
+    onlineLastSeenMove = m.move_number;
+    executeMove({ from: m.from_sq, to: m.to_sq, promo: m.promotion || undefined }, { fromRealtime: true });
+  }
+}
+
+function subscribeToOnlineGame(gameId) {
+  unsubscribeFromOnlineGame();
+  onlineMovesChannel = supa
+    .channel('moves-' + gameId)
+    .on('postgres_changes', {
+      event: 'INSERT',
+      schema: 'public',
+      table: 'moves',
+      filter: 'game_id=eq.' + gameId
+    }, payload => handleIncomingMove(payload.new))
+    .subscribe();
+
+  onlineGameChannel = supa
+    .channel('game-' + gameId)
+    .on('postgres_changes', {
+      event: 'UPDATE',
+      schema: 'public',
+      table: 'games',
+      filter: 'id=eq.' + gameId
+    }, payload => handleGameUpdate(payload.new))
+    .subscribe();
+}
+
+function unsubscribeFromOnlineGame() {
+  if (onlineMovesChannel) { try { supa.removeChannel(onlineMovesChannel); } catch(e) {} onlineMovesChannel = null; }
+  if (onlineGameChannel) { try { supa.removeChannel(onlineGameChannel); } catch(e) {} onlineGameChannel = null; }
+}
+
+function handleIncomingMove(move) {
+  if (gameMode !== 'online' || !onlineGameId) return;
+  if (move.game_id !== onlineGameId) return;
+  if (move.move_number <= onlineLastSeenMove) return;
+  onlineLastSeenMove = move.move_number;
+  // Ignora ECO do nosso proprio move
+  if (move.player_color === myOnlineColor) return;
+
+  // Aplica move do oponente
+  executeMove(
+    { from: move.from_sq, to: move.to_sq, promo: move.promotion || undefined },
+    { fromRealtime: true }
+  );
+}
+
+function handleGameUpdate(game) {
+  if (gameMode !== 'online' || !onlineGameId) return;
+  if (game.id !== onlineGameId) return;
+
+  if (game.status === 'active' && isWaitingForOpponent) {
+    isWaitingForOpponent = false;
+    closeShareModal();
+    opponentName = (myOnlineColor === 'w') ? game.black_username : game.white_username;
+    updateOnlinePlayerBars();
+    setStatus('🎯 Oponente entrou! Brancas jogam.');
+  }
+
+  if (game.status === 'finished' || game.status === 'abandoned') {
+    if (!gameOver) {
+      gameOver = true;
+      stopTimer();
+      const reason = game.end_reason || (game.status === 'abandoned' ? 'Oponente saiu' : 'Partida encerrada');
+      setStatus('🏁 ' + reason);
+    }
+  }
+}
+
+function updateOnlinePlayerBars() {
+  if (gameMode !== 'online') return;
+  const myName = currentUser ? userDisplayName(currentUser) : 'Você';
+  const oppName = opponentName || '⏳ Aguardando...';
+  if (myOnlineColor === 'w') {
+    document.getElementById('name-white').textContent = myName;
+    document.getElementById('name-black').textContent = oppName;
+  } else {
+    document.getElementById('name-white').textContent = oppName;
+    document.getElementById('name-black').textContent = myName;
+  }
+}
+
+async function sendMoveToServer(move, isGameOver, gameResult) {
+  if (gameMode !== 'online' || !onlineGameId || !supa || !currentUser) return;
+  const moveNumber = onlineLastSeenMove + 1;
+  onlineLastSeenMove = moveNumber;
+  const { error } = await supa.from('moves').insert({
+    game_id: onlineGameId,
+    move_number: moveNumber,
+    player_color: myOnlineColor,
+    from_sq: move.from,
+    to_sq: move.to,
+    promotion: move.promo || null,
+    notation: move.notation || null,
+    white_time_remaining: timerEnabled ? timerWhite : null,
+    black_time_remaining: timerEnabled ? timerBlack : null,
+    is_game_over: !!isGameOver,
+    game_result: gameResult || null
+  });
+  if (error) {
+    console.error('Erro ao enviar movimento:', error);
+    setStatus('⚠ Erro de conexão ao enviar movimento');
+    return;
+  }
+  // Atualiza turno no games
+  await supa.from('games').update({
+    current_turn: myOnlineColor === 'w' ? 'b' : 'w'
+  }).eq('id', onlineGameId);
+
+  // Se acabou, marca partida como finalizada
+  if (isGameOver) {
+    await supa.from('games').update({
+      status: 'finished',
+      result: gameResult,
+      end_reason: gameResult === 'draw' ? 'Empate' : (gameResult === 'white_wins' ? 'Brancas vencem' : 'Pretas vencem'),
+      ended_at: new Date().toISOString()
+    }).eq('id', onlineGameId);
+  }
+}
+
+function showShareModal(gameId) {
+  const url = window.location.origin + window.location.pathname + '?game=' + gameId;
+  document.getElementById('share-link-input').value = url;
+  const wa = document.getElementById('share-whatsapp');
+  const text = encodeURIComponent('Vamos jogar xadrez? Entra aqui: ' + url);
+  wa.href = 'https://wa.me/?text=' + text;
+  document.getElementById('share-game-modal').style.display = 'flex';
+}
+
+function closeShareModal() {
+  document.getElementById('share-game-modal').style.display = 'none';
+}
+
+async function copyShareLink() {
+  const input = document.getElementById('share-link-input');
+  const btn = document.getElementById('copy-link-btn');
+  try {
+    await navigator.clipboard.writeText(input.value);
+  } catch (e) {
+    input.select();
+    document.execCommand('copy');
+  }
+  btn.textContent = '✓ Copiado!';
+  setTimeout(() => { btn.textContent = '📋 Copiar'; }, 1500);
+}
+
+async function cancelOnlineGame() {
+  if (onlineGameId && supa) {
+    await supa.from('games').update({
+      status: 'abandoned',
+      end_reason: 'Cancelada pelo criador',
+      ended_at: new Date().toISOString()
+    }).eq('id', onlineGameId).eq('status', 'waiting');
+  }
+  leaveOnlineMode();
+  closeShareModal();
+  cleanGameUrlParam();
+  if (typeof newGame === 'function') newGame();
+}
+
+function leaveOnlineMode() {
+  unsubscribeFromOnlineGame();
+  gameMode = 'ai';
+  onlineGameId = null;
+  myOnlineColor = null;
+  opponentName = null;
+  onlineLastSeenMove = 0;
+  isWaitingForOpponent = false;
+}
+
+function cleanGameUrlParam() {
+  const url = new URL(window.location.href);
+  url.searchParams.delete('game');
+  url.hash = '';
+  window.history.replaceState({}, '', url);
+}
+
+function checkUrlForGameJoin() {
+  const params = new URLSearchParams(window.location.search);
+  const gameId = params.get('game');
+  if (gameId && /^[A-Z2-9]{6}$/.test(gameId)) {
+    // Aguarda auth resolver antes de tentar joinar
+    setTimeout(() => joinOnlineGame(gameId), 500);
+  }
+}
+
 // Init quando DOM e Supabase estiverem prontos
 window.addEventListener('DOMContentLoaded', () => {
   initSupabase();
   initRankingTabs();
+  // Detecta ?game= e tenta joinar (aguarda auth resolver)
+  checkUrlForGameJoin();
 });
 
 // ======================== CHESS ENGINE ========================
@@ -1554,6 +1944,16 @@ let playerColor = 'w';
 let flipped = false;
 let aiThinking = false;
 let moveNotations = [];
+
+// Friend Match (online) state
+let gameMode = 'ai';  // 'ai' | 'online'
+let onlineGameId = null;
+let myOnlineColor = null;  // 'w' | 'b' (apenas em online)
+let opponentName = null;
+let onlineMovesChannel = null;
+let onlineGameChannel = null;
+let onlineLastSeenMove = 0;
+let isWaitingForOpponent = false;
 
 // Drag state
 let dragging = false;
@@ -1986,9 +2386,11 @@ function getBestMove() {
 
 // ======================== GAME LOGIC ========================
 
-function executeMove(move) {
+function executeMove(move, opts) {
+  opts = opts || {};
   const legal = getLegalMoves(turn);
   const notation = toAlgebraic(move, legal);
+  move.notation = notation;
   const result = makeMove(move, board, castling);
 
   stateHistory.push({
@@ -2029,9 +2431,9 @@ function executeMove(move) {
   selectedSquare = -1;
   validMoves = [];
 
-  // Cronômetro do jogador (somente single-player conta pra ranking)
+  // Cronômetro do jogador (somente AI single-player conta pra ranking)
   const playAsVal = document.getElementById('play-as').value;
-  if (playAsVal !== 'both') {
+  if (gameMode === 'ai' && playAsVal !== 'both') {
     if (turn === playerColor) startPlayerTurnTimer();
     else endPlayerTurnTimer();
   }
@@ -2061,9 +2463,9 @@ function executeMove(move) {
         difficulty: diffNames[depthVal] || depthVal,
         total_moves: fullMoves
       });
-      // Captura tempo do jogador pra ranking (só vitórias single-player)
+      // Captura tempo do jogador pra ranking (só vitórias AI single-player)
       const playAsVal = document.getElementById('play-as').value;
-      if (playerWon && playAsVal !== 'both' && !tutorialMode) {
+      if (gameMode === 'ai' && playerWon && playAsVal !== 'both' && !tutorialMode) {
         captureWinData();
       } else {
         lastWinData = null;
@@ -2071,12 +2473,18 @@ function executeMove(move) {
       if (!tutorialMode) {
         setTimeout(() => showGameOverPopup(playerWon, winner, diffNames[depthVal] || depthVal), 600);
       }
+      // Online: envia move com resultado de fim de partida
+      if (gameMode === 'online' && !opts.fromRealtime) {
+        const gameResult = turn === 'w' ? 'black_wins' : 'white_wins';
+        sendMoveToServer(move, true, gameResult);
+      }
     } else {
       setStatus('Empate por afogamento!');
       trackEvent('game_over', { result: 'stalemate', total_moves: fullMoves });
       if (!tutorialMode) {
         setTimeout(() => showGameOverPopup(null, null, null), 600);
       }
+      if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
     }
     return;
   }
@@ -2085,6 +2493,7 @@ function executeMove(move) {
     gameOver = true;
     stopTimer();
     setStatus('Empate — regra dos 50 movimentos');
+    if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
     return;
   }
 
@@ -2092,6 +2501,7 @@ function executeMove(move) {
     gameOver = true;
     stopTimer();
     setStatus('Empate — material insuficiente');
+    if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
     return;
   }
 
@@ -2119,6 +2529,12 @@ function executeMove(move) {
       updatePlayerBars();
       setStatus(lesson.goal || 'Sua vez — continue praticando!');
     }
+    return;
+  }
+
+  // Modo online: envia move ao servidor e nao dispara IA
+  if (gameMode === 'online') {
+    if (!opts.fromRealtime) sendMoveToServer(move, false, null);
     return;
   }
 
@@ -2335,6 +2751,10 @@ function handleSquareAction(idx) {
     const lesson = LESSONS[currentLesson];
     if (!lesson || !lesson.interactive) return; // Non-interactive: no moves
     if (lesson.isPractice && turn !== 'w') return; // Practice: white only
+  } else if (gameMode === 'online') {
+    // Online: so move se oponente entrou e for sua vez
+    if (isWaitingForOpponent) return;
+    if (turn !== myOnlineColor) return;
   } else {
     const playAs = document.getElementById('play-as').value;
     if (playAs !== 'both' && turn !== playerColor) return;
@@ -2377,6 +2797,9 @@ function onMouseDown(e) {
     const lesson = LESSONS[currentLesson];
     if (lesson && lesson.isPractice && turn !== 'w') return;
     if (!lesson || !lesson.interactive) return;
+  } else if (gameMode === 'online') {
+    if (isWaitingForOpponent) return;
+    if (turn !== myOnlineColor) return;
   } else {
     const playAs = document.getElementById('play-as').value;
     if (playAs !== 'both' && turn !== playerColor) return;
@@ -3535,6 +3958,13 @@ function newGame() {
 
   // Exit tutorial if switching away
   if (tutorialMode) exitTutorialMode();
+
+  // Sai de modo online se estiver
+  if (gameMode === 'online') {
+    leaveOnlineMode();
+    cleanGameUrlParam();
+  }
+  gameMode = 'ai';
 
   const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert' };
   trackEvent('new_game', {
