@@ -968,6 +968,88 @@
   }
   .btn:disabled:hover { background: inherit; border-color: inherit; }
 
+  /* Reactions (online chat) */
+  .reactions-row {
+    display: flex;
+    gap: 4px;
+    flex-wrap: wrap;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    justify-content: center;
+  }
+  .reaction-btn {
+    font-size: 20px;
+    width: 38px;
+    height: 38px;
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.12s, background 0.12s, border-color 0.12s;
+    padding: 0;
+    line-height: 1;
+    color: inherit;
+    font-family: inherit;
+  }
+  .reaction-btn:hover {
+    background: rgba(226,185,111,0.15);
+    border-color: rgba(226,185,111,0.4);
+    transform: scale(1.1);
+  }
+  .reaction-btn:active { transform: scale(0.92); }
+
+  /* Floating reaction bubble */
+  .reaction-bubble {
+    position: fixed;
+    background: var(--bg-card);
+    border: 2px solid var(--accent);
+    border-radius: 14px;
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+    z-index: 900;
+    pointer-events: none;
+    animation: reaction-pop 3s ease forwards;
+    max-width: 240px;
+  }
+  .reaction-bubble.from-me {
+    border-color: rgba(226,185,111,0.5);
+    background: rgba(30,42,74,0.95);
+  }
+  .reaction-bubble .emoji { font-size: 30px; line-height: 1; }
+  .reaction-bubble .label { font-size: 13px; font-weight: 600; color: var(--text-light); }
+  .reaction-bubble .author { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
+  @keyframes reaction-pop {
+    0% { opacity: 0; transform: translateX(-50%) scale(0.5) translateY(8px); }
+    8% { opacity: 1; transform: translateX(-50%) scale(1.08) translateY(0); }
+    16% { transform: translateX(-50%) scale(1) translateY(0); }
+    85% { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); }
+    100% { opacity: 0; transform: translateX(-50%) scale(1) translateY(-8px); }
+  }
+
+  /* AFK badge no player bar do oponente */
+  .afk-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+    background: rgba(255,200,100,0.12);
+    border: 1px solid rgba(255,200,100,0.5);
+    color: #ffc864;
+    border-radius: 10px;
+    padding: 1px 7px;
+    font-size: 10px;
+    font-weight: 600;
+    margin-left: 6px;
+    animation: afk-pulse 2.4s ease-in-out infinite;
+  }
+  @keyframes afk-pulse {
+    0%, 100% { opacity: 0.85; }
+    50% { opacity: 1; }
+  }
+
   /* Footer */
   .site-footer {
     text-align: center;
@@ -1064,6 +1146,16 @@
       <div class="controls">
         <button class="btn" onclick="copyOnlineGameLink()" id="online-copy-link-btn">📋 Copiar Link</button>
         <button class="btn" onclick="leaveOnlineGameAction()">🚪 Sair da Partida</button>
+      </div>
+      <div class="reactions-row">
+        <button class="reaction-btn" onclick="sendReaction('👋','Olá')" title="Olá">👋</button>
+        <button class="reaction-btn" onclick="sendReaction('🤔','Pensando')" title="Pensando">🤔</button>
+        <button class="reaction-btn" onclick="sendReaction('👏','Boa jogada')" title="Boa jogada">👏</button>
+        <button class="reaction-btn" onclick="sendReaction('😅','Ufa')" title="Ufa">😅</button>
+        <button class="reaction-btn" onclick="sendReaction('🤝','GG')" title="GG (boa partida)">🤝</button>
+        <button class="reaction-btn" onclick="sendReaction('🎉','Vibes')" title="Vibes">🎉</button>
+        <button class="reaction-btn" onclick="sendReaction('🚶','Já volto','brb')" title="Já volto">🚶</button>
+        <button class="reaction-btn" onclick="sendReaction('✅','Voltei','back')" title="Voltei">✅</button>
       </div>
     </div>
 
@@ -1748,6 +1840,9 @@ function subscribeToOnlineGame(gameId) {
     .on('broadcast', { event: 'rematch' }, ({ payload }) => {
       handleRematchBroadcast(payload || {});
     })
+    .on('broadcast', { event: 'reaction' }, ({ payload }) => {
+      handleReactionBroadcast(payload || {});
+    })
     .subscribe();
 }
 
@@ -1914,6 +2009,7 @@ function leaveOnlineMode() {
   const onlinePanel = document.getElementById('online-controls');
   if (settingsPanel) settingsPanel.style.display = '';
   if (onlinePanel) onlinePanel.style.display = 'none';
+  clearReactionUi();
 }
 
 async function copyOnlineGameLink() {
@@ -2016,6 +2112,100 @@ function handleRematchBroadcast(payload) {
   closeGameOverPopup();
   // Ir pra nova partida criada pelo oponente
   joinOnlineGame(payload.newGameId);
+}
+
+// =================== REACTIONS / EMOJI CHAT ===================
+let reactionBubbleTimer = null;
+
+function sendReaction(emoji, label, afk) {
+  if (gameMode !== 'online' || !onlineGameChannel) return;
+  if (isWaitingForOpponent) return;
+  // Mostra localmente imediato
+  showReactionBubble({ emoji, label, fromMe: true });
+  // Envia broadcast pro oponente
+  try {
+    onlineGameChannel.send({
+      type: 'broadcast',
+      event: 'reaction',
+      payload: {
+        emoji,
+        label,
+        afk: afk || null,
+        sender_id: currentUser ? currentUser.id : null,
+        sender_name: currentUser ? userDisplayName(currentUser) : 'Jogador'
+      }
+    });
+  } catch (e) { console.error(e); }
+}
+
+function handleReactionBroadcast(payload) {
+  if (!payload || !payload.emoji) return;
+  if (currentUser && payload.sender_id === currentUser.id) return;  // echo do meu proprio
+  showReactionBubble({
+    emoji: payload.emoji,
+    label: payload.label,
+    fromMe: false,
+    author: payload.sender_name
+  });
+  if (payload.afk === 'brb') setOpponentAfkBadge(true);
+  else if (payload.afk === 'back') setOpponentAfkBadge(false);
+}
+
+function showReactionBubble(opts) {
+  const existing = document.getElementById('reaction-bubble');
+  if (existing) existing.remove();
+  if (reactionBubbleTimer) { clearTimeout(reactionBubbleTimer); reactionBubbleTimer = null; }
+
+  const bubble = document.createElement('div');
+  bubble.id = 'reaction-bubble';
+  bubble.className = 'reaction-bubble' + (opts.fromMe ? ' from-me' : '');
+  bubble.style.left = '50%';
+  if (opts.fromMe) {
+    bubble.style.bottom = '22%';
+    bubble.style.top = '';
+  } else {
+    bubble.style.top = '20%';
+    bubble.style.bottom = '';
+  }
+
+  const labelHtml = opts.author
+    ? `<div><div class="label">${escapeHtml(opts.label || '')}</div><div class="author">— ${escapeHtml(opts.author)}</div></div>`
+    : `<div class="label">${escapeHtml(opts.label || '')}</div>`;
+  bubble.innerHTML = `<span class="emoji">${escapeHtml(opts.emoji)}</span>${labelHtml}`;
+  document.body.appendChild(bubble);
+
+  reactionBubbleTimer = setTimeout(() => {
+    if (bubble && bubble.parentNode) bubble.parentNode.removeChild(bubble);
+  }, 3000);
+}
+
+function setOpponentAfkBadge(isAfk) {
+  if (gameMode !== 'online') return;
+  const oppColor = myOnlineColor === 'w' ? 'b' : 'w';
+  const barId = oppColor === 'w' ? 'bar-white' : 'bar-black';
+  const bar = document.getElementById(barId);
+  if (!bar) return;
+  const info = bar.querySelector('.player-info');
+  if (!info) return;
+  let badge = info.querySelector('.afk-badge');
+  if (isAfk) {
+    if (!badge) {
+      badge = document.createElement('span');
+      badge.className = 'afk-badge';
+      badge.textContent = '🚶 Voltando';
+      info.appendChild(badge);
+    }
+  } else {
+    if (badge) badge.remove();
+  }
+}
+
+function clearReactionUi() {
+  const existing = document.getElementById('reaction-bubble');
+  if (existing) existing.remove();
+  if (reactionBubbleTimer) { clearTimeout(reactionBubbleTimer); reactionBubbleTimer = null; }
+  // Remove badges de qualquer player bar
+  document.querySelectorAll('.afk-badge').forEach(b => b.remove());
 }
 
 function cleanGameUrlParam() {
