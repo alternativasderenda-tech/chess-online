@@ -2928,6 +2928,20 @@ function updateStatus() {
     else setStatus('Modo Tutorial — Aprendiz');
     return;
   }
+  if (gameMode === 'online') {
+    if (isWaitingForOpponent) {
+      setStatus('⏳ Aguardando oponente entrar...');
+      return;
+    }
+    const colorLabel = turn === 'w' ? 'Brancas' : 'Pretas';
+    if (turn === myOnlineColor) {
+      setStatus(`Sua vez — ${colorLabel} jogam`);
+    } else {
+      const opp = opponentName || 'Oponente';
+      setStatus(`Vez de ${opp} — ${colorLabel} jogam`);
+    }
+    return;
+  }
   const playAs = document.getElementById('play-as').value;
   if (playAs === 'both') {
     setStatus(`${turn === 'w' ? 'Brancas' : 'Pretas'} jogam`);
