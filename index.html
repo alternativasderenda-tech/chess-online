@@ -962,6 +962,12 @@
     #site-brand .brand-text { display: none; }
   }
 
+  .btn:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+  .btn:disabled:hover { background: inherit; border-color: inherit; }
+
   /* Footer */
   .site-footer {
     text-align: center;
@@ -1048,7 +1054,20 @@
   </div>
 
   <div class="sidebar">
-    <div class="panel">
+    <!-- Painel de partida online (so aparece em modo online) -->
+    <div class="panel" id="online-controls" style="display:none;">
+      <h3>🎯 Partida Online</h3>
+      <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">
+        ID: <span id="online-game-id-display" style="color:var(--accent); font-family:monospace; font-weight:600;">—</span>
+      </div>
+      <div id="online-color-display" style="font-size:12px; color:var(--text-muted); margin-bottom:10px;"></div>
+      <div class="controls">
+        <button class="btn" onclick="copyOnlineGameLink()" id="online-copy-link-btn">📋 Copiar Link</button>
+        <button class="btn" onclick="leaveOnlineGameAction()">🚪 Sair da Partida</button>
+      </div>
+    </div>
+
+    <div class="panel" id="settings-panel">
       <h3>⚙ Configurações</h3>
       <div class="settings-row">
         <span>Dificuldade IA</span>
@@ -1079,7 +1098,7 @@
       </div>
       <div class="controls" style="margin-top: 10px;">
         <button class="btn primary" onclick="newGameWithAd()">Novo Jogo</button>
-        <button class="btn" onclick="undoWithAd()">↩ Desfazer</button>
+        <button class="btn" id="btn-undo" onclick="undoWithAd()">↩ Desfazer</button>
       </div>
       <div class="controls" style="margin-top: 6px;">
         <button class="btn" onclick="document.getElementById('pgn-input').click()">📂 Importar PGN</button>
@@ -1628,6 +1647,27 @@ function setupOnlineGame(gameId, color) {
     exitTutorialMode();
   }
 
+  // Desabilita o botao Desfazer em modo online
+  const undoBtn = document.getElementById('btn-undo');
+  if (undoBtn) {
+    undoBtn.disabled = true;
+    undoBtn.title = 'Desfazer indisponivel em partidas online';
+  }
+
+  // Esconde Configuracoes, mostra painel online
+  const settingsPanel = document.getElementById('settings-panel');
+  const onlinePanel = document.getElementById('online-controls');
+  if (settingsPanel) settingsPanel.style.display = 'none';
+  if (onlinePanel) onlinePanel.style.display = '';
+  const idDisp = document.getElementById('online-game-id-display');
+  if (idDisp) idDisp.textContent = gameId;
+  const colorDisp = document.getElementById('online-color-display');
+  if (colorDisp) {
+    colorDisp.textContent = color === 'w'
+      ? '♔ Você joga com Brancas'
+      : '♚ Você joga com Pretas';
+  }
+
   gameMode = 'online';
   onlineGameId = gameId;
   myOnlineColor = color;
@@ -1858,6 +1898,52 @@ function leaveOnlineMode() {
   opponentName = null;
   onlineLastSeenMove = 0;
   isWaitingForOpponent = false;
+  // Reabilita o botao Desfazer
+  const undoBtn = document.getElementById('btn-undo');
+  if (undoBtn) {
+    undoBtn.disabled = false;
+    undoBtn.removeAttribute('title');
+  }
+  // Mostra Configuracoes, esconde painel online
+  const settingsPanel = document.getElementById('settings-panel');
+  const onlinePanel = document.getElementById('online-controls');
+  if (settingsPanel) settingsPanel.style.display = '';
+  if (onlinePanel) onlinePanel.style.display = 'none';
+}
+
+async function copyOnlineGameLink() {
+  if (!onlineGameId) return;
+  const url = window.location.origin + window.location.pathname + '?game=' + onlineGameId;
+  const btn = document.getElementById('online-copy-link-btn');
+  try {
+    await navigator.clipboard.writeText(url);
+  } catch (e) {
+    const tmp = document.createElement('textarea');
+    tmp.value = url; document.body.appendChild(tmp); tmp.select();
+    try { document.execCommand('copy'); } catch (e2) {}
+    document.body.removeChild(tmp);
+  }
+  if (btn) {
+    const original = btn.textContent;
+    btn.textContent = '✓ Copiado!';
+    setTimeout(() => { btn.textContent = original; }, 1500);
+  }
+}
+
+async function leaveOnlineGameAction() {
+  if (!confirm('Sair da partida? Sua jogada sera marcada como abandono.')) return;
+  if (onlineGameId && supa) {
+    try {
+      await supa.from('games').update({
+        status: 'abandoned',
+        end_reason: 'Jogador saiu',
+        ended_at: new Date().toISOString()
+      }).eq('id', onlineGameId).in('status', ['waiting', 'active']);
+    } catch (e) { console.error(e); }
+  }
+  leaveOnlineMode();
+  cleanGameUrlParam();
+  if (typeof newGame === 'function') newGame();
 }
 
 function cleanGameUrlParam() {
