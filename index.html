@@ -1169,7 +1169,9 @@
     <div id="go-score-info" style="display:none; font-size:13px; color:var(--text-muted); margin:6px 0 4px;"></div>
     <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; max-width:360px;">
       <button class="btn primary" id="btn-register-score" onclick="registerCurrentScore()" style="display:none; min-width:160px;">🏆 Registrar no Ranking</button>
-      <button class="btn primary" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;">Jogar Novamente</button>
+      <button class="btn primary" id="btn-go-rematch" onclick="startRematch()" style="display:none; min-width:140px;">🔄 Revanche</button>
+      <button class="btn" id="btn-go-leave-online" onclick="leaveOnlineFromPopup()" style="display:none; min-width:140px;">🚪 Sair</button>
+      <button class="btn primary" id="btn-go-newgame" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;">Jogar Novamente</button>
       <button class="btn" onclick="closeGameOverPopup(); nextDifficulty();" style="min-width:140px;" id="go-next-btn">Próximo Nível →</button>
       <button class="btn" onclick="startReplay();" style="min-width:140px;">▶ Ver Replay</button>
       <button class="btn" onclick="downloadGame();" style="min-width:140px;">💾 Salvar Partida</button>
@@ -1743,6 +1745,9 @@ function subscribeToOnlineGame(gameId) {
       table: 'games',
       filter: 'id=eq.' + gameId
     }, payload => handleGameUpdate(payload.new))
+    .on('broadcast', { event: 'rematch' }, ({ payload }) => {
+      handleRematchBroadcast(payload || {});
+    })
     .subscribe();
 }
 
@@ -1944,6 +1949,73 @@ async function leaveOnlineGameAction() {
   leaveOnlineMode();
   cleanGameUrlParam();
   if (typeof newGame === 'function') newGame();
+}
+
+function leaveOnlineFromPopup() {
+  // Sai da partida online (do popup de fim de jogo) e volta pra modo IA
+  closeGameOverPopup();
+  leaveOnlineMode();
+  cleanGameUrlParam();
+  if (typeof newGame === 'function') newGame();
+}
+
+async function startRematch() {
+  if (!onlineGameId || !supa || !currentUser) return;
+  closeGameOverPopup();
+
+  const oldChannel = onlineGameChannel;
+  const oldGameId = onlineGameId;
+
+  const { data: oldGame, error: gE } = await supa
+    .from('games').select('*').eq('id', oldGameId).single();
+  if (gE || !oldGame) {
+    alert('Erro ao iniciar revanche.');
+    return;
+  }
+
+  // Cria nova partida com cores trocadas (padrao de xadrez competitivo)
+  const newId = generateGameId();
+  const { error } = await supa.from('games').insert({
+    id: newId,
+    white_user_id: oldGame.black_user_id,
+    white_username: oldGame.black_username,
+    black_user_id: oldGame.white_user_id,
+    black_username: oldGame.white_username,
+    time_control: oldGame.time_control,
+    status: 'active',
+    current_turn: 'w',
+    started_at: new Date().toISOString()
+  });
+
+  if (error) {
+    alert('Erro ao criar revanche: ' + error.message);
+    return;
+  }
+
+  // Avisa o oponente via Broadcast no canal antigo
+  if (oldChannel) {
+    try {
+      await oldChannel.send({
+        type: 'broadcast',
+        event: 'rematch',
+        payload: { newGameId: newId, initiator: currentUser.id }
+      });
+    } catch (e) { console.error(e); }
+  }
+
+  if (typeof trackEvent === 'function') trackEvent('online_rematch', {});
+
+  // Eu mesmo vou pra nova partida
+  joinOnlineGame(newId);
+}
+
+function handleRematchBroadcast(payload) {
+  if (!payload || !payload.newGameId) return;
+  // Se eu fui o iniciador, ja redirecionei localmente, ignorar echo
+  if (currentUser && payload.initiator === currentUser.id) return;
+  closeGameOverPopup();
+  // Ir pra nova partida criada pelo oponente
+  joinOnlineGame(payload.newGameId);
 }
 
 function cleanGameUrlParam() {
@@ -3988,6 +4060,14 @@ function showGameOverPopup(playerWon, winner, difficulty) {
   if (scoreInfo) scoreInfo.style.display = 'none';
   if (scoreFb) scoreFb.style.display = 'none';
 
+  // Reset botoes online
+  const btnRematch = document.getElementById('btn-go-rematch');
+  const btnLeaveOnline = document.getElementById('btn-go-leave-online');
+  const btnNewGame = document.getElementById('btn-go-newgame');
+  if (btnRematch) btnRematch.style.display = 'none';
+  if (btnLeaveOnline) btnLeaveOnline.style.display = 'none';
+  if (btnNewGame) btnNewGame.style.display = '';
+
   // Se foi vitória legítima e há dados capturados, mostra opção de registrar (so AI mode)
   if (gameMode === 'ai' && playerWon && lastWinData && regBtn && scoreInfo) {
     scoreInfo.textContent = `⏱ Seu tempo: ${fmtSeconds(lastWinData.player_seconds)} • Nível: ${difficulty}`;
@@ -3995,9 +4075,12 @@ function showGameOverPopup(playerWon, winner, difficulty) {
     regBtn.style.display = 'inline-flex';
   }
 
-  // Online mode: mensagens diferentes (sem referencia a IA)
+  // Online mode: mensagens diferentes (sem referencia a IA) + botoes de revanche/sair
   if (gameMode === 'online') {
     nextBtn.style.display = 'none';
+    if (btnNewGame) btnNewGame.style.display = 'none';
+    if (btnRematch) btnRematch.style.display = 'inline-flex';
+    if (btnLeaveOnline) btnLeaveOnline.style.display = 'inline-flex';
     const opp = opponentName || 'Oponente';
     if (playerWon === null) {
       icon.textContent = '🤝';
