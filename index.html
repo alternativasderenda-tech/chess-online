@@ -3859,11 +3859,42 @@ function showGameOverPopup(playerWon, winner, difficulty) {
   if (scoreInfo) scoreInfo.style.display = 'none';
   if (scoreFb) scoreFb.style.display = 'none';
 
-  // Se foi vitória legítima e há dados capturados, mostra opção de registrar
-  if (playerWon && lastWinData && regBtn && scoreInfo) {
+  // Se foi vitória legítima e há dados capturados, mostra opção de registrar (so AI mode)
+  if (gameMode === 'ai' && playerWon && lastWinData && regBtn && scoreInfo) {
     scoreInfo.textContent = `⏱ Seu tempo: ${fmtSeconds(lastWinData.player_seconds)} • Nível: ${difficulty}`;
     scoreInfo.style.display = 'block';
     regBtn.style.display = 'inline-flex';
+  }
+
+  // Online mode: mensagens diferentes (sem referencia a IA)
+  if (gameMode === 'online') {
+    nextBtn.style.display = 'none';
+    const opp = opponentName || 'Oponente';
+    if (playerWon === null) {
+      icon.textContent = '🤝';
+      title.textContent = 'Empate!';
+      text.textContent = `Você empatou com ${opp}. Boa partida!`;
+    } else if (playerWon) {
+      icon.textContent = '🏆';
+      title.textContent = 'Você Venceu!';
+      const msgs = [
+        `Xeque-mate em ${opp}! Vitória sua! 🔥`,
+        `Vitória contra ${opp}! 💪`,
+        `Você derrotou ${opp}! 🎯`
+      ];
+      text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    } else {
+      icon.textContent = '😤';
+      title.textContent = 'Derrota...';
+      const msgs = [
+        `${opp} levou a melhor dessa vez. Revanche?`,
+        `Quase! ${opp} venceu. Chama pra outra!`,
+        `Bom jogo. ${opp} venceu.`
+      ];
+      text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
+    }
+    popup.classList.add('show');
+    return;
   }
 
   if (playerWon === null) {
