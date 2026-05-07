@@ -999,35 +999,36 @@
   }
   .reaction-btn:active { transform: scale(0.92); }
 
-  /* Floating reaction bubble */
+  /* Floating reaction bubble — centralizado no tabuleiro */
   .reaction-bubble {
     position: fixed;
-    background: var(--bg-card);
+    background: rgba(30, 42, 74, 0.95);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
     border: 2px solid var(--accent);
-    border-radius: 14px;
-    padding: 10px 16px;
+    border-radius: 16px;
+    padding: 14px 22px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    box-shadow: 0 8px 28px rgba(0,0,0,0.55);
+    gap: 12px;
+    box-shadow: 0 10px 32px rgba(0,0,0,0.6);
     z-index: 900;
     pointer-events: none;
-    animation: reaction-pop 3s ease forwards;
-    max-width: 240px;
+    animation: reaction-pop-center 3s ease forwards;
+    max-width: 80vw;
   }
   .reaction-bubble.from-me {
-    border-color: rgba(226,185,111,0.5);
-    background: rgba(30,42,74,0.95);
+    border-color: rgba(226,185,111,0.6);
   }
-  .reaction-bubble .emoji { font-size: 30px; line-height: 1; }
-  .reaction-bubble .label { font-size: 13px; font-weight: 600; color: var(--text-light); }
-  .reaction-bubble .author { font-size: 10px; color: var(--text-muted); margin-top: 2px; }
-  @keyframes reaction-pop {
-    0% { opacity: 0; transform: translateX(-50%) scale(0.5) translateY(8px); }
-    8% { opacity: 1; transform: translateX(-50%) scale(1.08) translateY(0); }
-    16% { transform: translateX(-50%) scale(1) translateY(0); }
-    85% { opacity: 1; transform: translateX(-50%) scale(1) translateY(0); }
-    100% { opacity: 0; transform: translateX(-50%) scale(1) translateY(-8px); }
+  .reaction-bubble .emoji { font-size: 38px; line-height: 1; }
+  .reaction-bubble .label { font-size: 14px; font-weight: 600; color: var(--text-light); }
+  .reaction-bubble .author { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+  @keyframes reaction-pop-center {
+    0% { opacity: 0; transform: translate(-50%, -50%) scale(0.4); }
+    8% { opacity: 1; transform: translate(-50%, -50%) scale(1.12); }
+    16% { transform: translate(-50%, -50%) scale(1); }
+    82% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+    100% { opacity: 0; transform: translate(-50%, -50%) scale(0.95); }
   }
 
   /* AFK badge no player bar do oponente */
@@ -2159,13 +2160,16 @@ function showReactionBubble(opts) {
   const bubble = document.createElement('div');
   bubble.id = 'reaction-bubble';
   bubble.className = 'reaction-bubble' + (opts.fromMe ? ' from-me' : '');
-  bubble.style.left = '50%';
-  if (opts.fromMe) {
-    bubble.style.bottom = '22%';
-    bubble.style.top = '';
+
+  // Posiciona no centro do tabuleiro
+  const board = document.getElementById('board');
+  if (board) {
+    const r = board.getBoundingClientRect();
+    bubble.style.left = (r.left + r.width / 2) + 'px';
+    bubble.style.top = (r.top + r.height / 2) + 'px';
   } else {
-    bubble.style.top = '20%';
-    bubble.style.bottom = '';
+    bubble.style.left = '50%';
+    bubble.style.top = '50%';
   }
 
   const labelHtml = opts.author
