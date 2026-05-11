@@ -1,6 +1,16 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v7';
-const ASSETS = ['/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png', '/privacidade', '/termos', '/aprenda', '/aprenda/como-jogar-xadrez-do-zero'];
+const CACHE_NAME = 'xadrez-v8';
+const ASSETS = [
+  '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
+  '/privacidade', '/termos',
+  '/aprenda', '/aprenda/post.css',
+  '/aprenda/como-jogar-xadrez-do-zero',
+  '/aprenda/aberturas-de-xadrez-para-iniciantes',
+  '/aprenda/regras-do-xadrez',
+  '/aprenda/xeque-mate-em-4-lances',
+  '/aprenda/como-o-cavalo-se-move',
+  '/aprenda/xadrez-classico-blitz-bullet'
+];
 
 self.addEventListener('install', e => {
   e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)));
