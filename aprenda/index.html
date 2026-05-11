@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Aprenda Xadrez — Guias e Tutoriais Gratuitos | Xadrez Online</title>
+<meta name="description" content="Guias completos para aprender xadrez do zero: regras, movimentos das peças, aberturas, táticas e estratégia. Conteúdo gratuito em português brasileiro.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://xadrezonline.vercel.app/aprenda">
+<link rel="icon" href="/icon-192.png">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Aprenda Xadrez — Guias Gratuitos">
+<meta property="og:description" content="Tudo o que você precisa para aprender xadrez do zero: regras, movimentos, aberturas, táticas e estratégia.">
+<meta property="og:url" content="https://xadrezonline.vercel.app/aprenda">
+<meta property="og:site_name" content="Xadrez Online">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="https://xadrezonline.vercel.app/icon-512.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Aprenda Xadrez",
+  "url": "https://xadrezonline.vercel.app/aprenda",
+  "inLanguage": "pt-BR",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Xadrez Online",
+    "url": "https://xadrezonline.vercel.app"
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "Como Jogar Xadrez do Zero: Guia Completo para Iniciantes",
+      "url": "https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero",
+      "datePublished": "2026-05-11",
+      "inLanguage": "pt-BR"
+    }
+  ]
+}
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #1e2a4a;
+    --accent: #e2b96f;
+    --accent2: #c9956b;
+    --text-light: #e8e8e8;
+    --text-muted: #8899aa;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    background-image: radial-gradient(ellipse at 20% 50%, #1e2a4a 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 20%, #2a1e3e 0%, transparent 50%);
+    color: var(--text-light);
+    min-height: 100vh;
+    line-height: 1.65;
+    padding: 30px 20px;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  header.top {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  header.top a.brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .lead {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .post-grid {
+    display: grid;
+    gap: 18px;
+    margin-top: 30px;
+  }
+  .post-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px 26px;
+    transition: border-color 0.2s, transform 0.15s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .post-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .post-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .post-card p { font-size: 14px; color: var(--text-light); margin-bottom: 10px; }
+  .post-meta { font-size: 12px; color: var(--text-muted); }
+  .coming-soon {
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  footer.site {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  footer.site a { color: var(--text-muted); text-decoration: none; margin: 0 8px; }
+  footer.site a:hover { color: var(--accent); }
+  .cta-game {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: var(--bg-dark);
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+  .cta-game:hover { background: var(--accent2); }
+  @media (max-width: 600px) {
+    h1 { font-size: 28px; }
+    .container { padding: 0 4px; }
+    .post-card { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="top">
+    <a href="/" class="brand">♚ Xadrez Online</a>
+    <h1>Aprenda Xadrez</h1>
+    <p class="lead">Guias completos e tutoriais gratuitos para você dominar o xadrez do zero ao avançado. Conteúdo escrito por quem joga, em português brasileiro.</p>
+    <a href="/" class="cta-game">▶ Jogar agora</a>
+  </header>
+
+  <div class="post-grid">
+    <a href="/aprenda/como-jogar-xadrez-do-zero" class="post-card">
+      <h2>Como Jogar Xadrez do Zero: Guia Completo para Iniciantes</h2>
+      <p>Você nunca jogou xadrez? Sem problema. Este guia ensina tudo o que você precisa para começar: tabuleiro, movimento de cada peça, jogadas especiais e xeque-mate.</p>
+      <div class="post-meta">📅 11 de maio de 2026 • 8 min de leitura</div>
+    </a>
+
+    <div class="coming-soon">
+      📝 Mais guias chegando em breve: aberturas, táticas, estratégia, finais de partida e muito mais.
+    </div>
+  </div>
+
+  <footer class="site">
+    <a href="/">Jogar</a> •
+    <a href="/privacidade">Política de Privacidade</a> •
+    <a href="/termos">Termos de Uso</a> •
+    <a href="mailto:alternativasderenda@gmail.com">Contato</a>
+  </footer>
+</div>
+
+</body>
+</html>

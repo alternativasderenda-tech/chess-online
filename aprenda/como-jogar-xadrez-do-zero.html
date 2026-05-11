@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Como Jogar Xadrez do Zero: Guia Completo para Iniciantes (2026)</title>
+<meta name="description" content="Aprenda a jogar xadrez do zero em 5 passos: o tabuleiro, o movimento de cada peça, jogadas especiais, xeque-mate e como praticar. Guia gratuito em português.">
+<meta name="keywords" content="como jogar xadrez, xadrez para iniciantes, aprender xadrez, regras do xadrez, xadrez do zero, tutorial xadrez">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero">
+<link rel="icon" href="/icon-192.png">
+
+<!-- Open Graph -->
+<meta property="og:type" content="article">
+<meta property="og:title" content="Como Jogar Xadrez do Zero: Guia Completo para Iniciantes">
+<meta property="og:description" content="Aprenda a jogar xadrez em 5 passos. Guia gratuito, prático e em português brasileiro.">
+<meta property="og:url" content="https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero">
+<meta property="og:site_name" content="Xadrez Online">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:image" content="https://xadrezonline.vercel.app/icon-512.png">
+<meta property="article:published_time" content="2026-05-11T00:00:00-03:00">
+<meta property="article:author" content="Xadrez Online">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "Como Jogar Xadrez do Zero: Guia Completo para Iniciantes",
+  "description": "Aprenda a jogar xadrez do zero em 5 passos: o tabuleiro, o movimento de cada peça, jogadas especiais, xeque-mate e como praticar.",
+  "image": "https://xadrezonline.vercel.app/icon-512.png",
+  "datePublished": "2026-05-11",
+  "dateModified": "2026-05-11",
+  "inLanguage": "pt-BR",
+  "author": {
+    "@type": "Organization",
+    "name": "Xadrez Online",
+    "url": "https://xadrezonline.vercel.app"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Xadrez Online",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://xadrezonline.vercel.app/icon-512.png"
+    }
+  },
+  "mainEntityOfPage": "https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero"
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Xadrez Online", "item": "https://xadrezonline.vercel.app/" },
+    { "@type": "ListItem", "position": 2, "name": "Aprenda", "item": "https://xadrezonline.vercel.app/aprenda" },
+    { "@type": "ListItem", "position": 3, "name": "Como Jogar Xadrez do Zero" }
+  ]
+}
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #1e2a4a;
+    --accent: #e2b96f;
+    --accent2: #c9956b;
+    --text-light: #e8e8e8;
+    --text-muted: #8899aa;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    background-image: radial-gradient(ellipse at 20% 50%, #1e2a4a 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 20%, #2a1e3e 0%, transparent 50%);
+    color: var(--text-light);
+    min-height: 100vh;
+    line-height: 1.75;
+    padding: 30px 20px;
+  }
+  .container { max-width: 760px; margin: 0 auto; }
+  nav.crumbs {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 22px;
+  }
+  nav.crumbs a { color: var(--text-muted); text-decoration: none; }
+  nav.crumbs a:hover { color: var(--accent); }
+  nav.crumbs .sep { margin: 0 6px; opacity: 0.5; }
+
+  .brand-link {
+    font-family: 'Playfair Display', serif;
+    font-weight: 700;
+    color: var(--accent) !important;
+  }
+
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 36px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .meta {
+    color: var(--text-muted);
+    font-size: 13px;
+    margin-bottom: 30px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+  }
+  .lead {
+    font-size: 17px;
+    color: var(--text-light);
+    margin-bottom: 28px;
+    font-weight: 500;
+  }
+  h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    color: var(--accent);
+    margin-top: 40px;
+    margin-bottom: 14px;
+    line-height: 1.3;
+  }
+  h3 {
+    font-size: 18px;
+    color: var(--text-light);
+    margin-top: 22px;
+    margin-bottom: 8px;
+    font-weight: 600;
+  }
+  p { margin-bottom: 16px; font-size: 16px; }
+  ul, ol { margin-bottom: 18px; padding-left: 22px; }
+  li { margin-bottom: 6px; }
+  strong { color: var(--accent); font-weight: 600; }
+
+  .toc {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 18px 24px;
+    margin-bottom: 30px;
+  }
+  .toc h4 {
+    font-size: 13px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+  .toc ol { padding-left: 22px; margin: 0; }
+  .toc li { margin-bottom: 4px; font-size: 14px; }
+  .toc a { color: var(--text-light); text-decoration: none; }
+  .toc a:hover { color: var(--accent); }
+
+  .piece-box {
+    background: var(--bg-card);
+    border-left: 3px solid var(--accent);
+    border-radius: 6px;
+    padding: 14px 18px;
+    margin: 14px 0 22px;
+  }
+  .piece-box .piece-glyph {
+    font-size: 30px;
+    margin-right: 8px;
+    vertical-align: middle;
+    color: var(--accent);
+  }
+  .piece-box .piece-name {
+    font-weight: 600;
+    font-size: 17px;
+    display: inline-block;
+    vertical-align: middle;
+  }
+  .piece-box p { margin: 8px 0 0 0; font-size: 15px; }
+  .piece-box small {
+    display: block;
+    color: var(--text-muted);
+    margin-top: 6px;
+    font-size: 12px;
+  }
+
+  .tip {
+    background: rgba(226,185,111,0.08);
+    border-left: 3px solid var(--accent);
+    padding: 12px 16px;
+    border-radius: 6px;
+    margin: 18px 0;
+    font-size: 15px;
+  }
+  .tip strong { color: var(--accent); }
+
+  .cta {
+    background: linear-gradient(135deg, rgba(226,185,111,0.15), rgba(201,149,107,0.1));
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 28px 26px;
+    text-align: center;
+    margin: 36px 0;
+  }
+  .cta h3 {
+    color: var(--accent);
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    margin-bottom: 8px;
+  }
+  .cta-btn {
+    display: inline-block;
+    margin-top: 14px;
+    padding: 12px 30px;
+    background: var(--accent);
+    color: var(--bg-dark);
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 700;
+    font-size: 15px;
+    transition: background 0.15s;
+  }
+  .cta-btn:hover { background: var(--accent2); }
+
+  footer.site {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  footer.site a { color: var(--text-muted); text-decoration: none; margin: 0 8px; }
+  footer.site a:hover { color: var(--accent); }
+
+  @media (max-width: 600px) {
+    h1 { font-size: 28px; }
+    h2 { font-size: 22px; }
+    p { font-size: 15px; }
+    .container { padding: 0 4px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <nav class="crumbs">
+    <a href="/" class="brand-link">♚ Xadrez Online</a>
+    <span class="sep">›</span>
+    <a href="/aprenda">Aprenda</a>
+    <span class="sep">›</span>
+    Como jogar xadrez do zero
+  </nav>
+
+  <h1>Como Jogar Xadrez do Zero: Guia Completo para Iniciantes</h1>
+  <div class="meta">📅 Publicado em 11 de maio de 2026 • ⏱ 8 minutos de leitura</div>
+
+  <p class="lead">
+    Se você nunca jogou xadrez, este guia é o ponto de partida ideal. Em 5 passos, você vai entender o tabuleiro, aprender como cada peça se move, conhecer as jogadas especiais, saber o que é xeque-mate e ter um caminho prático para começar a jogar hoje mesmo — direto do navegador, sem precisar baixar nada.
+  </p>
+
+  <div class="toc">
+    <h4>Neste guia</h4>
+    <ol>
+      <li><a href="#tabuleiro">O tabuleiro: 64 casas, claras e escuras</a></li>
+      <li><a href="#pecas">Como cada peça se move</a></li>
+      <li><a href="#especiais">Jogadas especiais (roque, en passant, promoção)</a></li>
+      <li><a href="#xeque-mate">Xeque, xeque-mate e empate</a></li>
+      <li><a href="#pratica">Como praticar e evoluir</a></li>
+    </ol>
+  </div>
+
+  <h2 id="tabuleiro">1. O tabuleiro: 64 casas, claras e escuras</h2>
+  <p>
+    O xadrez é jogado em um tabuleiro quadrado de <strong>8 por 8 casas</strong>, totalizando 64 casas que alternam entre claras e escuras. Cada jogador começa com 16 peças: 8 peões na segunda fileira e, atrás deles, na primeira fileira, uma torre em cada canto, depois cavalo, bispo, dama e rei (na ordem).
+  </p>
+  <p>
+    Uma regra simples para montar o tabuleiro: a <strong>casa do canto direito de cada jogador deve ser branca</strong> (clara). E a dama sempre começa na <strong>casa da sua própria cor</strong> — dama branca em casa branca, dama preta em casa preta.
+  </p>
+  <p>
+    As linhas horizontais são chamadas de <strong>fileiras</strong> (numeradas de 1 a 8) e as linhas verticais de <strong>colunas</strong> (letras de A a H). Esse sistema permite descrever qualquer jogada com precisão: "peão para E4" significa mover o peão para a coluna E, fileira 4.
+  </p>
+  <p>
+    O jogador das peças brancas <strong>sempre joga primeiro</strong>. Depois, os jogadores alternam um lance de cada vez.
+  </p>
+
+  <h2 id="pecas">2. Como cada peça se move</h2>
+  <p>
+    Aqui está o coração do xadrez. Não pule esta parte — entender como cada peça se move é metade do caminho para jogar bem.
+  </p>
+
+  <div class="piece-box">
+    <span class="piece-glyph">♟</span>
+    <span class="piece-name">Peão</span>
+    <p>Anda <strong>uma casa para frente</strong>. No primeiro lance, pode avançar duas casas (à sua escolha). Captura na <strong>diagonal, uma casa para frente</strong>. O peão é a única peça que se move diferente de como captura.</p>
+    <small>Curiosidade: se o peão chegar até a última fileira do tabuleiro, ele é promovido a qualquer outra peça (quase sempre uma dama).</small>
+  </div>
+
+  <div class="piece-box">
+    <span class="piece-glyph">♜</span>
+    <span class="piece-name">Torre</span>
+    <p>Move em <strong>linha reta</strong>, horizontal ou vertical, quantas casas quiser. Não pode pular outras peças. Captura da mesma forma que se move.</p>
+    <small>Dica: torres ficam muito poderosas em colunas abertas (sem peões pelo caminho).</small>
+  </div>
+
+  <div class="piece-box">
+    <span class="piece-glyph">♝</span>
+    <span class="piece-name">Bispo</span>
+    <p>Move em <strong>diagonal</strong>, quantas casas quiser. Cada bispo fica preso à cor da casa em que começou: o que sai da casa branca só anda por casas brancas, e vice-versa.</p>
+    <small>Por isso o par de bispos (controlando as duas cores) é considerado uma pequena vantagem.</small>
+  </div>
+
+  <div class="piece-box">
+    <span class="piece-glyph">♛</span>
+    <span class="piece-name">Dama</span>
+    <p>A peça mais poderosa do jogo. Combina os movimentos da torre e do bispo: anda em <strong>linha reta ou em diagonal</strong>, quantas casas quiser, em qualquer direção.</p>
+    <small>Vale aproximadamente 9 pontos. Perder a dama cedo costuma decidir a partida.</small>
+  </div>
+
+  <div class="piece-box">
+    <span class="piece-glyph">♞</span>
+    <span class="piece-name">Cavalo</span>
+    <p>Move em <strong>"L"</strong>: duas casas em uma direção e mais uma na perpendicular (ou o contrário). É a única peça do jogo que <strong>pula sobre outras peças</strong>.</p>
+    <small>O cavalo é mestre dos "garfos": ataques duplos onde duas peças adversárias são ameaçadas ao mesmo tempo.</small>
+  </div>
+
+  <div class="piece-box">
+    <span class="piece-glyph">♚</span>
+    <span class="piece-name">Rei</span>
+    <p>Move <strong>uma casa em qualquer direção</strong>. Não pode mover-se para uma casa atacada por uma peça adversária. O rei é a peça mais importante — se ele cair, você perde.</p>
+    <small>Proteja o rei com o roque (veja a próxima seção). No final do jogo, o rei se torna uma peça ativa.</small>
+  </div>
+
+  <h2 id="especiais">3. Jogadas especiais (roque, en passant, promoção)</h2>
+
+  <h3>Roque</h3>
+  <p>
+    O roque é uma jogada que move o rei e uma das torres ao mesmo tempo. Serve para colocar o rei em segurança e ativar a torre. Há dois tipos: <strong>roque curto</strong> (lado do rei) e <strong>roque longo</strong> (lado da dama).
+  </p>
+  <p>Para fazer o roque, três condições precisam ser verdadeiras:</p>
+  <ul>
+    <li>Nem o rei nem a torre envolvida podem ter se movido antes.</li>
+    <li>Não pode haver peças entre o rei e a torre.</li>
+    <li>O rei não pode estar em xeque nem passar por uma casa atacada.</li>
+  </ul>
+
+  <h3>En passant (captura "de passagem")</h3>
+  <p>
+    Se um peão adversário avança duas casas no primeiro lance e fica ao lado do seu peão, você pode capturá-lo <strong>na jogada seguinte</strong>, como se ele tivesse avançado apenas uma casa. É uma regra que muita gente nunca aprendeu.
+  </p>
+
+  <h3>Promoção</h3>
+  <p>
+    Quando seu peão chega à última fileira do tabuleiro, ele é promovido a outra peça da sua escolha (dama, torre, bispo ou cavalo). Na prática, quase sempre se escolhe a dama, por ser a peça mais forte. É possível ter mais de uma dama no tabuleiro graças à promoção.
+  </p>
+
+  <h2 id="xeque-mate">4. Xeque, xeque-mate e empate</h2>
+
+  <h3>Xeque</h3>
+  <p>
+    Quando o rei está sob ataque direto de uma peça adversária, dizemos que ele está em <strong>xeque</strong>. Você é obrigado a sair do xeque imediatamente. Existem três formas de fazer isso:
+  </p>
+  <ol>
+    <li>Mover o rei para uma casa segura.</li>
+    <li>Bloquear o ataque com outra peça (não funciona contra cavalo, pois ele pula).</li>
+    <li>Capturar a peça que está dando xeque.</li>
+  </ol>
+
+  <h3>Xeque-mate</h3>
+  <p>
+    Se o rei está em xeque e <strong>nenhuma das três opções acima é possível</strong>, é xeque-mate. Fim da partida. Quem deu o xeque-mate venceu.
+  </p>
+  <p>
+    O xeque-mate é o objetivo final do xadrez. Não importa quantas peças cada lado tem: ganhar uma dama de vantagem não vale nada se você não conseguir dar o xeque-mate.
+  </p>
+
+  <h3>Empate (afogamento e outros)</h3>
+  <p>Nem toda partida termina com vencedor. Existem várias formas de empatar:</p>
+  <ul>
+    <li><strong>Afogamento (stalemate)</strong>: o jogador da vez não está em xeque, mas não tem nenhuma jogada legal possível.</li>
+    <li><strong>Acordo entre os jogadores</strong>: ambos concordam em empatar.</li>
+    <li><strong>Regra dos 50 lances</strong>: nenhum peão se moveu nem houve captura por 50 lances consecutivos.</li>
+    <li><strong>Repetição tripla</strong>: a mesma posição se repete três vezes.</li>
+    <li><strong>Material insuficiente</strong>: nenhum dos lados tem peças suficientes para dar mate (por exemplo, rei contra rei).</li>
+  </ul>
+
+  <h2 id="pratica">5. Como praticar e evoluir</h2>
+  <p>
+    Aprender as regras é só o começo. O xadrez é um jogo que se aprimora com a prática. Algumas sugestões para os primeiros meses:
+  </p>
+  <ul>
+    <li><strong>Jogue todo dia, mesmo que pouco</strong>. Dez minutos diários valem mais que duas horas por semana.</li>
+    <li><strong>Comece contra o computador</strong>. Você pode pausar, pensar e refazer jogadas sem pressão. Quando estiver mais à vontade, passe para partidas contra outras pessoas.</li>
+    <li><strong>Reveja suas partidas perdidas</strong>. A maior parte do aprendizado vem dos erros.</li>
+    <li><strong>Aprenda algumas aberturas básicas</strong>. Não precisa decorar variantes longas. Saber controlar o centro e desenvolver as peças já é suficiente para os primeiros 10 lances.</li>
+    <li><strong>Resolva exercícios de tática</strong>. Garfo, cravada e ataque descoberto são padrões que aparecem o tempo todo.</li>
+  </ul>
+
+  <div class="tip">
+    <strong>💡 Dica honesta:</strong> não tente decorar todas as aberturas do zero. Foque em <em>princípios</em> (controle do centro, desenvolvimento, segurança do rei) e em <em>tática</em>. Isso te leva muito mais longe nos primeiros seis meses.
+  </div>
+
+  <div class="cta">
+    <h3>Pronto para a primeira partida?</h3>
+    <p>Use o nosso <strong>modo Aprendiz</strong>, com 12 lições interativas que ensinam cada peça e cada conceito na prática. Sem cadastro. Sem instalação. Direto no navegador.</p>
+    <a href="/" class="cta-btn">▶ Começar agora</a>
+  </div>
+
+  <h2>Próximos passos</h2>
+  <p>
+    Quando você já estiver confortável com as regras, vale a pena conhecer:
+  </p>
+  <ul>
+    <li>As aberturas mais comuns (Abertura Italiana, Defesa Siciliana, Gambito da Dama).</li>
+    <li>Padrões de mate (mate do corredor, mate do pastor, mate em escada).</li>
+    <li>Finais básicos (rei e dama contra rei, rei e torre contra rei, peão passado).</li>
+    <li>Princípios de meio-jogo (peças ativas, fraquezas no campo adversário, troca vantajosa).</li>
+  </ul>
+  <p>
+    Vamos publicar guias específicos sobre cada um desses temas em breve, aqui no <a href="/aprenda" style="color:var(--accent);">/aprenda</a>. Se quiser receber os próximos, salve o site nos favoritos e volte sempre.
+  </p>
+
+  <footer class="site">
+    <a href="/">Jogar</a> •
+    <a href="/aprenda">Outros guias</a> •
+    <a href="/privacidade">Política de Privacidade</a> •
+    <a href="/termos">Termos de Uso</a> •
+    <a href="mailto:alternativasderenda@gmail.com">Contato</a>
+  </footer>
+</div>
+
+</body>
+</html>
