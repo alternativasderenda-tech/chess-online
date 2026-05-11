@@ -1427,6 +1427,7 @@ function resetBehavior() {
     clicks: 0,
     idlePeriods: 0,
     keyboardEvents: 0,
+    undoCount: 0,
     moveTimesMs: [],
     lastActivityTs: Date.now(),
     lastMoveTs: 0,
@@ -1493,6 +1494,8 @@ function classifyBehavior(b) {
   if (totalMoves >= 25 && b.drags === 0) score += 1;
   // 6) Zero eventos de teclado em partida longa (humano scrolla, alt-tab, ESC)
   if (totalMoves >= 25 && b.keyboardEvents === 0) score += 1;
+  // 7) Zero uso de Desfazer em partida longa (humano usa pelo menos 1x)
+  if (totalMoves >= 25 && b.undoCount === 0) score += 2;
 
   return {
     suspicion_score: score,
@@ -1503,7 +1506,8 @@ function classifyBehavior(b) {
     idle_periods: b.idlePeriods,
     move_time_variance_ms: varianceMs,
     total_game_ms: totalGameMs,
-    keyboard_events: b.keyboardEvents
+    keyboard_events: b.keyboardEvents,
+    undo_count: b.undoCount
   };
 }
 
@@ -1579,7 +1583,8 @@ async function submitScore(data) {
         p_client_drag_count: b.drag_count || 0,
         p_client_click_count: b.click_count || 0,
         p_client_idle_periods: b.idle_periods || 0,
-        p_client_keyboard_events: b.keyboard_events || 0
+        p_client_keyboard_events: b.keyboard_events || 0,
+        p_client_undo_count: b.undo_count || 0
       });
       if (rpcErr) throw rpcErr;
       if (typeof trackEvent === 'function') {
@@ -4573,6 +4578,8 @@ let newGameCount = 0;
 // Vignette ad on Undo (shows overlay ad)
 function undoWithAd() {
   undoCount++;
+  // Sinal de comportamento humano: registra uso do botao Desfazer
+  if (behavior) behavior.undoCount++;
   // First undo is free, then show ad every 2 undos
   if (undoCount > 1 && undoCount % 2 === 0) {
     // Trigger vignette ad
