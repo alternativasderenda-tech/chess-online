@@ -2762,21 +2762,39 @@ function getBestMove() {
   if (legal.length === 0) return null;
 
   const maximizing = turn === 'w';
-  let bestMove = null;
-  let bestVal = maximizing ? -Infinity : Infinity;
-
   const ordered = orderMoves(legal, board);
 
+  // Avalia todos os movimentos
+  const scored = [];
   for (const m of ordered) {
     const r = makeMove(m, board, castling);
     const val = minimax(r.board, r.castling, r.enPassant, depth - 1, -Infinity, Infinity, !maximizing);
-    if (maximizing ? val > bestVal : val < bestVal) {
-      bestVal = val;
-      bestMove = m;
-    }
+    scored.push({ move: m, val });
   }
 
-  return bestMove;
+  if (scored.length === 0) return null;
+
+  // Encontra a melhor avaliacao
+  let best = scored[0].val;
+  for (const s of scored) {
+    if (maximizing ? s.val > best : s.val < best) best = s.val;
+  }
+
+  // Margem de aceitacao em centipeoes — escolhe aleatoriamente entre
+  // movimentos "quase tao bons quanto o melhor". Quanto maior a margem,
+  // mais variada (e fraca) a IA. Resolve o problema de partidas identicas
+  // ao decorar uma sequencia.
+  const marginByDepth = { 1: 80, 2: 35, 3: 15, 4: 10 };
+  const margin = marginByDepth[depth] || 15;
+
+  const candidates = scored.filter(s =>
+    maximizing ? s.val >= best - margin : s.val <= best + margin
+  );
+
+  // Pesos: movimentos mais perto do best tem leve preferencia, mas
+  // qualquer um pode ser escolhido. Mantém forca e adiciona variedade.
+  const pick = candidates[Math.floor(Math.random() * candidates.length)];
+  return pick.move;
 }
 
 // ======================== GAME LOGIC ========================
