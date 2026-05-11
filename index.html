@@ -1409,6 +1409,114 @@ function endPlayerTurnTimer() {
   }
 }
 
+// === Anti-cheat: coleta passiva de sinais comportamentais ===
+let behavior = null;
+const IDLE_THRESHOLD_MS = 5000;
+
+function resetBehavior() {
+  behavior = {
+    mouseMoves: 0,
+    drags: 0,
+    clicks: 0,
+    idlePeriods: 0,
+    keyboardEvents: 0,
+    moveTimesMs: [],
+    lastActivityTs: Date.now(),
+    lastMoveTs: 0,
+    gameStartTs: Date.now()
+  };
+}
+
+function recordActivity() {
+  if (!behavior) return;
+  const now = Date.now();
+  if (now - behavior.lastActivityTs > IDLE_THRESHOLD_MS) {
+    behavior.idlePeriods++;
+  }
+  behavior.lastActivityTs = now;
+}
+
+// Flag interno: onMouseUp delega pra handleSquareAction, entao precisamos
+// saber se o move veio de drag ou click verdadeiro
+let _moveInputSource = 'click';
+
+function recordPlayerMove(source) {
+  if (!behavior) return;
+  const now = Date.now();
+  if (source === 'drag') behavior.drags++;
+  else if (source === 'click') behavior.clicks++;
+  if (behavior.lastMoveTs > 0) {
+    behavior.moveTimesMs.push(now - behavior.lastMoveTs);
+  }
+  behavior.lastMoveTs = now;
+}
+
+function stdDev(arr) {
+  if (!arr || arr.length < 2) return 0;
+  const mean = arr.reduce((a, b) => a + b, 0) / arr.length;
+  const variance = arr.reduce((a, b) => a + (b - mean) ** 2, 0) / arr.length;
+  return Math.sqrt(variance);
+}
+
+function classifyBehavior(b) {
+  // Snapshot final + classificacao heuristica
+  const totalMoves = b.drags + b.clicks;
+  const totalGameMs = Date.now() - b.gameStartTs;
+  const varianceMs = Math.round(stdDev(b.moveTimesMs));
+
+  let score = 0;
+  // 1) Pouquissimos eventos mousemove em uma partida razoavel
+  if (totalMoves >= 15) {
+    if (b.mouseMoves < 30) score += 3;
+    else if (b.mouseMoves < 100) score += 1;
+  }
+  // 2) Nenhum periodo de idle (humano pausa pra pensar, bot nao)
+  if (totalMoves >= 15 && b.idlePeriods === 0) score += 2;
+  // 3) Variancia muito baixa nos tempos entre lances (bot tem cadencia uniforme)
+  if (b.moveTimesMs.length >= 10) {
+    if (varianceMs < 1500) score += 3;
+    else if (varianceMs < 3000) score += 1;
+  }
+  // 4) Velocidade absurda (>30 lances por minuto sustentados)
+  if (totalMoves >= 15 && totalGameMs > 0) {
+    const movesPerMin = totalMoves / (totalGameMs / 60000);
+    if (movesPerMin > 30) score += 2;
+  }
+  // 5) Zero drag em partida longa (sinal fraco — humano as vezes prefere click)
+  if (totalMoves >= 25 && b.drags === 0) score += 1;
+  // 6) Zero eventos de teclado em partida longa (humano scrolla, alt-tab, ESC)
+  if (totalMoves >= 25 && b.keyboardEvents === 0) score += 1;
+
+  return {
+    suspicion_score: score,
+    status: score >= 5 ? 'cheater' : 'normal',
+    mouse_movements: b.mouseMoves,
+    drag_count: b.drags,
+    click_count: b.clicks,
+    idle_periods: b.idlePeriods,
+    move_time_variance_ms: varianceMs,
+    total_game_ms: totalGameMs,
+    keyboard_events: b.keyboardEvents
+  };
+}
+
+// Event listeners passivos (registrados uma vez ao carregar)
+document.addEventListener('mousemove', () => {
+  if (!behavior) return;
+  behavior.mouseMoves++;
+  recordActivity();
+}, { passive: true });
+
+document.addEventListener('keydown', () => {
+  if (!behavior) return;
+  behavior.keyboardEvents++;
+  recordActivity();
+}, { passive: true });
+
+// Scroll e visibility tambem contam como atividade humana
+document.addEventListener('scroll', () => { recordActivity(); }, { passive: true });
+document.addEventListener('visibilitychange', () => { recordActivity(); });
+
 // === Win capture + score submission ===
 let lastWinData = null;
 
@@ -1448,19 +1556,34 @@ async function registerCurrentScore() {
 async function submitScore(data) {
   if (!supa || !currentUser) return false;
   const username = userDisplayName(currentUser);
-  const { error } = await supa.from('scores').insert({
+
+  // Coleta sinais de comportamento e classifica
+  let behaviorRow = {};
+  if (behavior) {
+    behaviorRow = classifyBehavior(behavior);
+  }
+
+  const row = {
     user_id: currentUser.id,
     username,
     difficulty: data.difficulty,
-    player_seconds: data.player_seconds
-  });
+    player_seconds: data.player_seconds,
+    ...behaviorRow
+  };
+
+  const { error } = await supa.from('scores').insert(row);
   if (error) {
     console.error('submitScore error:', error);
     alert('Erro ao registrar: ' + error.message);
     return false;
   }
   if (typeof trackEvent === 'function') {
-    trackEvent('score_registered', { difficulty: data.difficulty, seconds: data.player_seconds });
+    trackEvent('score_registered', {
+      difficulty: data.difficulty,
+      seconds: data.player_seconds,
+      status: behaviorRow.status || 'unknown',
+      suspicion_score: behaviorRow.suspicion_score
+    });
   }
   return true;
 }
@@ -3183,6 +3306,8 @@ function handleSquareAction(idx) {
       showPromotionModal(idx);
       return;
     }
+    recordPlayerMove(_moveInputSource);
+    _moveInputSource = 'click';  // reset apos consumir
     executeMove(moveMatch);
     return;
   }
@@ -3284,6 +3409,7 @@ function onMouseUp(e) {
     return;
   }
 
+  _moveInputSource = 'drag';
   handleSquareAction(dropIdx);
 }
 
@@ -3303,7 +3429,11 @@ function showPromotionModal(toSq) {
     btn.textContent = PIECES[p];
     btn.addEventListener('click', () => {
       const move = validMoves.find(m => m.to === toSq && m.promo && m.promo.toLowerCase() === p.toLowerCase());
-      if (move) executeMove(move);
+      if (move) {
+        recordPlayerMove(_moveInputSource);
+        _moveInputSource = 'click';
+        executeMove(move);
+      }
       modal.classList.remove('show');
       promotionPending = null;
     });
@@ -4464,6 +4594,8 @@ function newGame() {
 
   // Reset player-time tracking (somente single-player conta pra ranking)
   resetPlayerTime();
+  // Reset behavior tracking (anti-cheat passivo)
+  resetBehavior();
 
   const playAs = document.getElementById('play-as').value;
   if (playAs === 'both') {
