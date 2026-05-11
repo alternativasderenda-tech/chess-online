@@ -1409,9 +1409,16 @@ function endPlayerTurnTimer() {
   }
 }
 
-// === Anti-cheat: coleta passiva de sinais comportamentais ===
+// === Anti-cheat: coleta passiva + server-side validation ===
 let behavior = null;
+let aiSessionId = null;       // ID da sessao atual (vs IA)
+let aiSessionMoveNumber = 0;  // contador local de lances do jogador
 const IDLE_THRESHOLD_MS = 5000;
+
+function generateAiSessionId() {
+  // UUID-like simples (suficiente — RLS valida ownership)
+  return 'aig-' + Date.now().toString(36) + '-' + Math.random().toString(36).slice(2, 10);
+}
 
 function resetBehavior() {
   behavior = {
@@ -1557,18 +1564,51 @@ async function submitScore(data) {
   if (!supa || !currentUser) return false;
   const username = userDisplayName(currentUser);
 
-  // Coleta sinais de comportamento e classifica
-  let behaviorRow = {};
-  if (behavior) {
-    behaviorRow = classifyBehavior(behavior);
+  // Coleta sinais de comportamento client-side
+  let b = behavior ? classifyBehavior(behavior) : {};
+
+  // Tenta primeiro o caminho server-side validado (Caminho 2)
+  // A RPC valida timing via timestamps reais do DB, ignora client-claimed timing
+  if (aiSessionId) {
+    try {
+      const { data: rpcRes, error: rpcErr } = await supa.rpc('register_ai_score', {
+        p_session_id: aiSessionId,
+        p_difficulty: data.difficulty,
+        p_username: username,
+        p_client_mouse_movements: b.mouse_movements || 0,
+        p_client_drag_count: b.drag_count || 0,
+        p_client_click_count: b.click_count || 0,
+        p_client_idle_periods: b.idle_periods || 0,
+        p_client_keyboard_events: b.keyboard_events || 0
+      });
+      if (rpcErr) throw rpcErr;
+      if (typeof trackEvent === 'function') {
+        trackEvent('score_registered', {
+          difficulty: data.difficulty,
+          status: (rpcRes && rpcRes.status) || 'unknown',
+          suspicion_score: (rpcRes && rpcRes.suspicion_score) || 0,
+          server_validated: true
+        });
+      }
+      return true;
+    } catch (e) {
+      console.warn('RPC register_ai_score falhou, tentando fallback:', e.message || e);
+      // Se a RPC negou (ex: "no moves found"), e' suspeita real — bloqueia.
+      if (e.message && e.message.indexOf('no moves found') >= 0) {
+        alert('Nao foi possivel validar a partida. Tente novamente.');
+        return false;
+      }
+      // Outros erros (rede, etc): cai pro fallback abaixo
+    }
   }
 
+  // Fallback: INSERT direto (sem validacao server-side)
   const row = {
     user_id: currentUser.id,
     username,
     difficulty: data.difficulty,
     player_seconds: data.player_seconds,
-    ...behaviorRow
+    ...b
   };
 
   const { error } = await supa.from('scores').insert(row);
@@ -1581,8 +1621,9 @@ async function submitScore(data) {
     trackEvent('score_registered', {
       difficulty: data.difficulty,
       seconds: data.player_seconds,
-      status: behaviorRow.status || 'unknown',
-      suspicion_score: behaviorRow.suspicion_score
+      status: b.status || 'unknown',
+      suspicion_score: b.suspicion_score,
+      server_validated: false
     });
   }
   return true;
@@ -2963,6 +3004,7 @@ function executeMove(move, opts) {
     else moveNotations[moveNotations.length - 1].b = notation;
   }
 
+  const moverColor = turn;  // antes do swap, quem moveu
   turn = turn === 'w' ? 'b' : 'w';
   selectedSquare = -1;
   validMoves = [];
@@ -2972,6 +3014,27 @@ function executeMove(move, opts) {
   if (gameMode === 'ai' && playAsVal !== 'both') {
     if (turn === playerColor) startPlayerTurnTimer();
     else endPlayerTurnTimer();
+  }
+
+  // Anti-cheat server-side: registra lance do jogador no DB com timestamp servidor
+  if (gameMode === 'ai' && playAsVal !== 'both' && !tutorialMode
+      && moverColor === playerColor && aiSessionId && supa && currentUser) {
+    aiSessionMoveNumber++;
+    const depthVal = document.getElementById('ai-depth').value;
+    const diffNum = parseInt(depthVal);
+    // Fire-and-forget — nao bloqueia o jogo se DB demorar
+    supa.from('ai_game_moves').insert({
+      user_id: currentUser.id,
+      session_id: aiSessionId,
+      move_number: aiSessionMoveNumber,
+      from_sq: move.from,
+      to_sq: move.to,
+      promotion: move.promo || null,
+      notation: notation,
+      difficulty: (Number.isInteger(diffNum) && diffNum >= 1 && diffNum <= 4) ? diffNum : null
+    }).then(({ error }) => {
+      if (error) console.warn('ai_game_moves insert err:', error.message);
+    });
   }
 
   renderBoard();
@@ -4596,6 +4659,9 @@ function newGame() {
   resetPlayerTime();
   // Reset behavior tracking (anti-cheat passivo)
   resetBehavior();
+  // Nova sessao para validacao server-side (anti-cheat ativo)
+  aiSessionId = generateAiSessionId();
+  aiSessionMoveNumber = 0;
 
   const playAs = document.getElementById('play-as').value;
   if (playAs === 'both') {
