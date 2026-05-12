@@ -1201,6 +1201,21 @@
     white-space: nowrap;
   }
   #install-banner .install-btn:hover { background: var(--accent2); }
+  #install-banner .remind-btn {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.12);
+    color: var(--text-light);
+    border-radius: 8px;
+    padding: 8px 10px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  #install-banner .remind-btn:hover {
+    background: rgba(255,255,255,0.12);
+    border-color: rgba(255,255,255,0.2);
+  }
   #install-banner .dismiss-btn {
     background: transparent;
     border: none;
@@ -1260,6 +1275,7 @@
   </div>
   <div class="actions">
     <button class="install-btn" id="install-pwa-btn" onclick="triggerPwaInstall()">Instalar</button>
+    <button class="remind-btn" onclick="remindLaterInstall()">Depois</button>
     <button class="dismiss-btn" onclick="dismissInstallBanner()" aria-label="Fechar">✕</button>
   </div>
 </div>
@@ -1533,13 +1549,16 @@
 
 <script>
 // ======================== UI: PWA INSTALL PROMPT ========================
-// Banner mobile que convida a instalar como PWA. No Android (Chrome/Edge)
-// usa o evento beforeinstallprompt pra trigger nativo. No iOS, mostra
-// instrucoes manuais (compartilhar → adicionar a tela).
+// Banner mobile que convida a instalar como PWA. So aparece apos N partidas
+// completas (usuario engajado), e respeita dispensas anteriores.
 
 let deferredInstallPrompt = null;
 const INSTALL_DISMISS_KEY = 'pwaInstallDismissedAt';
-const INSTALL_DISMISS_TTL = 7 * 24 * 60 * 60 * 1000;  // 7 dias
+const INSTALL_DISMISS_TTL_KEY = 'pwaInstallDismissTtl';
+const INSTALL_DISMISS_TTL = 2 * 24 * 60 * 60 * 1000;  // 2 dias (dispensa definitiva)
+const REMIND_LATER_TTL = 12 * 60 * 60 * 1000;          // 12h ("Depois")
+const GAMES_PLAYED_KEY = 'gamesPlayedCount';
+const INSTALL_MIN_GAMES = 2;  // So mostra banner apos N partidas completas
 
 function isIOS() {
   return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
@@ -1552,13 +1571,31 @@ function wasInstallDismissedRecently() {
   try {
     const t = localStorage.getItem(INSTALL_DISMISS_KEY);
     if (!t) return false;
-    return Date.now() - parseInt(t) < INSTALL_DISMISS_TTL;
+    const ttl = parseInt(localStorage.getItem(INSTALL_DISMISS_TTL_KEY) || String(INSTALL_DISMISS_TTL));
+    return Date.now() - parseInt(t) < ttl;
   } catch (e) { return false; }
+}
+function getGamesPlayed() {
+  try { return parseInt(localStorage.getItem(GAMES_PLAYED_KEY) || '0'); }
+  catch (e) { return 0; }
+}
+function incrementGamesPlayed() {
+  try {
+    const c = getGamesPlayed() + 1;
+    localStorage.setItem(GAMES_PLAYED_KEY, String(c));
+    // Apos cada partida, reavalia se ja' pode mostrar o banner
+    showInstallBanner();
+  } catch (e) {}
+}
+function eligibleForInstallBanner() {
+  if (isStandalone()) return false;                 // ja instalado
+  if (wasInstallDismissedRecently()) return false;  // dispensa ativa
+  if (getGamesPlayed() < INSTALL_MIN_GAMES) return false;  // ainda nao engajado
+  return true;
 }
 
 function showInstallBanner() {
-  if (isStandalone()) return;                  // ja instalado
-  if (wasInstallDismissedRecently()) return;   // user fechou recentemente
+  if (!eligibleForInstallBanner()) return;
   const banner = document.getElementById('install-banner');
   if (banner) banner.classList.add('show');
 }
@@ -1568,9 +1605,22 @@ function hideInstallBanner() {
   if (banner) banner.classList.remove('show');
 }
 
-function dismissInstallBanner() {
-  try { localStorage.setItem(INSTALL_DISMISS_KEY, String(Date.now())); } catch (e) {}
+function dismissInstallBanner(ttlMs) {
+  ttlMs = ttlMs || INSTALL_DISMISS_TTL;
+  try {
+    localStorage.setItem(INSTALL_DISMISS_KEY, String(Date.now()));
+    localStorage.setItem(INSTALL_DISMISS_TTL_KEY, String(ttlMs));
+  } catch (e) {}
   hideInstallBanner();
+  if (typeof trackEvent === 'function') {
+    trackEvent('pwa_install_dismissed', { ttl_hours: Math.round(ttlMs / 3600000) });
+  }
+}
+
+function remindLaterInstall() {
+  // Dispensa mais curta — banner volta a aparecer em ~12h (proxima sessao)
+  dismissInstallBanner(REMIND_LATER_TTL);
+  if (typeof trackEvent === 'function') trackEvent('pwa_install_remind_later', {});
 }
 
 async function triggerPwaInstall() {
@@ -2091,16 +2141,17 @@ async function submitScore(data, opts) {
 
 async function checkPendingScore() {
   // 1) Pending NOVO formato (post-game registration, com bulk-insert dos lances)
+  // GUARD: checkPendingScore pode ser chamada 2x em sequencia (getSession +
+  // SIGNED_IN event). Removemos o localStorage IMEDIATAMENTE antes do async
+  // pra evitar double-INSERT.
   const pendingFull = localStorage.getItem('pendingScoreData');
   if (pendingFull && currentUser) {
+    localStorage.removeItem('pendingScoreData');
+    clearPendingAiGame();
     try {
       const data = JSON.parse(pendingFull);
-      // expira em 1h
-      if (data.saved_at && Date.now() - data.saved_at > PENDING_GAME_MAX_AGE_MS) {
-        localStorage.removeItem('pendingScoreData');
-        clearPendingAiGame();
-      } else {
-        // Bulk-insert lances locais primeiro
+      // expira em 1h — se for muito antigo, descarta silenciosamente
+      if (!data.saved_at || Date.now() - data.saved_at <= PENDING_GAME_MAX_AGE_MS) {
         const ok = await bulkInsertLocalMoves({
           sessionId: data.sessionId,
           moves: data.moves || []
@@ -2118,8 +2169,6 @@ async function checkPendingScore() {
         } else {
           await showAlert('Não foi possível registrar esta partida agora. Tente jogar novamente já logado.', { error: true });
         }
-        localStorage.removeItem('pendingScoreData');
-        clearPendingAiGame();
       }
     } catch (e) { console.error('pendingScoreData err:', e); }
   }
@@ -4965,6 +5014,11 @@ function exitReplay() {
 // ======================== GAME OVER POPUP ========================
 
 function showGameOverPopup(playerWon, winner, difficulty) {
+  // Conta partidas completadas em modo IA pra timing do banner de install PWA
+  if (gameMode === 'ai' && typeof incrementGamesPlayed === 'function') {
+    incrementGamesPlayed();
+  }
+
   const popup = document.getElementById('gameover-popup');
   const icon = document.getElementById('go-icon');
   const title = document.getElementById('go-title');
