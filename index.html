@@ -1861,7 +1861,8 @@ async function submitScore(data, opts) {
         p_client_idle_periods: b.idle_periods || 0,
         p_client_keyboard_events: b.keyboard_events || 0,
         p_client_undo_count: b.undo_count || 0,
-        p_client_validated: clientValidated
+        p_client_validated: clientValidated,
+        p_client_player_seconds: data.player_seconds || null
       });
       if (rpcErr) throw rpcErr;
       if (typeof trackEvent === 'function') {
