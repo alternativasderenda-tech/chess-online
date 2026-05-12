@@ -1534,7 +1534,75 @@ function endPlayerTurnTimer() {
 let behavior = null;
 let aiSessionId = null;       // ID da sessao atual (vs IA)
 let aiSessionMoveNumber = 0;  // contador local de lances do jogador
+let aiSessionLocalMoves = []; // espelho local dos lances (pra registro pos-login)
+let aiSessionStartTs = 0;
 const IDLE_THRESHOLD_MS = 5000;
+const PENDING_GAME_KEY = 'pendingAiGame';
+const PENDING_GAME_MAX_AGE_MS = 60 * 60 * 1000;  // 1h
+
+function saveAiGameToLocal() {
+  if (!aiSessionId) return;
+  const data = {
+    sessionId: aiSessionId,
+    startedAt: aiSessionStartTs,
+    moves: aiSessionLocalMoves,
+    saved_at: Date.now()
+  };
+  try { localStorage.setItem(PENDING_GAME_KEY, JSON.stringify(data)); } catch (e) {}
+}
+
+function loadPendingAiGame() {
+  try {
+    const raw = localStorage.getItem(PENDING_GAME_KEY);
+    if (!raw) return null;
+    const data = JSON.parse(raw);
+    // expira em 1h
+    if (!data.saved_at || Date.now() - data.saved_at > PENDING_GAME_MAX_AGE_MS) {
+      localStorage.removeItem(PENDING_GAME_KEY);
+      return null;
+    }
+    return data;
+  } catch (e) { return null; }
+}
+
+function clearPendingAiGame() {
+  try { localStorage.removeItem(PENDING_GAME_KEY); } catch (e) {}
+}
+
+async function bulkInsertLocalMoves(pendingGame) {
+  // Insere os lances que o cliente trackou localmente (pos-login).
+  // Importante: nao podemos enviar created_at custom porque seria
+  // tampperavel. Os timestamps serao now() do servidor (todos
+  // proximos entre si). O score sera marcado client_validated=true
+  // e a heuristica nao confia no timing server-side nesse caso.
+  if (!supa || !currentUser || !pendingGame || !pendingGame.moves) return false;
+  // Primeiro checa se ja tem moves no DB pra essa session (idempotencia)
+  const { data: existing } = await supa
+    .from('ai_game_moves')
+    .select('move_number')
+    .eq('session_id', pendingGame.sessionId)
+    .limit(1);
+  if (existing && existing.length > 0) {
+    // ja tem lances no DB, nao precisa replay
+    return true;
+  }
+  const rows = pendingGame.moves.map(m => ({
+    user_id: currentUser.id,
+    session_id: pendingGame.sessionId,
+    move_number: m.move_number,
+    from_sq: m.from_sq,
+    to_sq: m.to_sq,
+    promotion: m.promotion,
+    notation: m.notation,
+    difficulty: m.difficulty
+  }));
+  const { error } = await supa.from('ai_game_moves').insert(rows);
+  if (error) {
+    console.error('bulkInsertLocalMoves error:', error);
+    return false;
+  }
+  return true;
+}
 
 function generateAiSessionId() {
   // UUID-like simples (suficiente — RLS valida ownership)
@@ -1670,17 +1738,22 @@ async function registerCurrentScore() {
   const fb = document.getElementById('go-score-feedback');
 
   if (!currentUser) {
-    // Usuario deslogado tentando registrar partida — explicar antes do OAuth.
-    // Esta partida especifica nao pode ser validada (lances nao foram gravados
-    // no DB porque RLS exigia auth durante o jogo). Avisamos pra evitar
-    // frustracao depois do redirect.
-    const ok = confirm(
-      'Você nao estava logado durante esta partida, entao ela nao pode ser ' +
-      'registrada no ranking (o sistema nao tem como validar os lances).\n\n' +
-      'Quer fazer login agora para que suas PROXIMAS partidas contem?\n\n' +
-      'Dica: faca login ANTES de comecar uma partida.'
-    );
-    if (!ok) return;
+    // Usuario deslogado: salva os lances locais + dados do score em
+    // localStorage. Apos OAuth, vamos fazer bulk-insert e registrar
+    // com client_validated=true (validacao parcial).
+    try {
+      // Garante que o pending local tem os ultimos dados
+      saveAiGameToLocal();
+      const pending = loadPendingAiGame() || {};
+      localStorage.setItem('pendingScoreData', JSON.stringify({
+        sessionId: aiSessionId,
+        difficulty: lastWinData.difficulty,
+        player_seconds: lastWinData.player_seconds,
+        behavior: behavior ? classifyBehavior(behavior) : null,
+        moves: pending.moves || aiSessionLocalMoves,
+        saved_at: Date.now()
+      }));
+    } catch (e) { console.warn('saving pendingScoreData failed:', e); }
     return loginWithGoogle();
   }
   if (btn) { btn.disabled = true; btn.textContent = 'Registrando...'; }
@@ -1695,19 +1768,20 @@ async function registerCurrentScore() {
   }
 }
 
-async function submitScore(data) {
+async function submitScore(data, opts) {
   if (!supa || !currentUser) return false;
+  opts = opts || {};
   const username = userDisplayName(currentUser);
 
   // Coleta sinais de comportamento client-side
-  let b = behavior ? classifyBehavior(behavior) : {};
+  let b = (data && data.behavior) ? data.behavior : (behavior ? classifyBehavior(behavior) : {});
+  const sessionId = data.sessionId || aiSessionId;
+  const clientValidated = !!opts.clientValidated;
 
-  // Tenta primeiro o caminho server-side validado (Caminho 2)
-  // A RPC valida timing via timestamps reais do DB, ignora client-claimed timing
-  if (aiSessionId) {
+  if (sessionId) {
     try {
       const { data: rpcRes, error: rpcErr } = await supa.rpc('register_ai_score', {
-        p_session_id: aiSessionId,
+        p_session_id: sessionId,
         p_difficulty: data.difficulty,
         p_username: username,
         p_client_mouse_movements: b.mouse_movements || 0,
@@ -1715,7 +1789,8 @@ async function submitScore(data) {
         p_client_click_count: b.click_count || 0,
         p_client_idle_periods: b.idle_periods || 0,
         p_client_keyboard_events: b.keyboard_events || 0,
-        p_client_undo_count: b.undo_count || 0
+        p_client_undo_count: b.undo_count || 0,
+        p_client_validated: clientValidated
       });
       if (rpcErr) throw rpcErr;
       if (typeof trackEvent === 'function') {
@@ -1729,15 +1804,11 @@ async function submitScore(data) {
       return true;
     } catch (e) {
       console.warn('RPC register_ai_score falhou, tentando fallback:', e.message || e);
-      // Se a RPC negou (ex: "no moves found"), e' suspeita real — bloqueia.
+      // 'no moves found' agora so deveria acontecer se a partida e' antiga
+      // demais OU o usuario manipulou. Tentamos o fallback direto.
       if (e.message && e.message.indexOf('no moves found') >= 0) {
-        alert(
-          'Nao foi possivel validar esta partida no ranking.\n\n' +
-          'Isso acontece quando voce nao estava logado durante o jogo — ' +
-          'os lances nao foram registrados no servidor.\n\n' +
-          'Para a proxima partida: faca login ANTES de comecar a jogar.'
-        );
-        return false;
+        console.warn('No moves in DB for session — falling back to direct INSERT');
+        // cai pro fallback abaixo (direct insert sem validacao)
       }
       // Outros erros (rede, etc): cai pro fallback abaixo
     }
@@ -1770,21 +1841,54 @@ async function submitScore(data) {
   return true;
 }
 
-function checkPendingScore() {
+async function checkPendingScore() {
+  // 1) Pending NOVO formato (post-game registration, com bulk-insert dos lances)
+  const pendingFull = localStorage.getItem('pendingScoreData');
+  if (pendingFull && currentUser) {
+    try {
+      const data = JSON.parse(pendingFull);
+      // expira em 1h
+      if (data.saved_at && Date.now() - data.saved_at > PENDING_GAME_MAX_AGE_MS) {
+        localStorage.removeItem('pendingScoreData');
+        clearPendingAiGame();
+      } else {
+        // Bulk-insert lances locais primeiro
+        const ok = await bulkInsertLocalMoves({
+          sessionId: data.sessionId,
+          moves: data.moves || []
+        });
+        if (ok) {
+          const submitOk = await submitScore({
+            sessionId: data.sessionId,
+            difficulty: data.difficulty,
+            player_seconds: data.player_seconds,
+            behavior: data.behavior
+          }, { clientValidated: true });
+          if (submitOk) {
+            alert('✓ Sua vitória foi registrada no ranking!');
+          }
+        } else {
+          alert('Não foi possível registrar esta partida agora. Tente jogar novamente já logado.');
+        }
+        localStorage.removeItem('pendingScoreData');
+        clearPendingAiGame();
+      }
+    } catch (e) { console.error('pendingScoreData err:', e); }
+  }
+
+  // 2) Pending FORMATO ANTIGO (compatibilidade — score sem session_id)
   const pending = sessionStorage.getItem('pendingScore');
   if (pending && currentUser) {
     sessionStorage.removeItem('pendingScore');
     try {
       const data = JSON.parse(pending);
       submitScore(data).then(ok => {
-        if (ok) {
-          alert('✓ Sua pontuação foi registrada no ranking!');
-        }
+        if (ok) alert('✓ Sua pontuação foi registrada no ranking!');
       });
     } catch (e) { console.error(e); }
   }
 
-  // Acoes pendentes de pos-login (online game)
+  // 3) Acoes pendentes de pos-login (online game)
   const postAction = sessionStorage.getItem('postLoginAction');
   if (postAction && currentUser) {
     sessionStorage.removeItem('postLoginAction');
@@ -3157,25 +3261,43 @@ function executeMove(move, opts) {
     else endPlayerTurnTimer();
   }
 
-  // Anti-cheat server-side: registra lance do jogador no DB com timestamp servidor
+  // Anti-cheat: registra lance do jogador (em memoria + DB se logado, sempre em localStorage)
   if (gameMode === 'ai' && playAsVal !== 'both' && !tutorialMode
-      && moverColor === playerColor && aiSessionId && supa && currentUser) {
+      && moverColor === playerColor && aiSessionId) {
     aiSessionMoveNumber++;
     const depthVal = document.getElementById('ai-depth').value;
     const diffNum = parseInt(depthVal);
-    // Fire-and-forget — nao bloqueia o jogo se DB demorar
-    supa.from('ai_game_moves').insert({
-      user_id: currentUser.id,
-      session_id: aiSessionId,
+    const validDiff = (Number.isInteger(diffNum) && diffNum >= 1 && diffNum <= 4) ? diffNum : null;
+    const nowTs = Date.now();
+
+    // Espelho local (sempre)
+    aiSessionLocalMoves.push({
       move_number: aiSessionMoveNumber,
       from_sq: move.from,
       to_sq: move.to,
       promotion: move.promo || null,
       notation: notation,
-      difficulty: (Number.isInteger(diffNum) && diffNum >= 1 && diffNum <= 4) ? diffNum : null
-    }).then(({ error }) => {
-      if (error) console.warn('ai_game_moves insert err:', error.message);
+      difficulty: validDiff,
+      client_ts: nowTs
     });
+    // Persiste em localStorage (sobrevive a OAuth redirect)
+    try { saveAiGameToLocal(); } catch (e) { console.warn('localStorage save err:', e); }
+
+    // INSERT no DB so se logado (server timestamp prevalece quando possivel)
+    if (supa && currentUser) {
+      supa.from('ai_game_moves').insert({
+        user_id: currentUser.id,
+        session_id: aiSessionId,
+        move_number: aiSessionMoveNumber,
+        from_sq: move.from,
+        to_sq: move.to,
+        promotion: move.promo || null,
+        notation: notation,
+        difficulty: validDiff
+      }).then(({ error }) => {
+        if (error) console.warn('ai_game_moves insert err:', error.message);
+      });
+    }
   }
 
   renderBoard();
@@ -4805,6 +4927,10 @@ function newGame() {
   // Nova sessao para validacao server-side (anti-cheat ativo)
   aiSessionId = generateAiSessionId();
   aiSessionMoveNumber = 0;
+  aiSessionLocalMoves = [];
+  aiSessionStartTs = Date.now();
+  // Comecando um novo jogo: limpa pending anterior (se existir)
+  clearPendingAiGame();
 
   const playAs = document.getElementById('play-as').value;
   if (playAs === 'both') {
