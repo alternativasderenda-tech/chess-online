@@ -12,13 +12,24 @@
 --    ja foi registrado, evitando duplicata
 -- 3) DB level: unique index parcial em session_id (preventivo)
 
--- Cria indice unico parcial: cada session_id so pode ter 1 score
--- (NULL e' permitido multiplas vezes — scores antigos sem session_id)
+-- 1) PRIMEIRO: dedupe das duplicatas existentes (mantem a mais antiga)
+-- Precisa rodar ANTES de criar o indice unique
+with duplicates as (
+  select id,
+         row_number() over (partition by session_id order by created_at asc) as rn
+  from scores
+  where session_id is not null
+)
+delete from scores
+where id in (select id from duplicates where rn > 1);
+
+-- 2) Agora cria o indice unique parcial (sem duplicatas no caminho)
+-- Cada session_id so pode ter 1 score (NULL e' permitido multiplas vezes)
 create unique index if not exists idx_scores_session_unique
   on scores(session_id)
   where session_id is not null;
 
--- Recria a function com guard de idempotencia
+-- 3) Recria a function com guard de idempotencia
 drop function if exists register_ai_score(text, smallint, text, int, int, int, int, int, int, boolean, int);
 
 create or replace function register_ai_score(
@@ -195,18 +206,3 @@ end;
 $$;
 
 grant execute on function register_ai_score(text, smallint, text, int, int, int, int, int, int, boolean, int) to authenticated;
-
-
--- =========================================================
--- Dedupe: remove duplicatas existentes mantendo a mais antiga
--- =========================================================
--- Pega scores que tem session_id repetido e mantem so o mais antigo
-
-with duplicates as (
-  select id,
-         row_number() over (partition by session_id order by created_at asc) as rn
-  from scores
-  where session_id is not null
-)
-delete from scores
-where id in (select id from duplicates where rn > 1);
