@@ -1117,6 +1117,37 @@
     50% { opacity: 1; }
   }
 
+  /* Banner pra usuario deslogado */
+  .login-prompt-banner {
+    background: rgba(226,185,111,0.1);
+    border: 1px solid rgba(226,185,111,0.4);
+    border-radius: 10px;
+    padding: 10px 14px;
+    margin-bottom: 12px;
+    font-size: 12px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    line-height: 1.4;
+  }
+  .login-prompt-banner .ic { font-size: 18px; }
+  .login-prompt-banner .text { flex: 1; }
+  .login-prompt-banner .text strong { color: var(--accent); }
+  .login-prompt-banner button {
+    background: var(--accent);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 6px;
+    padding: 6px 12px;
+    font-size: 11px;
+    font-weight: 600;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  .login-prompt-banner button:hover { background: var(--accent2); }
+
   /* Footer */
   .site-footer {
     text-align: center;
@@ -1228,6 +1259,14 @@
 
     <div class="panel" id="settings-panel">
       <h3>⚙ Configurações</h3>
+      <div class="login-prompt-banner" id="login-prompt-banner" style="display:none;">
+        <span class="ic">💡</span>
+        <div class="text">
+          Você não está logado.<br>
+          <strong>Faça login antes de jogar</strong> para que suas vitórias contem no ranking.
+        </div>
+        <button onclick="loginWithGoogle()">Entrar</button>
+      </div>
       <div class="settings-row">
         <span>Dificuldade IA</span>
         <select id="ai-depth">
@@ -1448,6 +1487,20 @@ function onAuthChange(user) {
     btnLogin.style.display = 'inline-flex';
     userInfo.style.display = 'none';
   }
+  updateLoginPromptBanner();
+}
+
+function updateLoginPromptBanner() {
+  const banner = document.getElementById('login-prompt-banner');
+  if (!banner) return;
+  // Mostra so se: nao logado E nao esta em modo online E nao em tutorial
+  const inOnline = (typeof gameMode !== 'undefined' && gameMode === 'online');
+  const inTutorial = (typeof tutorialMode !== 'undefined' && tutorialMode);
+  if (!currentUser && !inOnline && !inTutorial) {
+    banner.style.display = 'flex';
+  } else {
+    banner.style.display = 'none';
+  }
 }
 
 async function loginWithGoogle() {
@@ -1617,7 +1670,17 @@ async function registerCurrentScore() {
   const fb = document.getElementById('go-score-feedback');
 
   if (!currentUser) {
-    sessionStorage.setItem('pendingScore', JSON.stringify(lastWinData));
+    // Usuario deslogado tentando registrar partida — explicar antes do OAuth.
+    // Esta partida especifica nao pode ser validada (lances nao foram gravados
+    // no DB porque RLS exigia auth durante o jogo). Avisamos pra evitar
+    // frustracao depois do redirect.
+    const ok = confirm(
+      'Você nao estava logado durante esta partida, entao ela nao pode ser ' +
+      'registrada no ranking (o sistema nao tem como validar os lances).\n\n' +
+      'Quer fazer login agora para que suas PROXIMAS partidas contem?\n\n' +
+      'Dica: faca login ANTES de comecar uma partida.'
+    );
+    if (!ok) return;
     return loginWithGoogle();
   }
   if (btn) { btn.disabled = true; btn.textContent = 'Registrando...'; }
@@ -1668,7 +1731,12 @@ async function submitScore(data) {
       console.warn('RPC register_ai_score falhou, tentando fallback:', e.message || e);
       // Se a RPC negou (ex: "no moves found"), e' suspeita real — bloqueia.
       if (e.message && e.message.indexOf('no moves found') >= 0) {
-        alert('Nao foi possivel validar a partida. Tente novamente.');
+        alert(
+          'Nao foi possivel validar esta partida no ranking.\n\n' +
+          'Isso acontece quando voce nao estava logado durante o jogo — ' +
+          'os lances nao foram registrados no servidor.\n\n' +
+          'Para a proxima partida: faca login ANTES de comecar a jogar.'
+        );
         return false;
       }
       // Outros erros (rede, etc): cai pro fallback abaixo
@@ -4757,6 +4825,7 @@ function newGame() {
   updatePlayerBars();
   updateCaptured();
   updateHint();
+  if (typeof updateLoginPromptBanner === 'function') updateLoginPromptBanner();
 
   // Esconde feedback do score (caso popup tenha ficado aberto antes)
   const fb = document.getElementById('go-score-feedback');
