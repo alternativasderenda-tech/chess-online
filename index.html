@@ -1148,6 +1148,73 @@
   }
   .login-prompt-banner button:hover { background: var(--accent2); }
 
+  /* Install PWA banner (mobile only) */
+  #install-banner {
+    display: none;
+    position: fixed;
+    left: 12px;
+    right: 12px;
+    bottom: 14px;
+    z-index: 850;
+    background: linear-gradient(135deg, #1e2a4a 0%, #2a1e3e 100%);
+    border: 1px solid var(--accent);
+    border-radius: 14px;
+    padding: 12px 14px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.6);
+    align-items: center;
+    gap: 12px;
+    backdrop-filter: blur(8px);
+  }
+  #install-banner.show { display: flex; }
+  #install-banner .ic {
+    font-size: 32px;
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  #install-banner .info { flex: 1; min-width: 0; }
+  #install-banner .info-title {
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 2px;
+  }
+  #install-banner .info-sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    line-height: 1.3;
+  }
+  #install-banner .actions {
+    display: flex;
+    gap: 6px;
+    flex-shrink: 0;
+  }
+  #install-banner .install-btn {
+    background: var(--accent);
+    color: var(--bg-dark);
+    border: none;
+    border-radius: 8px;
+    padding: 8px 14px;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    font-family: inherit;
+    white-space: nowrap;
+  }
+  #install-banner .install-btn:hover { background: var(--accent2); }
+  #install-banner .dismiss-btn {
+    background: transparent;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    font-size: 18px;
+    padding: 4px 8px;
+    line-height: 1;
+  }
+  #install-banner .dismiss-btn:hover { color: var(--text-light); }
+  @media (min-width: 901px) {
+    #install-banner.show { display: none; }
+  }
+
   /* Footer */
   .site-footer {
     text-align: center;
@@ -1181,6 +1248,19 @@
   <div id="user-info">
     <span id="user-name">👤 Jogador</span>
     <button id="btn-logout" onclick="logout()" title="Sair">Sair</button>
+  </div>
+</div>
+
+<!-- Install PWA banner (mobile only) -->
+<div id="install-banner" role="dialog" aria-label="Instalar Xadrez Online como app">
+  <div class="ic">📲</div>
+  <div class="info">
+    <div class="info-title">Instale o Xadrez Online</div>
+    <div class="info-sub">Mais rápido, em tela cheia e funciona offline</div>
+  </div>
+  <div class="actions">
+    <button class="install-btn" id="install-pwa-btn" onclick="triggerPwaInstall()">Instalar</button>
+    <button class="dismiss-btn" onclick="dismissInstallBanner()" aria-label="Fechar">✕</button>
   </div>
 </div>
 
@@ -1452,6 +1532,102 @@
 </div>
 
 <script>
+// ======================== UI: PWA INSTALL PROMPT ========================
+// Banner mobile que convida a instalar como PWA. No Android (Chrome/Edge)
+// usa o evento beforeinstallprompt pra trigger nativo. No iOS, mostra
+// instrucoes manuais (compartilhar → adicionar a tela).
+
+let deferredInstallPrompt = null;
+const INSTALL_DISMISS_KEY = 'pwaInstallDismissedAt';
+const INSTALL_DISMISS_TTL = 7 * 24 * 60 * 60 * 1000;  // 7 dias
+
+function isIOS() {
+  return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+}
+function isStandalone() {
+  return window.matchMedia('(display-mode: standalone)').matches
+      || window.navigator.standalone === true;
+}
+function wasInstallDismissedRecently() {
+  try {
+    const t = localStorage.getItem(INSTALL_DISMISS_KEY);
+    if (!t) return false;
+    return Date.now() - parseInt(t) < INSTALL_DISMISS_TTL;
+  } catch (e) { return false; }
+}
+
+function showInstallBanner() {
+  if (isStandalone()) return;                  // ja instalado
+  if (wasInstallDismissedRecently()) return;   // user fechou recentemente
+  const banner = document.getElementById('install-banner');
+  if (banner) banner.classList.add('show');
+}
+
+function hideInstallBanner() {
+  const banner = document.getElementById('install-banner');
+  if (banner) banner.classList.remove('show');
+}
+
+function dismissInstallBanner() {
+  try { localStorage.setItem(INSTALL_DISMISS_KEY, String(Date.now())); } catch (e) {}
+  hideInstallBanner();
+}
+
+async function triggerPwaInstall() {
+  // Android/Chrome: usa o evento salvo
+  if (deferredInstallPrompt) {
+    try {
+      deferredInstallPrompt.prompt();
+      const choice = await deferredInstallPrompt.userChoice;
+      if (typeof trackEvent === 'function') {
+        trackEvent('pwa_install_prompt', { outcome: choice.outcome });
+      }
+      deferredInstallPrompt = null;
+      if (choice.outcome === 'accepted') hideInstallBanner();
+    } catch (e) { console.warn('install prompt err:', e); }
+    return;
+  }
+  // iOS Safari: nao tem trigger programatico, mostra instrucoes
+  if (isIOS()) {
+    showAlert(
+      'Para instalar no iPhone/iPad:\n\n' +
+      '1. Toque no ícone Compartilhar (□↑) na barra inferior do Safari\n' +
+      '2. Role e toque em "Adicionar à Tela de Início"\n' +
+      '3. Confirme em "Adicionar"',
+      { icon: '📲', title: 'Instalar no iOS' }
+    );
+    return;
+  }
+  // Outros: provavelmente nao da pra instalar — orienta
+  showAlert(
+    'Para instalar como app:\n\n' +
+    'No Chrome ou Edge, abra o menu (⋮) e procure por "Instalar Xadrez Online" ou "Adicionar à Tela de Início".',
+    { icon: '📲', title: 'Instalar como app' }
+  );
+}
+
+// Evento Android: dispara quando o site e' instalavel
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredInstallPrompt = e;
+  showInstallBanner();
+});
+
+// Quando o user de fato instala, esconde
+window.addEventListener('appinstalled', () => {
+  hideInstallBanner();
+  deferredInstallPrompt = null;
+  if (typeof trackEvent === 'function') trackEvent('pwa_installed', {});
+});
+
+// iOS: mostra o banner se nao instalado (sem beforeinstallprompt no Safari)
+window.addEventListener('load', () => {
+  if (isIOS() && !isStandalone() && !wasInstallDismissedRecently()) {
+    // pequeno delay pra nao chamar atencao imediatamente
+    setTimeout(showInstallBanner, 2500);
+  }
+});
+
 // ======================== UI: MODAL GENERICO (substitui alert/confirm) ========================
 
 function showGameModal(opts) {
