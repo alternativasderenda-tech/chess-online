@@ -1399,6 +1399,16 @@
   </div>
 </div>
 
+<!-- Generic Alert/Confirm Modal (substitui alert() e confirm() do browser) -->
+<div class="modal-overlay" id="game-modal" style="display:none;">
+  <div class="modal" style="max-width: 440px; width: 92%;">
+    <div id="game-modal-icon" style="font-size: 44px; line-height: 1; margin-bottom: 10px;">ℹ️</div>
+    <h3 id="game-modal-title" style="margin-bottom: 12px;">Aviso</h3>
+    <p id="game-modal-message" style="text-align: center; margin-bottom: 20px; line-height: 1.55; font-size: 14px; color: var(--text-light); white-space: pre-line;"></p>
+    <div id="game-modal-buttons" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;"></div>
+  </div>
+</div>
+
 <!-- Share Game Modal -->
 <div class="modal-overlay" id="share-game-modal" style="display:none;">
   <div class="modal" style="max-width:480px; width:92%;">
@@ -1442,6 +1452,67 @@
 </div>
 
 <script>
+// ======================== UI: MODAL GENERICO (substitui alert/confirm) ========================
+
+function showGameModal(opts) {
+  return new Promise((resolve) => {
+    const modal = document.getElementById('game-modal');
+    if (!modal) {
+      // fallback (nao deveria acontecer)
+      if (opts.buttons && opts.buttons.length > 1) {
+        resolve(window.confirm(opts.message));
+      } else {
+        window.alert(opts.message);
+        resolve(true);
+      }
+      return;
+    }
+    document.getElementById('game-modal-icon').textContent = opts.icon || 'ℹ️';
+    document.getElementById('game-modal-title').textContent = opts.title || 'Aviso';
+    document.getElementById('game-modal-message').textContent = opts.message || '';
+
+    const buttonsContainer = document.getElementById('game-modal-buttons');
+    buttonsContainer.innerHTML = '';
+    const buttons = opts.buttons || [{ label: 'OK', value: true, primary: true }];
+    buttons.forEach(btn => {
+      const button = document.createElement('button');
+      button.className = 'btn' + (btn.primary ? ' primary' : '');
+      button.style.minWidth = '110px';
+      button.textContent = btn.label;
+      button.addEventListener('click', () => {
+        modal.style.display = 'none';
+        resolve(btn.value);
+      });
+      buttonsContainer.appendChild(button);
+    });
+
+    modal.style.display = 'flex';
+  });
+}
+
+function showAlert(message, opts) {
+  opts = opts || {};
+  const icon = opts.icon || (opts.error ? '⚠️' : (opts.success ? '✓' : 'ℹ️'));
+  const title = opts.title || (opts.error ? 'Erro' : (opts.success ? 'Sucesso' : 'Aviso'));
+  return showGameModal({
+    icon, title, message,
+    buttons: [{ label: opts.okLabel || 'OK', value: true, primary: true }]
+  });
+}
+
+function showConfirm(message, opts) {
+  opts = opts || {};
+  return showGameModal({
+    icon: opts.icon || '❓',
+    title: opts.title || 'Confirmação',
+    message,
+    buttons: [
+      { label: opts.cancelLabel || 'Cancelar', value: false, primary: false },
+      { label: opts.okLabel || 'Confirmar', value: true, primary: true }
+    ]
+  });
+}
+
 // ======================== SUPABASE / AUTH / RANKING ========================
 
 const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
@@ -1504,12 +1575,12 @@ function updateLoginPromptBanner() {
 }
 
 async function loginWithGoogle() {
-  if (!supa) { alert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!supa) { await showAlert('Conectando ao servidor, tente em 1 segundo...'); return; }
   const { error } = await supa.auth.signInWithOAuth({
     provider: 'google',
     options: { redirectTo: window.location.origin + window.location.pathname }
   });
-  if (error) alert('Erro ao entrar: ' + error.message);
+  if (error) await showAlert('Erro ao entrar: ' + error.message, { error: true });
 }
 
 async function logout() {
@@ -1826,7 +1897,7 @@ async function submitScore(data, opts) {
   const { error } = await supa.from('scores').insert(row);
   if (error) {
     console.error('submitScore error:', error);
-    alert('Erro ao registrar: ' + error.message);
+    await showAlert('Erro ao registrar: ' + error.message, { error: true });
     return false;
   }
   if (typeof trackEvent === 'function') {
@@ -1865,10 +1936,10 @@ async function checkPendingScore() {
             behavior: data.behavior
           }, { clientValidated: true });
           if (submitOk) {
-            alert('✓ Sua vitória foi registrada no ranking!');
+            await showAlert('Sua vitória foi registrada no ranking!', { success: true });
           }
         } else {
-          alert('Não foi possível registrar esta partida agora. Tente jogar novamente já logado.');
+          await showAlert('Não foi possível registrar esta partida agora. Tente jogar novamente já logado.', { error: true });
         }
         localStorage.removeItem('pendingScoreData');
         clearPendingAiGame();
@@ -1883,7 +1954,7 @@ async function checkPendingScore() {
     try {
       const data = JSON.parse(pending);
       submitScore(data).then(ok => {
-        if (ok) alert('✓ Sua pontuação foi registrada no ranking!');
+        if (ok) showAlert('Sua pontuação foi registrada no ranking!', { success: true });
       });
     } catch (e) { console.error(e); }
   }
@@ -2014,9 +2085,10 @@ function generateGameId() {
 }
 
 async function createOnlineGame() {
-  if (!supa) { alert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!supa) { await showAlert('Conectando ao servidor, tente em 1 segundo...'); return; }
   if (!currentUser) {
-    if (!confirm('Pra jogar com amigos voce precisa entrar com Google. Entrar agora?')) return;
+    const ok = await showConfirm('Pra jogar com amigos você precisa entrar com Google. Entrar agora?', { okLabel: 'Entrar com Google' });
+    if (!ok) return;
     sessionStorage.setItem('postLoginAction', 'createOnline');
     return loginWithGoogle();
   }
@@ -2047,7 +2119,7 @@ async function createOnlineGame() {
   const { error } = await supa.from('games').insert(insertData);
 
   if (error) {
-    alert('Erro ao criar partida: ' + error.message);
+    await showAlert('Erro ao criar partida: ' + error.message, { error: true });
     return;
   }
 
@@ -2058,9 +2130,10 @@ async function createOnlineGame() {
 }
 
 async function joinOnlineGame(gameId) {
-  if (!supa) { alert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!supa) { await showAlert('Conectando ao servidor, tente em 1 segundo...'); return; }
   if (!currentUser) {
-    if (!confirm('Pra entrar na partida voce precisa entrar com Google. Entrar agora?')) return;
+    const ok = await showConfirm('Pra entrar na partida você precisa entrar com Google. Entrar agora?', { okLabel: 'Entrar com Google' });
+    if (!ok) return;
     sessionStorage.setItem('postLoginAction', 'joinOnline:' + gameId);
     return loginWithGoogle();
   }
@@ -2069,7 +2142,7 @@ async function joinOnlineGame(gameId) {
     .from('games').select('*').eq('id', gameId).single();
 
   if (fetchErr || !game) {
-    alert('Partida nao encontrada ou ja encerrada.');
+    await showAlert('Partida não encontrada ou já encerrada.', { error: true });
     cleanGameUrlParam();
     return;
   }
@@ -2108,7 +2181,7 @@ async function joinOnlineGame(gameId) {
   }
 
   if (game.status !== 'waiting') {
-    alert('Esta partida ja esta em andamento ou encerrada.');
+    await showAlert('Esta partida já está em andamento ou encerrada.', { error: true });
     cleanGameUrlParam();
     return;
   }
@@ -2135,7 +2208,7 @@ async function joinOnlineGame(gameId) {
     .eq('status', 'waiting');
 
   if (updateErr) {
-    alert('Erro ao entrar: ' + updateErr.message);
+    await showAlert('Erro ao entrar: ' + updateErr.message, { error: true });
     return;
   }
 
@@ -2442,7 +2515,8 @@ async function copyOnlineGameLink() {
 }
 
 async function leaveOnlineGameAction() {
-  if (!confirm('Sair da partida? Sua jogada sera marcada como abandono.')) return;
+  const ok = await showConfirm('Sair da partida? Sua jogada será marcada como abandono.', { okLabel: 'Sair', cancelLabel: 'Continuar jogando' });
+  if (!ok) return;
   if (onlineGameId && supa) {
     try {
       await supa.from('games').update({
@@ -2475,7 +2549,7 @@ async function startRematch() {
   const { data: oldGame, error: gE } = await supa
     .from('games').select('*').eq('id', oldGameId).single();
   if (gE || !oldGame) {
-    alert('Erro ao iniciar revanche.');
+    await showAlert('Erro ao iniciar revanche.', { error: true });
     return;
   }
 
@@ -2494,7 +2568,7 @@ async function startRematch() {
   });
 
   if (error) {
-    alert('Erro ao criar revanche: ' + error.message);
+    await showAlert('Erro ao criar revanche: ' + error.message, { error: true });
     return;
   }
 
@@ -4486,7 +4560,7 @@ function importPGN(event) {
     try {
       parseAndReplayPGN(e.target.result);
     } catch(err) {
-      alert('Erro ao ler arquivo PGN: ' + err.message);
+      showAlert('Erro ao ler arquivo PGN: ' + err.message, { error: true });
     }
   };
   reader.readAsText(file);
@@ -4508,7 +4582,7 @@ function parseAndReplayPGN(pgnText) {
   const tokens = moveText.split(/\s+/).filter(t => t.length > 0);
 
   if (tokens.length === 0) {
-    alert('Arquivo PGN vazio ou inválido.');
+    showAlert('Arquivo PGN vazio ou inválido.', { error: true });
     return;
   }
 
@@ -4567,7 +4641,7 @@ function parseAndReplayPGN(pgnText) {
     // Nothing imported — restore
     board = savedBoard; castling = savedCastling; enPassant = savedEP; turn = savedTurn;
     renderBoard();
-    alert('Não foi possível ler nenhum movimento do arquivo.');
+    showAlert('Não foi possível ler nenhum movimento do arquivo.', { error: true });
     return;
   }
 
@@ -4591,7 +4665,7 @@ function parseAndReplayPGN(pgnText) {
   trackEvent('pgn_imported', { moves: snapshots.length - 1, skipped: skipped });
 
   if (skipped > 0) {
-    setTimeout(() => alert(`Importado! ${snapshots.length - 1} lances carregados.${skipped > 0 ? ' ' + skipped + ' lances ignorados.' : ''}`), 100);
+    setTimeout(() => showAlert(`Importado! ${snapshots.length - 1} lances carregados.${skipped > 0 ? ' ' + skipped + ' lances ignorados.' : ''}`, { success: true }), 100);
   }
 }
 
@@ -4604,7 +4678,7 @@ let savedGameState = null;
 
 function startReplay() {
   if (stateHistory.length === 0) {
-    alert('Nenhum movimento para replay.');
+    showAlert('Nenhum movimento para replay.');
     return;
   }
   closeGameOverPopup();
