@@ -4784,9 +4784,16 @@ function downloadGame() {
   });
   pgn += movesText.trim() + ' ' + result + '\n';
 
-  // Calcula tempo total da partida (em segundos)
+  // Tempo da partida em segundos — prioriza lastWinData.player_seconds
+  // (mesmo numero mostrado no popup e gravado no ranking) pra consistencia.
+  // Fallback: tempo de pensamento puro do jogador no behavior, depois
+  // wall-clock desde gameStartTs.
   let totalSeconds = 0;
-  if (typeof behavior !== 'undefined' && behavior && behavior.gameStartTs) {
+  if (typeof lastWinData !== 'undefined' && lastWinData && lastWinData.player_seconds) {
+    totalSeconds = lastWinData.player_seconds;
+  } else if (typeof playerMsSpent !== 'undefined' && playerMsSpent > 0) {
+    totalSeconds = Math.round(playerMsSpent / 1000);
+  } else if (typeof behavior !== 'undefined' && behavior && behavior.gameStartTs) {
     totalSeconds = Math.max(0, Math.round((Date.now() - behavior.gameStartTs) / 1000));
   }
   const timeStr =
