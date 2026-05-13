@@ -221,12 +221,6 @@
   <div id="error" class="status-msg error" style="display:none;"></div>
 
   <div id="dashboard" style="display:none;">
-    <div class="section" id="ga-section">
-      <h2>🌐 Google Analytics (últimos 28d / 7d)</h2>
-      <div id="ga-content"><div class="status-msg">Carregando...</div></div>
-    </div>
-
-    <h2 style="font-family:'Playfair Display',serif;color:var(--accent);font-size:20px;margin:24px 0 10px;">🎮 Dados do Jogo (Supabase)</h2>
     <div class="cards-grid" id="cards-overview"></div>
 
     <div class="section">
@@ -326,7 +320,10 @@ async function init() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   await Promise.all([
-    loadGoogleAnalytics(),
+    // loadGoogleAnalytics(),  // desabilitado por enquanto — requer setup
+                              // do GCP service account (bloqueado pela
+                              // org policy). Ver supabase/functions/ga-stats/
+                              // pra reativar no futuro.
     loadOverview(),
     loadByDifficulty(),
     loadDaily(),
