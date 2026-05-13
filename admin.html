@@ -221,6 +221,12 @@
   <div id="error" class="status-msg error" style="display:none;"></div>
 
   <div id="dashboard" style="display:none;">
+    <div class="section" id="ga-section">
+      <h2>🌐 Google Analytics (últimos 28d / 7d)</h2>
+      <div id="ga-content"><div class="status-msg">Carregando...</div></div>
+    </div>
+
+    <h2 style="font-family:'Playfair Display',serif;color:var(--accent);font-size:20px;margin:24px 0 10px;">🎮 Dados do Jogo (Supabase)</h2>
     <div class="cards-grid" id="cards-overview"></div>
 
     <div class="section">
@@ -320,6 +326,7 @@ async function init() {
   document.getElementById('loading').style.display = 'none';
   document.getElementById('dashboard').style.display = 'block';
   await Promise.all([
+    loadGoogleAnalytics(),
     loadOverview(),
     loadByDifficulty(),
     loadDaily(),
@@ -328,6 +335,177 @@ async function init() {
     loadRecentScores(),
     loadOnlineGames()
   ]);
+}
+
+async function loadGoogleAnalytics() {
+  const container = document.getElementById('ga-content');
+  try {
+    const { data: { session } } = await supa.auth.getSession();
+    if (!session) {
+      container.innerHTML = '<div class="status-msg">Login expirou.</div>';
+      return;
+    }
+    const resp = await fetch(`${SUPABASE_URL}/functions/v1/ga-stats`, {
+      method: 'POST',
+      headers: {
+        'Authorization': `Bearer ${session.access_token}`,
+        'apikey': SUPABASE_ANON
+      }
+    });
+    if (!resp.ok) {
+      const errText = await resp.text();
+      let parsed;
+      try { parsed = JSON.parse(errText); } catch(e) { parsed = { error: errText }; }
+      container.innerHTML = `
+        <div class="status-msg error">
+          Edge Function ga-stats nao respondeu: ${esc(parsed.error || errText)}
+        </div>
+        <div class="status-msg" style="padding-top:0;">
+          Se ainda nao configurou, segue o guia em
+          <code style="background:rgba(255,255,255,0.08);padding:2px 6px;border-radius:4px;">supabase/functions/ga-stats/README.md</code>
+        </div>`;
+      return;
+    }
+    const data = await resp.json();
+    renderGoogleAnalytics(container, data);
+  } catch (e) {
+    container.innerHTML = `<div class="status-msg error">Erro: ${esc(e.message || String(e))}</div>`;
+  }
+}
+
+function renderGoogleAnalytics(container, data) {
+  const t = data.totals || {};
+  const fmtN = (v) => v ? Number(v).toLocaleString('pt-BR') : '0';
+  const fmtDuration = (s) => {
+    const n = parseFloat(s || '0');
+    if (n < 60) return `${Math.round(n)}s`;
+    return `${Math.floor(n/60)}m ${Math.round(n%60)}s`;
+  };
+  const fmtGaDate = (d) => d ? `${d.slice(6,8)}/${d.slice(4,6)}` : '-';
+
+  const totalsCards = `
+    <div class="cards-grid">
+      <div class="card accent">
+        <div class="label">Usuários Únicos 28d</div>
+        <div class="value">${fmtN(t.activeUsers)}</div>
+        <div class="sub">${fmtN(t.newUsers)} novos</div>
+      </div>
+      <div class="card">
+        <div class="label">Sessões 28d</div>
+        <div class="value">${fmtN(t.sessions)}</div>
+      </div>
+      <div class="card">
+        <div class="label">Pageviews 28d</div>
+        <div class="value">${fmtN(t.screenPageViews)}</div>
+      </div>
+      <div class="card">
+        <div class="label">Tempo Médio Sessão</div>
+        <div class="value">${fmtDuration(t.averageSessionDuration)}</div>
+      </div>
+    </div>`;
+
+  // Daily mini-chart
+  const daily = data.daily || [];
+  const max = Math.max(1, ...daily.map(d => Number(d.activeUsers)));
+  const dailyChart = daily.length === 0 ? '' : `
+    <div style="margin-top:18px;">
+      <h3 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Usuários por dia (últimos 14d)</h3>
+      ${daily.map(d => {
+        const pct = (Number(d.activeUsers) / max) * 100;
+        return `
+          <div class="bar-row">
+            <div class="bar-label">${fmtGaDate(d.date)}</div>
+            <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+            <div class="bar-value">${d.activeUsers}</div>
+          </div>`;
+      }).join('')}
+    </div>`;
+
+  // Top pages
+  const pages = data.pages || [];
+  const pagesTable = pages.length === 0 ? '' : `
+    <div style="margin-top:22px;">
+      <h3 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Top páginas (7d)</h3>
+      <table>
+        <thead><tr><th>Página</th><th class="num">Views</th><th class="num">Usuários</th></tr></thead>
+        <tbody>${pages.map(p => `
+          <tr>
+            <td><code style="font-size:11px;">${esc(p.pagePath)}</code></td>
+            <td class="num">${fmtN(p.screenPageViews)}</td>
+            <td class="num">${fmtN(p.activeUsers)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+
+  // Events
+  const events = data.events || [];
+  const eventsTable = events.length === 0 ? '' : `
+    <div style="margin-top:22px;">
+      <h3 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Top eventos (7d)</h3>
+      <table>
+        <thead><tr><th>Evento</th><th class="num">Total</th></tr></thead>
+        <tbody>${events.map(e => `
+          <tr>
+            <td>${esc(e.eventName)}</td>
+            <td class="num">${fmtN(e.eventCount)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+
+  // Sources
+  const sources = data.sources || [];
+  const sourcesTable = sources.length === 0 ? '' : `
+    <div style="margin-top:22px;">
+      <h3 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Origens de tráfego (7d)</h3>
+      <table>
+        <thead><tr><th>Source</th><th class="num">Sessões</th><th class="num">Usuários</th></tr></thead>
+        <tbody>${sources.map(s => `
+          <tr>
+            <td>${esc(s.sessionSource)}</td>
+            <td class="num">${fmtN(s.sessions)}</td>
+            <td class="num">${fmtN(s.activeUsers)}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table>
+    </div>`;
+
+  // Devices + Countries (2 colunas)
+  const devices = data.devices || [];
+  const countries = data.countries || [];
+  const twoCol = `
+    <div style="margin-top:22px;display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:18px;">
+      ${devices.length === 0 ? '' : `
+        <div>
+          <h3 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Dispositivos (28d)</h3>
+          <table>
+            <thead><tr><th>Tipo</th><th class="num">Usuários</th><th class="num">Sessões</th></tr></thead>
+            <tbody>${devices.map(d => `
+              <tr>
+                <td>${esc(d.deviceCategory)}</td>
+                <td class="num">${fmtN(d.activeUsers)}</td>
+                <td class="num">${fmtN(d.sessions)}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`}
+      ${countries.length === 0 ? '' : `
+        <div>
+          <h3 style="font-size:13px;color:var(--text-muted);text-transform:uppercase;letter-spacing:0.6px;margin-bottom:10px;">Top países (28d)</h3>
+          <table>
+            <thead><tr><th>País</th><th class="num">Usuários</th></tr></thead>
+            <tbody>${countries.map(c => `
+              <tr>
+                <td>${esc(c.country)}</td>
+                <td class="num">${fmtN(c.activeUsers)}</td>
+              </tr>`).join('')}
+            </tbody>
+          </table>
+        </div>`}
+    </div>`;
+
+  container.innerHTML = totalsCards + dailyChart + pagesTable + eventsTable + sourcesTable + twoCol;
 }
 
 async function loadOverview() {
