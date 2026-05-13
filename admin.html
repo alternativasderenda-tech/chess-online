@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin — Xadrez Online</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/icon-192.png">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #1e2a4a;
+    --accent: #e2b96f;
+    --accent2: #c9956b;
+    --text-light: #e8e8e8;
+    --text-muted: #8899aa;
+    --danger: #ff6b6b;
+    --success: #9be09b;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    background-image: radial-gradient(ellipse at 20% 50%, #1e2a4a 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 20%, #2a1e3e 0%, transparent 50%);
+    color: var(--text-light);
+    min-height: 100vh;
+    padding: 20px;
+  }
+  .container { max-width: 1200px; margin: 0 auto; }
+  header.top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 28px;
+    flex-wrap: wrap;
+    gap: 12px;
+  }
+  header.top h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    color: var(--accent);
+  }
+  header.top h1 .ic { margin-right: 6px; }
+  .header-actions { display: flex; gap: 8px; align-items: center; }
+  .btn {
+    background: var(--bg-card);
+    border: 1px solid rgba(226,185,111,0.4);
+    color: var(--text-light);
+    padding: 8px 14px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 13px;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn.primary { background: var(--accent); color: var(--bg-dark); border: none; font-weight: 600; }
+  .btn.primary:hover { background: var(--accent2); }
+
+  .status-msg {
+    text-align: center;
+    padding: 40px 20px;
+    color: var(--text-muted);
+    font-size: 14px;
+  }
+  .status-msg.error { color: var(--danger); }
+
+  /* Cards */
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+    gap: 12px;
+    margin-bottom: 28px;
+  }
+  .card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 16px 18px;
+  }
+  .card .label {
+    font-size: 11px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom: 4px;
+  }
+  .card .value {
+    font-size: 28px;
+    font-weight: 700;
+    color: var(--text-light);
+    line-height: 1.1;
+  }
+  .card .sub {
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 4px;
+  }
+  .card.accent .value { color: var(--accent); }
+  .card.danger .value { color: var(--danger); }
+  .card.success .value { color: var(--success); }
+
+  /* Sections */
+  .section {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 20px 22px;
+    margin-bottom: 20px;
+  }
+  .section h2 {
+    font-family: 'Playfair Display', serif;
+    color: var(--accent);
+    font-size: 18px;
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  /* Tables */
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+  }
+  table th {
+    text-align: left;
+    color: var(--text-muted);
+    font-weight: 500;
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  table td {
+    padding: 8px 6px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+  }
+  table tr:hover td { background: rgba(255,255,255,0.02); }
+  td.num, th.num { text-align: right; }
+  td.cheater { color: var(--danger); }
+  td.normal { color: var(--success); }
+  td.client-valid { color: #ffd86b; }
+  .pill {
+    display: inline-block;
+    background: rgba(255,255,255,0.06);
+    border-radius: 10px;
+    padding: 1px 8px;
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  .pill.normal { background: rgba(155,224,155,0.12); color: var(--success); }
+  .pill.cheater { background: rgba(255,107,107,0.12); color: var(--danger); }
+  .pill.cv { background: rgba(255,216,107,0.12); color: #ffd86b; }
+
+  /* Bar chart simples */
+  .bar-row {
+    display: grid;
+    grid-template-columns: 80px 1fr 60px;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 6px;
+  }
+  .bar-label { font-size: 12px; color: var(--text-muted); }
+  .bar-track {
+    background: rgba(255,255,255,0.05);
+    border-radius: 4px;
+    height: 18px;
+    overflow: hidden;
+  }
+  .bar-fill {
+    background: linear-gradient(90deg, var(--accent2), var(--accent));
+    height: 100%;
+    border-radius: 4px;
+  }
+  .bar-value { font-size: 12px; text-align: right; color: var(--text-light); font-weight: 600; }
+
+  footer.site {
+    text-align: center;
+    margin-top: 30px;
+    padding-top: 18px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 11px;
+    color: var(--text-muted);
+  }
+  footer.site a { color: var(--text-muted); text-decoration: none; margin: 0 8px; }
+  footer.site a:hover { color: var(--accent); }
+
+  @media (max-width: 720px) {
+    .cards-grid { grid-template-columns: repeat(2, 1fr); }
+    .card .value { font-size: 22px; }
+    table { font-size: 12px; }
+    .bar-row { grid-template-columns: 70px 1fr 50px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="top">
+    <h1><span class="ic">📊</span>Admin — Xadrez Online</h1>
+    <div class="header-actions">
+      <span id="user-name-display" style="color:var(--text-muted); font-size:13px;"></span>
+      <button class="btn" onclick="window.location.reload()">🔄 Atualizar</button>
+      <a href="/" class="btn primary">▶ Jogar</a>
+    </div>
+  </header>
+
+  <div id="loading" class="status-msg">Verificando autenticação...</div>
+  <div id="error" class="status-msg error" style="display:none;"></div>
+
+  <div id="dashboard" style="display:none;">
+    <div class="cards-grid" id="cards-overview"></div>
+
+    <div class="section">
+      <h2>📈 Por Dificuldade</h2>
+      <div id="by-difficulty">Carregando...</div>
+    </div>
+
+    <div class="section">
+      <h2>📅 Atividade dos Últimos 14 Dias</h2>
+      <div id="daily-chart">Carregando...</div>
+    </div>
+
+    <div class="section">
+      <h2>🏆 Top Jogadores</h2>
+      <div id="top-players">Carregando...</div>
+    </div>
+
+    <div class="section">
+      <h2>⚠️ Scores Suspeitos (Cheater)</h2>
+      <div id="cheaters">Carregando...</div>
+    </div>
+
+    <div class="section">
+      <h2>🕐 Últimos Scores Registrados</h2>
+      <div id="recent-scores">Carregando...</div>
+    </div>
+
+    <div class="section">
+      <h2>🎯 Partidas Online Recentes</h2>
+      <div id="online-games">Carregando...</div>
+    </div>
+  </div>
+
+  <footer class="site">
+    <a href="/">Jogar</a> •
+    <a href="/aprenda">Aprenda</a> •
+    <a href="/privacidade">Privacidade</a> •
+    <a href="/termos">Termos</a>
+  </footer>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrZ2NseWxkYmJnYmZqZ3lvZWVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MDkyNTgsImV4cCI6MjA5MzE4NTI1OH0.Pk5PEc9dbWBc4amjGa4AZgsNTyvg2728ZQwhxZOY4-E';
+const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let currentUser = null;
+
+function esc(s) {
+  return String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function fmtTime(s) {
+  if (!s) return '-';
+  const m = Math.floor(s / 60);
+  const sec = s % 60;
+  return `${m}:${sec.toString().padStart(2,'0')}`;
+}
+function fmtDateTime(iso) {
+  if (!iso) return '-';
+  const d = new Date(iso);
+  return d.toLocaleString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+function fmtDate(iso) {
+  if (!iso) return '-';
+  const d = new Date(iso);
+  return d.toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit' });
+}
+const DIFF_NAMES = { 1: 'Fácil', 2: 'Médio', 3: 'Difícil', 4: 'Expert' };
+
+function showError(msg) {
+  document.getElementById('loading').style.display = 'none';
+  const err = document.getElementById('error');
+  err.style.display = 'block';
+  err.textContent = msg;
+}
+
+async function init() {
+  // 1) Check login
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) {
+    showError('Você precisa estar logado pra acessar o painel admin. Vá pro jogo, faça login com Google, e volte aqui.');
+    return;
+  }
+  currentUser = session.user;
+  document.getElementById('user-name-display').textContent = '👤 ' + (currentUser.user_metadata?.full_name || currentUser.email);
+
+  // 2) Check admin
+  const { data: adminRow, error: adminErr } = await supa.from('admin_users')
+    .select('user_id').eq('user_id', currentUser.id).maybeSingle();
+  if (adminErr) { showError('Erro ao verificar permissões: ' + adminErr.message); return; }
+  if (!adminRow) {
+    showError('Acesso negado. Você não é admin.');
+    return;
+  }
+
+  // 3) Show dashboard and load data
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('dashboard').style.display = 'block';
+  await Promise.all([
+    loadOverview(),
+    loadByDifficulty(),
+    loadDaily(),
+    loadTopPlayers(),
+    loadCheaters(),
+    loadRecentScores(),
+    loadOnlineGames()
+  ]);
+}
+
+async function loadOverview() {
+  const { data, error } = await supa.rpc('admin_stats_overview');
+  const container = document.getElementById('cards-overview');
+  if (error || !data) {
+    container.innerHTML = '<div class="status-msg error">Erro ao carregar overview</div>';
+    return;
+  }
+  const cards = [
+    { label: 'Total Scores', value: data.total_scores, sub: data.last_24h_scores + ' nas últimas 24h' },
+    { label: 'Usuários Únicos', value: data.unique_users, sub: 'que já registraram score' },
+    { label: 'Partidas vs IA', value: data.total_ai_games, sub: 'sessões com lances' },
+    { label: 'Scores Normais', value: data.normal_scores, sub: 'classe: normal', cls: 'success' },
+    { label: 'Cheaters', value: data.cheater_scores, sub: 'flags do anti-cheat', cls: 'danger' },
+    { label: 'Client-validated', value: data.client_validated_scores, sub: 'registrados pós-login', cls: 'accent' },
+    { label: 'Partidas Online', value: data.total_online_games, sub: `${data.online_finished} finalizadas, ${data.online_abandoned} abandonadas` },
+    { label: 'Online Ativas', value: data.online_active, sub: 'em andamento agora', cls: 'accent' },
+    { label: 'Scores 7 dias', value: data.last_7d_scores, sub: 'últimos 7 dias' }
+  ];
+  container.innerHTML = cards.map(c => `
+    <div class="card${c.cls ? ' '+c.cls : ''}">
+      <div class="label">${esc(c.label)}</div>
+      <div class="value">${c.value ?? 0}</div>
+      ${c.sub ? '<div class="sub">'+esc(c.sub)+'</div>' : ''}
+    </div>
+  `).join('');
+}
+
+async function loadByDifficulty() {
+  const { data, error } = await supa.rpc('admin_stats_by_difficulty');
+  const container = document.getElementById('by-difficulty');
+  if (error) { container.innerHTML = 'Erro: ' + esc(error.message); return; }
+  if (!data || data.length === 0) { container.innerHTML = '<div class="status-msg">Sem dados ainda.</div>'; return; }
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Nível</th><th class="num">Total</th><th class="num">Cheaters</th>
+        <th class="num">Client-val.</th><th class="num">Tempo Médio</th><th class="num">Melhor</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(r => `
+          <tr>
+            <td>${esc(DIFF_NAMES[r.difficulty] || r.difficulty)}</td>
+            <td class="num">${r.total}</td>
+            <td class="num cheater">${r.cheaters}</td>
+            <td class="num client-valid">${r.client_validated}</td>
+            <td class="num">${fmtTime(r.avg_seconds)}</td>
+            <td class="num">${fmtTime(r.best_seconds)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+
+async function loadDaily() {
+  const { data, error } = await supa.rpc('admin_stats_daily', { days_back: 14 });
+  const container = document.getElementById('daily-chart');
+  if (error) { container.innerHTML = 'Erro: ' + esc(error.message); return; }
+  if (!data || data.length === 0) { container.innerHTML = '<div class="status-msg">Sem atividade nos últimos 14 dias.</div>'; return; }
+  const max = Math.max(...data.map(d => Number(d.scores)));
+  // ordena ascending pra leitura mais natural
+  const sorted = [...data].sort((a, b) => a.dia < b.dia ? -1 : 1);
+  container.innerHTML = sorted.map(d => {
+    const pct = max > 0 ? (Number(d.scores) / max) * 100 : 0;
+    return `
+      <div class="bar-row">
+        <div class="bar-label">${fmtDate(d.dia)}</div>
+        <div class="bar-track"><div class="bar-fill" style="width:${pct}%"></div></div>
+        <div class="bar-value">${d.scores}</div>
+      </div>`;
+  }).join('');
+}
+
+async function loadTopPlayers() {
+  const { data, error } = await supa.rpc('admin_top_players', { lim: 15 });
+  const container = document.getElementById('top-players');
+  if (error) { container.innerHTML = 'Erro: ' + esc(error.message); return; }
+  if (!data || data.length === 0) { container.innerHTML = '<div class="status-msg">Sem jogadores ainda.</div>'; return; }
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>#</th><th>Jogador</th><th class="num">Scores</th>
+        <th>Maior Nível</th><th>Última partida</th>
+      </tr></thead>
+      <tbody>
+        ${data.map((p, i) => `
+          <tr>
+            <td>${i+1}</td>
+            <td>${esc(p.username || '—')}</td>
+            <td class="num">${p.total_scores}</td>
+            <td>${esc(DIFF_NAMES[p.best_difficulty] || '-')}</td>
+            <td>${fmtDateTime(p.last_played)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+
+async function loadCheaters() {
+  const { data, error } = await supa.from('scores')
+    .select('username, difficulty, player_seconds, suspicion_score, mouse_movements, drag_count, idle_periods, client_validated, created_at')
+    .eq('status', 'cheater')
+    .order('created_at', { ascending: false })
+    .limit(20);
+  const container = document.getElementById('cheaters');
+  if (error) { container.innerHTML = 'Erro: ' + esc(error.message); return; }
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="status-msg">Nenhum score flagged como cheater. ✓</div>'; return;
+  }
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Quando</th><th>Jogador</th><th>Nível</th>
+        <th class="num">Tempo</th><th class="num">Susp.</th>
+        <th class="num">Mouse</th><th class="num">Drags</th><th class="num">Idle</th>
+        <th>Tipo</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(s => `
+          <tr>
+            <td>${fmtDateTime(s.created_at)}</td>
+            <td>${esc(s.username || '—')}</td>
+            <td>${esc(DIFF_NAMES[s.difficulty] || s.difficulty)}</td>
+            <td class="num">${fmtTime(s.player_seconds)}</td>
+            <td class="num cheater">${s.suspicion_score ?? '-'}</td>
+            <td class="num">${s.mouse_movements ?? '-'}</td>
+            <td class="num">${s.drag_count ?? '-'}</td>
+            <td class="num">${s.idle_periods ?? '-'}</td>
+            <td>${s.client_validated ? '<span class="pill cv">Parcial</span>' : '<span class="pill cheater">Cheater</span>'}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+
+async function loadRecentScores() {
+  const { data, error } = await supa.from('scores')
+    .select('username, difficulty, player_seconds, status, suspicion_score, client_validated, created_at')
+    .order('created_at', { ascending: false })
+    .limit(30);
+  const container = document.getElementById('recent-scores');
+  if (error) { container.innerHTML = 'Erro: ' + esc(error.message); return; }
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="status-msg">Sem scores ainda.</div>'; return;
+  }
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Quando</th><th>Jogador</th><th>Nível</th>
+        <th class="num">Tempo</th><th class="num">Susp.</th><th>Status</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(s => `
+          <tr>
+            <td>${fmtDateTime(s.created_at)}</td>
+            <td>${esc(s.username || '—')}</td>
+            <td>${esc(DIFF_NAMES[s.difficulty] || s.difficulty)}</td>
+            <td class="num">${fmtTime(s.player_seconds)}</td>
+            <td class="num">${s.suspicion_score ?? '-'}</td>
+            <td>
+              ${s.status === 'cheater'
+                ? '<span class="pill cheater">Cheater</span>'
+                : '<span class="pill normal">Normal</span>'}
+              ${s.client_validated ? ' <span class="pill cv">Parcial</span>' : ''}
+            </td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+
+async function loadOnlineGames() {
+  const { data, error } = await supa.from('games')
+    .select('id, white_username, black_username, status, result, end_reason, time_control, started_at, ended_at')
+    .order('created_at', { ascending: false })
+    .limit(20);
+  const container = document.getElementById('online-games');
+  if (error) { container.innerHTML = 'Erro: ' + esc(error.message); return; }
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="status-msg">Nenhuma partida online ainda.</div>'; return;
+  }
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>ID</th><th>Brancas</th><th>Pretas</th><th>Status</th>
+        <th>Resultado</th><th>Tempo</th><th>Início</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(g => `
+          <tr>
+            <td><code style="font-size:11px;">${esc(g.id)}</code></td>
+            <td>${esc(g.white_username || '—')}</td>
+            <td>${esc(g.black_username || '—')}</td>
+            <td>${esc(g.status)}</td>
+            <td>${esc(g.result || g.end_reason || '-')}</td>
+            <td class="num">${g.time_control ? g.time_control + 's' : '-'}</td>
+            <td>${fmtDateTime(g.started_at)}</td>
+          </tr>
+        `).join('')}
+      </tbody>
+    </table>`;
+}
+
+init();
+</script>
+
+</body>
+</html>

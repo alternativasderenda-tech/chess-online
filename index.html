@@ -1444,6 +1444,7 @@
   <a href="/termos">Termos de Uso</a>
   <span class="sep">•</span>
   <a href="mailto:alternativasderenda@gmail.com">Contato</a>
+  <a href="/admin" id="footer-admin-link" style="display:none; margin-left:8px;">🔒 Admin</a>
 </footer>
 
 <!-- Tutorial Celebration -->
@@ -1786,11 +1787,24 @@ function onAuthChange(user) {
     btnLogin.style.display = 'none';
     userInfo.style.display = 'inline-flex';
     userName.textContent = '👤 ' + userDisplayName(user);
+    checkAdminLink();  // mostra link /admin se for admin
   } else {
     btnLogin.style.display = 'inline-flex';
     userInfo.style.display = 'none';
+    const adminLink = document.getElementById('footer-admin-link');
+    if (adminLink) adminLink.style.display = 'none';
   }
   updateLoginPromptBanner();
+}
+
+async function checkAdminLink() {
+  if (!supa || !currentUser) return;
+  try {
+    const { data } = await supa.from('admin_users')
+      .select('user_id').eq('user_id', currentUser.id).maybeSingle();
+    const adminLink = document.getElementById('footer-admin-link');
+    if (adminLink && data) adminLink.style.display = 'inline';
+  } catch (e) {}
 }
 
 function updateLoginPromptBanner() {
