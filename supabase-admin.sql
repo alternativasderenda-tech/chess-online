@@ -14,7 +14,8 @@ create table if not exists admin_users (
 -- Depois rode (com o ID correto):
 -- insert into admin_users (user_id) values ('SEU_UUID_AQUI') on conflict do nothing;
 
-insert into admin_users (user_id) values ('6b3de972-20bb-446a-9c28-5562c1b2d4dc')
+-- alternativasderenda@gmail.com (conta principal do projeto)
+insert into admin_users (user_id) values ('0aba9338-87e7-4cfd-ae42-efd702276712')
 on conflict (user_id) do nothing;
 
 -- Helper: checa se usuario logado e' admin
