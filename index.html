@@ -4752,6 +4752,8 @@ function downloadGame() {
   const date = now.toISOString().split('T')[0].replace(/-/g, '.');
   const depthVal = document.getElementById('ai-depth').value;
   const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert', 'tutorial': 'Aprendiz' };
+  // Slug em CAIXA-ALTA sem acentos pra usar no nome do arquivo
+  const diffSlug = { '1': 'FACIL', '2': 'MEDIO', '3': 'DIFICIL', '4': 'EXPERT', 'tutorial': 'APRENDIZ' };
   const whiteName = document.getElementById('name-white').textContent;
   const blackName = document.getElementById('name-black').textContent;
 
@@ -4782,18 +4784,43 @@ function downloadGame() {
   });
   pgn += movesText.trim() + ' ' + result + '\n';
 
+  // Calcula tempo total da partida (em segundos)
+  let totalSeconds = 0;
+  if (typeof behavior !== 'undefined' && behavior && behavior.gameStartTs) {
+    totalSeconds = Math.max(0, Math.round((Date.now() - behavior.gameStartTs) / 1000));
+  }
+  const timeStr =
+    String(Math.floor(totalSeconds / 60)).padStart(2, '0') + '.' +
+    String(totalSeconds % 60).padStart(2, '0');
+
+  // Determina o "slug" pro nome do arquivo
+  let modeSlug;
+  if (gameMode === 'online') {
+    modeSlug = 'ONLINE';
+  } else if (tutorialMode) {
+    modeSlug = 'APRENDIZ';
+  } else {
+    modeSlug = diffSlug[depthVal] || String(depthVal).toUpperCase();
+  }
+
+  const fileName = `partida-xadrez-${date.replace(/\./g, '')}-${modeSlug}-${timeStr}.pgn`;
+
   // Download
   const blob = new Blob([pgn], { type: 'text/plain;charset=utf-8' });
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `partida-xadrez-${date.replace(/\./g, '')}.pgn`;
+  a.download = fileName;
   document.body.appendChild(a);
   a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 
-  trackEvent('game_saved', { difficulty: diffNames[depthVal] || depthVal, moves: moveNotations.length });
+  trackEvent('game_saved', {
+    difficulty: diffNames[depthVal] || depthVal,
+    moves: moveNotations.length,
+    duration_sec: totalSeconds
+  });
 }
 
 // ======================== PGN IMPORT ========================
