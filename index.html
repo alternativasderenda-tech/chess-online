@@ -997,9 +997,12 @@
     padding: 8px 6px;
     border-bottom: 1px solid rgba(255,255,255,0.04);
   }
-  .rank-table tr:nth-child(1) td { color: var(--accent); font-weight: 600; }
-  .rank-table tr:nth-child(2) td { color: #c0c0c0; }
-  .rank-table tr:nth-child(3) td { color: #cd7f32; }
+  /* Podio: ouro, prata, bronze — todos em negrito pra destacar do resto */
+  .rank-table tr:nth-child(1) td { color: var(--accent); font-weight: 700; }
+  .rank-table tr:nth-child(2) td { color: #b8c6d9; font-weight: 700; }
+  .rank-table tr:nth-child(3) td { color: #e09850; font-weight: 700; }
+  /* 4o em diante: texto mais discreto pra nao competir com o podio */
+  .rank-table tr:nth-child(n+4) td { color: var(--text-muted); }
   .rank-table th:nth-child(3), .rank-table td:nth-child(3) { text-align: right; }
   .rank-empty {
     text-align: center;
