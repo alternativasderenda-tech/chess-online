@@ -223,6 +223,18 @@
   <div id="dashboard" style="display:none;">
     <div class="cards-grid" id="cards-overview"></div>
 
+    <div class="section" id="fraud-section" style="border-color: rgba(255,107,107,0.3);">
+      <h2 style="color: var(--danger);">🚨 Scores Sem Jogo (Possível Fraude)</h2>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+        Scores cujo <code>session_id</code> não tem lances correspondentes em <code>ai_game_moves</code>.
+        Placar sem jogo = fabricado. Não são removidos automaticamente — só sinalizados aqui.
+      </p>
+      <div style="margin-bottom:12px;">
+        <button class="btn" onclick="rescanOrphans()" id="rescan-btn">🔍 Re-escanear e marcar como 'hacker'</button>
+      </div>
+      <div id="fraud-content">Carregando...</div>
+    </div>
+
     <div class="section">
       <h2>📈 Por Dificuldade</h2>
       <div id="by-difficulty">Carregando...</div>
@@ -325,6 +337,7 @@ async function init() {
                               // org policy). Ver supabase/functions/ga-stats/
                               // pra reativar no futuro.
     loadOverview(),
+    loadOrphanScores(),
     loadByDifficulty(),
     loadDaily(),
     loadTopPlayers(),
@@ -332,6 +345,67 @@ async function init() {
     loadRecentScores(),
     loadOnlineGames()
   ]);
+}
+
+async function loadOrphanScores() {
+  const container = document.getElementById('fraud-content');
+  const { data, error } = await supa.rpc('admin_orphan_scores');
+  if (error) {
+    container.innerHTML = '<div class="status-msg error">Erro: ' + esc(error.message) + '</div>';
+    return;
+  }
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="status-msg" style="color:var(--success);">✓ Nenhum score sem jogo. Ranking limpo.</div>';
+    return;
+  }
+  container.innerHTML = `
+    <table>
+      <thead><tr>
+        <th>Quando</th><th>Jogador</th><th>Nível</th>
+        <th class="num">Tempo</th><th>Status</th><th>Session ID</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(s => `
+          <tr>
+            <td>${fmtDateTime(s.created_at)}</td>
+            <td class="cheater">${esc(s.username || '—')}</td>
+            <td>${esc(DIFF_NAMES[s.difficulty] || s.difficulty)}</td>
+            <td class="num">${fmtTime(s.player_seconds)}</td>
+            <td>${s.status === 'hacker'
+                ? '<span class="pill cheater">HACKER</span>'
+                : '<span class="pill">não marcado</span>'}</td>
+            <td><code style="font-size:10px;">${esc(s.session_id)}</code></td>
+          </tr>`).join('')}
+      </tbody>
+    </table>
+    <p style="font-size:12px; color:var(--text-muted); margin-top:10px;">
+      ${data.length} score(s) sem jogo correspondente.
+    </p>`;
+}
+
+async function rescanOrphans() {
+  const btn = document.getElementById('rescan-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Escaneando...';
+  try {
+    const { data, error } = await supa.rpc('admin_flag_orphan_scores');
+    if (error) {
+      await window.alert ? alert('Erro: ' + error.message) : null;
+      console.error(error);
+    } else {
+      const n = (data || []).length;
+      alert(n === 0
+        ? 'Nenhum score órfão novo encontrado.'
+        : `${n} score(s) marcado(s) como 'hacker'. Veja a lista atualizada.`);
+      await loadOrphanScores();
+    }
+  } catch (e) {
+    console.error(e);
+    alert('Erro ao re-escanear: ' + (e.message || e));
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🔍 Re-escanear e marcar como \'hacker\'';
+  }
 }
 
 async function loadGoogleAnalytics() {

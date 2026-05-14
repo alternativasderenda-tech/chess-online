@@ -2121,42 +2121,21 @@ async function submitScore(data, opts) {
       }
       return true;
     } catch (e) {
-      console.warn('RPC register_ai_score falhou, tentando fallback:', e.message || e);
-      // 'no moves found' agora so deveria acontecer se a partida e' antiga
-      // demais OU o usuario manipulou. Tentamos o fallback direto.
-      if (e.message && e.message.indexOf('no moves found') >= 0) {
-        console.warn('No moves in DB for session — falling back to direct INSERT');
-        // cai pro fallback abaixo (direct insert sem validacao)
-      }
-      // Outros erros (rede, etc): cai pro fallback abaixo
+      console.error('RPC register_ai_score falhou:', e.message || e);
+      // SEM fallback de INSERT direto — todo registro de score precisa
+      // passar pela register_ai_score, que valida que existe jogo real.
+      // Score sem jogo nao e' valido. Se a RPC falhou, o registro falha.
+      const msg = (e.message || '').indexOf('no moves found') >= 0
+        ? 'Não foi possível validar esta partida (sem registro de lances). Jogue logado desde o início pra registrar.'
+        : 'Não foi possível registrar a pontuação agora. Tente novamente.';
+      await showAlert(msg, { error: true });
+      return false;
     }
   }
 
-  // Fallback: INSERT direto (sem validacao server-side)
-  const row = {
-    user_id: currentUser.id,
-    username,
-    difficulty: data.difficulty,
-    player_seconds: data.player_seconds,
-    ...b
-  };
-
-  const { error } = await supa.from('scores').insert(row);
-  if (error) {
-    console.error('submitScore error:', error);
-    await showAlert('Erro ao registrar: ' + error.message, { error: true });
-    return false;
-  }
-  if (typeof trackEvent === 'function') {
-    trackEvent('score_registered', {
-      difficulty: data.difficulty,
-      seconds: data.player_seconds,
-      status: b.status || 'unknown',
-      suspicion_score: b.suspicion_score,
-      server_validated: false
-    });
-  }
-  return true;
+  // Sem sessionId — nao deveria acontecer em fluxo normal
+  await showAlert('Não foi possível registrar: sessão de jogo não encontrada.', { error: true });
+  return false;
 }
 
 async function checkPendingScore() {
