@@ -2650,8 +2650,18 @@ async function sendMoveToServer(move, isGameOver, gameResult) {
   }
 }
 
+function buildShareLink(gameId) {
+  // Adiciona UTM params pra rastrear no GA quem chegou via Friend Match.
+  // O GA captura automaticamente quando a pagina carrega.
+  return window.location.origin + window.location.pathname
+    + '?game=' + encodeURIComponent(gameId)
+    + '&utm_source=friend_match'
+    + '&utm_medium=link'
+    + '&utm_campaign=invite';
+}
+
 function showShareModal(gameId, creatorColor) {
-  const url = window.location.origin + window.location.pathname + '?game=' + gameId;
+  const url = buildShareLink(gameId);
   document.getElementById('share-link-input').value = url;
   const wa = document.getElementById('share-whatsapp');
   const text = encodeURIComponent('Vamos jogar xadrez? Entra aqui: ' + url);
@@ -2725,7 +2735,7 @@ function leaveOnlineMode() {
 
 async function copyOnlineGameLink() {
   if (!onlineGameId) return;
-  const url = window.location.origin + window.location.pathname + '?game=' + onlineGameId;
+  const url = buildShareLink(onlineGameId);
   const btn = document.getElementById('online-copy-link-btn');
   try {
     await navigator.clipboard.writeText(url);
