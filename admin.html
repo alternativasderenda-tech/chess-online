@@ -810,12 +810,22 @@ async function loadDaily() {
   const { data, error } = await supa.rpc('admin_stats_daily', { days_back: 14 });
   const container = document.getElementById('daily-chart');
   if (error) { container.innerHTML = 'Erro: ' + esc(error.message); return; }
-  if (!data || data.length === 0) { container.innerHTML = '<div class="status-msg">Sem atividade nos últimos 14 dias.</div>'; return; }
-  const max = Math.max(...data.map(d => Number(d.scores)));
-  // ordena ascending pra leitura mais natural
-  const sorted = [...data].sort((a, b) => a.dia < b.dia ? -1 : 1);
-  container.innerHTML = sorted.map(d => {
-    const pct = max > 0 ? (Number(d.scores) / max) * 100 : 0;
+
+  // Preenche os 14 dias completos (RPC pula dias com 0), do mais antigo
+  // pro mais novo. Inclui hoje mesmo sem score.
+  const points = [];
+  const today = new Date();
+  for (let i = 13; i >= 0; i--) {
+    const d = new Date(today);
+    d.setDate(d.getDate() - i);
+    const iso = brtDateStr(d);
+    const existing = (data || []).find(r => r.dia === iso);
+    points.push({ dia: iso, scores: existing ? Number(existing.scores) : 0 });
+  }
+
+  const max = Math.max(1, ...points.map(p => p.scores));
+  container.innerHTML = points.map(d => {
+    const pct = (d.scores / max) * 100;
     return `
       <div class="bar-row">
         <div class="bar-label">${fmtDate(d.dia)}</div>
