@@ -3656,7 +3656,7 @@ function executeMove(move, opts) {
       setStatus('Empate por afogamento!');
       trackEvent('game_over', { result: 'stalemate', total_moves: fullMoves });
       if (!tutorialMode) {
-        setTimeout(() => showGameOverPopup(null, null, null), 600);
+        setTimeout(() => showGameOverPopup(null, null, null, 'stalemate'), 600);
       }
       if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
     }
@@ -3666,7 +3666,11 @@ function executeMove(move, opts) {
   if (halfMoves >= 100) {
     gameOver = true;
     stopTimer();
-    setStatus('Empate — regra dos 50 movimentos');
+    setStatus('Empate — regra dos 50 lances');
+    trackEvent('game_over', { result: 'fifty_moves', total_moves: fullMoves });
+    if (!tutorialMode) {
+      setTimeout(() => showGameOverPopup(null, null, null, 'fifty_moves'), 600);
+    }
     if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
     return;
   }
@@ -3675,6 +3679,10 @@ function executeMove(move, opts) {
     gameOver = true;
     stopTimer();
     setStatus('Empate — material insuficiente');
+    trackEvent('game_over', { result: 'insufficient_material', total_moves: fullMoves });
+    if (!tutorialMode) {
+      setTimeout(() => showGameOverPopup(null, null, null, 'insufficient_material'), 600);
+    }
     if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
     return;
   }
@@ -5059,7 +5067,16 @@ function exitReplay() {
 
 // ======================== GAME OVER POPUP ========================
 
-function showGameOverPopup(playerWon, winner, difficulty) {
+// Mapa de motivos de empate → texto exibido pro usuario
+const DRAW_REASON_TEXT = {
+  stalemate: 'Empate por afogamento — o adversário não tem nenhuma jogada legal e o rei dele não está em xeque.',
+  fifty_moves: 'Empate pela regra dos 50 lances — 50 jogadas sem captura e sem movimento de peão.',
+  insufficient_material: 'Empate por material insuficiente — nenhum dos lados tem peças suficientes pra dar xeque-mate.',
+  threefold: 'Empate por repetição tripla — a mesma posição apareceu 3 vezes.',
+  agreement: 'Empate por acordo entre os jogadores.'
+};
+
+function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
   // Conta partidas completadas em modo IA pra timing do banner de install PWA
   if (gameMode === 'ai' && typeof incrementGamesPlayed === 'function') {
     incrementGamesPlayed();
@@ -5104,7 +5121,10 @@ function showGameOverPopup(playerWon, winner, difficulty) {
     if (playerWon === null) {
       icon.textContent = '🤝';
       title.textContent = 'Empate!';
-      text.textContent = `Você empatou com ${opp}. Boa partida!`;
+      const reasonText = DRAW_REASON_TEXT[drawReason];
+      text.textContent = reasonText
+        ? `Você empatou com ${opp}. ${reasonText}`
+        : `Você empatou com ${opp}. Boa partida!`;
     } else if (playerWon) {
       icon.textContent = '🏆';
       title.textContent = 'Você Venceu!';
@@ -5132,7 +5152,7 @@ function showGameOverPopup(playerWon, winner, difficulty) {
     // Draw
     icon.textContent = '🤝';
     title.textContent = 'Empate!';
-    text.textContent = 'Ninguém venceu desta vez. Tente novamente!';
+    text.textContent = DRAW_REASON_TEXT[drawReason] || 'Ninguém venceu desta vez. Tente novamente!';
     nextBtn.style.display = 'none';
   } else if (playerWon) {
     // Player won
