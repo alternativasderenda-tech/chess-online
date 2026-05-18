@@ -5067,13 +5067,28 @@ function exitReplay() {
 
 // ======================== GAME OVER POPUP ========================
 
-// Mapa de motivos de empate → texto exibido pro usuario
+// Mapa de motivos de empate → titulo + detalhe (renderizados em 2 niveis)
 const DRAW_REASON_TEXT = {
-  stalemate: 'Empate por afogamento — o adversário não tem nenhuma jogada legal e o rei dele não está em xeque.',
-  fifty_moves: 'Empate pela regra dos 50 lances — 50 jogadas sem captura e sem movimento de peão.',
-  insufficient_material: 'Empate por material insuficiente — nenhum dos lados tem peças suficientes pra dar xeque-mate.',
-  threefold: 'Empate por repetição tripla — a mesma posição apareceu 3 vezes.',
-  agreement: 'Empate por acordo entre os jogadores.'
+  stalemate: {
+    title: 'Empate por afogamento',
+    detail: 'O adversário não tem nenhuma jogada legal e o rei dele não está em xeque.'
+  },
+  fifty_moves: {
+    title: 'Empate pela regra dos 50 lances',
+    detail: '50 jogadas sem captura e sem movimento de peão.'
+  },
+  insufficient_material: {
+    title: 'Empate por material insuficiente',
+    detail: 'Nenhum dos lados tem peças suficientes pra dar xeque-mate.'
+  },
+  threefold: {
+    title: 'Empate por repetição tripla',
+    detail: 'A mesma posição apareceu 3 vezes.'
+  },
+  agreement: {
+    title: 'Empate por acordo',
+    detail: 'Os dois jogadores concordaram em empatar.'
+  }
 };
 
 function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
@@ -5121,10 +5136,16 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
     if (playerWon === null) {
       icon.textContent = '🤝';
       title.textContent = 'Empate!';
-      const reasonText = DRAW_REASON_TEXT[drawReason];
-      text.textContent = reasonText
-        ? `Você empatou com ${opp}. ${reasonText}`
-        : `Você empatou com ${opp}. Boa partida!`;
+      const reason = DRAW_REASON_TEXT[drawReason];
+      if (reason) {
+        text.textContent = `Você empatou com ${opp} — ${reason.title}.`;
+        if (scoreInfo) {
+          scoreInfo.textContent = reason.detail;
+          scoreInfo.style.display = 'block';
+        }
+      } else {
+        text.textContent = `Você empatou com ${opp}. Boa partida!`;
+      }
     } else if (playerWon) {
       icon.textContent = '🏆';
       title.textContent = 'Você Venceu!';
@@ -5152,7 +5173,16 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
     // Draw
     icon.textContent = '🤝';
     title.textContent = 'Empate!';
-    text.textContent = DRAW_REASON_TEXT[drawReason] || 'Ninguém venceu desta vez. Tente novamente!';
+    const reason = DRAW_REASON_TEXT[drawReason];
+    if (reason) {
+      text.textContent = reason.title;
+      if (scoreInfo) {
+        scoreInfo.textContent = reason.detail;
+        scoreInfo.style.display = 'block';
+      }
+    } else {
+      text.textContent = 'Ninguém venceu desta vez. Tente novamente!';
+    }
     nextBtn.style.display = 'none';
   } else if (playerWon) {
     // Player won
