@@ -1010,6 +1010,21 @@
     color: var(--accent) !important;
     font-weight: 700;
   }
+  /* Botao de replay no ranking (top 3) */
+  .replay-btn {
+    background: rgba(226,185,111,0.15);
+    border: 1px solid rgba(226,185,111,0.45);
+    color: var(--accent);
+    border-radius: 6px;
+    padding: 2px 9px;
+    font-size: 11px;
+    cursor: pointer;
+    font-family: inherit;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .replay-btn:hover { background: rgba(226,185,111,0.32); }
+
   /* Bloco "sua posicao" (quando o usuario esta fora do top 50) */
   .my-position-row { margin-top: 12px; }
   .mp-sep {
@@ -1936,7 +1951,8 @@ async function bulkInsertLocalMoves(pendingGame) {
     to_sq: m.to_sq,
     promotion: m.promotion,
     notation: m.notation,
-    difficulty: m.difficulty
+    difficulty: m.difficulty,
+    is_ai_move: !!m.is_ai_move
   }));
   const { error } = await supa.from('ai_game_moves').insert(rows);
   if (error) {
@@ -2384,10 +2400,17 @@ async function loadRanking() {
     let html = `
       <table class="rank-table">
         <thead><tr><th>#</th><th>Jogador</th><th>Tempo</th></tr></thead>
-        <tbody>${data.map(s => `
-          <tr class="${myId && s.user_id === myId ? 'me' : ''}">
-            <td>${s.rank_pos}</td><td>${escapeHtml(s.username)}</td><td>${fmtSeconds(s.best_seconds)}</td>
-          </tr>`).join('')}</tbody>
+        <tbody>${data.map(s => {
+          // Top 3 com session_id ganham botao de replay
+          const replayBtn = (s.rank_pos <= 3 && s.session_id)
+            ? ` <button class="replay-btn" onclick="replaySessionFromDb('${escapeHtml(s.session_id)}')">▶ replay</button>`
+            : '';
+          return `
+            <tr class="${myId && s.user_id === myId ? 'me' : ''}">
+              <td>${s.rank_pos}</td><td>${escapeHtml(s.username)}</td>
+              <td>${fmtSeconds(s.best_seconds)}${replayBtn}</td>
+            </tr>`;
+        }).join('')}</tbody>
       </table>`;
     if (myId && !inTop) {
       const mp = await fetchMyRankPosition();
@@ -3692,16 +3715,18 @@ function executeMove(move, opts) {
     else endPlayerTurnTimer();
   }
 
-  // Anti-cheat: registra lance do jogador (em memoria + DB se logado, sempre em localStorage)
-  if (gameMode === 'ai' && playAsVal !== 'both' && !tutorialMode
-      && moverColor === playerColor && aiSessionId) {
-    aiSessionMoveNumber++;
+  // Registra TODO lance da partida vs IA (jogador + IA) — permite
+  // replay completo. is_ai_move distingue os dois. O anti-cheat
+  // continua usando so' os lances do jogador.
+  if (gameMode === 'ai' && playAsVal !== 'both' && !tutorialMode && aiSessionId) {
+    aiSessionMoveNumber++;  // contador global (player + IA)
+    const isAiMove = (moverColor !== playerColor);
     const depthVal = document.getElementById('ai-depth').value;
     const diffNum = parseInt(depthVal);
     const validDiff = (Number.isInteger(diffNum) && diffNum >= 1 && diffNum <= 4) ? diffNum : null;
     const nowTs = Date.now();
 
-    // Espelho local (sempre)
+    // Espelho local (sempre — pra replay pos-OAuth)
     aiSessionLocalMoves.push({
       move_number: aiSessionMoveNumber,
       from_sq: move.from,
@@ -3709,12 +3734,12 @@ function executeMove(move, opts) {
       promotion: move.promo || null,
       notation: notation,
       difficulty: validDiff,
+      is_ai_move: isAiMove,
       client_ts: nowTs
     });
-    // Persiste em localStorage (sobrevive a OAuth redirect)
     try { saveAiGameToLocal(); } catch (e) { console.warn('localStorage save err:', e); }
 
-    // INSERT no DB so se logado (server timestamp prevalece quando possivel)
+    // INSERT no DB so se logado
     if (supa && currentUser) {
       supa.from('ai_game_moves').insert({
         user_id: currentUser.id,
@@ -3724,7 +3749,8 @@ function executeMove(move, opts) {
         to_sq: move.to,
         promotion: move.promo || null,
         notation: notation,
-        difficulty: validDiff
+        difficulty: validDiff,
+        is_ai_move: isAiMove
       }).then(({ error }) => {
         if (error) console.warn('ai_game_moves insert err:', error.message);
       });
@@ -5121,6 +5147,92 @@ function startReplay() {
   document.getElementById('replay-bar').style.display = 'flex';
   renderReplay();
   trackEvent('replay_started', { moves: replaySnapshots.length });
+}
+
+// Carrega uma partida do DB (ai_game_moves) e ativa o replay.
+// Funciona pra partidas que tem lances da IA gravados.
+async function replaySessionFromDb(sessionId) {
+  if (!supa) { await showAlert('Sem conexão com o servidor.', { error: true }); return; }
+
+  const { data: moves, error } = await supa
+    .from('ai_game_moves')
+    .select('move_number, from_sq, to_sq, promotion, is_ai_move')
+    .eq('session_id', sessionId)
+    .order('move_number', { ascending: true });
+
+  if (error) {
+    await showAlert('Erro ao carregar a partida: ' + error.message, { error: true });
+    return;
+  }
+  if (!moves || moves.length === 0) {
+    await showAlert('Partida não encontrada no servidor.', { error: true });
+    return;
+  }
+
+  // Partidas antigas so' tem lances do jogador (metade do jogo)
+  const hasAiMoves = moves.some(m => m.is_ai_move);
+  if (!hasAiMoves) {
+    await showAlert(
+      'Esta partida foi jogada antes do recurso de replay completo — só os lances do jogador foram guardados, não dá pra reconstruir o jogo inteiro.',
+      { icon: '⏳', title: 'Replay indisponível' }
+    );
+    return;
+  }
+
+  closeRankingModal();
+
+  // Salva o estado atual pra restaurar ao sair do replay
+  savedGameState = {
+    board: [...board], castling: { ...castling }, enPassant, turn,
+    halfMoves, fullMoves, lastMoveFrom, lastMoveTo, gameOver,
+    selectedSquare, validMoves: [...validMoves]
+  };
+
+  // Reconstrói a partida lance a lance a partir da posicao inicial
+  initBoard();
+  castling = { K: true, Q: true, k: true, q: true };
+  enPassant = -1;
+  turn = 'w';
+
+  const snapshots = [{ board: [...board], lastMoveFrom: -1, lastMoveTo: -1 }];
+  let applied = 0;
+  for (const mv of moves) {
+    const legal = getLegalMoves(turn);
+    let matched = null;
+    for (const m of legal) {
+      if (m.from !== mv.from_sq || m.to !== mv.to_sq) continue;
+      if (mv.promotion) {
+        if (m.promo && m.promo.toLowerCase() === mv.promotion.toLowerCase()) { matched = m; break; }
+      } else {
+        if (!m.promo) { matched = m; break; }
+      }
+    }
+    if (!matched) {
+      console.warn('replay: lance não reconstruível', mv);
+      break;  // para a reconstrucao no ponto que travou
+    }
+    const result = makeMove(matched, board, castling);
+    board = result.board;
+    castling = result.castling;
+    enPassant = result.enPassant;
+    turn = turn === 'w' ? 'b' : 'w';
+    snapshots.push({ board: [...board], lastMoveFrom: matched.from, lastMoveTo: matched.to });
+    applied++;
+  }
+
+  if (applied === 0) {
+    // Nao conseguiu reconstruir nada — restaura e avisa
+    exitReplay();
+    await showAlert('Não foi possível reconstruir esta partida.', { error: true });
+    return;
+  }
+
+  replaySnapshots = snapshots;
+  replayMode = true;
+  replayIndex = 0;
+  document.getElementById('replay-bar').style.display = 'flex';
+  renderReplay();
+  if (typeof trackEvent === 'function') trackEvent('replay_from_ranking', { moves: applied });
 }
 
 function renderReplay() {
