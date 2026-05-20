@@ -1004,6 +1004,22 @@
   /* 4o em diante: texto mais discreto pra nao competir com o podio */
   .rank-table tr:nth-child(n+4) td { color: var(--text-muted); }
   .rank-table th:nth-child(3), .rank-table td:nth-child(3) { text-align: right; }
+  /* Linha do proprio usuario logado — destaque */
+  .rank-table tr.me td {
+    background: rgba(226,185,111,0.14);
+    color: var(--accent) !important;
+    font-weight: 700;
+  }
+  /* Bloco "sua posicao" (quando o usuario esta fora do top 50) */
+  .my-position-row { margin-top: 12px; }
+  .mp-sep {
+    text-align: center;
+    font-size: 10px;
+    color: var(--text-muted);
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 6px 0;
+  }
   .rank-empty {
     text-align: center;
     color: var(--text-muted);
@@ -1545,6 +1561,7 @@
       <div class="ranking-subtabs">
         <button class="rank-subtab active" data-type="wins">🏆 Mais vitórias</button>
         <button class="rank-subtab" data-type="time">⚡ Vitória mais rápida</button>
+        <button class="rank-subtab" data-type="mine" id="rank-subtab-mine" style="display:none;">📋 Minhas partidas</button>
       </div>
     </div>
     <!-- Lista scrollavel (toma o espaco restante) -->
@@ -2211,6 +2228,18 @@ let currentRankType = 'wins';
 
 function openRankingModal() {
   document.getElementById('ranking-modal').style.display = 'flex';
+  // Aba 'Minhas partidas' so' aparece se logado
+  const mineTab = document.getElementById('rank-subtab-mine');
+  if (mineTab) {
+    mineTab.style.display = currentUser ? '' : 'none';
+    // Se estava em 'mine' e deslogou, volta pra 'wins'
+    if (!currentUser && currentRankType === 'mine') {
+      currentRankType = 'wins';
+      document.querySelectorAll('.rank-subtab').forEach(t => {
+        t.classList.toggle('active', t.dataset.type === 'wins');
+      });
+    }
+  }
   loadRanking();
   if (typeof trackEvent === 'function') trackEvent('ranking_opened', {});
 }
@@ -2229,6 +2258,45 @@ function fmtSeconds(s) {
   return `${m}:${sec.toString().padStart(2,'0')}`;
 }
 
+function fmtScoreDate(iso) {
+  if (!iso) return '-';
+  // iso aqui e' timestamp completo com timezone — new Date parseia certo
+  const d = new Date(iso);
+  return d.toLocaleString('pt-BR', {
+    timeZone: 'America/Sao_Paulo',
+    day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
+  });
+}
+
+async function fetchMyRankPosition() {
+  if (!currentUser || !supa) return null;
+  try {
+    const { data, error } = await supa.rpc('ranking_my_position', {
+      p_difficulty: currentRankDiff,
+      p_user_id: currentUser.id
+    });
+    if (error) { console.warn('ranking_my_position:', error.message); return null; }
+    return (data && data.length) ? data[0] : null;
+  } catch (e) { console.warn(e); return null; }
+}
+
+function renderMyPositionRow(position, metricValue) {
+  const myName = currentUser ? userDisplayName(currentUser) : 'Você';
+  return `
+    <div class="my-position-row">
+      <div class="mp-sep">— sua posição —</div>
+      <table class="rank-table">
+        <tbody>
+          <tr class="me">
+            <td>${position}</td>
+            <td>${escapeHtml(myName)}</td>
+            <td>${metricValue}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>`;
+}
+
 async function loadRanking() {
   const list = document.getElementById('ranking-list');
   list.innerHTML = '<div class="rank-empty">Carregando...</div>';
@@ -2239,50 +2307,96 @@ async function loadRanking() {
   }
 
   try {
-    if (currentRankType === 'wins') {
+    // ===== Aba "Minhas partidas" =====
+    if (currentRankType === 'mine') {
+      if (!currentUser) {
+        list.innerHTML = '<div class="rank-empty">Faça login pra ver suas partidas.</div>';
+        return;
+      }
       const { data, error } = await supa
         .from('scores')
-        .select('username, user_id')
-        .eq('difficulty', currentRankDiff);
+        .select('player_seconds, status, client_validated, created_at')
+        .eq('difficulty', currentRankDiff)
+        .eq('user_id', currentUser.id)
+        .order('player_seconds', { ascending: true });
       if (error) throw error;
-
-      const counts = {};
-      for (const s of data) {
-        if (!counts[s.user_id]) counts[s.user_id] = { username: s.username, count: 0 };
-        counts[s.user_id].count++;
-        // mantém o nome mais recente
-        counts[s.user_id].username = s.username;
-      }
-      const sorted = Object.values(counts).sort((a,b) => b.count - a.count).slice(0, 50);
-
-      if (sorted.length === 0) {
-        list.innerHTML = '<div class="rank-empty">Ainda não há vencedores neste nível. Seja o primeiro!</div>';
+      if (!data || data.length === 0) {
+        list.innerHTML = '<div class="rank-empty">Você ainda não tem partidas registradas neste nível.</div>';
         return;
       }
       list.innerHTML = `
+        <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">
+          ${data.length} partida(s) sua(s) — da mais rápida pra mais lenta.
+        </div>
         <table class="rank-table">
-          <thead><tr><th>#</th><th>Jogador</th><th>Vitórias</th></tr></thead>
-          <tbody>${sorted.map((s,i) => `<tr><td>${i+1}</td><td>${escapeHtml(s.username)}</td><td>${s.count}</td></tr>`).join('')}</tbody>
+          <thead><tr><th>#</th><th>Tempo</th><th>Data</th></tr></thead>
+          <tbody>${data.map((s,i) => `
+            <tr>
+              <td>${i+1}</td>
+              <td>${fmtSeconds(s.player_seconds)}</td>
+              <td style="font-size:11px; color:var(--text-muted);">${fmtScoreDate(s.created_at)}</td>
+            </tr>`).join('')}</tbody>
         </table>`;
-    } else {
-      const { data, error } = await supa
-        .from('scores')
-        .select('username, player_seconds')
-        .eq('difficulty', currentRankDiff)
-        .order('player_seconds', { ascending: true })
-        .limit(50);
-      if (error) throw error;
+      return;
+    }
 
+    const myId = currentUser ? currentUser.id : null;
+
+    // ===== Aba "Mais vitórias" =====
+    if (currentRankType === 'wins') {
+      const { data, error } = await supa.rpc('ranking_wins', {
+        p_difficulty: currentRankDiff, p_limit: 50
+      });
+      if (error) throw error;
       if (!data || data.length === 0) {
         list.innerHTML = '<div class="rank-empty">Ainda não há vencedores neste nível. Seja o primeiro!</div>';
         return;
       }
-      list.innerHTML = `
+      const inTop = myId && data.some(r => r.user_id === myId);
+      let html = `
         <table class="rank-table">
-          <thead><tr><th>#</th><th>Jogador</th><th>Tempo</th></tr></thead>
-          <tbody>${data.map((s,i) => `<tr><td>${i+1}</td><td>${escapeHtml(s.username)}</td><td>${fmtSeconds(s.player_seconds)}</td></tr>`).join('')}</tbody>
+          <thead><tr><th>#</th><th>Jogador</th><th>Vitórias</th></tr></thead>
+          <tbody>${data.map(s => `
+            <tr class="${myId && s.user_id === myId ? 'me' : ''}">
+              <td>${s.position}</td><td>${escapeHtml(s.username)}</td><td>${s.wins}</td>
+            </tr>`).join('')}</tbody>
         </table>`;
+      if (myId && !inTop) {
+        const mp = await fetchMyRankPosition();
+        if (mp && mp.wins_total != null) {
+          html += renderMyPositionRow(mp.wins_position, mp.wins_total);
+        }
+      }
+      list.innerHTML = html;
+      return;
     }
+
+    // ===== Aba "Vitória mais rápida" — 1 linha por usuario =====
+    const { data, error } = await supa.rpc('ranking_fastest', {
+      p_difficulty: currentRankDiff, p_limit: 50
+    });
+    if (error) throw error;
+    if (!data || data.length === 0) {
+      list.innerHTML = '<div class="rank-empty">Ainda não há vencedores neste nível. Seja o primeiro!</div>';
+      return;
+    }
+    const inTop = myId && data.some(r => r.user_id === myId);
+    let html = `
+      <table class="rank-table">
+        <thead><tr><th>#</th><th>Jogador</th><th>Tempo</th></tr></thead>
+        <tbody>${data.map(s => `
+          <tr class="${myId && s.user_id === myId ? 'me' : ''}">
+            <td>${s.position}</td><td>${escapeHtml(s.username)}</td><td>${fmtSeconds(s.best_seconds)}</td>
+          </tr>`).join('')}</tbody>
+      </table>`;
+    if (myId && !inTop) {
+      const mp = await fetchMyRankPosition();
+      if (mp && mp.fastest_best_seconds != null) {
+        html += renderMyPositionRow(mp.fastest_position, fmtSeconds(mp.fastest_best_seconds));
+      }
+    }
+    list.innerHTML = html;
+
   } catch (err) {
     console.error(err);
     list.innerHTML = '<div class="rank-empty">Erro ao carregar ranking.</div>';
