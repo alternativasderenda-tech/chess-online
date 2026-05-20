@@ -4068,7 +4068,7 @@ function renderBoard() {
 }
 
 function onSquareClick(e) {
-  if (gameOver || aiThinking || dragging) return;
+  if (gameOver || aiThinking || dragging || replayMode) return;
   const idx = parseInt(e.currentTarget.dataset.idx);
   handleSquareAction(idx);
 }
@@ -4120,7 +4120,7 @@ function handleSquareAction(idx) {
 // ======================== DRAG & DROP ========================
 
 function onMouseDown(e) {
-  if (gameOver || aiThinking || promotionPending) return;
+  if (gameOver || aiThinking || promotionPending || replayMode) return;
   const idx = parseInt(e.currentTarget.dataset.idx);
   if (tutorialMode) {
     const lesson = LESSONS[currentLesson];
@@ -5506,6 +5506,8 @@ function trackEvent(name, params) {
 // ======================== NEW GAME ========================
 
 function newGame() {
+  // Replay e jogo ao vivo sao estados exclusivos: sair do replay antes de iniciar
+  if (replayMode) exitReplay();
   const depthVal = document.getElementById('ai-depth').value;
 
   // Handle tutorial mode
