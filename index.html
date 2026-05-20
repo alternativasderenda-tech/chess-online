@@ -2358,7 +2358,7 @@ async function loadRanking() {
           <thead><tr><th>#</th><th>Jogador</th><th>Vitórias</th></tr></thead>
           <tbody>${data.map(s => `
             <tr class="${myId && s.user_id === myId ? 'me' : ''}">
-              <td>${s.position}</td><td>${escapeHtml(s.username)}</td><td>${s.wins}</td>
+              <td>${s.rank_pos}</td><td>${escapeHtml(s.username)}</td><td>${s.wins}</td>
             </tr>`).join('')}</tbody>
         </table>`;
       if (myId && !inTop) {
@@ -2386,7 +2386,7 @@ async function loadRanking() {
         <thead><tr><th>#</th><th>Jogador</th><th>Tempo</th></tr></thead>
         <tbody>${data.map(s => `
           <tr class="${myId && s.user_id === myId ? 'me' : ''}">
-            <td>${s.position}</td><td>${escapeHtml(s.username)}</td><td>${fmtSeconds(s.best_seconds)}</td>
+            <td>${s.rank_pos}</td><td>${escapeHtml(s.username)}</td><td>${fmtSeconds(s.best_seconds)}</td>
           </tr>`).join('')}</tbody>
       </table>`;
     if (myId && !inTop) {

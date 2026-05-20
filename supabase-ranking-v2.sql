@@ -14,12 +14,13 @@
 -- exigem is_admin().
 
 -- Ranking de vitoria mais rapida: 1 linha por usuario (melhor tempo)
+-- Obs: 'position' e' palavra reservada no Postgres — usamos rank_pos.
 create or replace function ranking_fastest(
   p_difficulty smallint,
   p_limit int default 50
 )
 returns table (
-  position bigint,
+  rank_pos bigint,
   username text,
   best_seconds int,
   user_id uuid
@@ -39,7 +40,7 @@ as $$
     group by s.user_id
   )
   select
-    rank() over (order by best_seconds asc) as position,
+    rank() over (order by best_seconds asc) as rank_pos,
     username,
     best_seconds,
     user_id
@@ -56,7 +57,7 @@ create or replace function ranking_wins(
   p_limit int default 50
 )
 returns table (
-  position bigint,
+  rank_pos bigint,
   username text,
   wins bigint,
   user_id uuid
@@ -76,7 +77,7 @@ as $$
     group by s.user_id
   )
   select
-    rank() over (order by wins desc) as position,
+    rank() over (order by wins desc) as rank_pos,
     username,
     wins,
     user_id
