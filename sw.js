@@ -1,5 +1,5 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v9';
+const CACHE_NAME = 'xadrez-v10';
 const ASSETS = [
   '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
   '/privacidade', '/termos',
@@ -28,12 +28,21 @@ self.addEventListener('activate', e => {
 
 // Network-first: tenta buscar atualizado, se falhar usa cache (offline)
 self.addEventListener('fetch', e => {
+  const req = e.request;
+  // Cache.put() so' aceita GET. POST (RPC do Supabase) vai direto pra rede.
+  if (req.method !== 'GET') return;
   e.respondWith(
-    fetch(e.request).then(resp => {
-      const clone = resp.clone();
-      caches.open(CACHE_NAME).then(c => c.put(e.request, clone));
+    fetch(req).then(resp => {
+      // So' cacheia respostas OK do proprio dominio (nao cacheia ads,
+      // Supabase, nem respostas de erro).
+      try {
+        if (resp && resp.ok && new URL(req.url).origin === self.location.origin) {
+          const clone = resp.clone();
+          caches.open(CACHE_NAME).then(c => c.put(req, clone));
+        }
+      } catch (err) {}
       return resp;
-    }).catch(() => caches.match(e.request))
+    }).catch(() => caches.match(req))
   );
 });
 
