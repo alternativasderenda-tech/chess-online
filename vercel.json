@@ -1,5 +1,13 @@
 {
   "cleanUrls": true,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "has": [{ "type": "host", "value": "xadrezonline.vercel.app" }],
+      "destination": "https://xadrezonline.app/$1",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     { "source": "/en", "destination": "/" }
   ],
