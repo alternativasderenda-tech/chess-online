@@ -1,5 +1,5 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v10';
+const CACHE_NAME = 'xadrez-v11';
 const ASSETS = [
   '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
   '/privacidade', '/termos',
@@ -13,7 +13,14 @@ const ASSETS = [
 ];
 
 self.addEventListener('install', e => {
-  e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(ASSETS)));
+  // Cacheia cada asset individualmente: se um falhar, a instalacao do SW
+  // continua mesmo assim. (c.addAll e' atomico — 1 falha derrubava tudo,
+  // e SW sem instalar = Chrome nao consegue gerar o app instalavel.)
+  e.waitUntil(
+    caches.open(CACHE_NAME).then(c =>
+      Promise.allSettled(ASSETS.map(u => c.add(u)))
+    )
+  );
   self.skipWaiting();
 });
 
