@@ -1,5 +1,8 @@
 {
   "cleanUrls": true,
+  "rewrites": [
+    { "source": "/en", "destination": "/index.html" }
+  ],
   "headers": [
     {
       "source": "/",

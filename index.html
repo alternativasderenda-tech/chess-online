@@ -51,6 +51,536 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="application-name" content="Xadrez Online">
 
+<!-- ===================== i18n (PT / EN) ===================== -->
+<!-- Idioma definido pela URL: / = PT, /en = EN (rewrite no vercel.json).
+     Dicionario unico; nada de duplicar o index.html. -->
+<script>
+(function () {
+  var STRINGS = {
+    pt: {
+      'meta.title': 'Xadrez Online Grátis - Aprenda a Jogar Xadrez do Zero | Tutorial Interativo',
+      'meta.description': 'Aprenda a jogar xadrez do zero com tutorial interativo gratuito. Jogue xadrez online contra o computador com 4 níveis de dificuldade. Modo Aprendiz ensina regras, movimentos de peças, estratégias de ataque e defesa. Sem cadastro, direto no navegador!',
+      'meta.keywords': 'xadrez online, jogar xadrez grátis, aprender xadrez, tutorial xadrez, xadrez para iniciantes, jogo de xadrez, xadrez contra computador, como jogar xadrez, regras do xadrez, xadrez brasileiro, chess online, xadrez offline, app xadrez',
+      'meta.ogTitle': 'Xadrez Online Grátis - Aprenda e Jogue Agora',
+      'meta.ogDescription': 'Tutorial interativo para aprender xadrez do zero. Jogue contra o computador com 4 níveis de dificuldade. 100% grátis, sem cadastro!',
+      'meta.twitterDescription': 'Aprenda xadrez do zero com tutorial interativo. Jogue contra o computador, sem cadastro!',
+      'meta.canonical': 'https://xadrezonline.vercel.app/',
+      'nav.brand': 'Xadrez Online',
+      'nav.brandAria': 'Xadrez Online — Voltar ao início',
+      'nav.ranking': '🏆 Ranking',
+      'nav.login': 'Entrar com Google',
+      'nav.userDefault': '👤 Jogador',
+      'nav.logout': 'Sair',
+      'nav.langSwitch': '🇺🇸 EN',
+      'nav.langSwitchTitle': 'Play in English',
+      'install.title': 'Instale o Xadrez Online',
+      'install.sub': 'Mais rápido, em tela cheia e funciona offline',
+      'install.install': 'Instalar',
+      'install.later': 'Depois',
+      'install.close': 'Fechar',
+      'settings.heading': '⚙ Configurações',
+      'settings.loginPrompt': 'Você não está logado.<br><strong>Faça login antes de jogar</strong> para que suas vitórias contem no ranking.',
+      'settings.loginPromptBtn': 'Entrar',
+      'settings.difficulty': 'Dificuldade IA',
+      'settings.diff.tutorial': '🎓 Aprendiz',
+      'settings.diff.1': 'Fácil',
+      'settings.diff.2': 'Médio',
+      'settings.diff.3': 'Difícil',
+      'settings.diff.4': 'Expert',
+      'settings.time': 'Tempo',
+      'settings.time.0': 'Sem limite',
+      'settings.playAs': 'Jogar como',
+      'settings.playAs.w': 'Brancas',
+      'settings.playAs.b': 'Pretas',
+      'settings.playAs.both': '2 Jogadores',
+      'settings.newGame': 'Novo Jogo',
+      'settings.undo': '↩ Desfazer',
+      'settings.importPgn': '📂 Importar PGN',
+      'settings.playFriend': '🎯 Jogar com Amigo',
+      'online.title': '🎯 Partida Online',
+      'online.copyLink': '📋 Copiar Link',
+      'online.leave': '🚪 Sair da Partida',
+      'react.hello': 'Olá',
+      'react.thinking': 'Pensando',
+      'react.nicemove': 'Boa jogada',
+      'react.phew': 'Ufa',
+      'react.gg': 'GG',
+      'react.ggTitle': 'GG (boa partida)',
+      'react.vibes': 'Vibes',
+      'react.brb': 'Já volto',
+      'react.back': 'Voltei',
+      'moves.title': '📋 Movimentos',
+      'hint.title': '💡 Dica',
+      'hint.default': 'Clique em uma peça para ver os movimentos possíveis.',
+      'footer.learn': '📖 Aprenda Xadrez',
+      'footer.privacy': 'Política de Privacidade',
+      'footer.terms': 'Termos de Uso',
+      'footer.contact': 'Contato',
+      'gameover.register': '🏆 Registrar no Ranking',
+      'gameover.rematch': '🔄 Revanche',
+      'gameover.leave': '🚪 Sair',
+      'gameover.newGame': 'Jogar Novamente',
+      'gameover.nextLevel': 'Próximo Nível →',
+      'gameover.replay': '▶ Ver Replay',
+      'gameover.save': '💾 Salvar Partida',
+      'promo.title': 'Promover peão',
+      'share.title': '🎯 Compartilhar Partida',
+      'share.desc': 'Mande este link pro seu amigo. Quando ele abrir, a partida começa.',
+      'share.copy': '📋 Copiar',
+      'share.cancel': 'Cancelar',
+      'share.waiting': '⏳ Aguardando oponente...',
+      'rank.subWins': '🏆 Mais vitórias',
+      'rank.subTime': '⚡ Vitória mais rápida',
+      'rank.subMine': '📋 Minhas partidas',
+      'common.close': 'Fechar',
+      'common.loading': 'Carregando...',
+      'color.white': 'Brancas',
+      'color.black': 'Pretas',
+      'name.you': 'Você',
+      'name.computer': 'Computador',
+      'name.targets': 'Alvos',
+      'name.beginnerAi': 'IA Aprendiz',
+      'name.player1': 'Jogador 1',
+      'name.player2': 'Jogador 2',
+      'name.opponent': 'Oponente',
+      'diff.tutorialName': 'Aprendiz',
+      'game.checkmate': 'Xeque-mate! {winner} vencem! 🏆',
+      'game.stalemate': 'Empate por afogamento!',
+      'game.draw50': 'Empate — regra dos 50 lances',
+      'game.drawMaterial': 'Empate — material insuficiente',
+      'game.check': 'Xeque! {color} devem se defender.',
+      'game.timeoutBlackWins': 'Tempo esgotado! Pretas vencem! ⏱',
+      'game.timeoutWhiteWins': 'Tempo esgotado! Brancas vencem! ⏱',
+      'game.aiBeginnerThinking': 'IA Aprendiz pensando...',
+      'game.computerThinking': 'Computador pensando...',
+      'game.practiceContinue': 'Sua vez — continue praticando!',
+      'game.ended': 'Jogo encerrado. Clique em "Novo Jogo" para recomeçar.',
+      'status.yourTurn': 'Sua vez — {color} jogam',
+      'status.opponentTurn': 'Vez de {opp} — {color} jogam',
+      'status.colorToMove': '{color} jogam',
+      'status.waitingOpponent': '⏳ Aguardando oponente entrar...',
+      'status.tutorialMode': 'Modo Tutorial — Aprendiz',
+      'status.opponentJoined': '🎯 Oponente entrou! Brancas jogam.',
+      'status.connError': '⚠ Erro de conexão ao enviar movimento',
+      'piece.pawn': 'Peão',
+      'piece.rook': 'Torre',
+      'piece.knight': 'Cavalo',
+      'piece.bishop': 'Bispo',
+      'piece.queen': 'Dama',
+      'piece.king': 'Rei',
+      'piece.generic': 'Peça',
+      'hint.clickDrag': 'Clique ou arraste uma peça para mover. Casas verdes indicam movimentos válidos.',
+      'hint.openE4': '💡 Tente mover o peão de e2 para e4 para controlar o centro!',
+      'hint.openD4': '💡 d2-d4 também é uma boa abertura controlando o centro.',
+      'hint.castle': '🏰 Não esqueça de fazer o roque para proteger seu rei!',
+      'hint.hangingPiece': '⚔️ {name} em {sq} está desprotegida! Capture-a!',
+      'hint.inCheck': '⚠️ Você está em xeque! Defenda seu rei imediatamente!',
+      'hint.materialAdv': '📈 Você tem vantagem material! Troque peças para simplificar.',
+      'hint.materialDis': '📉 Cuidado! Você está com menos material. Jogue com cautela.',
+      'hint.tutorialPlay': 'Jogue normalmente! Dicas aparecerão aqui.',
+      'hint.tutorialPractice': 'Clique nas peças destacadas para praticar!',
+      'hint.tutorialRead': 'Leia o conteúdo e avance quando estiver pronto.',
+      'modal.notice': 'Aviso',
+      'modal.error': 'Erro',
+      'modal.success': 'Sucesso',
+      'modal.confirm': 'Confirmação',
+      'modal.connecting': 'Conectando ao servidor, tente em 1 segundo...',
+      'modal.signinError': 'Erro ao entrar: ',
+      'common.ok': 'OK',
+      'common.cancel': 'Cancelar',
+      'common.confirmBtn': 'Confirmar',
+      'common.copied': '✓ Copiado!',
+      'install.iosTitle': 'Instalar no iOS',
+      'install.iosBody': 'Para instalar no iPhone/iPad:\n\n1. Toque no ícone Compartilhar (□↑) na barra inferior do Safari\n2. Role e toque em "Adicionar à Tela de Início"\n3. Confirme em "Adicionar"',
+      'install.otherTitle': 'Instalar como app',
+      'install.otherBody': 'No Chrome ou Edge, abra o menu (⋮) e procure por "Instalar Xadrez Online" ou "Adicionar à Tela de Início".',
+      'register.cantValidate': 'Não foi possível validar esta partida (sem registro de lances). Jogue logado desde o início pra registrar.',
+      'register.failRetry': 'Não foi possível registrar a pontuação agora. Tente novamente.',
+      'register.noSession': 'Não foi possível registrar: sessão de jogo não encontrada.',
+      'register.winRegistered': 'Sua vitória foi registrada no ranking!',
+      'register.failRelogin': 'Não foi possível registrar esta partida agora. Tente jogar novamente já logado.',
+      'register.scoreRegistered': 'Sua pontuação foi registrada no ranking!',
+      'register.feedbackOk': '✓ Pontuação registrada no ranking!',
+      'register.submitting': 'Registrando...',
+      'online.needLoginPlay': 'Pra jogar com amigos você precisa entrar com Google. Entrar agora?',
+      'online.needLoginJoin': 'Pra entrar na partida você precisa entrar com Google. Entrar agora?',
+      'online.createError': 'Erro ao criar partida: ',
+      'online.matchNotFound': 'Partida não encontrada ou já encerrada.',
+      'online.matchInProgress': 'Esta partida já está em andamento ou encerrada.',
+      'online.joinError': 'Erro ao entrar: ',
+      'online.leaveConfirm': 'Sair da partida? Sua jogada será marcada como abandono.',
+      'online.leaveYes': 'Sair',
+      'online.leaveNo': 'Continuar jogando',
+      'online.rematchError': 'Erro ao iniciar revanche.',
+      'online.rematchCreateError': 'Erro ao criar revanche: ',
+      'online.youPlayWhite': '♔ Você joga com Brancas',
+      'online.youPlayBlack': '♚ Você joga com Pretas',
+      'online.youWillBeWhite': '♔ Você jogará como Brancas (joga primeiro)',
+      'online.youWillBeBlack': '♚ Você jogará como Pretas (oponente joga primeiro)',
+      'online.waitingShort': '⏳ Aguardando...',
+      'online.opponentLeft': 'Oponente saiu',
+      'online.matchEnded': 'Partida encerrada',
+      'online.endDraw': 'Empate',
+      'online.endWhiteWins': 'Brancas vencem',
+      'online.endBlackWins': 'Pretas vencem',
+      'pgn.readError': 'Erro ao ler arquivo PGN: ',
+      'pgn.empty': 'Arquivo PGN vazio ou inválido.',
+      'pgn.noMoves': 'Não foi possível ler nenhum movimento do arquivo.',
+      'pgn.imported': 'Importado! {n} lances carregados.',
+      'pgn.importedSkipped': ' {s} lances ignorados.',
+      'replay.noMoves': 'Nenhum movimento para replay.',
+      'replay.noConnection': 'Sem conexão com o servidor.',
+      'replay.loadError': 'Erro ao carregar a partida: ',
+      'replay.notFound': 'Partida não encontrada no servidor.',
+      'replay.tooOld': 'Esta partida foi jogada antes do recurso de replay completo — só os lances do jogador foram guardados, não dá pra reconstruir o jogo inteiro.',
+      'replay.unavailableTitle': 'Replay indisponível',
+      'replay.cantReconstruct': 'Não foi possível reconstruir esta partida.',
+      'gameover.scoreInfo': '⏱ Seu tempo: {time} • Nível: {level}',
+      'gameover.drawTitle': 'Empate!',
+      'gameover.winTitle': 'Você Venceu!',
+      'gameover.lossTitle': 'Derrota...',
+      'gameover.drawVsReason': 'Você empatou com {opp} — {reason}.',
+      'gameover.drawVs': 'Você empatou com {opp}. Boa partida!',
+      'gameover.drawGeneric': 'Ninguém venceu desta vez. Tente novamente!',
+      'gameover.onlineWin1': 'Xeque-mate em {opp}! Vitória sua! 🔥',
+      'gameover.onlineWin2': 'Vitória contra {opp}! 💪',
+      'gameover.onlineWin3': 'Você derrotou {opp}! 🎯',
+      'gameover.onlineLoss1': '{opp} levou a melhor dessa vez. Revanche?',
+      'gameover.onlineLoss2': 'Quase! {opp} venceu. Chama pra outra!',
+      'gameover.onlineLoss3': 'Bom jogo. {opp} venceu.',
+      'gameover.aiWin1': 'Incrível! Você derrotou a IA no {level}! 🔥',
+      'gameover.aiWin2': 'Xeque-mate! A IA não teve chance no {level}!',
+      'gameover.aiWin3': 'Vitória dominante no nível {level}! 💪',
+      'gameover.aiWin4': 'Mestre! Você venceu no {level}!',
+      'gameover.aiLoss1': 'A IA levou a melhor desta vez. Tente novamente!',
+      'gameover.aiLoss2': 'Quase! Uma revanche pode mudar tudo!',
+      'gameover.aiLoss3': 'Não desista! Cada derrota é uma lição.',
+      'draw.stalemate.title': 'Empate por afogamento',
+      'draw.stalemate.detail': 'O adversário não tem nenhuma jogada legal e o rei dele não está em xeque.',
+      'draw.fifty.title': 'Empate pela regra dos 50 lances',
+      'draw.fifty.detail': '50 jogadas sem captura e sem movimento de peão.',
+      'draw.material.title': 'Empate por material insuficiente',
+      'draw.material.detail': 'Nenhum dos lados tem peças suficientes pra dar xeque-mate.',
+      'draw.threefold.title': 'Empate por repetição tripla',
+      'draw.threefold.detail': 'A mesma posição apareceu 3 vezes.',
+      'draw.agreement.title': 'Empate por acordo',
+      'draw.agreement.detail': 'Os dois jogadores concordaram em empatar.',
+      'rank.yourPosition': '— sua posição —',
+      'rank.loginToSee': 'Faça login pra ver suas partidas.',
+      'rank.noGamesYet': 'Você ainda não tem partidas registradas neste nível.',
+      'rank.myGamesCount': '{n} partida(s) sua(s) — da mais rápida pra mais lenta.',
+      'rank.noWinners': 'Ainda não há vencedores neste nível. Seja o primeiro!',
+      'rank.loadError': 'Erro ao carregar ranking.',
+      'rank.colPlayer': 'Jogador',
+      'rank.colWins': 'Vitórias',
+      'rank.colTime': 'Tempo',
+      'rank.colDate': 'Data',
+      'tutorial.prev': '← Anterior',
+      'tutorial.next': 'Próximo →',
+      'tutorial.finish': 'Finalizar',
+      'tutorial.nextLesson': 'Próxima Lição →',
+      'tutorial.congrats': 'Parabéns!',
+      'tutorial.lessonDone': 'Você completou a lição!',
+      'tutorial.complete': 'Tutorial completo! Agora jogue no modo Fácil!',
+      'tutorial.completeHint': 'Parabéns! Você completou o tutorial. Agora é hora de jogar de verdade!',
+      'tutorial.goalDone': '✅ Objetivo concluído!'
+    },
+    en: {
+      'meta.title': 'Free Online Chess - Learn to Play Chess from Scratch | Interactive Tutorial',
+      'meta.description': 'Learn to play chess from scratch with a free interactive tutorial. Play chess online against the computer across 4 difficulty levels. Beginner mode teaches the rules, how the pieces move, and attack and defense strategy. No sign-up — play right in your browser!',
+      'meta.keywords': 'play chess online, free chess game, learn chess, chess tutorial, chess for beginners, chess game, chess vs computer, how to play chess, chess rules, online chess, chess app',
+      'meta.ogTitle': 'Free Online Chess - Learn and Play Now',
+      'meta.ogDescription': 'Interactive tutorial to learn chess from scratch. Play against the computer across 4 difficulty levels. 100% free, no sign-up!',
+      'meta.twitterDescription': 'Learn chess from scratch with an interactive tutorial. Play against the computer, no sign-up!',
+      'meta.canonical': 'https://xadrezonline.vercel.app/en',
+      'nav.brand': 'Chess Online',
+      'nav.brandAria': 'Chess Online — Back to home',
+      'nav.ranking': '🏆 Leaderboard',
+      'nav.login': 'Sign in with Google',
+      'nav.userDefault': '👤 Player',
+      'nav.logout': 'Sign out',
+      'nav.langSwitch': '🇧🇷 PT',
+      'nav.langSwitchTitle': 'Jogar em português',
+      'install.title': 'Install Chess Online',
+      'install.sub': 'Faster, full-screen and works offline',
+      'install.install': 'Install',
+      'install.later': 'Later',
+      'install.close': 'Close',
+      'settings.heading': '⚙ Settings',
+      'settings.loginPrompt': "You're not signed in.<br><strong>Sign in before playing</strong> so your wins count on the leaderboard.",
+      'settings.loginPromptBtn': 'Sign in',
+      'settings.difficulty': 'AI Difficulty',
+      'settings.diff.tutorial': '🎓 Beginner',
+      'settings.diff.1': 'Easy',
+      'settings.diff.2': 'Medium',
+      'settings.diff.3': 'Hard',
+      'settings.diff.4': 'Expert',
+      'settings.time': 'Time',
+      'settings.time.0': 'No limit',
+      'settings.playAs': 'Play as',
+      'settings.playAs.w': 'White',
+      'settings.playAs.b': 'Black',
+      'settings.playAs.both': '2 Players',
+      'settings.newGame': 'New Game',
+      'settings.undo': '↩ Undo',
+      'settings.importPgn': '📂 Import PGN',
+      'settings.playFriend': '🎯 Play with a Friend',
+      'online.title': '🎯 Online Match',
+      'online.copyLink': '📋 Copy Link',
+      'online.leave': '🚪 Leave Match',
+      'react.hello': 'Hello',
+      'react.thinking': 'Thinking',
+      'react.nicemove': 'Nice move',
+      'react.phew': 'Phew',
+      'react.gg': 'GG',
+      'react.ggTitle': 'GG (good game)',
+      'react.vibes': 'Vibes',
+      'react.brb': 'Be right back',
+      'react.back': "I'm back",
+      'moves.title': '📋 Moves',
+      'hint.title': '💡 Hint',
+      'hint.default': 'Click a piece to see its possible moves.',
+      'footer.learn': '📖 Learn Chess',
+      'footer.privacy': 'Privacy Policy',
+      'footer.terms': 'Terms of Use',
+      'footer.contact': 'Contact',
+      'gameover.register': '🏆 Submit to Leaderboard',
+      'gameover.rematch': '🔄 Rematch',
+      'gameover.leave': '🚪 Leave',
+      'gameover.newGame': 'Play Again',
+      'gameover.nextLevel': 'Next Level →',
+      'gameover.replay': '▶ Watch Replay',
+      'gameover.save': '💾 Save Game',
+      'promo.title': 'Promote pawn',
+      'share.title': '🎯 Share Match',
+      'share.desc': 'Send this link to your friend. The match starts when they open it.',
+      'share.copy': '📋 Copy',
+      'share.cancel': 'Cancel',
+      'share.waiting': '⏳ Waiting for opponent...',
+      'rank.subWins': '🏆 Most wins',
+      'rank.subTime': '⚡ Fastest win',
+      'rank.subMine': '📋 My games',
+      'common.close': 'Close',
+      'common.loading': 'Loading...',
+      'color.white': 'White',
+      'color.black': 'Black',
+      'name.you': 'You',
+      'name.computer': 'Computer',
+      'name.targets': 'Targets',
+      'name.beginnerAi': 'Beginner AI',
+      'name.player1': 'Player 1',
+      'name.player2': 'Player 2',
+      'name.opponent': 'Opponent',
+      'diff.tutorialName': 'Beginner',
+      'game.checkmate': 'Checkmate! {winner} wins! 🏆',
+      'game.stalemate': 'Stalemate — draw!',
+      'game.draw50': 'Draw — fifty-move rule',
+      'game.drawMaterial': 'Draw — insufficient material',
+      'game.check': 'Check! {color} must defend.',
+      'game.timeoutBlackWins': "Time's up! Black wins! ⏱",
+      'game.timeoutWhiteWins': "Time's up! White wins! ⏱",
+      'game.aiBeginnerThinking': 'Beginner AI thinking...',
+      'game.computerThinking': 'Computer thinking...',
+      'game.practiceContinue': 'Your turn — keep practicing!',
+      'game.ended': 'Game over. Click "New Game" to start again.',
+      'status.yourTurn': 'Your turn — {color} to move',
+      'status.opponentTurn': "{opp}'s turn — {color} to move",
+      'status.colorToMove': '{color} to move',
+      'status.waitingOpponent': '⏳ Waiting for opponent to join...',
+      'status.tutorialMode': 'Tutorial Mode — Beginner',
+      'status.opponentJoined': '🎯 Opponent joined! White to move.',
+      'status.connError': '⚠ Connection error sending move',
+      'piece.pawn': 'Pawn',
+      'piece.rook': 'Rook',
+      'piece.knight': 'Knight',
+      'piece.bishop': 'Bishop',
+      'piece.queen': 'Queen',
+      'piece.king': 'King',
+      'piece.generic': 'Piece',
+      'hint.clickDrag': 'Click or drag a piece to move. Green squares show legal moves.',
+      'hint.openE4': '💡 Try moving the e2 pawn to e4 to control the center!',
+      'hint.openD4': '💡 d2-d4 is also a good opening to control the center.',
+      'hint.castle': "🏰 Don't forget to castle to protect your king!",
+      'hint.hangingPiece': '⚔️ {name} on {sq} is undefended! Capture it!',
+      'hint.inCheck': '⚠️ You are in check! Defend your king now!',
+      'hint.materialAdv': '📈 You have a material advantage! Trade pieces to simplify.',
+      'hint.materialDis': "📉 Careful! You're down material. Play cautiously.",
+      'hint.tutorialPlay': 'Play normally! Hints will appear here.',
+      'hint.tutorialPractice': 'Click the highlighted pieces to practice!',
+      'hint.tutorialRead': 'Read the content and continue when ready.',
+      'modal.notice': 'Notice',
+      'modal.error': 'Error',
+      'modal.success': 'Success',
+      'modal.confirm': 'Confirm',
+      'modal.connecting': 'Connecting to the server, try again in a second...',
+      'modal.signinError': 'Sign-in error: ',
+      'common.ok': 'OK',
+      'common.cancel': 'Cancel',
+      'common.confirmBtn': 'Confirm',
+      'common.copied': '✓ Copied!',
+      'install.iosTitle': 'Install on iOS',
+      'install.iosBody': 'To install on iPhone/iPad:\n\n1. Tap the Share icon (□↑) in Safari\'s bottom bar\n2. Scroll and tap "Add to Home Screen"\n3. Confirm with "Add"',
+      'install.otherTitle': 'Install as app',
+      'install.otherBody': 'In Chrome or Edge, open the menu (⋮) and look for "Install Chess Online" or "Add to Home Screen".',
+      'register.cantValidate': 'Could not validate this game (no move record). Play while signed in from the start to register.',
+      'register.failRetry': 'Could not register your score right now. Please try again.',
+      'register.noSession': 'Could not register: game session not found.',
+      'register.winRegistered': 'Your win has been added to the leaderboard!',
+      'register.failRelogin': 'Could not register this game now. Try playing again while signed in.',
+      'register.scoreRegistered': 'Your score has been added to the leaderboard!',
+      'register.feedbackOk': '✓ Score added to the leaderboard!',
+      'register.submitting': 'Submitting...',
+      'online.needLoginPlay': 'To play with friends you need to sign in with Google. Sign in now?',
+      'online.needLoginJoin': 'To join the match you need to sign in with Google. Sign in now?',
+      'online.createError': 'Error creating match: ',
+      'online.matchNotFound': 'Match not found or already ended.',
+      'online.matchInProgress': 'This match is already in progress or has ended.',
+      'online.joinError': 'Error joining: ',
+      'online.leaveConfirm': 'Leave the match? Your game will be counted as a forfeit.',
+      'online.leaveYes': 'Leave',
+      'online.leaveNo': 'Keep playing',
+      'online.rematchError': 'Error starting rematch.',
+      'online.rematchCreateError': 'Error creating rematch: ',
+      'online.youPlayWhite': '♔ You play White',
+      'online.youPlayBlack': '♚ You play Black',
+      'online.youWillBeWhite': '♔ You will play White (moves first)',
+      'online.youWillBeBlack': '♚ You will play Black (opponent moves first)',
+      'online.waitingShort': '⏳ Waiting...',
+      'online.opponentLeft': 'Opponent left',
+      'online.matchEnded': 'Match ended',
+      'online.endDraw': 'Draw',
+      'online.endWhiteWins': 'White wins',
+      'online.endBlackWins': 'Black wins',
+      'pgn.readError': 'Error reading PGN file: ',
+      'pgn.empty': 'PGN file is empty or invalid.',
+      'pgn.noMoves': 'Could not read any moves from the file.',
+      'pgn.imported': 'Imported! {n} moves loaded.',
+      'pgn.importedSkipped': ' {s} moves skipped.',
+      'replay.noMoves': 'No moves to replay.',
+      'replay.noConnection': 'No connection to the server.',
+      'replay.loadError': 'Error loading the game: ',
+      'replay.notFound': 'Game not found on the server.',
+      'replay.tooOld': "This game was played before the full replay feature — only the player's moves were saved, so the whole game can't be reconstructed.",
+      'replay.unavailableTitle': 'Replay unavailable',
+      'replay.cantReconstruct': 'Could not reconstruct this game.',
+      'gameover.scoreInfo': '⏱ Your time: {time} • Level: {level}',
+      'gameover.drawTitle': 'Draw!',
+      'gameover.winTitle': 'You Won!',
+      'gameover.lossTitle': 'Defeat...',
+      'gameover.drawVsReason': 'You drew with {opp} — {reason}.',
+      'gameover.drawVs': 'You drew with {opp}. Good game!',
+      'gameover.drawGeneric': 'Nobody won this time. Try again!',
+      'gameover.onlineWin1': 'Checkmate on {opp}! The win is yours! 🔥',
+      'gameover.onlineWin2': 'Victory over {opp}! 💪',
+      'gameover.onlineWin3': 'You beat {opp}! 🎯',
+      'gameover.onlineLoss1': '{opp} got the better of you this time. Rematch?',
+      'gameover.onlineLoss2': 'So close! {opp} won. Go again!',
+      'gameover.onlineLoss3': 'Good game. {opp} won.',
+      'gameover.aiWin1': 'Amazing! You beat the AI on {level}! 🔥',
+      'gameover.aiWin2': 'Checkmate! The AI had no chance on {level}!',
+      'gameover.aiWin3': 'Dominant win on {level}! 💪',
+      'gameover.aiWin4': 'Master! You won on {level}!',
+      'gameover.aiLoss1': 'The AI got the better of you this time. Try again!',
+      'gameover.aiLoss2': 'So close! A rematch could change everything!',
+      'gameover.aiLoss3': "Don't give up! Every loss is a lesson.",
+      'draw.stalemate.title': 'Draw by stalemate',
+      'draw.stalemate.detail': 'The opponent has no legal move and their king is not in check.',
+      'draw.fifty.title': 'Draw by the fifty-move rule',
+      'draw.fifty.detail': '50 moves with no capture and no pawn move.',
+      'draw.material.title': 'Draw by insufficient material',
+      'draw.material.detail': 'Neither side has enough pieces to checkmate.',
+      'draw.threefold.title': 'Draw by threefold repetition',
+      'draw.threefold.detail': 'The same position occurred 3 times.',
+      'draw.agreement.title': 'Draw by agreement',
+      'draw.agreement.detail': 'Both players agreed to a draw.',
+      'rank.yourPosition': '— your position —',
+      'rank.loginToSee': 'Sign in to see your games.',
+      'rank.noGamesYet': 'You have no registered games at this level yet.',
+      'rank.myGamesCount': '{n} of your game(s) — fastest to slowest.',
+      'rank.noWinners': 'No winners at this level yet. Be the first!',
+      'rank.loadError': 'Error loading the leaderboard.',
+      'rank.colPlayer': 'Player',
+      'rank.colWins': 'Wins',
+      'rank.colTime': 'Time',
+      'rank.colDate': 'Date',
+      'tutorial.prev': '← Previous',
+      'tutorial.next': 'Next →',
+      'tutorial.finish': 'Finish',
+      'tutorial.nextLesson': 'Next Lesson →',
+      'tutorial.congrats': 'Congratulations!',
+      'tutorial.lessonDone': 'You completed the lesson!',
+      'tutorial.complete': 'Tutorial complete! Now try Easy mode!',
+      'tutorial.completeHint': "Congratulations! You completed the tutorial. Now it's time to play for real!",
+      'tutorial.goalDone': '✅ Goal complete!'
+    }
+  };
+
+  var path = location.pathname;
+  var lang = (path === '/en' || path === '/en/' || path.indexOf('/en/') === 0) ? 'en' : 'pt';
+
+  function tr(key, params) {
+    var d = STRINGS[lang] || STRINGS.pt;
+    var s = (d[key] !== undefined) ? d[key]
+          : (STRINGS.pt[key] !== undefined ? STRINGS.pt[key] : key);
+    if (params) {
+      for (var k in params) {
+        s = s.split('{' + k + '}').join(params[k]);
+      }
+    }
+    return s;
+  }
+
+  window.STRINGS = STRINGS;
+  window.currentLang = lang;
+  window.tr = tr;
+
+  // --- Meta / <head> aplicados durante o parse (Googlebot le na renderizacao) ---
+  document.documentElement.lang = (lang === 'en') ? 'en' : 'pt-BR';
+  document.title = tr('meta.title');
+  function setAttr(sel, attr, val) {
+    var el = document.querySelector(sel);
+    if (el) el.setAttribute(attr, val);
+  }
+  setAttr('meta[name="description"]', 'content', tr('meta.description'));
+  setAttr('meta[name="keywords"]', 'content', tr('meta.keywords'));
+  setAttr('link[rel="canonical"]', 'href', tr('meta.canonical'));
+  setAttr('meta[property="og:title"]', 'content', tr('meta.ogTitle'));
+  setAttr('meta[property="og:description"]', 'content', tr('meta.ogDescription'));
+  setAttr('meta[property="og:url"]', 'content', tr('meta.canonical'));
+  setAttr('meta[property="og:locale"]', 'content', (lang === 'en') ? 'en_US' : 'pt_BR');
+  setAttr('meta[name="twitter:title"]', 'content', tr('meta.ogTitle'));
+  setAttr('meta[name="twitter:description"]', 'content', tr('meta.twitterDescription'));
+
+  // --- Textos do DOM (data-i18n*) ---
+  function applyI18n() {
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      el.textContent = tr(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-html]').forEach(function (el) {
+      el.innerHTML = tr(el.getAttribute('data-i18n-html'));
+    });
+    document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+      el.setAttribute('title', tr(el.getAttribute('data-i18n-title')));
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      el.setAttribute('aria-label', tr(el.getAttribute('data-i18n-aria')));
+    });
+  }
+  window.applyI18n = applyI18n;
+
+  // Troca de idioma: navega entre / (PT) e /en (EN)
+  window.switchLang = function () {
+    location.pathname = (lang === 'en') ? '/' : '/en';
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyI18n);
+  } else {
+    applyI18n();
+  }
+})();
+</script>
+
 <!-- Schema.org JSON-LD (para Google e IAs) -->
 <script type="application/ld+json">
 {
@@ -204,8 +734,9 @@
 }
 </script>
 
-<!-- hreflang: preparado para futura versão em inglês -->
+<!-- hreflang: PT (raiz) + EN (/en) -->
 <link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/">
+<link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en">
 <link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/">
 
 <style>
@@ -1285,32 +1816,33 @@
 
 <!-- Site Brand (logo + h1 primario) -->
 <h1 id="site-brand">
-  <a href="/" aria-label="Xadrez Online — Voltar ao início">
-    <span class="brand-icon">♚</span><span class="brand-text">Xadrez Online</span>
+  <a href="/" data-i18n-aria="nav.brandAria" aria-label="Xadrez Online — Voltar ao início">
+    <span class="brand-icon">♚</span><span class="brand-text" data-i18n="nav.brand">Xadrez Online</span>
   </a>
 </h1>
 
 <!-- Auth Header (login + ranking) -->
 <div id="auth-header">
-  <button class="auth-btn" onclick="openRankingModal()">🏆 Ranking</button>
-  <button class="auth-btn primary" id="btn-login" onclick="loginWithGoogle()">Entrar com Google</button>
+  <button class="auth-btn" id="btn-lang" onclick="switchLang()" data-i18n="nav.langSwitch" data-i18n-title="nav.langSwitchTitle" title="Play in English">🇺🇸 EN</button>
+  <button class="auth-btn" onclick="openRankingModal()" data-i18n="nav.ranking">🏆 Ranking</button>
+  <button class="auth-btn primary" id="btn-login" onclick="loginWithGoogle()" data-i18n="nav.login">Entrar com Google</button>
   <div id="user-info">
-    <span id="user-name">👤 Jogador</span>
-    <button id="btn-logout" onclick="logout()" title="Sair">Sair</button>
+    <span id="user-name" data-i18n="nav.userDefault">👤 Jogador</span>
+    <button id="btn-logout" onclick="logout()" data-i18n="nav.logout" data-i18n-title="nav.logout" title="Sair">Sair</button>
   </div>
 </div>
 
 <!-- Install PWA banner (mobile only) -->
-<div id="install-banner" role="dialog" aria-label="Instalar Xadrez Online como app">
+<div id="install-banner" role="dialog" data-i18n-aria="install.title" aria-label="Instalar Xadrez Online como app">
   <div class="ic">📲</div>
   <div class="info">
-    <div class="info-title">Instale o Xadrez Online</div>
-    <div class="info-sub">Mais rápido, em tela cheia e funciona offline</div>
+    <div class="info-title" data-i18n="install.title">Instale o Xadrez Online</div>
+    <div class="info-sub" data-i18n="install.sub">Mais rápido, em tela cheia e funciona offline</div>
   </div>
   <div class="actions">
-    <button class="install-btn" id="install-pwa-btn" onclick="triggerPwaInstall()">Instalar</button>
-    <button class="remind-btn" onclick="remindLaterInstall()">Depois</button>
-    <button class="dismiss-btn" onclick="dismissInstallBanner()" aria-label="Fechar">✕</button>
+    <button class="install-btn" id="install-pwa-btn" onclick="triggerPwaInstall()" data-i18n="install.install">Instalar</button>
+    <button class="remind-btn" onclick="remindLaterInstall()" data-i18n="install.later">Depois</button>
+    <button class="dismiss-btn" onclick="dismissInstallBanner()" data-i18n-aria="install.close" aria-label="Fechar">✕</button>
   </div>
 </div>
 
@@ -1329,8 +1861,8 @@
     <div class="player-bar" id="bar-black">
       <div class="player-avatar">♚</div>
       <div class="player-info">
-        <div class="player-name" id="name-black">Computador</div>
-        <div class="player-label">Pretas</div>
+        <div class="player-name" id="name-black" data-i18n="name.computer">Computador</div>
+        <div class="player-label" data-i18n="color.black">Pretas</div>
       </div>
       <div class="captured-pieces" id="captured-black"></div>
       <div class="timer" id="timer-black">10:00</div>
@@ -1348,8 +1880,8 @@
     <div class="player-bar active" id="bar-white">
       <div class="player-avatar">♔</div>
       <div class="player-info">
-        <div class="player-name" id="name-white">Você</div>
-        <div class="player-label">Brancas</div>
+        <div class="player-name" id="name-white" data-i18n="name.you">Você</div>
+        <div class="player-label" data-i18n="color.white">Brancas</div>
       </div>
       <div class="captured-pieces" id="captured-white"></div>
       <div class="timer" id="timer-white">10:00</div>
@@ -1366,80 +1898,80 @@
   <div class="sidebar">
     <!-- Painel de partida online (so aparece em modo online) -->
     <div class="panel" id="online-controls" style="display:none;">
-      <h3>🎯 Partida Online</h3>
+      <h3 data-i18n="online.title">🎯 Partida Online</h3>
       <div style="font-size:12px; color:var(--text-muted); margin-bottom:6px;">
         ID: <span id="online-game-id-display" style="color:var(--accent); font-family:monospace; font-weight:600;">—</span>
       </div>
       <div id="online-color-display" style="font-size:12px; color:var(--text-muted); margin-bottom:10px;"></div>
       <div class="controls">
-        <button class="btn" onclick="copyOnlineGameLink()" id="online-copy-link-btn">📋 Copiar Link</button>
-        <button class="btn" onclick="leaveOnlineGameAction()">🚪 Sair da Partida</button>
+        <button class="btn" onclick="copyOnlineGameLink()" id="online-copy-link-btn" data-i18n="online.copyLink">📋 Copiar Link</button>
+        <button class="btn" onclick="leaveOnlineGameAction()" data-i18n="online.leave">🚪 Sair da Partida</button>
       </div>
       <div class="reactions-row">
-        <button class="reaction-btn" onclick="sendReaction('👋','Olá')" title="Olá">👋</button>
-        <button class="reaction-btn" onclick="sendReaction('🤔','Pensando')" title="Pensando">🤔</button>
-        <button class="reaction-btn" onclick="sendReaction('👏','Boa jogada')" title="Boa jogada">👏</button>
-        <button class="reaction-btn" onclick="sendReaction('😅','Ufa')" title="Ufa">😅</button>
-        <button class="reaction-btn" onclick="sendReaction('🤝','GG')" title="GG (boa partida)">🤝</button>
-        <button class="reaction-btn" onclick="sendReaction('🎉','Vibes')" title="Vibes">🎉</button>
-        <button class="reaction-btn" onclick="sendReaction('🚶','Já volto','brb')" title="Já volto">🚶</button>
-        <button class="reaction-btn" onclick="sendReaction('✅','Voltei','back')" title="Voltei">✅</button>
+        <button class="reaction-btn" onclick="sendReaction('👋',tr('react.hello'))" data-i18n-title="react.hello" title="Olá">👋</button>
+        <button class="reaction-btn" onclick="sendReaction('🤔',tr('react.thinking'))" data-i18n-title="react.thinking" title="Pensando">🤔</button>
+        <button class="reaction-btn" onclick="sendReaction('👏',tr('react.nicemove'))" data-i18n-title="react.nicemove" title="Boa jogada">👏</button>
+        <button class="reaction-btn" onclick="sendReaction('😅',tr('react.phew'))" data-i18n-title="react.phew" title="Ufa">😅</button>
+        <button class="reaction-btn" onclick="sendReaction('🤝',tr('react.gg'))" data-i18n-title="react.ggTitle" title="GG (boa partida)">🤝</button>
+        <button class="reaction-btn" onclick="sendReaction('🎉',tr('react.vibes'))" data-i18n-title="react.vibes" title="Vibes">🎉</button>
+        <button class="reaction-btn" onclick="sendReaction('🚶',tr('react.brb'),'brb')" data-i18n-title="react.brb" title="Já volto">🚶</button>
+        <button class="reaction-btn" onclick="sendReaction('✅',tr('react.back'),'back')" data-i18n-title="react.back" title="Voltei">✅</button>
       </div>
     </div>
 
     <div class="panel" id="settings-panel">
-      <h3>⚙ Configurações</h3>
+      <h3 data-i18n="settings.heading">⚙ Configurações</h3>
       <div class="login-prompt-banner" id="login-prompt-banner" style="display:none;">
         <span class="ic">💡</span>
-        <div class="text">
+        <div class="text" data-i18n-html="settings.loginPrompt">
           Você não está logado.<br>
           <strong>Faça login antes de jogar</strong> para que suas vitórias contem no ranking.
         </div>
-        <button onclick="loginWithGoogle()">Entrar</button>
+        <button onclick="loginWithGoogle()" data-i18n="settings.loginPromptBtn">Entrar</button>
       </div>
       <div class="settings-row">
-        <span>Dificuldade IA</span>
+        <span data-i18n="settings.difficulty">Dificuldade IA</span>
         <select id="ai-depth">
-          <option value="tutorial">🎓 Aprendiz</option>
-          <option value="1">Fácil</option>
-          <option value="2" selected>Médio</option>
-          <option value="3">Difícil</option>
-          <option value="4">Expert</option>
+          <option value="tutorial" data-i18n="settings.diff.tutorial">🎓 Aprendiz</option>
+          <option value="1" data-i18n="settings.diff.1">Fácil</option>
+          <option value="2" selected data-i18n="settings.diff.2">Médio</option>
+          <option value="3" data-i18n="settings.diff.3">Difícil</option>
+          <option value="4" data-i18n="settings.diff.4">Expert</option>
         </select>
       </div>
       <div class="settings-row">
-        <span>Tempo</span>
+        <span data-i18n="settings.time">Tempo</span>
         <select id="time-control">
-          <option value="0">Sem limite</option>
+          <option value="0" data-i18n="settings.time.0">Sem limite</option>
           <option value="300">5 min</option>
           <option value="600" selected>10 min</option>
           <option value="900">15 min</option>
         </select>
       </div>
       <div class="settings-row">
-        <span>Jogar como</span>
+        <span data-i18n="settings.playAs">Jogar como</span>
         <select id="play-as">
-          <option value="w" selected>Brancas</option>
-          <option value="b">Pretas</option>
-          <option value="both">2 Jogadores</option>
+          <option value="w" selected data-i18n="settings.playAs.w">Brancas</option>
+          <option value="b" data-i18n="settings.playAs.b">Pretas</option>
+          <option value="both" data-i18n="settings.playAs.both">2 Jogadores</option>
         </select>
       </div>
       <div class="controls" style="margin-top: 10px;">
-        <button class="btn primary" onclick="newGameWithAd()">Novo Jogo</button>
-        <button class="btn" id="btn-undo" onclick="undoWithAd()">↩ Desfazer</button>
+        <button class="btn primary" onclick="newGameWithAd()" data-i18n="settings.newGame">Novo Jogo</button>
+        <button class="btn" id="btn-undo" onclick="undoWithAd()" data-i18n="settings.undo">↩ Desfazer</button>
       </div>
       <div class="controls" style="margin-top: 6px;">
-        <button class="btn" onclick="document.getElementById('pgn-input').click()">📂 Importar PGN</button>
+        <button class="btn" onclick="document.getElementById('pgn-input').click()" data-i18n="settings.importPgn">📂 Importar PGN</button>
         <input type="file" id="pgn-input" accept=".pgn,.txt" style="display:none" onchange="importPGN(event)">
-        <button class="btn" onclick="openRankingModal()">🏆 Ranking</button>
+        <button class="btn" onclick="openRankingModal()" data-i18n="nav.ranking">🏆 Ranking</button>
       </div>
       <div class="controls" style="margin-top: 6px;">
-        <button class="btn primary" onclick="createOnlineGame()" style="grid-column: span 2;">🎯 Jogar com Amigo</button>
+        <button class="btn primary" onclick="createOnlineGame()" style="grid-column: span 2;" data-i18n="settings.playFriend">🎯 Jogar com Amigo</button>
       </div>
     </div>
 
     <div class="panel" style="flex:1; display:flex; flex-direction:column;" id="moves-panel">
-      <h3>📋 Movimentos</h3>
+      <h3 data-i18n="moves.title">📋 Movimentos</h3>
       <div class="moves-list" id="moves-list"></div>
     </div>
 
@@ -1449,15 +1981,15 @@
       <div class="tutorial-content" id="tutorial-content"></div>
       <div id="tutorial-goal-area"></div>
       <div class="tutorial-nav">
-        <button class="btn" id="btn-prev-lesson" onclick="prevLesson()">← Anterior</button>
+        <button class="btn" id="btn-prev-lesson" onclick="prevLesson()" data-i18n="tutorial.prev">← Anterior</button>
         <span class="tutorial-progress" id="tutorial-progress">1/12</span>
-        <button class="btn primary" id="btn-next-lesson" onclick="nextLesson()">Próximo →</button>
+        <button class="btn primary" id="btn-next-lesson" onclick="nextLesson()" data-i18n="tutorial.next">Próximo →</button>
       </div>
     </div>
 
     <div class="panel">
-      <h3>💡 Dica</h3>
-      <div id="hint-area" style="font-size:13px; color: var(--text-muted);">Clique em uma peça para ver os movimentos possíveis.</div>
+      <h3 data-i18n="hint.title">💡 Dica</h3>
+      <div id="hint-area" data-i18n="hint.default" style="font-size:13px; color: var(--text-muted);">Clique em uma peça para ver os movimentos possíveis.</div>
     </div>
   </div>
 
@@ -1471,13 +2003,13 @@
 
 <!-- Footer -->
 <footer class="site-footer">
-  <a href="/aprenda">📖 Aprenda Xadrez</a>
+  <a href="/aprenda" data-i18n="footer.learn">📖 Aprenda Xadrez</a>
   <span class="sep">•</span>
-  <a href="/privacidade">Política de Privacidade</a>
+  <a href="/privacidade" data-i18n="footer.privacy">Política de Privacidade</a>
   <span class="sep">•</span>
-  <a href="/termos">Termos de Uso</a>
+  <a href="/termos" data-i18n="footer.terms">Termos de Uso</a>
   <span class="sep">•</span>
-  <a href="mailto:alternativasderenda@gmail.com">Contato</a>
+  <a href="mailto:alternativasderenda@gmail.com" data-i18n="footer.contact">Contato</a>
   <a href="/admin" id="footer-admin-link" style="display:none; margin-left:8px;">🔒 Admin</a>
 </footer>
 
@@ -1485,9 +2017,9 @@
 <div class="tutorial-celebration" id="tutorial-celebration">
   <div class="celebration-card">
     <div class="celeb-icon" id="celeb-icon">🎉</div>
-    <h3 id="celeb-title">Parabéns!</h3>
-    <p id="celeb-text">Você completou a lição!</p>
-    <button class="btn primary" onclick="closeCelebration()" style="min-width:160px;">Próxima Lição →</button>
+    <h3 id="celeb-title" data-i18n="tutorial.congrats">Parabéns!</h3>
+    <p id="celeb-text" data-i18n="tutorial.lessonDone">Você completou a lição!</p>
+    <button class="btn primary" onclick="closeCelebration()" style="min-width:160px;" data-i18n="tutorial.nextLesson">Próxima Lição →</button>
   </div>
 </div>
 
@@ -1499,13 +2031,13 @@
     <p id="go-text">Você venceu!</p>
     <div id="go-score-info" style="display:none; font-size:13px; color:var(--text-muted); margin:6px 0 4px;"></div>
     <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; max-width:360px;">
-      <button class="btn primary" id="btn-register-score" onclick="registerCurrentScore()" style="display:none; min-width:160px;">🏆 Registrar no Ranking</button>
-      <button class="btn primary" id="btn-go-rematch" onclick="startRematch()" style="display:none; min-width:140px;">🔄 Revanche</button>
-      <button class="btn" id="btn-go-leave-online" onclick="leaveOnlineFromPopup()" style="display:none; min-width:140px;">🚪 Sair</button>
-      <button class="btn primary" id="btn-go-newgame" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;">Jogar Novamente</button>
-      <button class="btn" onclick="closeGameOverPopup(); nextDifficulty();" style="min-width:140px;" id="go-next-btn">Próximo Nível →</button>
-      <button class="btn" onclick="startReplay();" style="min-width:140px;">▶ Ver Replay</button>
-      <button class="btn" onclick="downloadGame();" style="min-width:140px;">💾 Salvar Partida</button>
+      <button class="btn primary" id="btn-register-score" onclick="registerCurrentScore()" style="display:none; min-width:160px;" data-i18n="gameover.register">🏆 Registrar no Ranking</button>
+      <button class="btn primary" id="btn-go-rematch" onclick="startRematch()" style="display:none; min-width:140px;" data-i18n="gameover.rematch">🔄 Revanche</button>
+      <button class="btn" id="btn-go-leave-online" onclick="leaveOnlineFromPopup()" style="display:none; min-width:140px;" data-i18n="gameover.leave">🚪 Sair</button>
+      <button class="btn primary" id="btn-go-newgame" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;" data-i18n="gameover.newGame">Jogar Novamente</button>
+      <button class="btn" onclick="closeGameOverPopup(); nextDifficulty();" style="min-width:140px;" id="go-next-btn" data-i18n="gameover.nextLevel">Próximo Nível →</button>
+      <button class="btn" onclick="startReplay();" style="min-width:140px;" data-i18n="gameover.replay">▶ Ver Replay</button>
+      <button class="btn" onclick="downloadGame();" style="min-width:140px;" data-i18n="gameover.save">💾 Salvar Partida</button>
     </div>
     <div id="go-score-feedback" style="display:none;" class="score-feedback"></div>
   </div>
@@ -1525,7 +2057,7 @@
 <!-- Promotion Modal -->
 <div class="modal-overlay" id="promo-modal">
   <div class="modal">
-    <h3>Promover peão</h3>
+    <h3 data-i18n="promo.title">Promover peão</h3>
     <div class="promo-options" id="promo-options"></div>
   </div>
 </div>
@@ -1543,21 +2075,21 @@
 <!-- Share Game Modal -->
 <div class="modal-overlay" id="share-game-modal" style="display:none;">
   <div class="modal" style="max-width:480px; width:92%;">
-    <h3 style="margin-bottom:6px;">🎯 Compartilhar Partida</h3>
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;">
+    <h3 style="margin-bottom:6px;" data-i18n="share.title">🎯 Compartilhar Partida</h3>
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:8px;" data-i18n="share.desc">
       Mande este link pro seu amigo. Quando ele abrir, a partida começa.
     </p>
     <p id="share-color-info" style="font-size:12px; color:var(--accent); margin-bottom:14px;"></p>
     <div style="display:flex; gap:6px; margin-bottom:12px;">
       <input id="share-link-input" type="text" readonly
         style="flex:1; background:rgba(0,0,0,0.3); border:1px solid rgba(255,255,255,0.1); color:var(--text-light); padding:8px 10px; border-radius:6px; font-size:11px; font-family:monospace; min-width:0;">
-      <button class="btn primary" onclick="copyShareLink()" id="copy-link-btn" style="min-width:90px;">📋 Copiar</button>
+      <button class="btn primary" onclick="copyShareLink()" id="copy-link-btn" style="min-width:90px;" data-i18n="share.copy">📋 Copiar</button>
     </div>
     <div style="display:flex; gap:8px; flex-wrap:wrap; justify-content:center;">
       <a id="share-whatsapp" class="btn" target="_blank" rel="noopener" style="background:#25D366; color:white; min-width:140px; border:none;">💬 WhatsApp</a>
-      <button class="btn" onclick="cancelOnlineGame()" style="min-width:120px;">Cancelar</button>
+      <button class="btn" onclick="cancelOnlineGame()" style="min-width:120px;" data-i18n="share.cancel">Cancelar</button>
     </div>
-    <p id="waiting-status" style="text-align:center; color:var(--accent); font-size:13px; margin-top:14px;">⏳ Aguardando oponente...</p>
+    <p id="waiting-status" style="text-align:center; color:var(--accent); font-size:13px; margin-top:14px;" data-i18n="share.waiting">⏳ Aguardando oponente...</p>
   </div>
 </div>
 
@@ -1566,24 +2098,24 @@
   <div class="modal" style="max-width:520px; width:92%; max-height:85vh; padding:0; display:flex; flex-direction:column; overflow:hidden;">
     <!-- Header fixo -->
     <div style="padding: 24px 24px 14px; flex-shrink:0;">
-      <h3 style="margin-bottom:10px;">🏆 Ranking</h3>
+      <h3 style="margin-bottom:10px;" data-i18n="nav.ranking">🏆 Ranking</h3>
       <div class="ranking-tabs">
-        <button class="rank-tab active" data-diff="1">Fácil</button>
-        <button class="rank-tab" data-diff="2">Médio</button>
-        <button class="rank-tab" data-diff="3">Difícil</button>
-        <button class="rank-tab" data-diff="4">Expert</button>
+        <button class="rank-tab active" data-diff="1" data-i18n="settings.diff.1">Fácil</button>
+        <button class="rank-tab" data-diff="2" data-i18n="settings.diff.2">Médio</button>
+        <button class="rank-tab" data-diff="3" data-i18n="settings.diff.3">Difícil</button>
+        <button class="rank-tab" data-diff="4" data-i18n="settings.diff.4">Expert</button>
       </div>
       <div class="ranking-subtabs">
-        <button class="rank-subtab active" data-type="wins">🏆 Mais vitórias</button>
-        <button class="rank-subtab" data-type="time">⚡ Vitória mais rápida</button>
-        <button class="rank-subtab" data-type="mine" id="rank-subtab-mine" style="display:none;">📋 Minhas partidas</button>
+        <button class="rank-subtab active" data-type="wins" data-i18n="rank.subWins">🏆 Mais vitórias</button>
+        <button class="rank-subtab" data-type="time" data-i18n="rank.subTime">⚡ Vitória mais rápida</button>
+        <button class="rank-subtab" data-type="mine" id="rank-subtab-mine" style="display:none;" data-i18n="rank.subMine">📋 Minhas partidas</button>
       </div>
     </div>
     <!-- Lista scrollavel (toma o espaco restante) -->
-    <div id="ranking-list" style="flex:1; overflow-y:auto; padding: 0 24px;"><div class="rank-empty">Carregando...</div></div>
+    <div id="ranking-list" style="flex:1; overflow-y:auto; padding: 0 24px;"><div class="rank-empty" data-i18n="common.loading">Carregando...</div></div>
     <!-- Footer fixo com o botao Fechar -->
     <div style="padding: 14px 24px; flex-shrink:0; border-top: 1px solid rgba(255,255,255,0.06); display:flex; justify-content:center;">
-      <button class="btn primary" onclick="closeRankingModal()" style="min-width:120px;">Fechar</button>
+      <button class="btn primary" onclick="closeRankingModal()" style="min-width:120px;" data-i18n="common.close">Fechar</button>
     </div>
   </div>
 </div>
@@ -1686,21 +2218,11 @@ async function triggerPwaInstall() {
   }
   // iOS Safari: nao tem trigger programatico, mostra instrucoes
   if (isIOS()) {
-    showAlert(
-      'Para instalar no iPhone/iPad:\n\n' +
-      '1. Toque no ícone Compartilhar (□↑) na barra inferior do Safari\n' +
-      '2. Role e toque em "Adicionar à Tela de Início"\n' +
-      '3. Confirme em "Adicionar"',
-      { icon: '📲', title: 'Instalar no iOS' }
-    );
+    showAlert(tr('install.iosBody'), { icon: '📲', title: tr('install.iosTitle') });
     return;
   }
   // Outros: provavelmente nao da pra instalar — orienta
-  showAlert(
-    'Para instalar como app:\n\n' +
-    'No Chrome ou Edge, abra o menu (⋮) e procure por "Instalar Xadrez Online" ou "Adicionar à Tela de Início".',
-    { icon: '📲', title: 'Instalar como app' }
-  );
+  showAlert(tr('install.otherBody'), { icon: '📲', title: tr('install.otherTitle') });
 }
 
 // Evento Android: dispara quando o site e' instalavel
@@ -1741,12 +2263,12 @@ function showGameModal(opts) {
       return;
     }
     document.getElementById('game-modal-icon').textContent = opts.icon || 'ℹ️';
-    document.getElementById('game-modal-title').textContent = opts.title || 'Aviso';
+    document.getElementById('game-modal-title').textContent = opts.title || tr('modal.notice');
     document.getElementById('game-modal-message').textContent = opts.message || '';
 
     const buttonsContainer = document.getElementById('game-modal-buttons');
     buttonsContainer.innerHTML = '';
-    const buttons = opts.buttons || [{ label: 'OK', value: true, primary: true }];
+    const buttons = opts.buttons || [{ label: tr('common.ok'), value: true, primary: true }];
     buttons.forEach(btn => {
       const button = document.createElement('button');
       button.className = 'btn' + (btn.primary ? ' primary' : '');
@@ -1766,10 +2288,10 @@ function showGameModal(opts) {
 function showAlert(message, opts) {
   opts = opts || {};
   const icon = opts.icon || (opts.error ? '⚠️' : (opts.success ? '✓' : 'ℹ️'));
-  const title = opts.title || (opts.error ? 'Erro' : (opts.success ? 'Sucesso' : 'Aviso'));
+  const title = opts.title || (opts.error ? tr('modal.error') : (opts.success ? tr('modal.success') : tr('modal.notice')));
   return showGameModal({
     icon, title, message,
-    buttons: [{ label: opts.okLabel || 'OK', value: true, primary: true }]
+    buttons: [{ label: opts.okLabel || tr('common.ok'), value: true, primary: true }]
   });
 }
 
@@ -1777,11 +2299,11 @@ function showConfirm(message, opts) {
   opts = opts || {};
   return showGameModal({
     icon: opts.icon || '❓',
-    title: opts.title || 'Confirmação',
+    title: opts.title || tr('modal.confirm'),
     message,
     buttons: [
-      { label: opts.cancelLabel || 'Cancelar', value: false, primary: false },
-      { label: opts.okLabel || 'Confirmar', value: true, primary: true }
+      { label: opts.cancelLabel || tr('common.cancel'), value: false, primary: false },
+      { label: opts.okLabel || tr('common.confirmBtn'), value: true, primary: true }
     ]
   });
 }
@@ -1861,12 +2383,12 @@ function updateLoginPromptBanner() {
 }
 
 async function loginWithGoogle() {
-  if (!supa) { await showAlert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!supa) { await showAlert(tr('modal.connecting')); return; }
   const { error } = await supa.auth.signInWithOAuth({
     provider: 'google',
     options: { redirectTo: window.location.origin + window.location.pathname }
   });
-  if (error) await showAlert('Erro ao entrar: ' + error.message, { error: true });
+  if (error) await showAlert(tr('modal.signinError') + error.message, { error: true });
 }
 
 async function logout() {
@@ -2114,11 +2636,11 @@ async function registerCurrentScore() {
     } catch (e) { console.warn('saving pendingScoreData failed:', e); }
     return loginWithGoogle();
   }
-  if (btn) { btn.disabled = true; btn.textContent = 'Registrando...'; }
+  if (btn) { btn.disabled = true; btn.textContent = tr('register.submitting'); }
   const ok = await submitScore(lastWinData);
   if (ok) {
     if (btn) { btn.style.display = 'none'; }
-    if (fb) { fb.style.display = 'block'; fb.textContent = '✓ Pontuação registrada no ranking!'; }
+    if (fb) { fb.style.display = 'block'; fb.textContent = tr('register.feedbackOk'); }
     lastWinData = null;
   } else if (btn) {
     btn.disabled = false;
@@ -2167,15 +2689,15 @@ async function submitScore(data, opts) {
       // passar pela register_ai_score, que valida que existe jogo real.
       // Score sem jogo nao e' valido. Se a RPC falhou, o registro falha.
       const msg = (e.message || '').indexOf('no moves found') >= 0
-        ? 'Não foi possível validar esta partida (sem registro de lances). Jogue logado desde o início pra registrar.'
-        : 'Não foi possível registrar a pontuação agora. Tente novamente.';
+        ? tr('register.cantValidate')
+        : tr('register.failRetry');
       await showAlert(msg, { error: true });
       return false;
     }
   }
 
   // Sem sessionId — nao deveria acontecer em fluxo normal
-  await showAlert('Não foi possível registrar: sessão de jogo não encontrada.', { error: true });
+  await showAlert(tr('register.noSession'), { error: true });
   return false;
 }
 
@@ -2204,10 +2726,10 @@ async function checkPendingScore() {
             behavior: data.behavior
           }, { clientValidated: true });
           if (submitOk) {
-            await showAlert('Sua vitória foi registrada no ranking!', { success: true });
+            await showAlert(tr('register.winRegistered'), { success: true });
           }
         } else {
-          await showAlert('Não foi possível registrar esta partida agora. Tente jogar novamente já logado.', { error: true });
+          await showAlert(tr('register.failRelogin'), { error: true });
         }
       }
     } catch (e) { console.error('pendingScoreData err:', e); }
@@ -2220,7 +2742,7 @@ async function checkPendingScore() {
     try {
       const data = JSON.parse(pending);
       submitScore(data).then(ok => {
-        if (ok) showAlert('Sua pontuação foi registrada no ranking!', { success: true });
+        if (ok) showAlert(tr('register.scoreRegistered'), { success: true });
       });
     } catch (e) { console.error(e); }
   }
@@ -2278,7 +2800,7 @@ function fmtScoreDate(iso) {
   if (!iso) return '-';
   // iso aqui e' timestamp completo com timezone — new Date parseia certo
   const d = new Date(iso);
-  return d.toLocaleString('pt-BR', {
+  return d.toLocaleString(currentLang === 'en' ? 'en-US' : 'pt-BR', {
     timeZone: 'America/Sao_Paulo',
     day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit'
   });
@@ -2297,10 +2819,10 @@ async function fetchMyRankPosition() {
 }
 
 function renderMyPositionRow(position, metricValue) {
-  const myName = currentUser ? userDisplayName(currentUser) : 'Você';
+  const myName = currentUser ? userDisplayName(currentUser) : tr('name.you');
   return `
     <div class="my-position-row">
-      <div class="mp-sep">— sua posição —</div>
+      <div class="mp-sep">${tr('rank.yourPosition')}</div>
       <table class="rank-table">
         <tbody>
           <tr class="me">
@@ -2315,10 +2837,10 @@ function renderMyPositionRow(position, metricValue) {
 
 async function loadRanking() {
   const list = document.getElementById('ranking-list');
-  list.innerHTML = '<div class="rank-empty">Carregando...</div>';
+  list.innerHTML = '<div class="rank-empty">' + tr('common.loading') + '</div>';
 
   if (!supa) {
-    list.innerHTML = '<div class="rank-empty">Sem conexão com o servidor.</div>';
+    list.innerHTML = '<div class="rank-empty">' + tr('replay.noConnection') + '</div>';
     return;
   }
 
@@ -2326,7 +2848,7 @@ async function loadRanking() {
     // ===== Aba "Minhas partidas" =====
     if (currentRankType === 'mine') {
       if (!currentUser) {
-        list.innerHTML = '<div class="rank-empty">Faça login pra ver suas partidas.</div>';
+        list.innerHTML = '<div class="rank-empty">' + tr('rank.loginToSee') + '</div>';
         return;
       }
       const { data, error } = await supa
@@ -2337,15 +2859,15 @@ async function loadRanking() {
         .order('player_seconds', { ascending: true });
       if (error) throw error;
       if (!data || data.length === 0) {
-        list.innerHTML = '<div class="rank-empty">Você ainda não tem partidas registradas neste nível.</div>';
+        list.innerHTML = '<div class="rank-empty">' + tr('rank.noGamesYet') + '</div>';
         return;
       }
       list.innerHTML = `
         <div style="font-size:12px; color:var(--text-muted); margin-bottom:8px;">
-          ${data.length} partida(s) sua(s) — da mais rápida pra mais lenta.
+          ${tr('rank.myGamesCount', { n: data.length })}
         </div>
         <table class="rank-table">
-          <thead><tr><th>#</th><th>Tempo</th><th>Data</th></tr></thead>
+          <thead><tr><th>#</th><th>${tr('rank.colTime')}</th><th>${tr('rank.colDate')}</th></tr></thead>
           <tbody>${data.map((s,i) => `
             <tr>
               <td>${i+1}</td>
@@ -2365,13 +2887,13 @@ async function loadRanking() {
       });
       if (error) throw error;
       if (!data || data.length === 0) {
-        list.innerHTML = '<div class="rank-empty">Ainda não há vencedores neste nível. Seja o primeiro!</div>';
+        list.innerHTML = '<div class="rank-empty">' + tr('rank.noWinners') + '</div>';
         return;
       }
       const inTop = myId && data.some(r => r.user_id === myId);
       let html = `
         <table class="rank-table">
-          <thead><tr><th>#</th><th>Jogador</th><th>Vitórias</th></tr></thead>
+          <thead><tr><th>#</th><th>${tr('rank.colPlayer')}</th><th>${tr('rank.colWins')}</th></tr></thead>
           <tbody>${data.map(s => `
             <tr class="${myId && s.user_id === myId ? 'me' : ''}">
               <td>${s.rank_pos}</td><td>${escapeHtml(s.username)}</td><td>${s.wins}</td>
@@ -2393,13 +2915,13 @@ async function loadRanking() {
     });
     if (error) throw error;
     if (!data || data.length === 0) {
-      list.innerHTML = '<div class="rank-empty">Ainda não há vencedores neste nível. Seja o primeiro!</div>';
+      list.innerHTML = '<div class="rank-empty">' + tr('rank.noWinners') + '</div>';
       return;
     }
     const inTop = myId && data.some(r => r.user_id === myId);
     let html = `
       <table class="rank-table">
-        <thead><tr><th>#</th><th>Jogador</th><th>Tempo</th></tr></thead>
+        <thead><tr><th>#</th><th>${tr('rank.colPlayer')}</th><th>${tr('rank.colTime')}</th></tr></thead>
         <tbody>${data.map(s => {
           // Top 3 com session_id ganham botao de replay
           const replayBtn = (s.rank_pos <= 3 && s.session_id)
@@ -2422,7 +2944,7 @@ async function loadRanking() {
 
   } catch (err) {
     console.error(err);
-    list.innerHTML = '<div class="rank-empty">Erro ao carregar ranking.</div>';
+    list.innerHTML = '<div class="rank-empty">' + tr('rank.loadError') + '</div>';
   }
 }
 
@@ -2455,9 +2977,9 @@ function generateGameId() {
 }
 
 async function createOnlineGame() {
-  if (!supa) { await showAlert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!supa) { await showAlert(tr('modal.connecting')); return; }
   if (!currentUser) {
-    const ok = await showConfirm('Pra jogar com amigos você precisa entrar com Google. Entrar agora?', { okLabel: 'Entrar com Google' });
+    const ok = await showConfirm(tr('online.needLoginPlay'), { okLabel: tr('nav.login') });
     if (!ok) return;
     sessionStorage.setItem('postLoginAction', 'createOnline');
     return loginWithGoogle();
@@ -2489,7 +3011,7 @@ async function createOnlineGame() {
   const { error } = await supa.from('games').insert(insertData);
 
   if (error) {
-    await showAlert('Erro ao criar partida: ' + error.message, { error: true });
+    await showAlert(tr('online.createError') + error.message, { error: true });
     return;
   }
 
@@ -2500,9 +3022,9 @@ async function createOnlineGame() {
 }
 
 async function joinOnlineGame(gameId) {
-  if (!supa) { await showAlert('Conectando ao servidor, tente em 1 segundo...'); return; }
+  if (!supa) { await showAlert(tr('modal.connecting')); return; }
   if (!currentUser) {
-    const ok = await showConfirm('Pra entrar na partida você precisa entrar com Google. Entrar agora?', { okLabel: 'Entrar com Google' });
+    const ok = await showConfirm(tr('online.needLoginJoin'), { okLabel: tr('nav.login') });
     if (!ok) return;
     sessionStorage.setItem('postLoginAction', 'joinOnline:' + gameId);
     return loginWithGoogle();
@@ -2512,7 +3034,7 @@ async function joinOnlineGame(gameId) {
     .from('games').select('*').eq('id', gameId).single();
 
   if (fetchErr || !game) {
-    await showAlert('Partida não encontrada ou já encerrada.', { error: true });
+    await showAlert(tr('online.matchNotFound'), { error: true });
     cleanGameUrlParam();
     return;
   }
@@ -2551,7 +3073,7 @@ async function joinOnlineGame(gameId) {
   }
 
   if (game.status !== 'waiting') {
-    await showAlert('Esta partida já está em andamento ou encerrada.', { error: true });
+    await showAlert(tr('online.matchInProgress'), { error: true });
     cleanGameUrlParam();
     return;
   }
@@ -2578,7 +3100,7 @@ async function joinOnlineGame(gameId) {
     .eq('status', 'waiting');
 
   if (updateErr) {
-    await showAlert('Erro ao entrar: ' + updateErr.message, { error: true });
+    await showAlert(tr('online.joinError') + updateErr.message, { error: true });
     return;
   }
 
@@ -2611,8 +3133,8 @@ function setupOnlineGame(gameId, color) {
   const colorDisp = document.getElementById('online-color-display');
   if (colorDisp) {
     colorDisp.textContent = color === 'w'
-      ? '♔ Você joga com Brancas'
-      : '♚ Você joga com Pretas';
+      ? tr('online.youPlayWhite')
+      : tr('online.youPlayBlack');
   }
 
   gameMode = 'online';
@@ -2728,14 +3250,14 @@ function handleGameUpdate(game) {
     closeShareModal();
     opponentName = (myOnlineColor === 'w') ? game.black_username : game.white_username;
     updateOnlinePlayerBars();
-    setStatus('🎯 Oponente entrou! Brancas jogam.');
+    setStatus(tr('status.opponentJoined'));
   }
 
   if (game.status === 'finished' || game.status === 'abandoned') {
     if (!gameOver) {
       gameOver = true;
       stopTimer();
-      const reason = game.end_reason || (game.status === 'abandoned' ? 'Oponente saiu' : 'Partida encerrada');
+      const reason = game.end_reason || (game.status === 'abandoned' ? tr('online.opponentLeft') : tr('online.matchEnded'));
       setStatus('🏁 ' + reason);
     }
   }
@@ -2743,8 +3265,8 @@ function handleGameUpdate(game) {
 
 function updateOnlinePlayerBars() {
   if (gameMode !== 'online') return;
-  const myName = currentUser ? userDisplayName(currentUser) : 'Você';
-  const oppName = opponentName || '⏳ Aguardando...';
+  const myName = currentUser ? userDisplayName(currentUser) : tr('name.you');
+  const oppName = opponentName || tr('online.waitingShort');
   if (myOnlineColor === 'w') {
     document.getElementById('name-white').textContent = myName;
     document.getElementById('name-black').textContent = oppName;
@@ -2773,7 +3295,7 @@ async function sendMoveToServer(move, isGameOver, gameResult) {
   });
   if (error) {
     console.error('Erro ao enviar movimento:', error);
-    setStatus('⚠ Erro de conexão ao enviar movimento');
+    setStatus(tr('status.connError'));
     return;
   }
   // Atualiza turno no games
@@ -2786,7 +3308,7 @@ async function sendMoveToServer(move, isGameOver, gameResult) {
     await supa.from('games').update({
       status: 'finished',
       result: gameResult,
-      end_reason: gameResult === 'draw' ? 'Empate' : (gameResult === 'white_wins' ? 'Brancas vencem' : 'Pretas vencem'),
+      end_reason: gameResult === 'draw' ? tr('online.endDraw') : (gameResult === 'white_wins' ? tr('online.endWhiteWins') : tr('online.endBlackWins')),
       ended_at: new Date().toISOString()
     }).eq('id', onlineGameId);
   }
@@ -2812,9 +3334,9 @@ function showShareModal(gameId, creatorColor) {
   const colorInfo = document.getElementById('share-color-info');
   if (colorInfo) {
     if (creatorColor === 'w') {
-      colorInfo.textContent = '♔ Você jogará como Brancas (joga primeiro)';
+      colorInfo.textContent = tr('online.youWillBeWhite');
     } else if (creatorColor === 'b') {
-      colorInfo.textContent = '♚ Você jogará como Pretas (oponente joga primeiro)';
+      colorInfo.textContent = tr('online.youWillBeBlack');
     } else {
       colorInfo.textContent = '';
     }
@@ -2835,8 +3357,8 @@ async function copyShareLink() {
     input.select();
     document.execCommand('copy');
   }
-  btn.textContent = '✓ Copiado!';
-  setTimeout(() => { btn.textContent = '📋 Copiar'; }, 1500);
+  btn.textContent = tr('common.copied');
+  setTimeout(() => { btn.textContent = tr('share.copy'); }, 1500);
 }
 
 async function cancelOnlineGame() {
@@ -2889,13 +3411,13 @@ async function copyOnlineGameLink() {
   }
   if (btn) {
     const original = btn.textContent;
-    btn.textContent = '✓ Copiado!';
+    btn.textContent = tr('common.copied');
     setTimeout(() => { btn.textContent = original; }, 1500);
   }
 }
 
 async function leaveOnlineGameAction() {
-  const ok = await showConfirm('Sair da partida? Sua jogada será marcada como abandono.', { okLabel: 'Sair', cancelLabel: 'Continuar jogando' });
+  const ok = await showConfirm(tr('online.leaveConfirm'), { okLabel: tr('online.leaveYes'), cancelLabel: tr('online.leaveNo') });
   if (!ok) return;
   if (onlineGameId && supa) {
     try {
@@ -2929,7 +3451,7 @@ async function startRematch() {
   const { data: oldGame, error: gE } = await supa
     .from('games').select('*').eq('id', oldGameId).single();
   if (gE || !oldGame) {
-    await showAlert('Erro ao iniciar revanche.', { error: true });
+    await showAlert(tr('online.rematchError'), { error: true });
     return;
   }
 
@@ -2948,7 +3470,7 @@ async function startRematch() {
   });
 
   if (error) {
-    await showAlert('Erro ao criar revanche: ' + error.message, { error: true });
+    await showAlert(tr('online.rematchCreateError') + error.message, { error: true });
     return;
   }
 
@@ -3770,10 +4292,10 @@ function executeMove(move, opts) {
     gameOver = true;
     stopTimer();
     if (inCheck(turn, board)) {
-      const winner = turn === 'w' ? 'Pretas' : 'Brancas';
-      setStatus(`Xeque-mate! ${winner} vencem! 🏆`);
+      const winner = turn === 'w' ? tr('color.black') : tr('color.white');
+      setStatus(tr('game.checkmate', { winner: winner }));
       const depthVal = document.getElementById('ai-depth').value;
-      const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert', 'tutorial': 'Aprendiz' };
+      const diffNames = { '1': tr('settings.diff.1'), '2': tr('settings.diff.2'), '3': tr('settings.diff.3'), '4': tr('settings.diff.4'), 'tutorial': tr('diff.tutorialName') };
       const playerWon = (turn === 'b' && playerColor === 'w') || (turn === 'w' && playerColor === 'b');
       trackEvent('game_over', {
         result: 'checkmate',
@@ -3798,7 +4320,7 @@ function executeMove(move, opts) {
         sendMoveToServer(move, true, gameResult);
       }
     } else {
-      setStatus('Empate por afogamento!');
+      setStatus(tr('game.stalemate'));
       trackEvent('game_over', { result: 'stalemate', total_moves: fullMoves });
       if (!tutorialMode) {
         setTimeout(() => showGameOverPopup(null, null, null, 'stalemate'), 600);
@@ -3811,7 +4333,7 @@ function executeMove(move, opts) {
   if (halfMoves >= 100) {
     gameOver = true;
     stopTimer();
-    setStatus('Empate — regra dos 50 lances');
+    setStatus(tr('game.draw50'));
     trackEvent('game_over', { result: 'fifty_moves', total_moves: fullMoves });
     if (!tutorialMode) {
       setTimeout(() => showGameOverPopup(null, null, null, 'fifty_moves'), 600);
@@ -3823,7 +4345,7 @@ function executeMove(move, opts) {
   if (isInsufficientMaterial()) {
     gameOver = true;
     stopTimer();
-    setStatus('Empate — material insuficiente');
+    setStatus(tr('game.drawMaterial'));
     trackEvent('game_over', { result: 'insufficient_material', total_moves: fullMoves });
     if (!tutorialMode) {
       setTimeout(() => showGameOverPopup(null, null, null, 'insufficient_material'), 600);
@@ -3833,7 +4355,7 @@ function executeMove(move, opts) {
   }
 
   if (inCheck(turn, board)) {
-    setStatus(`Xeque! ${turn === 'w' ? 'Brancas' : 'Pretas'} devem se defender.`);
+    setStatus(tr('game.check', { color: turn === 'w' ? tr('color.white') : tr('color.black') }));
   }
 
   // Check tutorial goals
@@ -3843,7 +4365,7 @@ function executeMove(move, opts) {
     if (lesson && lesson.isPractice && turn === 'b' && !gameOver) {
       // Practice mode: weak AI responds
       aiThinking = true;
-      setStatus('IA Aprendiz pensando...');
+      setStatus(tr('game.aiBeginnerThinking'));
       setTimeout(() => {
         if (gameOver) return;
         const aiMove = getTutorialAIMove();
@@ -3854,7 +4376,7 @@ function executeMove(move, opts) {
       // Non-practice lessons: auto-skip black's turn back to white
       turn = 'w';
       updatePlayerBars();
-      setStatus(lesson.goal || 'Sua vez — continue praticando!');
+      setStatus(lesson.goal || tr('game.practiceContinue'));
     }
     return;
   }
@@ -3869,7 +4391,7 @@ function executeMove(move, opts) {
   const playAs = document.getElementById('play-as').value;
   if (playAs !== 'both' && turn !== playerColor && !gameOver) {
     aiThinking = true;
-    setStatus('Computador pensando...');
+    setStatus(tr('game.computerThinking'));
     setTimeout(() => {
       if (gameOver) return;
       const aiMove = getBestMove();
@@ -3951,13 +4473,13 @@ function startTimer() {
     updateTimerDisplay();
     if (timerWhite <= 0) {
       gameOver = true; stopTimer();
-      setStatus('Tempo esgotado! Pretas vencem! ⏱');
-      if (!tutorialMode) setTimeout(() => showGameOverPopup(playerColor === 'b', 'Pretas', null), 600);
+      setStatus(tr('game.timeoutBlackWins'));
+      if (!tutorialMode) setTimeout(() => showGameOverPopup(playerColor === 'b', tr('color.black'), null), 600);
     }
     if (timerBlack <= 0) {
       gameOver = true; stopTimer();
-      setStatus('Tempo esgotado! Brancas vencem! ⏱');
-      if (!tutorialMode) setTimeout(() => showGameOverPopup(playerColor === 'w', 'Brancas', null), 600);
+      setStatus(tr('game.timeoutWhiteWins'));
+      if (!tutorialMode) setTimeout(() => showGameOverPopup(playerColor === 'w', tr('color.white'), null), 600);
     }
   }, 1000);
 }
@@ -4259,37 +4781,37 @@ function updateStatus() {
   if (tutorialMode) {
     const lesson = LESSONS[currentLesson];
     if (lesson && lesson.goal) setStatus(lesson.goal);
-    else setStatus('Modo Tutorial — Aprendiz');
+    else setStatus(tr('status.tutorialMode'));
     return;
   }
   if (gameMode === 'online') {
     if (isWaitingForOpponent) {
-      setStatus('⏳ Aguardando oponente entrar...');
+      setStatus(tr('status.waitingOpponent'));
       return;
     }
-    const colorLabel = turn === 'w' ? 'Brancas' : 'Pretas';
+    const colorLabel = turn === 'w' ? tr('color.white') : tr('color.black');
     if (turn === myOnlineColor) {
-      setStatus(`Sua vez — ${colorLabel} jogam`);
+      setStatus(tr('status.yourTurn', { color: colorLabel }));
     } else {
-      const opp = opponentName || 'Oponente';
-      setStatus(`Vez de ${opp} — ${colorLabel} jogam`);
+      const opp = opponentName || tr('name.opponent');
+      setStatus(tr('status.opponentTurn', { opp: opp, color: colorLabel }));
     }
     return;
   }
   const playAs = document.getElementById('play-as').value;
   if (playAs === 'both') {
-    setStatus(`${turn === 'w' ? 'Brancas' : 'Pretas'} jogam`);
+    setStatus(tr('status.colorToMove', { color: turn === 'w' ? tr('color.white') : tr('color.black') }));
   } else if (turn === playerColor) {
-    setStatus(`Sua vez — ${turn === 'w' ? 'Brancas' : 'Pretas'} jogam`);
+    setStatus(tr('status.yourTurn', { color: turn === 'w' ? tr('color.white') : tr('color.black') }));
   }
 }
 
 function updateHint() {
   const el = document.getElementById('hint-area');
   if (gameOver) {
-    el.textContent = 'Jogo encerrado. Clique em "Novo Jogo" para recomeçar.';
+    el.textContent = tr('game.ended');
   } else {
-    el.textContent = 'Clique ou arraste uma peça para mover. Casas verdes indicam movimentos válidos.';
+    el.textContent = tr('hint.clickDrag');
   }
 }
 
@@ -4609,6 +5131,157 @@ const LESSONS = [
   }
 ];
 
+// Tradução EN das lições — sobrescreve só os textos (estrutura/tabuleiro
+// continua no array LESSONS acima). PT fica como está; EN é aplicado aqui.
+const LESSONS_EN = [
+  {
+    title: '📖 Welcome to Chess!',
+    content: `<p>Chess is one of the oldest and most fascinating games in the world! Two players face off on a 64-square board, each with 16 pieces.</p>
+<div class="key-concept">🎯 <b>Goal:</b> <b>Checkmate</b> the opponent's king — trap it with no escape!</div>
+<p>In this tutorial, you'll learn:</p>
+<p>• How each piece moves<br>• How to capture enemy pieces<br>• Special moves (castling, en passant, promotion)<br>• Attack and defense strategy<br>• Practice with guided games</p>
+<p>Let's start by meeting the pieces! Click <b>Next</b>.</p>`,
+    goal: null
+  },
+  {
+    title: '♟ The Pawn',
+    content: `<p>The <span class="piece-demo">♟</span> <b>Pawn</b> is the foot soldier of chess. You have 8 of them!</p>
+<div class="key-concept">📏 <b>Movement:</b> Advances <b>1 square forward</b> (or 2 squares on its first move).<br>⚔️ <b>Capture:</b> <b>Diagonally</b>, 1 square forward.</div>
+<p>The pawn is the only piece that captures differently from how it moves! It moves straight but captures on the diagonals.</p>
+<p>If a pawn reaches the other side of the board, it is <b>promoted</b> to any other piece (usually a queen)!</p>`,
+    goal: 'Capture all the black pawns!',
+    celebTitle: 'Pawn mastered!',
+    celebText: 'You learned how the pawn moves and captures!'
+  },
+  {
+    title: '♜ The Rook',
+    content: `<p>The <span class="piece-demo">♜</span> <b>Rook</b> is a powerful piece that controls entire lines!</p>
+<div class="key-concept">📏 <b>Movement:</b> Moves in a <b>straight line</b> — horizontal or vertical — as far as you want.<br>⚔️ <b>Capture:</b> The same way it moves.</div>
+<p>The rook is very strong in the endgame. Two rooks together are almost as strong as a queen!</p>
+<p>Tip: Put your rooks on <b>open files</b> (with no pawns) for maximum power.</p>`,
+    goal: 'Capture all the pawns with the rook!',
+    celebTitle: 'Powerful rook!',
+    celebText: 'Straight lines with no limit — the rook is devastating!'
+  },
+  {
+    title: '♝ The Bishop',
+    content: `<p>The <span class="piece-demo">♝</span> <b>Bishop</b> glides along the board's diagonals!</p>
+<div class="key-concept">📏 <b>Movement:</b> Moves <b>diagonally</b>, as far as you want.<br>⚔️ <b>Capture:</b> The same way it moves.<br>⚠️ A bishop <b>never changes the color of the square</b> it sits on!</div>
+<p>You start with 2 bishops: one on the light squares and one on the dark squares. Together they control every diagonal!</p>
+<p>The bishop pair is considered a small advantage in chess.</p>`,
+    goal: 'Capture all the pawns with the bishop!',
+    celebTitle: 'Sharp bishop!',
+    celebText: 'The diagonals are your domain! Never forget: each bishop stays on its color.'
+  },
+  {
+    title: '♛ The Queen',
+    content: `<p>The <span class="piece-demo">♛</span> <b>Queen</b> is the most powerful piece on the board!</p>
+<div class="key-concept">📏 <b>Movement:</b> Combines Rook + Bishop — moves in <b>any direction</b> (straight or diagonal), as far as you want.<br>⚔️ <b>Capture:</b> The same way it moves.</div>
+<p>The queen is worth roughly <b>9 points</b> (a rook is worth 5, a bishop/knight 3). Losing your queen early usually means losing the game!</p>
+<p>Tip: Do not bring the queen out too early — it can be chased around by minor pieces.</p>`,
+    goal: 'Capture all the pawns with the queen!',
+    celebTitle: 'Supreme queen!',
+    celebText: 'The most powerful piece in the game is under your command!'
+  },
+  {
+    title: '♞ The Knight',
+    content: `<p>The <span class="piece-demo">♞</span> <b>Knight</b> is the most special piece — it <b>jumps</b> over other pieces!</p>
+<div class="key-concept">📏 <b>Movement:</b> Moves in an <b>"L" shape</b> — 2 squares one way + 1 square perpendicular (or vice versa).<br>🦘 <b>Special:</b> It is the <b>only piece that jumps</b> over others!<br>⚔️ <b>Capture:</b> On the destination square of the "L".</div>
+<p>The knight always alternates between light and dark squares. In closed positions (with many pawns), the knight can be stronger than the bishop!</p>
+<p>The <b>"fork"</b> is the knight's most famous attack: attacking two pieces at the same time!</p>`,
+    goal: 'Capture all the pawns with the knight!',
+    celebTitle: 'Knight master!',
+    celebText: 'The L-shaped jump is unpredictable — your opponents will fear your forks!'
+  },
+  {
+    title: '♚ The King',
+    content: `<p>The <span class="piece-demo">♚</span> <b>King</b> is the most important piece — if it is captured, you lose!</p>
+<div class="key-concept">📏 <b>Movement:</b> Moves <b>1 square in any direction</b>.<br>⚠️ The king <b>can never move to an attacked square</b>!<br>👑 If the king is under attack, that is <b>check</b> — you must defend!</div>
+<p>Protect your king! Early on, <b>castle</b> (we will see it in the next lesson) to bring it to safety.</p>
+<p>In the endgame (with few pieces), the king becomes active and can help deliver checkmate!</p>`,
+    goal: 'Walk the king around and capture the pawns!',
+    celebTitle: 'King in action!',
+    celebText: 'The king moves slowly, but it is the most valuable piece. Always protect it!'
+  },
+  {
+    title: '⚔ Check and Checkmate',
+    content: `<p>Understanding check and checkmate is the essence of chess!</p>
+<div class="key-concept">👊 <b>Check:</b> The king is under attack. You MUST defend!<br>💀 <b>Checkmate:</b> The king is in check and has NO defense — <b>game over!</b></div>
+<p><b>Three ways to escape check:</b></p>
+<p>1. <b>Move</b> the king to a safe square<br>2. <b>Block</b> the attack with another piece<br>3. <b>Capture</b> the attacking piece</p>
+<p>In this position, deliver <b>checkmate</b> with the queen! The black king is cornered.</p>`,
+    goal: 'Checkmate the black king!',
+    celebTitle: 'CHECK-MATE!',
+    celebText: 'You delivered checkmate! That is the most satisfying move in chess!'
+  },
+  {
+    title: '🏰 Special Moves',
+    content: `<p>Chess has three important special moves:</p>
+<div class="key-concept">🏰 <b>Castling:</b> King + Rook move together! The king moves 2 squares and the rook jumps to the other side.<br>Conditions: neither the king nor the rook may have moved, no pieces between them, the king is not in check.</div>
+<div class="key-concept">♟ <b>En Passant:</b> If an enemy pawn advances 2 squares and lands beside your pawn, you can capture it "in passing".</div>
+<div class="key-concept">👑 <b>Promotion:</b> A pawn that reaches the far end of the board becomes a Queen (or another piece)!</div>
+<p>Practice <b>castling</b>: move the king 2 squares toward the rook (click the king, then the g1 square).</p>`,
+    goal: 'Castle! (Move the king 2 squares to the right or left)',
+    celebTitle: 'Castling done!',
+    celebText: 'Castling protects your king and activates your rook. Do it in every game!'
+  },
+  {
+    title: '👑 Pawn Promotion',
+    content: `<p>When a pawn reaches the <b>last rank</b> of the board, it gets promoted!</p>
+<div class="key-concept">👑 <b>Promotion:</b> The pawn turns into a <b>Queen, Rook, Bishop or Knight</b>.<br>In the vast majority of cases, promote to a <b>Queen</b> — it is the strongest piece!</div>
+<p>Promotion is one of the reasons pawns are so important in the endgame. A passed pawn (with no enemy pawns blocking it) can decide the game!</p>
+<p>Advance the pawn to the last rank to promote it!</p>`,
+    goal: 'Promote the pawn! Advance it to the last rank.',
+    celebTitle: 'Pawn promoted!',
+    celebText: 'From a humble soldier to a mighty queen! Promotion completely changes the game.'
+  },
+  {
+    title: '🛡 Attack and Defense',
+    content: `<p>Knowing how to attack AND defend is what separates beginners from good players!</p>
+<div class="key-concept">⚔️ <b>Attacking Principles:</b><br>
+• Control the <b>center</b> (the e4, d4, e5, d5 squares)<br>
+• <b>Develop</b> your pieces quickly (get knights and bishops out)<br>
+• Create <b>double threats</b> (forks, pins, discovered attacks)</div>
+<div class="key-concept">🛡 <b>Defensive Principles:</b><br>
+• <b>Protect</b> pieces that are under attack<br>
+• Keep the king <b>safe</b> (castle!)<br>
+• <b>Undefended</b> enemy pieces are targets — but so are yours!</div>
+<p>In this position, your white pieces can land a <b>fork</b> with the knight! Find the move that attacks two pieces at once.</p>`,
+    goal: 'Land a fork with the knight! Attack the king and the rook at the same time.',
+    celebTitle: 'Perfect fork!',
+    celebText: 'Threatening two pieces at once is devastating! The knight is a master at it.'
+  },
+  {
+    title: '🎮 Guided Practice',
+    content: `<p>Now it is time to play a full game!</p>
+<div class="key-concept">🤖 The AI is set to <b>very easy</b> mode so you can practice everything you have learned.<br>💡 Hints will appear during the game to guide you!</div>
+<p><b>Tips for the game:</b></p>
+<p>1. Open by controlling the <b>center</b> (e4, d4)<br>
+2. <b>Develop</b> knights and bishops first<br>
+3. <b>Castle</b> to protect the king<br>
+4. <b>Do not lose pieces</b> for free — check that they are protected<br>
+5. Look for your <b>opponent's threats</b> before you move</p>
+<p>Good luck! Try to deliver checkmate!</p>`,
+    goal: 'Play a full game and try to deliver checkmate!',
+    celebTitle: 'VICTORY!',
+    celebText: 'You won your first game! Now try the other difficulty levels.'
+  }
+];
+
+if (currentLang === 'en') {
+  LESSONS_EN.forEach(function (t, i) {
+    const L = LESSONS[i];
+    if (!L) return;
+    if (t.title != null) L.title = t.title;
+    if (t.content != null) L.content = t.content;
+    if ('goal' in t) L.goal = t.goal;
+    if (L.celebration) {
+      if (t.celebTitle != null) L.celebration.title = t.celebTitle;
+      if (t.celebText != null) L.celebration.text = t.celebText;
+    }
+  });
+}
+
 function enterTutorialMode() {
   trackEvent('tutorial_start', {});
   tutorialMode = true;
@@ -4648,7 +5321,7 @@ function loadLesson(index) {
   document.getElementById('tutorial-progress').textContent = `${index + 1}/${LESSONS.length}`;
   document.getElementById('tutorial-progress-fill').style.width = `${((index + 1) / LESSONS.length) * 100}%`;
   document.getElementById('btn-prev-lesson').style.visibility = index === 0 ? 'hidden' : 'visible';
-  document.getElementById('btn-next-lesson').textContent = index === LESSONS.length - 1 ? 'Finalizar' : 'Próximo →';
+  document.getElementById('btn-next-lesson').textContent = index === LESSONS.length - 1 ? tr('tutorial.finish') : tr('tutorial.next');
 
   // Goal area
   const goalArea = document.getElementById('tutorial-goal-area');
@@ -4697,20 +5370,20 @@ function loadLesson(index) {
   const hintEl = document.getElementById('hint-area');
   if (lesson.interactive) {
     if (lesson.isPractice) {
-      hintEl.textContent = 'Jogue normalmente! Dicas aparecerão aqui.';
+      hintEl.textContent = tr('hint.tutorialPlay');
       startPracticeHints();
     } else {
-      hintEl.textContent = 'Clique nas peças destacadas para praticar!';
+      hintEl.textContent = tr('hint.tutorialPractice');
     }
-    document.getElementById('name-white').textContent = 'Você';
-    document.getElementById('name-black').textContent = lesson.isPractice ? 'IA Aprendiz' : 'Alvos';
+    document.getElementById('name-white').textContent = tr('name.you');
+    document.getElementById('name-black').textContent = lesson.isPractice ? tr('name.beginnerAi') : tr('name.targets');
   } else {
-    hintEl.textContent = 'Leia o conteúdo e avance quando estiver pronto.';
-    document.getElementById('name-white').textContent = 'Brancas';
-    document.getElementById('name-black').textContent = 'Pretas';
+    hintEl.textContent = tr('hint.tutorialRead');
+    document.getElementById('name-white').textContent = tr('color.white');
+    document.getElementById('name-black').textContent = tr('color.black');
   }
 
-  setStatus(lesson.goal || 'Modo Tutorial — Aprendiz');
+  setStatus(lesson.goal || tr('status.tutorialMode'));
 
   // Scroll to top for mobile — user sees instructions first
   window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -4727,8 +5400,8 @@ function nextLesson() {
     document.getElementById('ai-depth').value = '1';
     exitTutorialMode();
     newGame();
-    setStatus('Tutorial completo! Agora jogue no modo Fácil!');
-    document.getElementById('hint-area').textContent = 'Parabéns! Você completou o tutorial. Agora é hora de jogar de verdade!';
+    setStatus(tr('tutorial.complete'));
+    document.getElementById('hint-area').textContent = tr('tutorial.completeHint');
   }
 }
 
@@ -4754,7 +5427,7 @@ function checkTutorialGoal() {
     const goalEl = document.getElementById('tutorial-goal');
     if (goalEl) {
       goalEl.classList.add('completed');
-      goalEl.innerHTML = '✅ Objetivo concluído!';
+      goalEl.innerHTML = tr('tutorial.goalDone');
     }
     // Show celebration
     if (lesson.celebration) {
@@ -4807,8 +5480,8 @@ function generatePracticeHint() {
   // Opening hints (first few moves)
   if (fullMoves <= 3) {
     // Check if center pawns are available
-    if (board[52] === 'P') hints.push('💡 Tente mover o peão de e2 para e4 para controlar o centro!');
-    if (board[51] === 'P') hints.push('💡 d2-d4 também é uma boa abertura controlando o centro.');
+    if (board[52] === 'P') hints.push(tr('hint.openE4'));
+    if (board[51] === 'P') hints.push(tr('hint.openD4'));
     if (stateHistory.length >= 2) {
       const hasKnight = board.some((p,i) => p === 'N' && row(i) < 6);
       if (!hasKnight) hints.push('💡 Desenvolva seus cavalos! Leve-os para f3 ou c3.');
@@ -4818,7 +5491,7 @@ function generatePracticeHint() {
   // Castling hint
   if (castling.K || castling.Q) {
     if (fullMoves >= 4) {
-      hints.push('🏰 Não esqueça de fazer o roque para proteger seu rei!');
+      hints.push(tr('hint.castle'));
     }
   }
 
@@ -4830,20 +5503,20 @@ function generatePracticeHint() {
       const canCapture = legal.some(m => m.to === i);
       if (canCapture) {
         const name = getPieceName(p);
-        hints.push(`⚔️ ${name} em ${squareName(i)} está desprotegida! Capture-a!`);
+        hints.push(tr('hint.hangingPiece', { name: name, sq: squareName(i) }));
       }
     }
   }
 
   // In check
   if (inCheck('w', board)) {
-    hints.push('⚠️ Você está em xeque! Defenda seu rei imediatamente!');
+    hints.push(tr('hint.inCheck'));
   }
 
   // Material advantage
   const matDiff = countMaterial('w') - countMaterial('b');
-  if (matDiff > 300) hints.push('📈 Você tem vantagem material! Troque peças para simplificar.');
-  if (matDiff < -300) hints.push('📉 Cuidado! Você está com menos material. Jogue com cautela.');
+  if (matDiff > 300) hints.push(tr('hint.materialAdv'));
+  if (matDiff < -300) hints.push(tr('hint.materialDis'));
 
   if (hints.length > 0) {
     hintEl.textContent = hints[Math.floor(Math.random() * hints.length)];
@@ -4869,8 +5542,8 @@ function countMaterial(color) {
 }
 
 function getPieceName(p) {
-  const names = { p: 'Peão', r: 'Torre', n: 'Cavalo', b: 'Bispo', q: 'Dama', k: 'Rei' };
-  return names[p.toLowerCase()] || 'Peça';
+  const names = { p: tr('piece.pawn'), r: tr('piece.rook'), n: tr('piece.knight'), b: tr('piece.bishop'), q: tr('piece.queen'), k: tr('piece.king') };
+  return names[p.toLowerCase()] || tr('piece.generic');
 }
 
 function squareName(idx) {
@@ -4896,7 +5569,7 @@ function downloadGame() {
   const now = new Date();
   const date = now.toISOString().split('T')[0].replace(/-/g, '.');
   const depthVal = document.getElementById('ai-depth').value;
-  const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert', 'tutorial': 'Aprendiz' };
+  const diffNames = { '1': tr('settings.diff.1'), '2': tr('settings.diff.2'), '3': tr('settings.diff.3'), '4': tr('settings.diff.4'), 'tutorial': tr('diff.tutorialName') };
   // Slug em CAIXA-ALTA sem acentos pra usar no nome do arquivo
   const diffSlug = { '1': 'FACIL', '2': 'MEDIO', '3': 'DIFICIL', '4': 'EXPERT', 'tutorial': 'APRENDIZ' };
   const whiteName = document.getElementById('name-white').textContent;
@@ -4985,7 +5658,7 @@ function importPGN(event) {
     try {
       parseAndReplayPGN(e.target.result);
     } catch(err) {
-      showAlert('Erro ao ler arquivo PGN: ' + err.message, { error: true });
+      showAlert(tr('pgn.readError') + err.message, { error: true });
     }
   };
   reader.readAsText(file);
@@ -5007,7 +5680,7 @@ function parseAndReplayPGN(pgnText) {
   const tokens = moveText.split(/\s+/).filter(t => t.length > 0);
 
   if (tokens.length === 0) {
-    showAlert('Arquivo PGN vazio ou inválido.', { error: true });
+    showAlert(tr('pgn.empty'), { error: true });
     return;
   }
 
@@ -5066,7 +5739,7 @@ function parseAndReplayPGN(pgnText) {
     // Nothing imported — restore
     board = savedBoard; castling = savedCastling; enPassant = savedEP; turn = savedTurn;
     renderBoard();
-    showAlert('Não foi possível ler nenhum movimento do arquivo.', { error: true });
+    showAlert(tr('pgn.noMoves'), { error: true });
     return;
   }
 
@@ -5090,7 +5763,7 @@ function parseAndReplayPGN(pgnText) {
   trackEvent('pgn_imported', { moves: snapshots.length - 1, skipped: skipped });
 
   if (skipped > 0) {
-    setTimeout(() => showAlert(`Importado! ${snapshots.length - 1} lances carregados.${skipped > 0 ? ' ' + skipped + ' lances ignorados.' : ''}`, { success: true }), 100);
+    setTimeout(() => showAlert(tr('pgn.imported', { n: snapshots.length - 1 }) + (skipped > 0 ? tr('pgn.importedSkipped', { s: skipped }) : ''), { success: true }), 100);
   }
 }
 
@@ -5103,7 +5776,7 @@ let savedGameState = null;
 
 function startReplay() {
   if (stateHistory.length === 0) {
-    showAlert('Nenhum movimento para replay.');
+    showAlert(tr('replay.noMoves'));
     return;
   }
   closeGameOverPopup();
@@ -5152,7 +5825,7 @@ function startReplay() {
 // Carrega uma partida do DB (ai_game_moves) e ativa o replay.
 // Funciona pra partidas que tem lances da IA gravados.
 async function replaySessionFromDb(sessionId) {
-  if (!supa) { await showAlert('Sem conexão com o servidor.', { error: true }); return; }
+  if (!supa) { await showAlert(tr('replay.noConnection'), { error: true }); return; }
 
   const { data: moves, error } = await supa
     .from('ai_game_moves')
@@ -5161,21 +5834,18 @@ async function replaySessionFromDb(sessionId) {
     .order('move_number', { ascending: true });
 
   if (error) {
-    await showAlert('Erro ao carregar a partida: ' + error.message, { error: true });
+    await showAlert(tr('replay.loadError') + error.message, { error: true });
     return;
   }
   if (!moves || moves.length === 0) {
-    await showAlert('Partida não encontrada no servidor.', { error: true });
+    await showAlert(tr('replay.notFound'), { error: true });
     return;
   }
 
   // Partidas antigas so' tem lances do jogador (metade do jogo)
   const hasAiMoves = moves.some(m => m.is_ai_move);
   if (!hasAiMoves) {
-    await showAlert(
-      'Esta partida foi jogada antes do recurso de replay completo — só os lances do jogador foram guardados, não dá pra reconstruir o jogo inteiro.',
-      { icon: '⏳', title: 'Replay indisponível' }
-    );
+    await showAlert(tr('replay.tooOld'), { icon: '⏳', title: tr('replay.unavailableTitle') });
     return;
   }
 
@@ -5223,7 +5893,7 @@ async function replaySessionFromDb(sessionId) {
   if (applied === 0) {
     // Nao conseguiu reconstruir nada — restaura e avisa
     exitReplay();
-    await showAlert('Não foi possível reconstruir esta partida.', { error: true });
+    await showAlert(tr('replay.cantReconstruct'), { error: true });
     return;
   }
 
@@ -5300,26 +5970,11 @@ function exitReplay() {
 
 // Mapa de motivos de empate → titulo + detalhe (renderizados em 2 niveis)
 const DRAW_REASON_TEXT = {
-  stalemate: {
-    title: 'Empate por afogamento',
-    detail: 'O adversário não tem nenhuma jogada legal e o rei dele não está em xeque.'
-  },
-  fifty_moves: {
-    title: 'Empate pela regra dos 50 lances',
-    detail: '50 jogadas sem captura e sem movimento de peão.'
-  },
-  insufficient_material: {
-    title: 'Empate por material insuficiente',
-    detail: 'Nenhum dos lados tem peças suficientes pra dar xeque-mate.'
-  },
-  threefold: {
-    title: 'Empate por repetição tripla',
-    detail: 'A mesma posição apareceu 3 vezes.'
-  },
-  agreement: {
-    title: 'Empate por acordo',
-    detail: 'Os dois jogadores concordaram em empatar.'
-  }
+  stalemate: { title: tr('draw.stalemate.title'), detail: tr('draw.stalemate.detail') },
+  fifty_moves: { title: tr('draw.fifty.title'), detail: tr('draw.fifty.detail') },
+  insufficient_material: { title: tr('draw.material.title'), detail: tr('draw.material.detail') },
+  threefold: { title: tr('draw.threefold.title'), detail: tr('draw.threefold.detail') },
+  agreement: { title: tr('draw.agreement.title'), detail: tr('draw.agreement.detail') }
 };
 
 function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
@@ -5338,7 +5993,7 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
   const scoreFb = document.getElementById('go-score-feedback');
 
   // Reset score UI
-  if (regBtn) { regBtn.style.display = 'none'; regBtn.disabled = false; regBtn.textContent = '🏆 Registrar no Ranking'; }
+  if (regBtn) { regBtn.style.display = 'none'; regBtn.disabled = false; regBtn.textContent = tr('gameover.register'); }
   if (scoreInfo) scoreInfo.style.display = 'none';
   if (scoreFb) scoreFb.style.display = 'none';
 
@@ -5352,7 +6007,7 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
 
   // Se foi vitória legítima e há dados capturados, mostra opção de registrar (so AI mode)
   if (gameMode === 'ai' && playerWon && lastWinData && regBtn && scoreInfo) {
-    scoreInfo.textContent = `⏱ Seu tempo: ${fmtSeconds(lastWinData.player_seconds)} • Nível: ${difficulty}`;
+    scoreInfo.textContent = tr('gameover.scoreInfo', { time: fmtSeconds(lastWinData.player_seconds), level: difficulty });
     scoreInfo.style.display = 'block';
     regBtn.style.display = 'inline-flex';
   }
@@ -5363,36 +6018,36 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
     if (btnNewGame) btnNewGame.style.display = 'none';
     if (btnRematch) btnRematch.style.display = 'inline-flex';
     if (btnLeaveOnline) btnLeaveOnline.style.display = 'inline-flex';
-    const opp = opponentName || 'Oponente';
+    const opp = opponentName || tr('name.opponent');
     if (playerWon === null) {
       icon.textContent = '🤝';
-      title.textContent = 'Empate!';
+      title.textContent = tr('gameover.drawTitle');
       const reason = DRAW_REASON_TEXT[drawReason];
       if (reason) {
-        text.textContent = `Você empatou com ${opp} — ${reason.title}.`;
+        text.textContent = tr('gameover.drawVsReason', { opp: opp, reason: reason.title });
         if (scoreInfo) {
           scoreInfo.textContent = reason.detail;
           scoreInfo.style.display = 'block';
         }
       } else {
-        text.textContent = `Você empatou com ${opp}. Boa partida!`;
+        text.textContent = tr('gameover.drawVs', { opp: opp });
       }
     } else if (playerWon) {
       icon.textContent = '🏆';
-      title.textContent = 'Você Venceu!';
+      title.textContent = tr('gameover.winTitle');
       const msgs = [
-        `Xeque-mate em ${opp}! Vitória sua! 🔥`,
-        `Vitória contra ${opp}! 💪`,
-        `Você derrotou ${opp}! 🎯`
+        tr('gameover.onlineWin1', { opp: opp }),
+        tr('gameover.onlineWin2', { opp: opp }),
+        tr('gameover.onlineWin3', { opp: opp })
       ];
       text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
     } else {
       icon.textContent = '😤';
-      title.textContent = 'Derrota...';
+      title.textContent = tr('gameover.lossTitle');
       const msgs = [
-        `${opp} levou a melhor dessa vez. Revanche?`,
-        `Quase! ${opp} venceu. Chama pra outra!`,
-        `Bom jogo. ${opp} venceu.`
+        tr('gameover.onlineLoss1', { opp: opp }),
+        tr('gameover.onlineLoss2', { opp: opp }),
+        tr('gameover.onlineLoss3', { opp: opp })
       ];
       text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
     }
@@ -5403,7 +6058,7 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
   if (playerWon === null) {
     // Draw
     icon.textContent = '🤝';
-    title.textContent = 'Empate!';
+    title.textContent = tr('gameover.drawTitle');
     const reason = DRAW_REASON_TEXT[drawReason];
     if (reason) {
       text.textContent = reason.title;
@@ -5412,19 +6067,19 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
         scoreInfo.style.display = 'block';
       }
     } else {
-      text.textContent = 'Ninguém venceu desta vez. Tente novamente!';
+      text.textContent = tr('gameover.drawGeneric');
     }
     nextBtn.style.display = 'none';
   } else if (playerWon) {
     // Player won
     const msgs = [
-      `Incrível! Você derrotou a IA no ${difficulty}! 🔥`,
-      `Xeque-mate! A IA não teve chance no ${difficulty}!`,
-      `Vitória dominante no nível ${difficulty}! 💪`,
-      `Mestre! Você venceu no ${difficulty}!`
+      tr('gameover.aiWin1', { level: difficulty }),
+      tr('gameover.aiWin2', { level: difficulty }),
+      tr('gameover.aiWin3', { level: difficulty }),
+      tr('gameover.aiWin4', { level: difficulty })
     ];
     icon.textContent = '🏆';
-    title.textContent = 'Você Venceu!';
+    title.textContent = tr('gameover.winTitle');
     text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
 
     // Show "next level" button only if not already at Expert
@@ -5433,12 +6088,12 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
   } else {
     // Player lost
     const msgs = [
-      'A IA levou a melhor desta vez. Tente novamente!',
-      'Quase! Uma revanche pode mudar tudo!',
-      'Não desista! Cada derrota é uma lição.'
+      tr('gameover.aiLoss1'),
+      tr('gameover.aiLoss2'),
+      tr('gameover.aiLoss3')
     ];
     icon.textContent = '😤';
-    title.textContent = 'Derrota...';
+    title.textContent = tr('gameover.lossTitle');
     text.textContent = msgs[Math.floor(Math.random() * msgs.length)];
     nextBtn.style.display = 'none';
   }
@@ -5527,7 +6182,7 @@ function newGame() {
   }
   gameMode = 'ai';
 
-  const diffNames = { '1': 'Fácil', '2': 'Médio', '3': 'Difícil', '4': 'Expert' };
+  const diffNames = { '1': tr('settings.diff.1'), '2': tr('settings.diff.2'), '3': tr('settings.diff.3'), '4': tr('settings.diff.4') };
   trackEvent('new_game', {
     difficulty: diffNames[depthVal] || depthVal,
     play_as: document.getElementById('play-as').value,
@@ -5568,14 +6223,14 @@ function newGame() {
 
   const playAs = document.getElementById('play-as').value;
   if (playAs === 'both') {
-    document.getElementById('name-white').textContent = 'Jogador 1';
-    document.getElementById('name-black').textContent = 'Jogador 2';
+    document.getElementById('name-white').textContent = tr('name.player1');
+    document.getElementById('name-black').textContent = tr('name.player2');
   } else if (playerColor === 'w') {
-    document.getElementById('name-white').textContent = 'Você';
-    document.getElementById('name-black').textContent = 'Computador';
+    document.getElementById('name-white').textContent = tr('name.you');
+    document.getElementById('name-black').textContent = tr('name.computer');
   } else {
-    document.getElementById('name-white').textContent = 'Computador';
-    document.getElementById('name-black').textContent = 'Você';
+    document.getElementById('name-white').textContent = tr('name.computer');
+    document.getElementById('name-black').textContent = tr('name.you');
   }
 
   startTimer();
@@ -5594,7 +6249,7 @@ function newGame() {
   // If player is black, AI moves first
   if (playAs !== 'both' && playerColor === 'b') {
     aiThinking = true;
-    setStatus('Computador pensando...');
+    setStatus(tr('game.computerThinking'));
     setTimeout(() => {
       const aiMove = getBestMove();
       if (aiMove) executeMove(aiMove);
