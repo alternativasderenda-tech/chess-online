@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Learn Chess — Free Guides and Tutorials | Chess Online</title>
+<meta name="description" content="Complete guides to learn chess from scratch: rules, how the pieces move, openings, tactics and strategy. Free content, written by players.">
+<meta name="robots" content="index, follow, max-snippet:-1, max-image-preview:large">
+<link rel="canonical" href="https://xadrezonline.vercel.app/en/learn">
+<link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda">
+<link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn">
+<link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda">
+<link rel="icon" href="/icon-192.png">
+
+<!-- Open Graph -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Learn Chess — Free Guides">
+<meta property="og:description" content="Everything you need to learn chess from scratch: rules, moves, openings, tactics and strategy.">
+<meta property="og:url" content="https://xadrezonline.vercel.app/en/learn">
+<meta property="og:site_name" content="Chess Online">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="https://xadrezonline.vercel.app/icon-512.png">
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Blog",
+  "name": "Learn Chess",
+  "url": "https://xadrezonline.vercel.app/en/learn",
+  "inLanguage": "en",
+  "publisher": {
+    "@type": "Organization",
+    "name": "Chess Online",
+    "url": "https://xadrezonline.vercel.app"
+  },
+  "blogPost": [
+    {
+      "@type": "BlogPosting",
+      "headline": "How to Play Chess for Beginners: Complete Guide",
+      "url": "https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners",
+      "datePublished": "2026-05-11",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "10 Chess Openings for Beginners",
+      "url": "https://xadrezonline.vercel.app/en/learn/chess-openings-for-beginners",
+      "datePublished": "2026-05-11",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "The Official Rules of Chess (FIDE) Explained",
+      "url": "https://xadrezonline.vercel.app/en/learn/chess-rules",
+      "datePublished": "2026-05-11",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Scholar's Mate: Checkmate in 4 Moves",
+      "url": "https://xadrezonline.vercel.app/en/learn/four-move-checkmate-scholars-mate",
+      "datePublished": "2026-05-11",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "How the Knight Moves: The Definitive Guide",
+      "url": "https://xadrezonline.vercel.app/en/learn/how-the-knight-moves",
+      "datePublished": "2026-05-11",
+      "inLanguage": "en"
+    },
+    {
+      "@type": "BlogPosting",
+      "headline": "Classical, Rapid, Blitz and Bullet Chess: The Differences",
+      "url": "https://xadrezonline.vercel.app/en/learn/classical-rapid-blitz-bullet-chess",
+      "datePublished": "2026-05-11",
+      "inLanguage": "en"
+    }
+  ]
+}
+</script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #1e2a4a;
+    --accent: #e2b96f;
+    --accent2: #c9956b;
+    --text-light: #e8e8e8;
+    --text-muted: #8899aa;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    background-image: radial-gradient(ellipse at 20% 50%, #1e2a4a 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 20%, #2a1e3e 0%, transparent 50%);
+    color: var(--text-light);
+    min-height: 100vh;
+    line-height: 1.65;
+    padding: 30px 20px;
+  }
+  .container { max-width: 860px; margin: 0 auto; }
+  header.top {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  header.top a.brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 26px;
+    font-weight: 700;
+    color: var(--accent);
+    text-decoration: none;
+    display: inline-block;
+    margin-bottom: 10px;
+  }
+  h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: 38px;
+    color: var(--text-light);
+    margin-bottom: 8px;
+    line-height: 1.2;
+  }
+  .lead {
+    font-size: 16px;
+    color: var(--text-muted);
+    max-width: 640px;
+    margin: 0 auto;
+  }
+  .post-grid {
+    display: grid;
+    gap: 18px;
+    margin-top: 30px;
+  }
+  .post-card {
+    background: var(--bg-card);
+    border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px;
+    padding: 24px 26px;
+    transition: border-color 0.2s, transform 0.15s;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .post-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .post-card h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 22px;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .post-card p { font-size: 14px; color: var(--text-light); margin-bottom: 10px; }
+  .post-meta { font-size: 12px; color: var(--text-muted); }
+  .coming-soon {
+    background: rgba(255,255,255,0.03);
+    border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: 12px;
+    padding: 20px 24px;
+    text-align: center;
+    color: var(--text-muted);
+    font-size: 13px;
+  }
+  footer.site {
+    text-align: center;
+    margin-top: 50px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    font-size: 12px;
+    color: var(--text-muted);
+  }
+  footer.site a { color: var(--text-muted); text-decoration: none; margin: 0 8px; }
+  footer.site a:hover { color: var(--accent); }
+  .cta-game {
+    display: inline-block;
+    margin-top: 20px;
+    padding: 12px 28px;
+    background: var(--accent);
+    color: var(--bg-dark);
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    transition: background 0.15s;
+  }
+  .cta-game:hover { background: var(--accent2); }
+  @media (max-width: 600px) {
+    h1 { font-size: 28px; }
+    .container { padding: 0 4px; }
+    .post-card { padding: 18px 20px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="top">
+    <a href="/en" class="brand">♚ Chess Online</a>
+    <h1>Learn Chess</h1>
+    <p class="lead">Complete guides and free tutorials to take you from absolute beginner to confident player. Written by people who actually play.</p>
+    <a href="/en" class="cta-game">▶ Play now</a>
+  </header>
+
+  <div class="post-grid">
+    <a href="/en/learn/how-to-play-chess-for-beginners" class="post-card">
+      <h2>How to Play Chess for Beginners: Complete Guide</h2>
+      <p>Never played chess before? No problem. This guide teaches everything you need to get started: the board, how each piece moves, special moves and checkmate.</p>
+      <div class="post-meta">📅 May 11, 2026 • 8 min read</div>
+    </a>
+
+    <a href="/en/learn/chess-openings-for-beginners" class="post-card">
+      <h2>10 Chess Openings for Beginners</h2>
+      <p>The 10 most important openings for beginners, with the first moves explained, the core principles and which one to pick for your style.</p>
+      <div class="post-meta">📅 May 11, 2026 • 9 min read</div>
+    </a>
+
+    <a href="/en/learn/chess-rules" class="post-card">
+      <h2>The Official Rules of Chess (FIDE) Explained</h2>
+      <p>Everything you need to know about the official FIDE rules, in plain language: moves, special moves, how a game ends and draws.</p>
+      <div class="post-meta">📅 May 11, 2026 • 8 min read</div>
+    </a>
+
+    <a href="/en/learn/four-move-checkmate-scholars-mate" class="post-card">
+      <h2>Scholar's Mate: Checkmate in 4 Moves</h2>
+      <p>The most famous four-move checkmate in chess. How to deliver it, how to defend against it, and why it only works on unsuspecting beginners.</p>
+      <div class="post-meta">📅 May 11, 2026 • 6 min read</div>
+    </a>
+
+    <a href="/en/learn/how-the-knight-moves" class="post-card">
+      <h2>How the Knight Moves: The Definitive Guide</h2>
+      <p>The L-shaped move, jumping over pieces, forks and tactical patterns. Everything about the most unpredictable and powerful piece on the board.</p>
+      <div class="post-meta">📅 May 11, 2026 • 7 min read</div>
+    </a>
+
+    <a href="/en/learn/classical-rapid-blitz-bullet-chess" class="post-card">
+      <h2>Classical, Rapid, Blitz and Bullet Chess: The Differences</h2>
+      <p>Chess time controls explained. The differences, the rules and which one to choose based on your level and goals.</p>
+      <div class="post-meta">📅 May 11, 2026 • 6 min read</div>
+    </a>
+
+    <div class="coming-soon">
+      📝 More guides coming soon: basic endgames, tactical patterns, middlegame strategy and much more.
+    </div>
+  </div>
+
+  <footer class="site">
+    <a href="/en">Play</a> •
+    <a href="/en/privacy">Privacy Policy</a> •
+    <a href="/en/terms">Terms of Use</a> •
+    <a href="mailto:alternativasderenda@gmail.com">Contact</a>
+  </footer>
+</div>
+
+</body>
+</html>

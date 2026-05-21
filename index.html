@@ -116,6 +116,10 @@
       'footer.privacy': 'Política de Privacidade',
       'footer.terms': 'Termos de Uso',
       'footer.contact': 'Contato',
+      'footer.learnHref': '/aprenda',
+      'footer.privacyHref': '/privacidade',
+      'footer.termsHref': '/termos',
+      'nav.homeHref': '/',
       'gameover.register': '🏆 Registrar no Ranking',
       'gameover.rematch': '🔄 Revanche',
       'gameover.leave': '🚪 Sair',
@@ -344,6 +348,10 @@
       'footer.privacy': 'Privacy Policy',
       'footer.terms': 'Terms of Use',
       'footer.contact': 'Contact',
+      'footer.learnHref': '/en/learn',
+      'footer.privacyHref': '/en/privacy',
+      'footer.termsHref': '/en/terms',
+      'nav.homeHref': '/en',
       'gameover.register': '🏆 Submit to Leaderboard',
       'gameover.rematch': '🔄 Rematch',
       'gameover.leave': '🚪 Leave',
@@ -565,6 +573,14 @@
     document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
       el.setAttribute('aria-label', tr(el.getAttribute('data-i18n-aria')));
     });
+    document.querySelectorAll('[data-i18n-href]').forEach(function (el) {
+      el.setAttribute('href', tr(el.getAttribute('data-i18n-href')));
+    });
+    // Schema.org: mantem so' o bloco JSON-LD do idioma atual
+    var keepLang = (lang === 'en') ? 'en' : 'pt';
+    document.querySelectorAll('script[data-lang]').forEach(function (s) {
+      if (s.getAttribute('data-lang') !== keepLang) s.remove();
+    });
   }
   window.applyI18n = applyI18n;
 
@@ -573,16 +589,62 @@
     location.pathname = (lang === 'en') ? '/' : '/en';
   };
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyI18n);
-  } else {
+  // 1a visita: se o idioma do navegador difere do da pagina, sugere
+  // (banner discreto, dispensavel — NUNCA redireciona, pra nao quebrar
+  // crawler nem escolha do usuario).
+  function maybeSuggestLanguage() {
+    try {
+      if (localStorage.getItem('langSuggestDismissed')) return;
+      var navLang = (navigator.language || 'en').toLowerCase();
+      var browserIsPt = navLang.indexOf('pt') === 0;
+      var suggest = null;
+      if (lang === 'pt' && !browserIsPt) suggest = 'en';
+      else if (lang === 'en' && browserIsPt) suggest = 'pt';
+      if (!suggest || !document.body) return;
+      var msg = (suggest === 'en')
+        ? 'This game is also available in English.'
+        : 'Este jogo também está disponível em português.';
+      var btnTxt = (suggest === 'en') ? 'Switch to English' : 'Mudar para português';
+      var bar = document.createElement('div');
+      bar.style.cssText = 'position:fixed;left:0;right:0;bottom:0;z-index:1200;background:#1e2a4a;border-top:1px solid #e2b96f;color:#e8e8e8;font:14px Inter,sans-serif;padding:10px 14px;display:flex;gap:10px;align-items:center;justify-content:center;flex-wrap:wrap;box-shadow:0 -4px 16px rgba(0,0,0,0.4)';
+      var span = document.createElement('span');
+      span.textContent = msg;
+      var a = document.createElement('a');
+      a.textContent = btnTxt;
+      a.href = (suggest === 'en') ? '/en' : '/';
+      a.style.cssText = 'color:#1a1a2e;background:#e2b96f;padding:6px 14px;border-radius:8px;text-decoration:none;font-weight:600';
+      a.addEventListener('click', function () {
+        try { localStorage.setItem('langSuggestDismissed', '1'); } catch (e) {}
+      });
+      var x = document.createElement('button');
+      x.textContent = '✕';
+      x.setAttribute('aria-label', 'Close');
+      x.style.cssText = 'background:none;border:none;color:#8899aa;font-size:16px;cursor:pointer;line-height:1';
+      x.addEventListener('click', function () {
+        bar.remove();
+        try { localStorage.setItem('langSuggestDismissed', '1'); } catch (e) {}
+      });
+      bar.appendChild(span);
+      bar.appendChild(a);
+      bar.appendChild(x);
+      document.body.appendChild(bar);
+    } catch (e) {}
+  }
+
+  function onI18nReady() {
     applyI18n();
+    maybeSuggestLanguage();
+  }
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', onI18nReady);
+  } else {
+    onI18nReady();
   }
 })();
 </script>
 
 <!-- Schema.org JSON-LD (para Google e IAs) -->
-<script type="application/ld+json">
+<script type="application/ld+json" data-lang="pt">
 {
   "@context": "https://schema.org",
   "@type": "WebApplication",
@@ -624,7 +686,7 @@
   }
 }
 </script>
-<script type="application/ld+json">
+<script type="application/ld+json" data-lang="pt">
 {
   "@context": "https://schema.org",
   "@type": "FAQPage",
@@ -672,7 +734,7 @@
   ]
 }
 </script>
-<script type="application/ld+json">
+<script type="application/ld+json" data-lang="pt">
 {
   "@context": "https://schema.org",
   "@type": "HowTo",
@@ -719,7 +781,7 @@
   ]
 }
 </script>
-<script type="application/ld+json">
+<script type="application/ld+json" data-lang="pt">
 {
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
@@ -729,6 +791,159 @@
       "position": 1,
       "name": "Xadrez Online",
       "item": "https://xadrezonline.vercel.app/"
+    }
+  ]
+}
+</script>
+
+<!-- Schema.org EN (data-lang controla qual fica; o outro idioma e' removido por JS) -->
+<script type="application/ld+json" data-lang="en">
+{
+  "@context": "https://schema.org",
+  "@type": "WebApplication",
+  "name": "Chess Online - Learn and Play",
+  "alternateName": ["Free Chess", "Learn Chess Online", "Online Chess Game"],
+  "description": "Free online chess game with an interactive tutorial to learn from scratch. Includes a Beginner mode with 12 lessons, 4 difficulty levels, and works offline as an app.",
+  "url": "https://xadrezonline.vercel.app/en",
+  "applicationCategory": "GameApplication",
+  "genre": "Chess / Strategy / Educational",
+  "operatingSystem": "Web, Android, iOS",
+  "browserRequirements": "Requires JavaScript",
+  "offers": {
+    "@type": "Offer",
+    "price": "0",
+    "priceCurrency": "USD"
+  },
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": "4.8",
+    "ratingCount": "150",
+    "bestRating": "5"
+  },
+  "featureList": [
+    "Interactive tutorial with 12 lessons for beginners",
+    "Beginner mode that teaches every piece and move",
+    "4 difficulty levels: Easy, Medium, Hard, Expert",
+    "Play against the computer with smart AI",
+    "Works offline as a PWA app",
+    "No sign-up, 100% free",
+    "Checkmate, castling, en passant, pawn promotion",
+    "Real-time hints during the game",
+    "Configurable game timer",
+    "Responsive interface for mobile and desktop"
+  ],
+  "inLanguage": "en",
+  "author": {
+    "@type": "Organization",
+    "name": "Alternativas de Renda"
+  }
+}
+</script>
+<script type="application/ld+json" data-lang="en">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How do I learn to play chess?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Use our Beginner mode with 12 interactive lessons that teach everything from how each piece moves to attack and defense strategy. You practice on the board as you learn, with real-time hints."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How does each chess piece move?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The Pawn moves 1 square forward (2 on its first move) and captures diagonally. The Rook moves in straight lines. The Bishop moves diagonally. The Queen combines Rook and Bishop. The Knight jumps in an L shape. The King moves 1 square in any direction."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can I play chess online for free with no sign-up?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes! Our chess game is 100% free, runs right in your browser with no sign-up, and can be installed as an app on your phone to play offline."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What is checkmate?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Checkmate is when the king is under attack (in check) and there is no legal move to escape. It is the ultimate goal of chess — whoever delivers checkmate wins the game."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "How do I install the chess game on my phone?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Open the site in Chrome (Android) or Safari (iPhone), tap the menu and choose Install app or Add to Home Screen. The game becomes an app on your phone and works offline."
+      }
+    }
+  ]
+}
+</script>
+<script type="application/ld+json" data-lang="en">
+{
+  "@context": "https://schema.org",
+  "@type": "HowTo",
+  "name": "How to Play Chess for Beginners",
+  "description": "Learn to play chess from scratch in 5 steps: the board, the pieces, the moves, checkmate and practice.",
+  "inLanguage": "en",
+  "totalTime": "PT30M",
+  "estimatedCost": {
+    "@type": "MonetaryAmount",
+    "currency": "USD",
+    "value": "0"
+  },
+  "step": [
+    {
+      "@type": "HowToStep",
+      "name": "Get to know the board",
+      "text": "A chessboard has 64 squares (8x8), alternating between light and dark. Ranks are numbered 1 to 8 and files are lettered A to H.",
+      "url": "https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Learn how each piece moves",
+      "text": "The pawn moves 1 square forward (or 2 on its first move) and captures diagonally. The rook moves in straight lines. The bishop moves diagonally. The queen combines rook and bishop. The knight jumps in an L shape. The king moves 1 square in any direction.",
+      "url": "https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Practice the special moves",
+      "text": "Castling protects the king and activates the rook. En passant is the pawn's special capture. Promotion turns a pawn into a queen when it reaches the last rank.",
+      "url": "https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Understand check and checkmate",
+      "text": "Check is when the king is under attack. Checkmate happens when the king is in check and there is no move to escape — game over.",
+      "url": "https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners"
+    },
+    {
+      "@type": "HowToStep",
+      "name": "Practice in Beginner mode",
+      "text": "Use Chess Online's Beginner mode with 12 interactive lessons to practice every concept in guided games, for free.",
+      "url": "https://xadrezonline.vercel.app/en"
+    }
+  ]
+}
+</script>
+<script type="application/ld+json" data-lang="en">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Chess Online",
+      "item": "https://xadrezonline.vercel.app/en"
     }
   ]
 }
@@ -1816,7 +2031,7 @@
 
 <!-- Site Brand (logo + h1 primario) -->
 <h1 id="site-brand">
-  <a href="/" data-i18n-aria="nav.brandAria" aria-label="Xadrez Online — Voltar ao início">
+  <a href="/" data-i18n-href="nav.homeHref" data-i18n-aria="nav.brandAria" aria-label="Xadrez Online — Voltar ao início">
     <span class="brand-icon">♚</span><span class="brand-text" data-i18n="nav.brand">Xadrez Online</span>
   </a>
 </h1>
@@ -2003,11 +2218,11 @@
 
 <!-- Footer -->
 <footer class="site-footer">
-  <a href="/aprenda" data-i18n="footer.learn">📖 Aprenda Xadrez</a>
+  <a href="/aprenda" data-i18n-href="footer.learnHref" data-i18n="footer.learn">📖 Aprenda Xadrez</a>
   <span class="sep">•</span>
-  <a href="/privacidade" data-i18n="footer.privacy">Política de Privacidade</a>
+  <a href="/privacidade" data-i18n-href="footer.privacyHref" data-i18n="footer.privacy">Política de Privacidade</a>
   <span class="sep">•</span>
-  <a href="/termos" data-i18n="footer.terms">Termos de Uso</a>
+  <a href="/termos" data-i18n-href="footer.termsHref" data-i18n="footer.terms">Termos de Uso</a>
   <span class="sep">•</span>
   <a href="mailto:alternativasderenda@gmail.com" data-i18n="footer.contact">Contato</a>
   <a href="/admin" id="footer-admin-link" style="display:none; margin-left:8px;">🔒 Admin</a>

@@ -1,63 +1,191 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <!-- ===== Jogo ===== -->
   <url>
     <loc>https://xadrezonline.vercel.app/</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/"/>
   </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>1.0</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/"/>
+  </url>
+
+  <!-- ===== Blog: indice ===== -->
   <url>
     <loc>https://xadrezonline.vercel.app/aprenda</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda"/>
   </url>
   <url>
+    <loc>https://xadrezonline.vercel.app/en/learn</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda"/>
+  </url>
+
+  <!-- ===== Blog: posts ===== -->
+  <url>
     <loc>https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/how-to-play-chess-for-beginners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/como-jogar-xadrez-do-zero"/>
   </url>
   <url>
     <loc>https://xadrezonline.vercel.app/aprenda/aberturas-de-xadrez-para-iniciantes</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/aberturas-de-xadrez-para-iniciantes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/chess-openings-for-beginners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/aberturas-de-xadrez-para-iniciantes"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en/learn/chess-openings-for-beginners</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/aberturas-de-xadrez-para-iniciantes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/chess-openings-for-beginners"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/aberturas-de-xadrez-para-iniciantes"/>
   </url>
   <url>
     <loc>https://xadrezonline.vercel.app/aprenda/regras-do-xadrez</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/regras-do-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/chess-rules"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/regras-do-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en/learn/chess-rules</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/regras-do-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/chess-rules"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/regras-do-xadrez"/>
   </url>
   <url>
     <loc>https://xadrezonline.vercel.app/aprenda/xeque-mate-em-4-lances</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/xeque-mate-em-4-lances"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/four-move-checkmate-scholars-mate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/xeque-mate-em-4-lances"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en/learn/four-move-checkmate-scholars-mate</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/xeque-mate-em-4-lances"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/four-move-checkmate-scholars-mate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/xeque-mate-em-4-lances"/>
   </url>
   <url>
     <loc>https://xadrezonline.vercel.app/aprenda/como-o-cavalo-se-move</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/como-o-cavalo-se-move"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/how-the-knight-moves"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/como-o-cavalo-se-move"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en/learn/how-the-knight-moves</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/como-o-cavalo-se-move"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/how-the-knight-moves"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/como-o-cavalo-se-move"/>
   </url>
   <url>
     <loc>https://xadrezonline.vercel.app/aprenda/xadrez-classico-blitz-bullet</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/xadrez-classico-blitz-bullet"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/classical-rapid-blitz-bullet-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/xadrez-classico-blitz-bullet"/>
   </url>
   <url>
+    <loc>https://xadrezonline.vercel.app/en/learn/classical-rapid-blitz-bullet-chess</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/aprenda/xadrez-classico-blitz-bullet"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/learn/classical-rapid-blitz-bullet-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/aprenda/xadrez-classico-blitz-bullet"/>
+  </url>
+
+  <!-- ===== Paginas legais ===== -->
+  <url>
     <loc>https://xadrezonline.vercel.app/privacidade</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/privacidade"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en/privacy</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/privacidade"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/privacy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/privacidade"/>
   </url>
   <url>
     <loc>https://xadrezonline.vercel.app/termos</loc>
-    <lastmod>2026-05-04</lastmod>
+    <lastmod>2026-05-21</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/termos"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.vercel.app/en/terms</loc>
+    <lastmod>2026-05-21</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.vercel.app/termos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.vercel.app/en/terms"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.vercel.app/termos"/>
   </url>
 </urlset>
