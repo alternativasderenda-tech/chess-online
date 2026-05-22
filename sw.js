@@ -1,5 +1,5 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v11';
+const CACHE_NAME = 'xadrez-v12';
 const ASSETS = [
   '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
   '/privacidade', '/termos',
@@ -52,10 +52,3 @@ self.addEventListener('fetch', e => {
     }).catch(() => caches.match(req))
   );
 });
-
-// Monetag (depois do PWA para não interferir)
-try {
-  self.options = { "domain": "5gvci.com", "zoneId": 10873443 };
-  self.lary = "";
-  importScripts('https://5gvci.com/act/files/service-worker.min.js?r=sw');
-} catch(e) {}
