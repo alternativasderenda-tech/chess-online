@@ -516,7 +516,8 @@ grant execute on function get_tournament_participants(uuid) to authenticated;
 
 
 -- tournament_leaderboard (formato ranking AI)
--- Scores válidos = mesmo difficulty + dentro da janela + status='normal' (anti-cheat)
+-- Isolado por tournament_id: so conta scores INSERIDOS com tournament_id = X
+-- (a partir de quando o jogador acessa via /?tournament=X)
 create or replace function tournament_leaderboard(p_tournament_id uuid)
 returns table (
   user_id uuid,
@@ -542,10 +543,8 @@ begin
     from tournament_participants p
     left join scores s
       on s.user_id = p.user_id
-     and s.difficulty = v_t.difficulty
+     and s.tournament_id = p_tournament_id
      and coalesce(s.status, 'normal') = 'normal'
-     and s.created_at >= v_t.starts_at
-     and s.created_at <= coalesce(v_t.ends_at, now())
    where p.tournament_id = p_tournament_id
      and p.status = 'approved'
    group by p.user_id, p.user_name
@@ -835,9 +834,11 @@ grant execute on function admin_list_pending_tournaments() to authenticated;
 alter table tournaments add column if not exists time_control_seconds int not null default 600;
 alter table tournament_matches add column if not exists game_id text references games(id) on delete set null;
 alter table games add column if not exists tournament_match_id uuid references tournament_matches(id) on delete set null;
+alter table scores add column if not exists tournament_id uuid references tournaments(id) on delete set null;
 
 create index if not exists idx_games_tmatch on games(tournament_match_id);
 create index if not exists idx_tmatches_game on tournament_matches(game_id);
+create index if not exists idx_scores_tournament on scores(tournament_id);
 
 -- create_tournament: agora aceita time_control_seconds
 drop function if exists create_tournament(text, text, text, tournament_format, tournament_visibility, int, timestamptz, timestamptz, smallint, tournament_criterion, int);
@@ -1144,6 +1145,235 @@ grant execute on function tournament_apply_walkovers(uuid) to authenticated;
 -- Permite leitura de games via RLS pra qualquer authenticated.
 -- Ja existe a policy "games readable by all auth" em friend-match.sql,
 -- entao espectador ja consegue ver games + moves via realtime.
+
+
+-- =========================================================
+-- register_ai_score: agora aceita p_tournament_id (opcional)
+-- Quando preenchido, valida que o usuario esta participando do torneio,
+-- que o torneio e' formato AI e a dificuldade bate. Score fica vinculado
+-- ao torneio (aparece no tournament_leaderboard).
+-- =========================================================
+
+drop function if exists register_ai_score(text, smallint, text, int, int, int, int, int, int, boolean, int);
+drop function if exists register_ai_score(text, smallint, text, int, int, int, int, int, int, boolean, int, uuid);
+
+create or replace function register_ai_score(
+  p_session_id text,
+  p_difficulty smallint,
+  p_username text,
+  p_client_mouse_movements int default 0,
+  p_client_drag_count int default 0,
+  p_client_click_count int default 0,
+  p_client_idle_periods int default 0,
+  p_client_keyboard_events int default 0,
+  p_client_undo_count int default 0,
+  p_client_validated boolean default false,
+  p_client_player_seconds int default null,
+  p_tournament_id uuid default null
+)
+returns jsonb
+language plpgsql
+security definer
+set search_path = public
+as $$
+declare
+  v_user_id uuid := auth.uid();
+  v_first_ts timestamptz;
+  v_last_ts timestamptz;
+  v_move_count int;
+  v_total_ms bigint;
+  v_player_seconds int;
+  v_variance_ms int;
+  v_suspicion int := 0;
+  v_status text := 'normal';
+  v_inserted_id uuid;
+  v_existing_id uuid;
+  v_baseline_count int;
+  v_baseline_avg_sec numeric;
+  v_baseline_avg_mouse numeric;
+  v_baseline_avg_variance numeric;
+  v_tournament tournaments;
+  v_is_participant boolean;
+begin
+  if v_user_id is null then raise exception 'authentication required'; end if;
+
+  -- Idempotencia: 1 score por sessao
+  select id into v_existing_id from scores where session_id = p_session_id limit 1;
+  if v_existing_id is not null then
+    return jsonb_build_object('success', true, 'score_id', v_existing_id, 'idempotent', true);
+  end if;
+
+  if p_difficulty < 1 or p_difficulty > 4 then raise exception 'invalid difficulty: %', p_difficulty; end if;
+
+  -- Validacao do contexto de torneio (se aplicavel)
+  if p_tournament_id is not null then
+    select * into v_tournament from tournaments where id = p_tournament_id;
+    if v_tournament.id is null then raise exception 'tournament not found'; end if;
+    if v_tournament.format <> 'ai' then raise exception 'tournament is not AI format'; end if;
+    if v_tournament.status not in ('open', 'active') then raise exception 'tournament not accepting scores'; end if;
+    if v_tournament.difficulty is not null and v_tournament.difficulty <> p_difficulty then
+      raise exception 'difficulty does not match tournament (expected %, got %)', v_tournament.difficulty, p_difficulty;
+    end if;
+    if v_tournament.starts_at is not null and now() < v_tournament.starts_at then
+      raise exception 'tournament has not started yet';
+    end if;
+    if v_tournament.ends_at is not null and now() > v_tournament.ends_at then
+      raise exception 'tournament has ended';
+    end if;
+    select exists (
+      select 1 from tournament_participants
+      where tournament_id = p_tournament_id and user_id = v_user_id and status = 'approved'
+    ) into v_is_participant;
+    if not v_is_participant then raise exception 'you are not an approved participant of this tournament'; end if;
+  end if;
+
+  select min(created_at), max(created_at), count(*)
+    into v_first_ts, v_last_ts, v_move_count
+  from ai_game_moves where session_id = p_session_id and user_id = v_user_id;
+
+  if v_move_count is null or v_move_count = 0 then
+    raise exception 'no moves found for session %', p_session_id;
+  end if;
+
+  v_total_ms := (extract(epoch from (v_last_ts - v_first_ts)) * 1000)::bigint;
+  v_player_seconds := greatest(1, (v_total_ms / 1000)::int);
+
+  if p_client_validated then
+    if p_client_player_seconds is not null and p_client_player_seconds > 0 then
+      v_player_seconds := p_client_player_seconds;
+      v_total_ms := p_client_player_seconds::bigint * 1000;
+    end if;
+  else
+    if p_client_player_seconds is not null
+       and p_client_player_seconds > 0
+       and p_client_player_seconds <= (v_total_ms / 1000 + 5) then
+      v_player_seconds := p_client_player_seconds;
+    end if;
+  end if;
+
+  with intervals as (
+    select extract(epoch from (created_at - lag(created_at) over (order by move_number))) * 1000 as gap_ms
+    from ai_game_moves where session_id = p_session_id and user_id = v_user_id
+  )
+  select coalesce(stddev_pop(gap_ms), 0)::int into v_variance_ms
+  from intervals where gap_ms is not null;
+
+  if not p_client_validated then
+    if v_move_count >= 10 and v_variance_ms < 1500 then v_suspicion := v_suspicion + 3;
+    elsif v_move_count >= 10 and v_variance_ms < 3000 then v_suspicion := v_suspicion + 1;
+    end if;
+    if v_move_count >= 15 and v_total_ms > 0
+       and (v_move_count::float / (v_total_ms::float / 60000.0)) > 30 then
+      v_suspicion := v_suspicion + 2;
+    end if;
+  else
+    v_suspicion := v_suspicion + 1;
+  end if;
+
+  if v_move_count >= 15 then
+    if p_client_mouse_movements < 30 then v_suspicion := v_suspicion + 3;
+    elsif p_client_mouse_movements < 100 then v_suspicion := v_suspicion + 1;
+    end if;
+    if p_client_idle_periods = 0 then v_suspicion := v_suspicion + 2; end if;
+  end if;
+  if v_move_count >= 25 then
+    if p_client_drag_count = 0 then v_suspicion := v_suspicion + 1; end if;
+    if p_client_keyboard_events = 0 then v_suspicion := v_suspicion + 1; end if;
+    if p_client_undo_count = 0 then v_suspicion := v_suspicion + 2; end if;
+  end if;
+
+  if p_difficulty = 4 then
+    select count(*), avg(player_seconds),
+      avg(coalesce(mouse_movements, 0)) filter (where mouse_movements is not null),
+      avg(coalesce(move_time_variance_ms, 0)) filter (where move_time_variance_ms is not null)
+    into v_baseline_count, v_baseline_avg_sec, v_baseline_avg_mouse, v_baseline_avg_variance
+    from scores
+    where user_id = v_user_id and difficulty < 4
+      and (status = 'normal' or status is null) and player_seconds is not null;
+
+    if v_baseline_count >= 3 then
+      if v_baseline_avg_sec is not null and v_player_seconds < v_baseline_avg_sec then v_suspicion := v_suspicion + 3; end if;
+      if v_baseline_avg_mouse is not null and v_baseline_avg_mouse > 100
+         and p_client_mouse_movements < (v_baseline_avg_mouse * 0.4) then v_suspicion := v_suspicion + 2; end if;
+      if v_baseline_avg_variance is not null and v_baseline_avg_variance > 3000
+         and v_variance_ms < (v_baseline_avg_variance * 0.4) then v_suspicion := v_suspicion + 2; end if;
+    elsif v_baseline_count = 0 then
+      v_suspicion := v_suspicion + 2;
+    end if;
+  end if;
+
+  if v_suspicion >= 5 then v_status := 'cheater'; end if;
+
+  insert into scores (
+    user_id, username, difficulty, player_seconds, session_id,
+    status, suspicion_score, client_validated,
+    mouse_movements, drag_count, click_count,
+    idle_periods, keyboard_events, undo_count,
+    move_time_variance_ms, total_game_ms,
+    tournament_id
+  ) values (
+    v_user_id, p_username, p_difficulty, v_player_seconds, p_session_id,
+    v_status, v_suspicion, p_client_validated,
+    p_client_mouse_movements, p_client_drag_count, p_client_click_count,
+    p_client_idle_periods, p_client_keyboard_events, p_client_undo_count,
+    v_variance_ms, v_total_ms::int,
+    p_tournament_id
+  ) returning id into v_inserted_id;
+
+  return jsonb_build_object(
+    'success', true, 'score_id', v_inserted_id, 'idempotent', false,
+    'status', v_status, 'suspicion_score', v_suspicion,
+    'client_validated', p_client_validated, 'tournament_id', p_tournament_id,
+    'player_seconds', v_player_seconds
+  );
+end;
+$$;
+
+grant execute on function register_ai_score(text, smallint, text, int, int, int, int, int, int, boolean, int, uuid) to authenticated;
+
+
+-- =========================================================
+-- Ranking global: ranking_fastest com fonte (avulso / torneio X)
+-- O ranking 'mais vitorias' continua agregado simples (nao tem
+-- como atribuir fonte unica a uma soma de vitorias).
+-- =========================================================
+
+drop function if exists ranking_fastest(smallint, int);
+
+create or replace function ranking_fastest(
+  p_difficulty smallint,
+  p_limit int default 50
+)
+returns table (
+  rank_pos bigint,
+  username text,
+  best_seconds int,
+  user_id uuid,
+  session_id text,
+  source_tournament_id uuid,
+  source_tournament_name text
+)
+language sql stable security definer set search_path = public as $$
+  with best_per_user as (
+    select distinct on (s.user_id)
+      s.user_id, s.username, s.player_seconds, s.session_id, s.tournament_id
+    from scores s
+    where s.difficulty = p_difficulty
+      and coalesce(s.status, 'normal') = 'normal'
+    order by s.user_id, s.player_seconds asc, s.created_at asc
+  )
+  select
+    rank() over (order by b.player_seconds asc) as rank_pos,
+    b.username, b.player_seconds as best_seconds, b.user_id, b.session_id,
+    b.tournament_id as source_tournament_id,
+    t.name as source_tournament_name
+  from best_per_user b
+  left join tournaments t on t.id = b.tournament_id
+  order by b.player_seconds asc
+  limit p_limit;
+$$;
+
+grant execute on function ranking_fastest(smallint, int) to anon, authenticated;
 
 
 -- =========================================================

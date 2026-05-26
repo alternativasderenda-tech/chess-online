@@ -2922,7 +2922,8 @@ async function submitScore(data, opts) {
         p_client_keyboard_events: b.keyboard_events || 0,
         p_client_undo_count: b.undo_count || 0,
         p_client_validated: clientValidated,
-        p_client_player_seconds: data.player_seconds || null
+        p_client_player_seconds: data.player_seconds || null,
+        p_tournament_id: (typeof activeTournament !== 'undefined' && activeTournament) ? activeTournament.id : null
       });
       if (rpcErr) throw rpcErr;
       if (typeof trackEvent === 'function') {
@@ -3010,6 +3011,9 @@ async function checkPendingScore() {
     } else if (postAction.startsWith('spectate:')) {
       const gid = postAction.split(':')[1];
       setTimeout(() => setupSpectateGame(gid), 200);
+    } else if (postAction.startsWith('tournament:')) {
+      const tid = postAction.split(':')[1];
+      setTimeout(() => enterTournamentContext(tid), 200);
     }
   }
 }
@@ -3175,16 +3179,19 @@ async function loadRanking() {
     const inTop = myId && data.some(r => r.user_id === myId);
     let html = `
       <table class="rank-table">
-        <thead><tr><th>#</th><th>${tr('rank.colPlayer')}</th><th>${tr('rank.colTime')}</th></tr></thead>
+        <thead><tr><th>#</th><th>${tr('rank.colPlayer')}</th><th>${tr('rank.colTime')}</th><th>Origem</th></tr></thead>
         <tbody>${data.map(s => {
-          // Top 3 com session_id ganham botao de replay
           const replayBtn = (s.rank_pos <= 3 && s.session_id)
             ? ` <button class="replay-btn" onclick="replaySessionFromDb('${escapeHtml(s.session_id)}')">▶ replay</button>`
             : '';
+          const source = s.source_tournament_name
+            ? `<span style="font-size:11px; color:#e2b96f;" title="Conquistado no torneio ${escapeHtml(s.source_tournament_name)}">🏆 ${escapeHtml(s.source_tournament_name)}</span>`
+            : `<span style="font-size:11px; color:var(--text-muted);">Avulso</span>`;
           return `
             <tr class="${myId && s.user_id === myId ? 'me' : ''}">
               <td>${s.rank_pos}</td><td>${escapeHtml(s.username)}</td>
               <td>${fmtSeconds(s.best_seconds)}${replayBtn}</td>
+              <td>${source}</td>
             </tr>`;
         }).join('')}</tbody>
       </table>`;
@@ -3869,12 +3876,133 @@ function checkUrlForGameJoin() {
   const gameId = params.get('game');
   if (gameId && /^[A-Z2-9]{6}$/.test(gameId)) {
     const spectate = params.get('spectate') === '1';
-    // Aguarda auth resolver antes de tentar joinar
     setTimeout(() => {
       if (spectate) setupSpectateGame(gameId);
       else joinOnlineGame(gameId);
     }, 500);
+    return;
   }
+  // Contexto de torneio AI: ?tournament=UUID
+  const tid = params.get('tournament');
+  if (tid && /^[0-9a-f-]{36}$/.test(tid)) {
+    setTimeout(() => enterTournamentContext(tid), 500);
+  }
+}
+
+// ============ Contexto de torneio AI no index ============
+let activeTournament = null; // { id, name, difficulty, criterion, ends_at }
+
+async function enterTournamentContext(tid) {
+  if (!supa) return;
+  if (!currentUser) {
+    sessionStorage.setItem('postLoginAction', 'tournament:' + tid);
+    const ok = await showConfirm('Precisa estar logado pra jogar no torneio.', { okLabel: tr('nav.login') });
+    if (ok) return loginWithGoogle();
+    return;
+  }
+  const { data: t, error } = await supa.from('tournaments').select('*').eq('id', tid).maybeSingle();
+  if (error || !t) {
+    await showAlert('Torneio não encontrado.', { error: true });
+    return;
+  }
+  if (t.format !== 'ai') {
+    await showAlert('Esse torneio não é de ranking IA.', { error: true });
+    return;
+  }
+  // Verifica participacao aprovada
+  const { data: part } = await supa.from('tournament_participants')
+    .select('status').eq('tournament_id', tid).eq('user_id', currentUser.id).maybeSingle();
+  if (!part || part.status !== 'approved') {
+    await showAlert('Você não está aprovado neste torneio. Volte pra /torneios e se inscreva.', { error: true });
+    return;
+  }
+
+  activeTournament = t;
+  // Trava a dificuldade
+  const diffSel = document.getElementById('ai-depth');
+  if (diffSel) {
+    diffSel.value = String(t.difficulty);
+    diffSel.disabled = true;
+    diffSel.title = 'Travado pelo torneio';
+  }
+  // Mostra banner + leaderboard
+  showTournamentBanner();
+  loadTournamentSidebar();
+  setInterval(loadTournamentSidebar, 15000); // refresh leaderboard a cada 15s
+  // Comeca novo jogo na dificuldade do torneio
+  if (typeof newGame === 'function') newGame();
+}
+
+function showTournamentBanner() {
+  if (!activeTournament) return;
+  let banner = document.getElementById('tournament-banner');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'tournament-banner';
+    banner.style.cssText = 'background: linear-gradient(135deg, #6f4cb4, #e2b96f); color: #fff; padding: 10px 16px; border-radius: 10px; margin-bottom: 14px; font-size: 13px; display: flex; align-items: center; gap: 12px; flex-wrap: wrap; box-shadow: 0 2px 12px rgba(111,76,180,0.25);';
+    const mainContent = document.querySelector('.main-content') || document.querySelector('main') || document.body;
+    mainContent.insertBefore(banner, mainContent.firstChild);
+  }
+  const t = activeTournament;
+  const criterionLabel = t.criterion === 'fastest_win' ? 'Vitória mais rápida' : 'Mais vitórias';
+  const diffLabel = ({1:'Fácil', 2:'Médio', 3:'Difícil', 4:'Expert'})[t.difficulty] || ('Nv ' + t.difficulty);
+  const endStr = t.ends_at ? new Date(t.ends_at).toLocaleString('pt-BR', { day:'2-digit', month:'2-digit', hour:'2-digit', minute:'2-digit' }) : '—';
+  banner.innerHTML = `
+    <span style="font-size:22px;">🏆</span>
+    <div style="flex:1; min-width: 200px;">
+      <div style="font-weight:700; font-size:14px;">Torneio: ${escapeHtml(t.name)}</div>
+      <div style="font-size:11px; opacity:0.85;">${diffLabel} · ${criterionLabel} · Encerra em ${endStr}</div>
+    </div>
+    <button onclick="exitTournamentContext()" style="background:rgba(255,255,255,0.2); color:#fff; border:none; padding:6px 12px; border-radius:6px; cursor:pointer; font-size:12px; font-weight:600;">Sair do torneio</button>
+  `;
+}
+
+async function loadTournamentSidebar() {
+  if (!activeTournament) return;
+  const { data, error } = await supa.rpc('tournament_leaderboard', { p_tournament_id: activeTournament.id });
+  if (error) return;
+  let panel = document.getElementById('tournament-leaderboard-panel');
+  if (!panel) {
+    panel = document.createElement('div');
+    panel.id = 'tournament-leaderboard-panel';
+    panel.className = 'panel';
+    panel.style.cssText = 'background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 14px 16px; margin-bottom: 14px;';
+    // Insere no topo da sidebar
+    const sidebar = document.querySelector('.sidebar');
+    if (sidebar) sidebar.insertBefore(panel, sidebar.firstChild);
+  }
+  const rows = (data || []).map((r, i) => `
+    <tr ${r.user_id === currentUser.id ? 'style="background:rgba(226,185,111,0.1)"' : ''}>
+      <td style="padding:4px 6px; font-variant-numeric: tabular-nums;">${i + 1}</td>
+      <td style="padding:4px 6px; font-size:12px;">${escapeHtml(r.user_name)}</td>
+      <td style="padding:4px 6px; text-align:right; font-variant-numeric: tabular-nums;">${r.wins}</td>
+      <td style="padding:4px 6px; text-align:right; font-variant-numeric: tabular-nums; font-size:11px;">${r.best_seconds ? fmtSeconds(r.best_seconds) : '-'}</td>
+    </tr>`).join('');
+  panel.innerHTML = `
+    <h3 style="margin-bottom: 10px; font-size: 14px;">🏅 Classificação do torneio</h3>
+    <table style="width:100%; font-size:12px; border-collapse: collapse;">
+      <thead><tr style="color:var(--text-muted); font-size:10px; text-transform:uppercase;">
+        <th style="text-align:left; padding:4px 6px;">#</th>
+        <th style="text-align:left; padding:4px 6px;">Jogador</th>
+        <th style="text-align:right; padding:4px 6px;">V</th>
+        <th style="text-align:right; padding:4px 6px;">Melhor</th>
+      </tr></thead>
+      <tbody>${rows || '<tr><td colspan="4" style="text-align:center; color:var(--text-muted); padding:10px;">Sem partidas ainda</td></tr>'}</tbody>
+    </table>`;
+}
+
+function exitTournamentContext() {
+  activeTournament = null;
+  const diffSel = document.getElementById('ai-depth');
+  if (diffSel) { diffSel.disabled = false; diffSel.removeAttribute('title'); }
+  const banner = document.getElementById('tournament-banner');
+  if (banner) banner.remove();
+  const panel = document.getElementById('tournament-leaderboard-panel');
+  if (panel) panel.remove();
+  // Limpa URL
+  const url = new URL(window.location.href);
+  url.searchParams.delete('tournament');
+  window.history.replaceState({}, '', url);
 }
 
 async function setupSpectateGame(gameId) {
