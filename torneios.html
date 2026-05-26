@@ -469,8 +469,13 @@ const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrZ2NseWxkYmJnYmZqZ3lvZWVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MDkyNTgsImV4cCI6MjA5MzE4NTI1OH0.Pk5PEc9dbWBc4amjGa4AZgsNTyvg2728ZQwhxZOY4-E';
 const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
+// E-mails liberados pra usar a UI durante o MVP (sem ser admin).
+// Veem a tela completa mas NAO veem o painel admin de Pix.
+const BETA_EMAILS = ['novacanabiodieselbr@gmail.com'];
+
 let currentUser = null;
 let isAdmin = false;
+let isBeta = false;
 let tournaments = [];     // lista de torneios públicos abertos
 let selectedId = null;    // id do torneio selecionado
 let selectedDetail = null; // { tournament, participants, matches, my }
@@ -524,20 +529,24 @@ async function init() {
   const { data: adminRow } = await supa.from('admin_users')
     .select('user_id').eq('user_id', currentUser.id).maybeSingle();
   isAdmin = !!adminRow;
+  isBeta = BETA_EMAILS.includes((currentUser.email || '').toLowerCase());
 
-  // MVP: só admin vê o conteúdo real (botão criar + pode entrar)
-  // Os outros veem o teaser "em breve"
-  if (!isAdmin) {
+  // MVP: só admin + beta-testers veem a UI completa.
+  // Resto vê o teaser "em breve".
+  if (!isAdmin && !isBeta) {
     document.getElementById('loading').style.display = 'none';
     document.getElementById('teaser').style.display = 'block';
     return;
   }
 
-  // Admin: mostra UI completa
+  // Admin OU beta: pode criar e participar
   document.getElementById('btn-create').style.display = 'inline-flex';
-  document.getElementById('admin-pending-panel').style.display = 'block';
   await loadTournaments();
-  await loadAdminPending();
+  // Painel admin de Pix: só pra admin
+  if (isAdmin) {
+    document.getElementById('admin-pending-panel').style.display = 'block';
+    await loadAdminPending();
+  }
   document.getElementById('loading').style.display = 'none';
   document.getElementById('app').style.display = 'block';
 }
