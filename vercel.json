@@ -25,7 +25,7 @@
       ]
     },
     {
-      "source": "/(privacidade|termos)",
+      "source": "/(privacidade|termos|torneios)",
       "headers": [
         { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
       ]

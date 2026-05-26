@@ -1,8 +1,8 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v12';
+const CACHE_NAME = 'xadrez-v13';
 const ASSETS = [
   '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
-  '/privacidade', '/termos',
+  '/privacidade', '/termos', '/torneios',
   '/aprenda', '/aprenda/post.css',
   '/aprenda/como-jogar-xadrez-do-zero',
   '/aprenda/aberturas-de-xadrez-para-iniciantes',

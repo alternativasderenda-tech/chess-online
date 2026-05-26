@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Torneios — Xadrez Online</title>
+<meta name="description" content="Torneios de xadrez criados pela comunidade. Crie o seu ou inscreva-se nos abertos.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="/icon-192.png">
+<link rel="manifest" href="/manifest.json">
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --bg-dark: #1a1a2e;
+    --bg-card: #1e2a4a;
+    --bg-soft: #232f54;
+    --accent: #e2b96f;
+    --accent2: #c9956b;
+    --text-light: #e8e8e8;
+    --text-muted: #8899aa;
+    --danger: #ff6b6b;
+    --success: #9be09b;
+    --info: #6fa8e2;
+  }
+  body {
+    font-family: 'Inter', sans-serif;
+    background: var(--bg-dark);
+    background-image: radial-gradient(ellipse at 20% 50%, #1e2a4a 0%, transparent 50%),
+                      radial-gradient(ellipse at 80% 20%, #2a1e3e 0%, transparent 50%);
+    color: var(--text-light);
+    min-height: 100vh;
+    padding: 18px;
+  }
+  .container { max-width: 1400px; margin: 0 auto; }
+
+  header.top {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 22px; flex-wrap: wrap; gap: 12px;
+  }
+  header.top h1 {
+    font-family: 'Playfair Display', serif; font-size: 26px; color: var(--accent);
+  }
+  .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+  .user-chip { font-size: 12px; color: var(--text-muted); }
+
+  .btn {
+    background: var(--bg-card); border: 1px solid rgba(226,185,111,0.4);
+    color: var(--text-light); padding: 8px 14px; border-radius: 8px; cursor: pointer;
+    font-family: inherit; font-size: 13px; text-decoration: none;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .btn:hover { border-color: var(--accent); }
+  .btn:disabled { opacity: 0.45; cursor: not-allowed; }
+  .btn.primary { background: var(--accent); color: var(--bg-dark); border: none; font-weight: 600; }
+  .btn.primary:hover { background: var(--accent2); }
+  .btn.danger { color: var(--danger); border-color: rgba(255,107,107,0.4); }
+  .btn.success { color: var(--success); border-color: rgba(155,224,155,0.4); }
+  .btn.small { padding: 5px 10px; font-size: 12px; }
+
+  .status-msg { text-align: center; padding: 36px 16px; color: var(--text-muted); font-size: 14px; }
+  .status-msg.error { color: var(--danger); }
+
+  /* MVP teaser pra quem não é admin */
+  .teaser {
+    background: linear-gradient(135deg, rgba(226,185,111,0.08), rgba(111,168,226,0.06));
+    border: 1px solid rgba(226,185,111,0.3);
+    border-radius: 14px; padding: 32px 28px; text-align: center; margin-bottom: 22px;
+  }
+  .teaser h2 {
+    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 22px; margin-bottom: 10px;
+  }
+  .teaser p { color: var(--text-muted); font-size: 14px; max-width: 520px; margin: 0 auto 6px; line-height: 1.55; }
+
+  /* Disclaimer */
+  .disclaimer {
+    background: rgba(255,216,107,0.06); border-left: 3px solid #ffd86b;
+    border-radius: 4px; padding: 10px 12px; font-size: 12px; color: var(--text-muted);
+    line-height: 1.5; margin-bottom: 14px;
+  }
+  .disclaimer strong { color: #ffd86b; }
+
+  /* Grid principal: lista + detalhe */
+  .main-grid {
+    display: grid; grid-template-columns: 1fr 380px; gap: 18px;
+  }
+  @media (max-width: 900px) {
+    .main-grid { grid-template-columns: 1fr; }
+    .detail-pane { position: static; max-height: none; }
+  }
+
+  /* Painel/seção */
+  .panel {
+    background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 18px 20px;
+  }
+  .panel h2 {
+    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 17px;
+    margin-bottom: 14px; display: flex; align-items: center; gap: 8px; justify-content: space-between;
+  }
+  .panel h2 .right { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); font-weight: 400; }
+
+  /* Tabela densa estilo "server list" */
+  table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  table th {
+    text-align: left; color: var(--text-muted); font-weight: 500; padding: 8px 8px;
+    border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0;
+    background: var(--bg-card); z-index: 1;
+  }
+  table td {
+    padding: 9px 8px; border-bottom: 1px solid rgba(255,255,255,0.04);
+    vertical-align: middle;
+  }
+  table tr.row { cursor: pointer; }
+  table tr.row:hover td { background: rgba(255,255,255,0.03); }
+  table tr.row.selected td { background: rgba(226,185,111,0.08); }
+  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
+  td.center, th.center { text-align: center; }
+
+  .pill {
+    display: inline-block; background: rgba(255,255,255,0.06); border-radius: 10px;
+    padding: 2px 9px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px;
+    font-weight: 600;
+  }
+  .pill.ai { background: rgba(111,168,226,0.15); color: var(--info); }
+  .pill.bracket { background: rgba(226,185,111,0.15); color: var(--accent); }
+  .pill.pub { background: rgba(155,224,155,0.15); color: var(--success); }
+  .pill.appr { background: rgba(255,216,107,0.15); color: #ffd86b; }
+  .pill.link { background: rgba(200,140,255,0.15); color: #c88cff; }
+  .pill.open { background: rgba(155,224,155,0.15); color: var(--success); }
+  .pill.active { background: rgba(111,168,226,0.15); color: var(--info); }
+  .pill.finished { background: rgba(136,153,170,0.18); color: var(--text-muted); }
+  .pill.cancelled { background: rgba(255,107,107,0.15); color: var(--danger); }
+
+  /* Detalhe (right pane) */
+  .detail-pane { position: sticky; top: 18px; max-height: calc(100vh - 36px); overflow-y: auto; }
+  .detail-empty {
+    background: var(--bg-card); border: 1px dashed rgba(255,255,255,0.12);
+    border-radius: 12px; padding: 30px 20px; text-align: center; color: var(--text-muted); font-size: 13px;
+  }
+  .detail-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
+  .detail-card h3 {
+    font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text-light);
+    line-height: 1.2; margin-bottom: 4px; word-wrap: break-word;
+  }
+  .detail-card .by { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
+  .detail-card .prize-box {
+    background: rgba(226,185,111,0.08); border: 1px solid rgba(226,185,111,0.25);
+    border-radius: 8px; padding: 11px 13px; margin-bottom: 14px;
+  }
+  .detail-card .prize-box .lbl {
+    font-size: 10px; color: var(--accent); text-transform: uppercase;
+    letter-spacing: 0.6px; font-weight: 700; margin-bottom: 3px;
+  }
+  .detail-card .prize-box .val { font-size: 14px; color: var(--text-light); white-space: pre-wrap; }
+  .detail-card .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin-bottom: 14px; }
+  .detail-card .meta .lbl {
+    font-size: 10px; color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.5px; margin-bottom: 2px;
+  }
+  .detail-card .meta .val { font-size: 13px; color: var(--text-light); font-weight: 500; }
+  .detail-card .meta .full { grid-column: 1 / -1; }
+  .detail-card .description {
+    font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;
+    white-space: pre-wrap; word-wrap: break-word;
+  }
+  .detail-card .actions { display: flex; flex-direction: column; gap: 8px; }
+  .detail-card .actions .btn { justify-content: center; }
+  .detail-card .state-msg {
+    background: rgba(155,224,155,0.08); border: 1px solid rgba(155,224,155,0.2); color: var(--success);
+    border-radius: 8px; padding: 10px 12px; font-size: 13px; text-align: center;
+  }
+  .detail-card .state-msg.pending { background: rgba(255,216,107,0.08); border-color: rgba(255,216,107,0.2); color: #ffd86b; }
+  .detail-card .state-msg.rejected { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.2); color: var(--danger); }
+  .detail-card .state-msg.full { background: rgba(136,153,170,0.1); border-color: rgba(136,153,170,0.2); color: var(--text-muted); }
+
+  /* Capacity bar */
+  .cap-bar {
+    background: rgba(255,255,255,0.05); border-radius: 4px; height: 6px;
+    overflow: hidden; margin-top: 6px;
+  }
+  .cap-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 4px; }
+
+  /* Modal */
+  .modal-bg {
+    position: fixed; inset: 0; background: rgba(8,10,20,0.75); z-index: 100;
+    display: none; align-items: center; justify-content: center; padding: 18px;
+    overflow-y: auto;
+  }
+  .modal-bg.show { display: flex; }
+  .modal {
+    background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
+    padding: 22px 24px; max-width: 540px; width: 100%; max-height: 92vh; overflow-y: auto;
+  }
+  .modal h2 {
+    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 20px; margin-bottom: 16px;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .modal h2 .close {
+    background: none; border: none; color: var(--text-muted); font-size: 22px;
+    cursor: pointer; line-height: 1;
+  }
+  .form-row { margin-bottom: 14px; }
+  .form-row label {
+    display: block; font-size: 11px; color: var(--text-muted);
+    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 600;
+  }
+  .form-row input[type=text], .form-row input[type=number], .form-row input[type=datetime-local],
+  .form-row select, .form-row textarea {
+    width: 100%; background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-light); padding: 9px 11px; border-radius: 7px; font-family: inherit; font-size: 13px;
+  }
+  .form-row textarea { resize: vertical; min-height: 60px; }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
+  .form-row .hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
+
+  .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .chip {
+    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08); color: var(--text-light);
+    padding: 6px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-family: inherit;
+  }
+  .chip:hover { border-color: var(--accent); }
+  .chip.active { background: var(--accent); color: var(--bg-dark); border-color: var(--accent); font-weight: 600; }
+
+  .form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
+  .form-err { color: var(--danger); font-size: 13px; margin-top: 10px; }
+
+  /* Manage modal */
+  .manage-list { max-height: 280px; overflow-y: auto; }
+  .manage-row {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 8px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 8px;
+  }
+  .manage-row .who { font-size: 13px; }
+  .manage-row .actions { display: flex; gap: 6px; }
+
+  /* Bracket */
+  .bracket {
+    display: grid; gap: 12px; overflow-x: auto; padding-bottom: 8px;
+  }
+  .bracket-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(180px, 1fr); gap: 10px; }
+  .match-card {
+    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
+    padding: 9px 11px; font-size: 12px;
+  }
+  .match-card .round-label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
+  .match-player {
+    display: flex; justify-content: space-between; align-items: center;
+    padding: 3px 0; gap: 6px;
+  }
+  .match-player.winner { color: var(--success); font-weight: 600; }
+  .match-player.loser { color: var(--text-muted); }
+  .match-card .vs { font-size: 10px; color: var(--text-muted); text-align: center; padding: 1px 0; }
+  .match-card .meta { font-size: 10px; color: var(--text-muted); margin-top: 6px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
+  .match-card.actionable { border-color: rgba(226,185,111,0.4); }
+  .match-card button { margin-top: 6px; width: 100%; }
+
+  /* Footer */
+  footer.site {
+    margin-top: 28px; text-align: center; padding-top: 18px; color: var(--text-muted);
+    font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05);
+  }
+  footer.site a { color: var(--text-muted); margin: 0 6px; text-decoration: none; }
+  footer.site a:hover { color: var(--accent); }
+</style>
+</head>
+<body>
+
+<div class="container">
+  <header class="top">
+    <h1>🏆 Torneios</h1>
+    <div class="header-actions">
+      <span class="user-chip" id="user-chip"></span>
+      <button class="btn primary" id="btn-create" onclick="openCreateModal()" style="display:none">+ Criar Torneio</button>
+      <a class="btn" href="/">← Voltar pro jogo</a>
+    </div>
+  </header>
+
+  <div id="not-logged" class="status-msg" style="display:none">
+    Você precisa estar logado pra ver os torneios.
+    <div style="margin-top: 12px;">
+      <button class="btn primary" onclick="loginWithGoogle()">Entrar com Google</button>
+    </div>
+  </div>
+
+  <div id="teaser" class="teaser" style="display:none">
+    <h2>🚧 Torneios em fase de testes</h2>
+    <p>Estamos rodando os primeiros torneios com um grupo restrito de jogadores pra ajustar tudo antes de abrir pra geral.</p>
+    <p style="margin-top:10px;">Em breve qualquer pessoa vai poder criar e participar — fica de olho!</p>
+  </div>
+
+  <div id="loading" class="status-msg">Carregando torneios...</div>
+
+  <div id="app" style="display:none">
+    <div class="disclaimer">
+      <strong>⚠ Sobre os prêmios:</strong> os prêmios são definidos exclusivamente pelo criador do torneio e a entrega é responsabilidade dele(a). O Xadrez Online não intermedia, garante nem é responsável por qualquer premiação combinada entre criador e participantes. A taxa de R$1 paga ao site cobre apenas a criação do torneio.
+    </div>
+
+    <div class="main-grid">
+      <div class="panel">
+        <h2>📋 Torneios abertos <span class="right" id="count-label"></span></h2>
+        <div id="list-area"></div>
+      </div>
+
+      <div class="detail-pane">
+        <div id="detail-area">
+          <div class="detail-empty">Selecione um torneio à esquerda pra ver os detalhes.</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Painel admin: torneios aguardando confirmação de pagamento -->
+    <div id="admin-pending-panel" class="panel" style="display:none; margin-top: 18px;">
+      <h2>💳 Aguardando confirmação de pagamento <span class="right">(admin)</span></h2>
+      <div id="admin-pending-list"></div>
+    </div>
+  </div>
+
+  <footer class="site">
+    <a href="/">Jogar</a> •
+    <a href="/aprenda">Aprenda</a> •
+    <a href="/privacidade">Privacidade</a> •
+    <a href="/termos">Termos</a>
+  </footer>
+</div>
+
+<!-- =================== Modal: Criar Torneio =================== -->
+<div class="modal-bg" id="modal-create">
+  <div class="modal">
+    <h2>+ Criar Torneio <button class="close" onclick="closeCreateModal()">✕</button></h2>
+
+    <div class="form-row">
+      <label>Nome do torneio</label>
+      <input type="text" id="f-name" maxlength="60" placeholder="Ex: Copa de Domingo">
+    </div>
+
+    <div class="form-row">
+      <label>Descrição (opcional)</label>
+      <textarea id="f-description" maxlength="300" placeholder="Conte rapidinho do que se trata o torneio"></textarea>
+    </div>
+
+    <div class="form-row">
+      <label>Premiação (texto livre)</label>
+      <textarea id="f-prize" maxlength="200" placeholder="Ex: R$50 via Pix pro 1º lugar"></textarea>
+      <div class="hint">Você escolhe o que oferece. A entrega do prêmio é por sua conta — o site não intermedia.</div>
+    </div>
+
+    <div class="form-row">
+      <label>Formato</label>
+      <div class="chip-row" id="f-format-chips">
+        <div class="chip active" data-val="ai">🤖 Ranking contra IA</div>
+        <div class="chip" data-val="pvp_bracket">⚔ Chaveamento PvP</div>
+      </div>
+      <div class="hint" id="format-hint">Cada jogador joga contra a IA. Quem fizer mais vitórias (ou a mais rápida) ganha.</div>
+    </div>
+
+    <!-- Campos específicos AI -->
+    <div id="ai-fields">
+      <div class="form-row">
+        <label>Dificuldade da IA</label>
+        <select id="f-difficulty">
+          <option value="1">Fácil</option>
+          <option value="2" selected>Médio</option>
+          <option value="3">Difícil</option>
+          <option value="4">Expert</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Critério de classificação</label>
+        <select id="f-criterion">
+          <option value="most_wins" selected>Mais vitórias</option>
+          <option value="fastest_win">Vitória mais rápida</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label>Encerra em</label>
+        <input type="datetime-local" id="f-ends-at">
+      </div>
+    </div>
+
+    <!-- Campos específicos Bracket -->
+    <div id="bracket-fields" style="display:none">
+      <div class="form-row">
+        <label>Prazo de cada rodada (horas)</label>
+        <input type="number" id="f-deadline" value="48" min="1" max="720">
+        <div class="hint">Se um jogador não jogar dentro do prazo, leva W.O.</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Capacidade</label>
+      <div class="chip-row" id="f-capacity-chips">
+        <div class="chip" data-val="4">4</div>
+        <div class="chip active" data-val="8">8</div>
+        <div class="chip" data-val="16">16</div>
+        <div class="chip" data-val="32">32</div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label>Quem pode entrar</label>
+      <div class="chip-row" id="f-visibility-chips">
+        <div class="chip active" data-val="public">🌐 Público</div>
+        <div class="chip" data-val="approval">🛡 Com aprovação</div>
+        <div class="chip" data-val="link">🔗 Só com link</div>
+      </div>
+      <div class="hint" id="vis-hint">Qualquer jogador logado pode se inscrever direto.</div>
+    </div>
+
+    <div class="form-row">
+      <label>Início</label>
+      <input type="datetime-local" id="f-starts-at">
+    </div>
+
+    <div class="form-err" id="create-err"></div>
+
+    <div class="form-actions">
+      <button class="btn" onclick="closeCreateModal()">Cancelar</button>
+      <button class="btn primary" id="btn-submit-create" onclick="submitCreate()">Criar (R$1)</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== Modal: Pagamento =================== -->
+<div class="modal-bg" id="modal-payment">
+  <div class="modal">
+    <h2>💳 Confirmação de pagamento <button class="close" onclick="closePaymentModal()">✕</button></h2>
+    <p style="font-size:13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px;">
+      Seu torneio foi criado, mas ainda não está visível pra outros jogadores.
+      Pra liberar, faça um Pix de <strong style="color: var(--accent)">R$ 1,00</strong> pra a chave abaixo e
+      mande comprovante pra <a href="mailto:alternativasderenda@gmail.com" style="color:var(--accent)">alternativasderenda@gmail.com</a>.
+    </p>
+    <div style="background: var(--bg-soft); padding: 14px; border-radius: 8px; text-align: center; margin-bottom: 14px;">
+      <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Chave Pix (e-mail)</div>
+      <div style="font-family: monospace; font-size: 15px; color: var(--accent); user-select: all;">alternativasderenda@gmail.com</div>
+    </div>
+    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
+      Depois que o pagamento for confirmado manualmente pelo admin, o torneio aparece pros outros jogadores.
+      Você pode acompanhar em "Meus torneios" (em breve).
+    </p>
+    <div class="form-actions">
+      <button class="btn primary" onclick="closePaymentModal()">Entendi</button>
+    </div>
+  </div>
+</div>
+
+<!-- =================== Modal: Gerenciar =================== -->
+<div class="modal-bg" id="modal-manage">
+  <div class="modal">
+    <h2>⚙ Gerenciar torneio <button class="close" onclick="closeManageModal()">✕</button></h2>
+    <div id="manage-body"></div>
+  </div>
+</div>
+
+<!-- =================== Modal: Reportar resultado =================== -->
+<div class="modal-bg" id="modal-result">
+  <div class="modal">
+    <h2>📝 Reportar resultado <button class="close" onclick="closeResultModal()">✕</button></h2>
+    <div id="result-body"></div>
+  </div>
+</div>
+
+<script>
+const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrZ2NseWxkYmJnYmZqZ3lvZWVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MDkyNTgsImV4cCI6MjA5MzE4NTI1OH0.Pk5PEc9dbWBc4amjGa4AZgsNTyvg2728ZQwhxZOY4-E';
+const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+
+let currentUser = null;
+let isAdmin = false;
+let tournaments = [];     // lista de torneios públicos abertos
+let selectedId = null;    // id do torneio selecionado
+let selectedDetail = null; // { tournament, participants, matches, my }
+
+function esc(s) {
+  if (s === null || s === undefined) return '';
+  return String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+}
+function fmtDT(iso) {
+  if (!iso) return '-';
+  const d = new Date(iso);
+  return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+}
+function fmtSeconds(s) {
+  if (!s) return '-';
+  const m = Math.floor(s / 60);
+  return `${m}:${String(s % 60).padStart(2, '0')}`;
+}
+function fmtDifficulty(d) {
+  return ({1:'Fácil', 2:'Médio', 3:'Difícil', 4:'Expert'})[d] || ('Nv ' + d);
+}
+function fmtCriterion(c) {
+  return c === 'fastest_win' ? 'Vitória mais rápida' : 'Mais vitórias';
+}
+function fmtFormat(f) {
+  return f === 'ai' ? 'Ranking IA' : 'Chaveamento';
+}
+function fmtVisibility(v) {
+  return v === 'public' ? 'Público' : v === 'approval' ? 'Aprovação' : 'Link';
+}
+
+async function loginWithGoogle() {
+  await supa.auth.signInWithOAuth({
+    provider: 'google',
+    options: { redirectTo: window.location.origin + '/torneios' }
+  });
+}
+
+async function init() {
+  const { data: { session } } = await supa.auth.getSession();
+  if (!session) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('not-logged').style.display = 'block';
+    return;
+  }
+  currentUser = session.user;
+  const userName = currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email;
+  document.getElementById('user-chip').textContent = '👤 ' + userName;
+
+  // Verifica admin
+  const { data: adminRow } = await supa.from('admin_users')
+    .select('user_id').eq('user_id', currentUser.id).maybeSingle();
+  isAdmin = !!adminRow;
+
+  // MVP: só admin vê o conteúdo real (botão criar + pode entrar)
+  // Os outros veem o teaser "em breve"
+  if (!isAdmin) {
+    document.getElementById('loading').style.display = 'none';
+    document.getElementById('teaser').style.display = 'block';
+    return;
+  }
+
+  // Admin: mostra UI completa
+  document.getElementById('btn-create').style.display = 'inline-flex';
+  document.getElementById('admin-pending-panel').style.display = 'block';
+  await loadTournaments();
+  await loadAdminPending();
+  document.getElementById('loading').style.display = 'none';
+  document.getElementById('app').style.display = 'block';
+}
+
+// ============== LISTAGEM ==============
+async function loadTournaments() {
+  const { data, error } = await supa.rpc('list_open_tournaments');
+  if (error) {
+    document.getElementById('list-area').innerHTML =
+      '<div class="status-msg error">Erro: ' + esc(error.message) + '</div>';
+    return;
+  }
+  tournaments = data || [];
+  renderList();
+}
+
+function renderList() {
+  const area = document.getElementById('list-area');
+  document.getElementById('count-label').textContent = tournaments.length + ' aberto(s)';
+  if (tournaments.length === 0) {
+    area.innerHTML = '<div class="status-msg">Nenhum torneio aberto. Seja o primeiro a criar! 🚀</div>';
+    return;
+  }
+  const rows = tournaments.map(t => {
+    const sel = (t.id === selectedId) ? 'selected' : '';
+    const fmtPill = t.format === 'ai' ? 'ai' : 'bracket';
+    const fmtLabel = t.format === 'ai' ? '🤖 IA' : '⚔ PvP';
+    return `<tr class="row ${sel}" onclick="selectTournament('${t.id}')">
+      <td><div style="font-weight:600">${esc(t.name)}</div>
+          <div style="font-size:11px; color:var(--text-muted)">por ${esc(t.creator_name)}</div></td>
+      <td><span class="pill ${fmtPill}">${fmtLabel}</span></td>
+      <td class="num">${t.participant_count}/${t.capacity}</td>
+      <td>${fmtDT(t.starts_at)}</td>
+    </tr>`;
+  }).join('');
+  area.innerHTML = `<div style="overflow-x:auto"><table>
+    <thead><tr>
+      <th>Nome / Criador</th><th>Formato</th><th class="num">Vagas</th><th>Início</th>
+    </tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+// ============== DETALHE ==============
+async function selectTournament(id) {
+  selectedId = id;
+  renderList();
+  await loadDetail(id);
+}
+
+async function loadDetail(id) {
+  document.getElementById('detail-area').innerHTML =
+    '<div class="detail-empty">Carregando...</div>';
+
+  const [tRes, pRes, mRes] = await Promise.all([
+    supa.from('tournaments').select('*').eq('id', id).maybeSingle(),
+    supa.rpc('get_tournament_participants', { p_tournament_id: id }),
+    supa.rpc('get_tournament_matches', { p_tournament_id: id })
+  ]);
+  if (tRes.error || !tRes.data) {
+    document.getElementById('detail-area').innerHTML =
+      '<div class="detail-empty">Torneio não encontrado.</div>';
+    return;
+  }
+  const t = tRes.data;
+  const participants = pRes.data || [];
+  const matches = mRes.data || [];
+  const my = participants.find(p => p.user_id === currentUser.id);
+
+  selectedDetail = { tournament: t, participants, matches, my };
+  renderDetail();
+}
+
+function renderDetail() {
+  const { tournament: t, participants, matches, my } = selectedDetail;
+  const isCreator = t.creator_id === currentUser.id;
+  const approvedCount = participants.filter(p => p.status === 'approved').length;
+  const pendingCount = participants.filter(p => p.status === 'pending').length;
+
+  // bloco de ação
+  let actionHtml = '';
+  if (isCreator) {
+    actionHtml = `
+      <button class="btn primary" onclick="openManageModal()">⚙ Gerenciar (${pendingCount} pendente${pendingCount===1?'':'s'})</button>
+      ${t.status === 'open' && t.format === 'pvp_bracket' ? `<button class="btn success" onclick="startBracket()">▶ Iniciar chaveamento</button>` : ''}
+      ${t.status === 'open' && t.format === 'ai' ? `<button class="btn success" onclick="finalizeRanking()">🏁 Encerrar ranking</button>` : ''}
+      ${(t.status === 'open' || t.status === 'active') ? `<button class="btn danger" onclick="cancelTournament()">Cancelar torneio</button>` : ''}
+    `;
+  } else if (my && my.status === 'approved') {
+    actionHtml = `<div class="state-msg">✓ Você está inscrito</div>`;
+    if (t.status === 'open') actionHtml += `<button class="btn small" onclick="leaveTournament()">Sair do torneio</button>`;
+  } else if (my && my.status === 'pending') {
+    actionHtml = `<div class="state-msg pending">⏳ Aguardando aprovação do criador...</div>`;
+  } else if (my && my.status === 'rejected') {
+    actionHtml = `<div class="state-msg rejected">✗ Inscrição rejeitada pelo criador</div>`;
+  } else if (t.status === 'open' && approvedCount + pendingCount < t.capacity) {
+    const label = t.visibility === 'approval' ? 'Solicitar entrada' : 'Inscrever-se';
+    actionHtml = `<button class="btn primary" onclick="joinTournament()">${label}</button>`;
+  } else if (t.status === 'open') {
+    actionHtml = `<div class="state-msg full">Torneio cheio</div>`;
+  } else {
+    actionHtml = `<div class="state-msg full">Torneio ${t.status === 'finished' ? 'encerrado' : 'cancelado'}</div>`;
+  }
+
+  // share link (criador ou se já aprovado, e modo link)
+  let shareHtml = '';
+  if (t.visibility === 'link' && (isCreator || (my && my.status === 'approved'))) {
+    const link = window.location.origin + '/torneios?t=' + encodeURIComponent(t.share_token);
+    shareHtml = `
+      <div class="form-row" style="margin-top:14px">
+        <label>Link de convite</label>
+        <input type="text" readonly value="${esc(link)}" onclick="this.select()" style="font-family:monospace; font-size:11px">
+      </div>`;
+  }
+
+  const capPct = Math.min(100, (approvedCount / t.capacity) * 100);
+
+  // Bracket / Leaderboard inline (compacto)
+  let extraHtml = '';
+  if (t.format === 'pvp_bracket' && t.status !== 'open' && matches.length > 0) {
+    extraHtml = renderBracketCompact(t, matches);
+  } else if (t.format === 'ai' && (t.status === 'open' || t.status === 'active' || t.status === 'finished')) {
+    extraHtml = '<div id="leaderboard-mount" style="margin-top:14px"></div>';
+  }
+
+  document.getElementById('detail-area').innerHTML = `<div class="detail-card">
+    <h3>${esc(t.name)}</h3>
+    <div class="by">criado por ${esc(t.creator_name)}</div>
+
+    <div class="prize-box">
+      <div class="lbl">🏆 Premiação</div>
+      <div class="val">${esc(t.prize_description)}</div>
+    </div>
+
+    ${t.description ? `<div class="description">${esc(t.description)}</div>` : ''}
+
+    <div class="meta">
+      <div><div class="lbl">Formato</div><div class="val">${fmtFormat(t.format)}</div></div>
+      <div><div class="lbl">Visibilidade</div><div class="val">${fmtVisibility(t.visibility)}</div></div>
+      ${t.format === 'ai' ? `
+        <div><div class="lbl">Dificuldade</div><div class="val">${fmtDifficulty(t.difficulty)}</div></div>
+        <div><div class="lbl">Critério</div><div class="val">${fmtCriterion(t.criterion)}</div></div>
+      ` : `
+        <div><div class="lbl">Prazo/rodada</div><div class="val">${t.round_deadline_hours}h</div></div>
+        <div><div class="lbl">Rodada atual</div><div class="val">${t.current_round || '—'}/${t.total_rounds || '—'}</div></div>
+      `}
+      <div><div class="lbl">Início</div><div class="val">${fmtDT(t.starts_at)}</div></div>
+      <div><div class="lbl">${t.format === 'ai' ? 'Encerra em' : 'Status'}</div>
+           <div class="val">${t.format === 'ai' ? fmtDT(t.ends_at) : `<span class="pill ${t.status}">${t.status}</span>`}</div></div>
+      <div class="full">
+        <div class="lbl">Inscritos</div>
+        <div class="val">${approvedCount} / ${t.capacity} aprovados${pendingCount ? ` (${pendingCount} pendente${pendingCount===1?'':'s'})` : ''}</div>
+        <div class="cap-bar"><div class="cap-fill" style="width:${capPct}%"></div></div>
+      </div>
+    </div>
+
+    <div class="actions">${actionHtml}</div>
+    ${shareHtml}
+    ${extraHtml}
+  </div>`;
+
+  if (t.format === 'ai' && (t.status === 'open' || t.status === 'active' || t.status === 'finished')) {
+    renderLeaderboard(t.id);
+  }
+}
+
+async function renderLeaderboard(tid) {
+  const mount = document.getElementById('leaderboard-mount');
+  if (!mount) return;
+  const { data, error } = await supa.rpc('tournament_leaderboard', { p_tournament_id: tid });
+  if (error) { mount.innerHTML = '<div class="status-msg error">Erro: ' + esc(error.message) + '</div>'; return; }
+  const rows = (data || []).slice(0, 10).map((r, i) => `
+    <tr>
+      <td class="num">${i + 1}</td>
+      <td>${esc(r.user_name)}</td>
+      <td class="num">${r.wins}</td>
+      <td class="num">${r.best_seconds ? fmtSeconds(r.best_seconds) : '-'}</td>
+    </tr>`).join('');
+  mount.innerHTML = `<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px">🏅 Classificação</div>
+    <table><thead><tr>
+      <th class="num">#</th><th>Jogador</th><th class="num">V</th><th class="num">Melhor</th>
+    </tr></thead><tbody>${rows || '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Sem partidas ainda</td></tr>'}</tbody></table>`;
+}
+
+function renderBracketCompact(t, matches) {
+  const byRound = {};
+  matches.forEach(m => { (byRound[m.round] = byRound[m.round] || []).push(m); });
+  const totalRounds = t.total_rounds || Math.max(...Object.keys(byRound).map(Number));
+
+  let html = '<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin: 14px 0 8px">⚔ Chaveamento</div>';
+  html += '<div class="bracket">';
+  for (let r = 1; r <= totalRounds; r++) {
+    const list = (byRound[r] || []).sort((a, b) => a.slot - b.slot);
+    if (list.length === 0) continue;
+    const label = r === totalRounds ? 'Final' : `Rodada ${r}`;
+    html += `<div><div style="font-size:11px; color:var(--text-muted); margin-bottom:6px">${label}</div>`;
+    html += '<div style="display:flex; flex-direction:column; gap:8px">';
+    list.forEach(m => {
+      const w1 = m.winner_id === m.player1_id;
+      const w2 = m.winner_id === m.player2_id;
+      const youIn = m.player1_id === currentUser.id || m.player2_id === currentUser.id;
+      const pending = m.status === 'pending';
+      const canReport = pending && (youIn || t.creator_id === currentUser.id || isAdmin);
+      html += `<div class="match-card ${canReport ? 'actionable' : ''}">
+        <div class="match-player ${w1 ? 'winner' : (m.winner_id ? 'loser' : '')}">
+          <span>${esc(m.player1_name || 'TBD')}</span>${w1 ? '<span>✓</span>' : ''}
+        </div>
+        <div class="vs">vs</div>
+        <div class="match-player ${w2 ? 'winner' : (m.winner_id ? 'loser' : '')}">
+          <span>${esc(m.player2_name || (m.status === 'walkover' ? 'W.O.' : 'TBD'))}</span>${w2 ? '<span>✓</span>' : ''}
+        </div>
+        <div class="meta">
+          <span class="pill ${m.status}">${m.status}</span>
+          ${pending && m.deadline_at ? `<span>até ${fmtDT(m.deadline_at)}</span>` : ''}
+        </div>
+        ${canReport ? `<button class="btn small primary" onclick="openResultModal('${m.id}')">Reportar resultado</button>` : ''}
+      </div>`;
+    });
+    html += '</div></div>';
+  }
+  html += '</div>';
+  return html;
+}
+
+// ============== AÇÕES ==============
+async function joinTournament() {
+  if (!confirm('Confirma inscrição neste torneio?')) return;
+  const { error } = await supa.rpc('join_tournament', { p_tournament_id: selectedId });
+  if (error) { alert('Erro: ' + error.message); return; }
+  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
+}
+
+async function leaveTournament() {
+  if (!confirm('Sair do torneio?')) return;
+  const { error } = await supa.rpc('leave_tournament', { p_tournament_id: selectedId });
+  if (error) { alert('Erro: ' + error.message); return; }
+  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
+}
+
+async function cancelTournament() {
+  if (!confirm('Cancelar este torneio? Essa ação não pode ser desfeita.')) return;
+  const { error } = await supa.rpc('cancel_tournament', { p_tournament_id: selectedId });
+  if (error) { alert('Erro: ' + error.message); return; }
+  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
+}
+
+async function startBracket() {
+  if (!confirm('Iniciar chaveamento agora? Não dá pra voltar atrás.')) return;
+  const { error } = await supa.rpc('start_bracket_tournament', { p_tournament_id: selectedId });
+  if (error) { alert('Erro: ' + error.message); return; }
+  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
+}
+
+async function finalizeRanking() {
+  if (!confirm('Encerrar este ranking agora?')) return;
+  const { error } = await supa.rpc('finalize_ranking_tournament', { p_tournament_id: selectedId });
+  if (error) { alert('Erro: ' + error.message); return; }
+  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
+}
+
+// ============== CRIAR ==============
+let createForm = {
+  format: 'ai',
+  capacity: 8,
+  visibility: 'public'
+};
+
+function openCreateModal() {
+  document.getElementById('create-err').textContent = '';
+  document.getElementById('f-name').value = '';
+  document.getElementById('f-description').value = '';
+  document.getElementById('f-prize').value = '';
+  document.getElementById('f-deadline').value = 48;
+  // Default starts_at = agora + 1h, ends_at = +7 dias
+  const now = new Date();
+  const startDefault = new Date(now.getTime() + 60 * 60 * 1000);
+  const endDefault = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
+  document.getElementById('f-starts-at').value = toDTLocal(startDefault);
+  document.getElementById('f-ends-at').value = toDTLocal(endDefault);
+  document.getElementById('modal-create').classList.add('show');
+}
+function closeCreateModal() { document.getElementById('modal-create').classList.remove('show'); }
+
+function toDTLocal(d) {
+  const pad = n => String(n).padStart(2, '0');
+  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+}
+
+document.getElementById('f-format-chips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip'); if (!chip) return;
+  document.querySelectorAll('#f-format-chips .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  createForm.format = chip.dataset.val;
+  document.getElementById('ai-fields').style.display = createForm.format === 'ai' ? 'block' : 'none';
+  document.getElementById('bracket-fields').style.display = createForm.format === 'pvp_bracket' ? 'block' : 'none';
+  document.getElementById('format-hint').textContent = createForm.format === 'ai'
+    ? 'Cada jogador joga contra a IA. Quem fizer mais vitórias (ou a mais rápida) ganha.'
+    : 'Pareamento aleatório. Eliminação simples — quem perde, sai. Necessário 4/8/16/32 jogadores.';
+});
+
+document.getElementById('f-capacity-chips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip'); if (!chip) return;
+  document.querySelectorAll('#f-capacity-chips .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  createForm.capacity = parseInt(chip.dataset.val, 10);
+});
+
+document.getElementById('f-visibility-chips').addEventListener('click', e => {
+  const chip = e.target.closest('.chip'); if (!chip) return;
+  document.querySelectorAll('#f-visibility-chips .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  createForm.visibility = chip.dataset.val;
+  document.getElementById('vis-hint').textContent = ({
+    public: 'Qualquer jogador logado pode se inscrever direto.',
+    approval: 'Jogadores solicitam entrada — você aprova um por um.',
+    link: 'Só quem tiver o link consegue ver e entrar. O link fica na tela do torneio.'
+  })[createForm.visibility];
+});
+
+async function submitCreate() {
+  const errEl = document.getElementById('create-err');
+  errEl.textContent = '';
+  const name = document.getElementById('f-name').value.trim();
+  const description = document.getElementById('f-description').value.trim() || null;
+  const prize = document.getElementById('f-prize').value.trim();
+  const startsAt = document.getElementById('f-starts-at').value;
+
+  if (name.length < 3) { errEl.textContent = 'Nome muito curto.'; return; }
+  if (!prize) { errEl.textContent = 'Descreva a premiação.'; return; }
+  if (!startsAt) { errEl.textContent = 'Defina a data de início.'; return; }
+
+  const params = {
+    p_name: name,
+    p_description: description,
+    p_prize: prize,
+    p_format: createForm.format,
+    p_visibility: createForm.visibility,
+    p_capacity: createForm.capacity,
+    p_starts_at: new Date(startsAt).toISOString(),
+    p_ends_at: null,
+    p_difficulty: null,
+    p_criterion: null,
+    p_round_deadline_hours: null
+  };
+
+  if (createForm.format === 'ai') {
+    const endsAt = document.getElementById('f-ends-at').value;
+    if (!endsAt) { errEl.textContent = 'Defina quando encerra o ranking.'; return; }
+    params.p_ends_at = new Date(endsAt).toISOString();
+    params.p_difficulty = parseInt(document.getElementById('f-difficulty').value, 10);
+    params.p_criterion = document.getElementById('f-criterion').value;
+  } else {
+    params.p_round_deadline_hours = parseInt(document.getElementById('f-deadline').value, 10);
+    if (!params.p_round_deadline_hours || params.p_round_deadline_hours < 1) {
+      errEl.textContent = 'Prazo de rodada inválido.'; return;
+    }
+  }
+
+  const btn = document.getElementById('btn-submit-create');
+  btn.disabled = true; btn.textContent = 'Criando...';
+  const { error } = await supa.rpc('create_tournament', params);
+  btn.disabled = false; btn.textContent = 'Criar (R$1)';
+  if (error) { errEl.textContent = 'Erro: ' + error.message; return; }
+
+  closeCreateModal();
+  document.getElementById('modal-payment').classList.add('show');
+  await loadAdminPending();
+}
+
+function closePaymentModal() { document.getElementById('modal-payment').classList.remove('show'); }
+
+// ============== GERENCIAR ==============
+function openManageModal() {
+  if (!selectedDetail) return;
+  const { participants } = selectedDetail;
+  const pending = participants.filter(p => p.status === 'pending');
+  const approved = participants.filter(p => p.status === 'approved');
+
+  let html = '';
+  if (pending.length === 0 && approved.length === 0) {
+    html = '<div class="status-msg">Sem inscritos ainda.</div>';
+  } else {
+    if (pending.length > 0) {
+      html += '<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px">Pendentes</div>';
+      html += '<div class="manage-list">';
+      pending.forEach(p => {
+        html += `<div class="manage-row">
+          <span class="who">${esc(p.user_name)}</span>
+          <div class="actions">
+            <button class="btn small success" onclick="setPartStatus('${p.id}', 'approved')">✓ Aprovar</button>
+            <button class="btn small danger" onclick="setPartStatus('${p.id}', 'rejected')">✗ Rejeitar</button>
+          </div>
+        </div>`;
+      });
+      html += '</div>';
+    }
+    if (approved.length > 0) {
+      html += '<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin: 14px 0 6px">Aprovados</div>';
+      html += '<div class="manage-list">';
+      approved.forEach(p => {
+        html += `<div class="manage-row">
+          <span class="who">${esc(p.user_name)}</span>
+          <div class="actions">
+            <button class="btn small danger" onclick="setPartStatus('${p.id}', 'rejected')">Remover</button>
+          </div>
+        </div>`;
+      });
+      html += '</div>';
+    }
+  }
+  document.getElementById('manage-body').innerHTML = html;
+  document.getElementById('modal-manage').classList.add('show');
+}
+function closeManageModal() { document.getElementById('modal-manage').classList.remove('show'); }
+
+async function setPartStatus(participantId, status) {
+  const { error } = await supa.rpc('set_participant_status', {
+    p_participant_id: participantId, p_status: status
+  });
+  if (error) { alert('Erro: ' + error.message); return; }
+  await loadDetail(selectedId);
+  openManageModal();
+}
+
+// ============== REPORTAR RESULTADO ==============
+let resultMatchId = null;
+
+function openResultModal(matchId) {
+  resultMatchId = matchId;
+  const m = (selectedDetail.matches || []).find(x => x.id === matchId);
+  if (!m) return;
+  document.getElementById('result-body').innerHTML = `
+    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px">
+      Marque quem venceu a partida. Ambos jogadores e o criador podem reportar.
+    </p>
+    <div style="display:flex; flex-direction:column; gap:8px">
+      <button class="btn primary" onclick="submitResult('${m.player1_id}')">${esc(m.player1_name)} venceu</button>
+      <button class="btn primary" onclick="submitResult('${m.player2_id}')">${esc(m.player2_name)} venceu</button>
+      <button class="btn" onclick="closeResultModal()">Cancelar</button>
+    </div>`;
+  document.getElementById('modal-result').classList.add('show');
+}
+function closeResultModal() { document.getElementById('modal-result').classList.remove('show'); }
+
+async function submitResult(winnerId) {
+  const { error } = await supa.rpc('record_match_result', {
+    p_match_id: resultMatchId, p_winner_id: winnerId, p_pgn: null
+  });
+  if (error) { alert('Erro: ' + error.message); return; }
+  closeResultModal();
+  await loadDetail(selectedId);
+}
+
+// ============== ADMIN: PENDENTES DE PAGAMENTO ==============
+async function loadAdminPending() {
+  const { data, error } = await supa.rpc('admin_list_pending_tournaments');
+  const area = document.getElementById('admin-pending-list');
+  if (error) { area.innerHTML = '<div class="status-msg error">Erro: ' + esc(error.message) + '</div>'; return; }
+  const list = data || [];
+  if (list.length === 0) {
+    area.innerHTML = '<div class="status-msg">Nenhum torneio aguardando pagamento.</div>';
+    return;
+  }
+  const rows = list.map(t => `<tr>
+    <td><div style="font-weight:600">${esc(t.name)}</div>
+        <div style="font-size:11px; color:var(--text-muted)">por ${esc(t.creator_name)}</div></td>
+    <td><span class="pill ${t.format === 'ai' ? 'ai' : 'bracket'}">${fmtFormat(t.format)}</span></td>
+    <td>${esc(t.prize_description).slice(0, 60)}${t.prize_description.length > 60 ? '...' : ''}</td>
+    <td>${fmtDT(t.created_at)}</td>
+    <td class="center"><button class="btn small success" onclick="confirmPayment('${t.id}')">✓ Confirmar pagamento</button></td>
+  </tr>`).join('');
+  area.innerHTML = `<div style="overflow-x:auto"><table>
+    <thead><tr><th>Nome</th><th>Formato</th><th>Prêmio</th><th>Criado em</th><th class="center">Ação</th></tr></thead>
+    <tbody>${rows}</tbody>
+  </table></div>`;
+}
+
+async function confirmPayment(id) {
+  if (!confirm('Confirma que o Pix de R$1 foi recebido?')) return;
+  const { error } = await supa.rpc('confirm_tournament_payment', { p_tournament_id: id });
+  if (error) { alert('Erro: ' + error.message); return; }
+  await Promise.all([loadTournaments(), loadAdminPending()]);
+}
+
+// ============== INIT ==============
+init().catch(e => {
+  document.getElementById('loading').innerHTML =
+    '<span class="error">Erro: ' + esc(e.message || e) + '</span>';
+});
+</script>
+
+</body>
+</html>
