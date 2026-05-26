@@ -286,11 +286,7 @@
   .manage-row .who { font-size: 13px; }
   .manage-row .actions { display: flex; gap: 6px; }
 
-  /* Bracket */
-  .bracket {
-    display: grid; gap: 12px; overflow-x: auto; padding-bottom: 8px;
-  }
-  .bracket-row { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(180px, 1fr); gap: 10px; }
+  /* Bracket — match card (compartilhado entre tree e lista) */
   .match-card {
     background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
     padding: 9px 11px; font-size: 12px;
@@ -304,8 +300,93 @@
   .match-player.loser { color: var(--text-muted); }
   .match-card .vs { font-size: 10px; color: var(--text-muted); text-align: center; padding: 1px 0; }
   .match-card .meta { font-size: 10px; color: var(--text-muted); margin-top: 6px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
-  .match-card.actionable { border-color: rgba(226,185,111,0.4); }
+  .match-card.actionable { border-color: rgba(226,185,111,0.4); box-shadow: 0 0 0 1px rgba(226,185,111,0.15); }
   .match-card button { margin-top: 6px; width: 100%; }
+
+  /* Bracket tree clássico (desktop) */
+  .bracket-tree {
+    display: flex; gap: 36px; padding: 20px 12px; overflow-x: auto; min-height: 460px;
+  }
+  .bracket-round {
+    display: flex; flex-direction: column;
+    min-width: 220px; max-width: 240px;
+  }
+  .bracket-round-label {
+    font-size: 11px; color: var(--text-muted); text-transform: uppercase;
+    letter-spacing: 0.6px; margin-bottom: 6px; text-align: center; font-weight: 600;
+  }
+  .bracket-round-content { flex: 1; display: flex; flex-direction: column; }
+  .bracket-match {
+    flex: 1; display: flex; align-items: center; position: relative; padding: 6px 0;
+  }
+  .bracket-match .match-card { width: 100%; }
+
+  /* Conectores: linha horizontal saindo pra direita */
+  .bracket-round:not(:last-child) .bracket-match::after {
+    content: ''; position: absolute; right: -18px; top: 50%;
+    width: 18px; border-top: 1px solid rgba(226,185,111,0.35);
+  }
+  /* Linha vertical entre pares (odd matches: estende pra baixo) */
+  .bracket-round:not(:last-child) .bracket-match:nth-child(odd)::before {
+    content: ''; position: absolute; right: -18px; top: 50%;
+    width: 0; height: 100%;
+    border-right: 1px solid rgba(226,185,111,0.35);
+  }
+  /* Linha horizontal de entrada (do lado esquerdo) — exceto rodada 1 */
+  .bracket-round:not(:first-child) .bracket-match {
+    padding-left: 18px;
+  }
+  .bracket-round:not(:first-child) .bracket-match .match-card {
+    position: relative;
+  }
+  .bracket-round:not(:first-child) .bracket-match .match-card::before {
+    content: ''; position: absolute; left: -18px; top: 50%;
+    width: 18px; border-top: 1px solid rgba(226,185,111,0.35);
+  }
+
+  /* Coluna do vencedor (separada à direita) */
+  .bracket-winner {
+    display: flex; flex-direction: column; justify-content: center;
+    min-width: 220px; padding: 20px 12px 20px 28px;
+    border-left: 1px dashed rgba(226,185,111,0.3); margin-left: 12px;
+  }
+  .bracket-winner .crown {
+    text-align: center; font-size: 32px; margin-bottom: 8px;
+  }
+  .bracket-winner .label {
+    font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.6px;
+    text-align: center; margin-bottom: 4px; font-weight: 700;
+  }
+  .bracket-winner .name {
+    text-align: center; font-family: 'Playfair Display', serif; font-size: 18px;
+    color: var(--text-light); padding: 10px; background: rgba(226,185,111,0.1);
+    border: 1px solid rgba(226,185,111,0.3); border-radius: 8px;
+  }
+  .bracket-winner .pending { color: var(--text-muted); font-style: italic; }
+
+  /* Mobile: vira lista vertical */
+  @media (max-width: 800px) {
+    .bracket-tree { flex-direction: column; gap: 16px; padding: 8px; min-height: 0; }
+    .bracket-round { min-width: 0; max-width: none; }
+    .bracket-round-content { gap: 8px; }
+    .bracket-match { padding: 0 !important; }
+    .bracket-match .match-card::before,
+    .bracket-match::before,
+    .bracket-match::after { display: none !important; }
+    .bracket-winner { border-left: none; border-top: 1px dashed rgba(226,185,111,0.3); margin-left: 0; padding-left: 12px; padding-top: 16px; }
+  }
+
+  /* Tournament focused view (full-width, replaces lobby) */
+  #tournament-view { display: none; }
+  #tournament-view.show { display: block; }
+  .tournament-view-header {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 14px; gap: 12px; flex-wrap: wrap;
+  }
+  .tournament-view-header h2 {
+    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 22px;
+  }
+  .tournament-view-header .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
 
   /* Footer */
   footer.site {
@@ -349,6 +430,7 @@
       <strong>⚠ Sobre os prêmios:</strong> os prêmios são definidos exclusivamente pelo criador do torneio e a entrega é responsabilidade dele(a). O Xadrez Online não intermedia, garante nem é responsável por qualquer premiação combinada entre criador e participantes. A taxa de R$1 paga ao site cobre apenas a criação do torneio.
     </div>
 
+    <div id="lobby-view">
     <div class="main-grid">
       <div class="panel">
         <h2 id="list-title">📋 Torneios
@@ -404,6 +486,19 @@
     <div id="admin-pending-panel" class="panel" style="display:none; margin-top: 18px;">
       <h2>💳 Aguardando confirmação de pagamento <span class="right">(admin)</span></h2>
       <div id="admin-pending-list"></div>
+    </div>
+    </div><!-- /#lobby-view -->
+
+    <!-- View focada num torneio especifico (full width) -->
+    <div id="tournament-view" class="panel" style="padding: 18px 20px;">
+      <div class="tournament-view-header">
+        <div>
+          <h2 id="tv-name">Torneio</h2>
+          <div class="sub" id="tv-sub"></div>
+        </div>
+        <button class="btn" onclick="backToLobby()">← Voltar pra lista</button>
+      </div>
+      <div id="tv-body"></div>
     </div>
   </div>
 
@@ -960,12 +1055,16 @@ function renderDetail() {
 
   const capPct = Math.min(100, (approvedCount / t.capacity) * 100);
 
-  // Bracket / Leaderboard inline (compacto)
-  let extraHtml = '';
-  if (t.format === 'pvp_bracket' && t.status !== 'open' && matches.length > 0) {
-    extraHtml = renderBracketCompact(t, matches);
-  } else if (t.format === 'ai' && (t.status === 'open' || t.status === 'active' || t.status === 'finished')) {
-    extraHtml = '<div id="leaderboard-mount" style="margin-top:14px"></div>';
+  // Botao "Entrar" — disponivel quando torneio ja comecou OU pra ranking AI aberto
+  let enterBtn = '';
+  if (t.format === 'pvp_bracket' && (t.status === 'active' || t.status === 'finished')) {
+    enterBtn = `<button class="btn primary" onclick="openTournamentView('${t.id}')" style="background: linear-gradient(135deg, #6f4cb4, #e2b96f); color:#fff; border:none; font-weight:600">
+      ⚔ Entrar no chaveamento
+    </button>`;
+  } else if (t.format === 'ai' && (t.status === 'open' || t.status === 'active')) {
+    enterBtn = `<button class="btn primary" onclick="enterAiTournament('${t.id}')" style="background: linear-gradient(135deg, #6f4cb4, #e2b96f); color:#fff; border:none; font-weight:600">
+      🎮 Jogar e disputar ranking
+    </button>`;
   }
 
   document.getElementById('detail-area').innerHTML = `<div class="detail-card">
@@ -987,6 +1086,7 @@ function renderDetail() {
         <div><div class="lbl">Critério</div><div class="val">${fmtCriterion(t.criterion)}</div></div>
       ` : `
         <div><div class="lbl">Prazo/rodada</div><div class="val">${t.round_deadline_hours}h</div></div>
+        <div><div class="lbl">Tempo/partida</div><div class="val">${t.time_control_seconds ? Math.floor(t.time_control_seconds / 60) + ' min' : 'Sem limite'}</div></div>
         <div><div class="lbl">Rodada atual</div><div class="val">${t.current_round || '—'}/${t.total_rounds || '—'}</div></div>
       `}
       <div><div class="lbl">Início</div><div class="val">${fmtDT(t.starts_at)}</div></div>
@@ -999,92 +1099,110 @@ function renderDetail() {
       </div>
     </div>
 
-    <div class="actions">${actionHtml}</div>
+    <div class="actions">
+      ${enterBtn}
+      ${actionHtml}
+    </div>
     ${shareHtml}
-    ${extraHtml}
   </div>`;
-
-  if (t.format === 'ai' && (t.status === 'open' || t.status === 'active' || t.status === 'finished')) {
-    renderLeaderboard(t.id);
-  }
 }
 
-async function renderLeaderboard(tid) {
-  const mount = document.getElementById('leaderboard-mount');
-  if (!mount) return;
+function enterAiTournament(tid) {
+  // Pro torneio AI: redireciona pra pagina do jogo com contexto do torneio
+  window.location.href = '/?tournament=' + encodeURIComponent(tid);
+}
+
+async function loadLeaderboard(tid) {
   const { data, error } = await supa.rpc('tournament_leaderboard', { p_tournament_id: tid });
-  if (error) { mount.innerHTML = '<div class="status-msg error">Erro: ' + esc(error.message) + '</div>'; return; }
-  const rows = (data || []).slice(0, 10).map((r, i) => `
+  if (error) return { rows: [], err: error.message };
+  return { rows: data || [], err: null };
+}
+
+function renderLeaderboardHtml(lb) {
+  if (lb.err) return '<div class="status-msg error">Erro: ' + esc(lb.err) + '</div>';
+  const rows = lb.rows.map((r, i) => `
     <tr>
       <td class="num">${i + 1}</td>
       <td>${esc(r.user_name)}</td>
       <td class="num">${r.wins}</td>
       <td class="num">${r.best_seconds ? fmtSeconds(r.best_seconds) : '-'}</td>
     </tr>`).join('');
-  mount.innerHTML = `<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px">🏅 Classificação</div>
-    <table><thead><tr>
-      <th class="num">#</th><th>Jogador</th><th class="num">V</th><th class="num">Melhor</th>
-    </tr></thead><tbody>${rows || '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Sem partidas ainda</td></tr>'}</tbody></table>`;
+  return `<div style="overflow-x:auto"><table>
+    <thead><tr>
+      <th class="num">#</th><th>Jogador</th><th class="num">Vitórias</th><th class="num">Melhor tempo</th>
+    </tr></thead><tbody>${rows || '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Sem partidas ainda</td></tr>'}</tbody></table></div>`;
 }
 
-function renderBracketCompact(t, matches) {
+function renderMatchCardHtml(t, m, isCreator) {
+  const w1 = m.winner_id === m.player1_id;
+  const w2 = m.winner_id === m.player2_id;
+  const youIn = m.player1_id === currentUser.id || m.player2_id === currentUser.id;
+  const opponent = m.player1_id === currentUser.id ? m.player2_name : m.player1_name;
+  let actions = '';
+  if (m.status === 'pending') {
+    if (youIn && m.player1_id && m.player2_id) {
+      actions = `<button class="btn small primary" onclick="enterMatchRoom('${m.id}')">▶ Entrar na sala (vs ${esc(opponent || '?')})</button>`;
+    } else if (isCreator || isAdmin) {
+      actions = `<button class="btn small" onclick="openResultModal('${m.id}')">⚖ Forçar resultado</button>`;
+    } else if (m.player1_id && m.player2_id) {
+      actions = `<div style="font-size:11px; color:var(--text-muted); text-align:center; padding:4px 0">🕐 Aguardando início</div>`;
+    }
+  } else if (m.status === 'in_progress' && m.game_id) {
+    if (youIn) {
+      actions = `<button class="btn small primary" onclick="goToGame('${m.game_id}')">▶ Continuar partida</button>`;
+    } else {
+      actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">👁 Assistir ao vivo</button>`;
+    }
+  } else if (m.status === 'finished' && m.game_id) {
+    actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">📺 Ver replay</button>`;
+  }
+  const actionable = m.status === 'pending' && youIn && m.player1_id && m.player2_id;
+  return `<div class="match-card ${actionable ? 'actionable' : ''}">
+    <div class="match-player ${w1 ? 'winner' : (m.winner_id ? 'loser' : '')}">
+      <span>${esc(m.player1_name || 'TBD')}</span>${w1 ? '<span>✓</span>' : ''}
+    </div>
+    <div class="vs">vs</div>
+    <div class="match-player ${w2 ? 'winner' : (m.winner_id ? 'loser' : '')}">
+      <span>${esc(m.player2_name || (m.status === 'walkover' ? 'W.O.' : 'TBD'))}</span>${w2 ? '<span>✓</span>' : ''}
+    </div>
+    <div class="meta">
+      <span class="pill ${m.status}">${m.status}</span>
+      ${m.status === 'pending' && m.deadline_at ? `<span>até ${fmtDT(m.deadline_at)}</span>` : ''}
+    </div>
+    ${actions}
+  </div>`;
+}
+
+function renderBracketTree(t, matches) {
   const byRound = {};
   matches.forEach(m => { (byRound[m.round] = byRound[m.round] || []).push(m); });
   const totalRounds = t.total_rounds || Math.max(...Object.keys(byRound).map(Number));
   const isCreator = t.creator_id === currentUser.id;
 
-  let html = '<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin: 14px 0 8px">⚔ Chaveamento</div>';
-  html += '<div class="bracket">';
+  let html = '<div class="bracket-tree">';
   for (let r = 1; r <= totalRounds; r++) {
     const list = (byRound[r] || []).sort((a, b) => a.slot - b.slot);
-    if (list.length === 0) continue;
-    const label = r === totalRounds ? 'Final' : `Rodada ${r}`;
-    html += `<div><div style="font-size:11px; color:var(--text-muted); margin-bottom:6px">${label}</div>`;
-    html += '<div style="display:flex; flex-direction:column; gap:8px">';
+    const label = r === totalRounds ? '🏁 Final' : (r === totalRounds - 1 ? '⚔ Semifinal' : `Rodada ${r}`);
+    html += `<div class="bracket-round">
+      <div class="bracket-round-label">${label}</div>
+      <div class="bracket-round-content">`;
     list.forEach(m => {
-      const w1 = m.winner_id === m.player1_id;
-      const w2 = m.winner_id === m.player2_id;
-      const youIn = m.player1_id === currentUser.id || m.player2_id === currentUser.id;
-      const opponent = m.player1_id === currentUser.id ? m.player2_name : m.player1_name;
-
-      // Botoes de acao por status
-      let actions = '';
-      if (m.status === 'pending') {
-        if (youIn && m.player1_id && m.player2_id) {
-          actions = `<button class="btn small primary" onclick="enterMatchRoom('${m.id}')">▶ Entrar na sala (vs ${esc(opponent || '?')})</button>`;
-        } else if (isCreator || isAdmin) {
-          actions = `<button class="btn small" onclick="openResultModal('${m.id}')">⚖ Forçar resultado</button>`;
-        } else if (m.player1_id && m.player2_id) {
-          actions = `<div style="font-size:11px; color:var(--text-muted); text-align:center; padding:4px 0">🕐 Aguardando início</div>`;
-        }
-      } else if (m.status === 'in_progress' && m.game_id) {
-        if (youIn) {
-          actions = `<button class="btn small primary" onclick="goToGame('${m.game_id}')">▶ Continuar partida</button>`;
-        } else {
-          actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">👁 Assistir ao vivo</button>`;
-        }
-      } else if (m.status === 'finished' && m.game_id) {
-        actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">📺 Ver replay</button>`;
-      }
-
-      const actionable = m.status === 'pending' && youIn && m.player1_id && m.player2_id;
-      html += `<div class="match-card ${actionable ? 'actionable' : ''}">
-        <div class="match-player ${w1 ? 'winner' : (m.winner_id ? 'loser' : '')}">
-          <span>${esc(m.player1_name || 'TBD')}</span>${w1 ? '<span>✓</span>' : ''}
-        </div>
-        <div class="vs">vs</div>
-        <div class="match-player ${w2 ? 'winner' : (m.winner_id ? 'loser' : '')}">
-          <span>${esc(m.player2_name || (m.status === 'walkover' ? 'W.O.' : 'TBD'))}</span>${w2 ? '<span>✓</span>' : ''}
-        </div>
-        <div class="meta">
-          <span class="pill ${m.status}">${m.status}</span>
-          ${m.status === 'pending' && m.deadline_at ? `<span>até ${fmtDT(m.deadline_at)}</span>` : ''}
-        </div>
-        ${actions}
-      </div>`;
+      html += `<div class="bracket-match">${renderMatchCardHtml(t, m, isCreator)}</div>`;
     });
-    html += '</div></div>';
+    html += `</div></div>`;
   }
+
+  // Coluna do vencedor
+  const finalMatch = (byRound[totalRounds] || [])[0];
+  const winnerName = finalMatch && finalMatch.winner_id
+    ? (finalMatch.winner_id === finalMatch.player1_id ? finalMatch.player1_name : finalMatch.player2_name)
+    : null;
+  html += `<div class="bracket-winner">
+    <div class="crown">${winnerName ? '👑' : '🏆'}</div>
+    <div class="label">Campeão</div>
+    <div class="name ${winnerName ? '' : 'pending'}">${winnerName ? esc(winnerName) : 'a definir'}</div>
+  </div>`;
+
   html += '</div>';
   return html;
 }
@@ -1102,6 +1220,67 @@ function goToGame(gameId) {
 }
 function goToGameSpectate(gameId) {
   window.location.href = '/?game=' + encodeURIComponent(gameId) + '&spectate=1';
+}
+
+// ============== TOURNAMENT FOCUSED VIEW (bracket tree) ==============
+let viewTournamentId = null;
+let viewRefreshTimer = null;
+
+async function openTournamentView(tid) {
+  viewTournamentId = tid;
+  // Esconde lobby, mostra view
+  document.getElementById('lobby-view').style.display = 'none';
+  document.getElementById('tournament-view').classList.add('show');
+  await loadTournamentView();
+  // Atualiza a cada 10s pra pegar mudancas em real-time leve
+  if (viewRefreshTimer) clearInterval(viewRefreshTimer);
+  viewRefreshTimer = setInterval(loadTournamentView, 10000);
+}
+
+function backToLobby() {
+  document.getElementById('tournament-view').classList.remove('show');
+  document.getElementById('lobby-view').style.display = '';
+  viewTournamentId = null;
+  if (viewRefreshTimer) { clearInterval(viewRefreshTimer); viewRefreshTimer = null; }
+  // Recarrega lista pra refletir mudancas
+  refreshAll();
+}
+
+async function loadTournamentView() {
+  if (!viewTournamentId) return;
+  // Walkover sweep oportunista
+  supa.rpc('tournament_apply_walkovers', { p_tournament_id: viewTournamentId });
+
+  const [tRes, mRes, lbData] = await Promise.all([
+    supa.from('tournaments').select('*').eq('id', viewTournamentId).maybeSingle(),
+    supa.rpc('get_tournament_matches', { p_tournament_id: viewTournamentId }),
+    null  // leaderboard fetched abaixo se for IA
+  ]);
+
+  // Fallback se RLS bloquear
+  const t = tRes.data || tournaments.find(x => x.id === viewTournamentId) || myTournaments.find(x => x.id === viewTournamentId);
+  if (!t) {
+    document.getElementById('tv-body').innerHTML = '<div class="status-msg error">Torneio não encontrado.</div>';
+    return;
+  }
+  const matches = mRes.data || [];
+
+  document.getElementById('tv-name').textContent = t.name;
+  document.getElementById('tv-sub').innerHTML =
+    'por <strong>' + esc(t.creator_name) + '</strong> · '
+    + (t.format === 'pvp_bracket' ? '⚔ Chaveamento' : '🤖 Ranking IA')
+    + ' · <span class="pill ' + t.status + '">' + t.status + '</span>'
+    + (t.format === 'pvp_bracket' && t.time_control_seconds
+        ? ' · ⏱ ' + Math.floor(t.time_control_seconds / 60) + ' min/jogador'
+        : '');
+
+  if (t.format === 'pvp_bracket') {
+    document.getElementById('tv-body').innerHTML = renderBracketTree(t, matches);
+  } else {
+    // IA: deve nem cair aqui (enterAiTournament redireciona), mas por seguranca:
+    const lb = await loadLeaderboard(t.id);
+    document.getElementById('tv-body').innerHTML = renderLeaderboardHtml(lb);
+  }
 }
 
 // ============== AÇÕES ==============
