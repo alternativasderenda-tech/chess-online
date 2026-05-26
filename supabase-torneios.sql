@@ -979,9 +979,10 @@ declare
   v_attempt int := 0;
 begin
   if v_user is null then raise exception 'login required'; end if;
-  select * into v_m from tournament_matches where id = p_match_id;
+  -- Lock pra evitar race entre os 2 jogadores clicando simultaneamente
+  select * into v_m from tournament_matches where id = p_match_id for update;
   if v_m.id is null then raise exception 'match not found'; end if;
-  if v_m.status <> 'pending' then raise exception 'match not pending'; end if;
+  if v_m.status not in ('pending', 'in_progress') then raise exception 'match not active'; end if;
   if v_m.player1_id is null or v_m.player2_id is null then
     raise exception 'match has no opponent (walkover ja resolvido)';
   end if;
