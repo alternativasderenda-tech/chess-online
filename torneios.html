@@ -218,6 +218,22 @@
   .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
   .form-row .hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
 
+  /* Filtros da lista */
+  .filters { margin-bottom: 14px; }
+  .filters .chip-row { margin-bottom: 8px; }
+  .filter-extras { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .filter-toggle {
+    display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
+    color: var(--text-muted); cursor: pointer; user-select: none;
+  }
+  .filter-toggle input { accent-color: var(--accent); }
+  .filter-search {
+    flex: 1; min-width: 180px; background: var(--bg-soft);
+    border: 1px solid rgba(255,255,255,0.08); color: var(--text-light);
+    padding: 7px 11px; border-radius: 7px; font-family: inherit; font-size: 12px;
+  }
+  .filter-search:focus { outline: none; border-color: var(--accent); }
+
   .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
   .chip {
     background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08); color: var(--text-light);
@@ -308,6 +324,22 @@
             <button class="btn small" onclick="refreshAll()" style="padding:3px 10px; font-size:11px;">↻ Atualizar</button>
           </span>
         </h2>
+
+        <div class="filters">
+          <div class="chip-row" id="filter-format">
+            <div class="chip active" data-val="all">Todos</div>
+            <div class="chip" data-val="ai">🤖 Ranking IA</div>
+            <div class="chip" data-val="pvp_bracket">⚔ Chaveamento</div>
+          </div>
+          <div class="filter-extras">
+            <label class="filter-toggle">
+              <input type="checkbox" id="filter-available" checked>
+              <span>Só com vagas</span>
+            </label>
+            <input type="text" id="filter-search" placeholder="Buscar por nome ou criador..." class="filter-search">
+          </div>
+        </div>
+
         <div id="list-area"></div>
       </div>
 
@@ -481,9 +513,10 @@ const BETA_EMAILS = ['novacanabiodieselbr@gmail.com'];
 let currentUser = null;
 let isAdmin = false;
 let isBeta = false;
-let tournaments = [];     // lista de torneios públicos abertos
+let tournaments = [];     // lista de torneios públicos abertos (todos da RPC)
 let selectedId = null;    // id do torneio selecionado
 let selectedDetail = null; // { tournament, participants, matches, my }
+let filters = { format: 'all', search: '', available: true };
 
 function esc(s) {
   if (s === null || s === undefined) return '';
@@ -556,6 +589,23 @@ async function init() {
   document.getElementById('app').style.display = 'block';
 }
 
+// Filtros
+document.getElementById('filter-format').addEventListener('click', e => {
+  const chip = e.target.closest('.chip'); if (!chip) return;
+  document.querySelectorAll('#filter-format .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filters.format = chip.dataset.val;
+  renderList();
+});
+document.getElementById('filter-available').addEventListener('change', e => {
+  filters.available = e.target.checked;
+  renderList();
+});
+document.getElementById('filter-search').addEventListener('input', e => {
+  filters.search = e.target.value;
+  renderList();
+});
+
 // Refresh manual: recarrega tudo (lista pública + detalhe atual + painel admin)
 async function refreshAll() {
   await loadTournaments();
@@ -575,14 +625,33 @@ async function loadTournaments() {
   renderList();
 }
 
+function getFilteredTournaments() {
+  const q = filters.search.trim().toLowerCase();
+  return tournaments.filter(t => {
+    if (filters.format !== 'all' && t.format !== filters.format) return false;
+    if (filters.available && t.participant_count >= t.capacity) return false;
+    if (q && !((t.name || '').toLowerCase().includes(q) ||
+               (t.creator_name || '').toLowerCase().includes(q))) return false;
+    return true;
+  });
+}
+
 function renderList() {
   const area = document.getElementById('list-area');
-  document.getElementById('count-label').textContent = tournaments.length + ' aberto(s)';
+  const list = getFilteredTournaments();
+  const totalLabel = tournaments.length === list.length
+    ? tournaments.length + ' aberto(s)'
+    : list.length + ' / ' + tournaments.length + ' aberto(s)';
+  document.getElementById('count-label').textContent = totalLabel;
   if (tournaments.length === 0) {
     area.innerHTML = '<div class="status-msg">Nenhum torneio aberto. Seja o primeiro a criar! 🚀</div>';
     return;
   }
-  const rows = tournaments.map(t => {
+  if (list.length === 0) {
+    area.innerHTML = '<div class="status-msg">Nenhum torneio bate com os filtros.</div>';
+    return;
+  }
+  const rows = list.map(t => {
     const sel = (t.id === selectedId) ? 'selected' : '';
     const fmtPill = t.format === 'ai' ? 'ai' : 'bracket';
     const fmtLabel = t.format === 'ai' ? '🤖 IA' : '⚔ PvP';
@@ -618,9 +687,28 @@ async function loadDetail(id) {
     supa.rpc('get_tournament_participants', { p_tournament_id: id }),
     supa.rpc('get_tournament_matches', { p_tournament_id: id })
   ]);
-  if (tRes.error || !tRes.data) {
+  if (tRes.error) {
+    console.error('loadDetail tournaments error:', tRes.error);
     document.getElementById('detail-area').innerHTML =
-      '<div class="detail-empty">Torneio não encontrado.</div>';
+      '<div class="detail-empty">Erro: ' + esc(tRes.error.message) + '</div>';
+    return;
+  }
+  if (!tRes.data) {
+    // Fallback: usa o registro da lista (que vem via RPC security definer,
+    // por cima da RLS). Cobre o caso de RLS bloquear visualizacao.
+    const fallback = tournaments.find(t => t.id === id);
+    if (!fallback) {
+      document.getElementById('detail-area').innerHTML =
+        '<div class="detail-empty">Torneio não encontrado (RLS pode estar bloqueando — confira se rodou as policies atualizadas).</div>';
+      return;
+    }
+    selectedDetail = {
+      tournament: { ...fallback, status: 'open', paid: true, current_round: 0, total_rounds: null, share_token: null },
+      participants: pRes.data || [],
+      matches: mRes.data || [],
+      my: (pRes.data || []).find(p => p.user_id === currentUser.id)
+    };
+    renderDetail();
     return;
   }
   const t = tRes.data;
