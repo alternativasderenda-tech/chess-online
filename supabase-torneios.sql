@@ -71,9 +71,9 @@ create table if not exists tournaments (
   created_at timestamptz not null default now()
 );
 
-create index if not exists idx_tournaments_open_public
+create index if not exists idx_tournaments_open_listed
   on tournaments (starts_at)
-  where status = 'open' and paid = true and visibility = 'public';
+  where status = 'open' and paid = true and visibility in ('public', 'approval');
 create index if not exists idx_tournaments_creator on tournaments(creator_id);
 create index if not exists idx_tournaments_token on tournaments(share_token);
 
@@ -115,13 +115,14 @@ alter table tournaments enable row level security;
 alter table tournament_participants enable row level security;
 alter table tournament_matches enable row level security;
 
--- Tournaments: logado vê público-pago, próprio criador vê os seus, participante vê os que está
+-- Tournaments: logado vê pagos (público OU aprovação), próprio criador vê os seus,
+-- participante vê os que está. Modo 'link' fica oculto (só via share_token).
 drop policy if exists "tournaments visible" on tournaments;
 create policy "tournaments visible" on tournaments for select
   to authenticated
   using (
     auth.uid() is not null and (
-      (paid = true and visibility = 'public')
+      (paid = true and visibility in ('public', 'approval'))
       or creator_id = auth.uid()
       or exists (
         select 1 from tournament_participants p
@@ -141,7 +142,8 @@ create policy "participants visible" on tournament_participants for select
       or exists (
         select 1 from tournaments t
         where t.id = tournament_participants.tournament_id
-          and (t.creator_id = auth.uid() or (t.paid = true and t.visibility = 'public'))
+          and (t.creator_id = auth.uid()
+               or (t.paid = true and t.visibility in ('public', 'approval')))
       )
       or is_admin()
     )
@@ -156,7 +158,7 @@ create policy "matches visible" on tournament_matches for select
       select 1 from tournaments t
       where t.id = tournament_matches.tournament_id
         and (
-          (t.paid = true and t.visibility = 'public')
+          (t.paid = true and t.visibility in ('public', 'approval'))
           or t.creator_id = auth.uid()
           or exists (
             select 1 from tournament_participants p
@@ -277,7 +279,7 @@ $$;
 grant execute on function confirm_tournament_payment(uuid) to authenticated;
 
 
--- list_open_tournaments (só públicos e pagos)
+-- list_open_tournaments (públicos + aprovação; modo 'link' fica oculto)
 create or replace function list_open_tournaments()
 returns table (
   id uuid,
@@ -309,7 +311,7 @@ as $$
     from tournaments t
    where t.status = 'open'
      and t.paid = true
-     and t.visibility = 'public'
+     and t.visibility in ('public', 'approval')
    order by t.starts_at asc;
 $$;
 

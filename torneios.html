@@ -302,7 +302,12 @@
 
     <div class="main-grid">
       <div class="panel">
-        <h2>📋 Torneios abertos <span class="right" id="count-label"></span></h2>
+        <h2>📋 Torneios abertos
+          <span class="right" style="display:flex; gap:10px; align-items:center;">
+            <span id="count-label"></span>
+            <button class="btn small" onclick="refreshAll()" style="padding:3px 10px; font-size:11px;">↻ Atualizar</button>
+          </span>
+        </h2>
         <div id="list-area"></div>
       </div>
 
@@ -549,6 +554,13 @@ async function init() {
   }
   document.getElementById('loading').style.display = 'none';
   document.getElementById('app').style.display = 'block';
+}
+
+// Refresh manual: recarrega tudo (lista pública + detalhe atual + painel admin)
+async function refreshAll() {
+  await loadTournaments();
+  if (selectedId) await loadDetail(selectedId);
+  if (isAdmin) await loadAdminPending();
 }
 
 // ============== LISTAGEM ==============
