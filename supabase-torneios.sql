@@ -823,6 +823,328 @@ $$;
 
 grant execute on function admin_list_pending_tournaments() to authenticated;
 
+
+-- =========================================================
+-- FASE 2: integração com friend-match games
+-- - Cada partida do bracket vira/aponta pra uma games row
+-- - Quando a games termina, o resultado vai automatico pro bracket
+-- - Walkover auto se prazo da rodada estourou
+-- =========================================================
+
+-- Colunas novas (idempotente)
+alter table tournaments add column if not exists time_control_seconds int not null default 600;
+alter table tournament_matches add column if not exists game_id text references games(id) on delete set null;
+alter table games add column if not exists tournament_match_id uuid references tournament_matches(id) on delete set null;
+
+create index if not exists idx_games_tmatch on games(tournament_match_id);
+create index if not exists idx_tmatches_game on tournament_matches(game_id);
+
+-- create_tournament: agora aceita time_control_seconds
+drop function if exists create_tournament(text, text, text, tournament_format, tournament_visibility, int, timestamptz, timestamptz, smallint, tournament_criterion, int);
+create or replace function create_tournament(
+  p_name text,
+  p_description text,
+  p_prize text,
+  p_format tournament_format,
+  p_visibility tournament_visibility,
+  p_capacity int,
+  p_starts_at timestamptz,
+  p_ends_at timestamptz,
+  p_difficulty smallint,
+  p_criterion tournament_criterion,
+  p_round_deadline_hours int,
+  p_time_control_seconds int default 600
+)
+returns tournaments
+language plpgsql security definer set search_path = public
+as $$
+declare
+  v_user uuid := auth.uid();
+  v_name text;
+  v_token text;
+  v_total_rounds int;
+  v_row tournaments;
+begin
+  if v_user is null then raise exception 'login required'; end if;
+  if p_capacity not in (4, 8, 16, 32) then raise exception 'capacity must be 4, 8, 16 or 32'; end if;
+  if char_length(coalesce(p_name, '')) < 3 then raise exception 'name too short'; end if;
+  if char_length(coalesce(p_prize, '')) < 1 then raise exception 'prize required'; end if;
+  if p_time_control_seconds not in (0, 300, 600, 900, 1800) then
+    raise exception 'time_control_seconds must be 0, 300, 600, 900 or 1800';
+  end if;
+
+  if p_format = 'ai' then
+    if p_difficulty is null or p_criterion is null or p_ends_at is null then
+      raise exception 'ai format requires difficulty, criterion and ends_at';
+    end if;
+    if p_ends_at <= p_starts_at then raise exception 'ends_at must be after starts_at'; end if;
+    v_total_rounds := null;
+  else
+    if p_round_deadline_hours is null or p_round_deadline_hours < 1 then
+      raise exception 'pvp_bracket requires round_deadline_hours >= 1';
+    end if;
+    v_total_rounds := case p_capacity when 4 then 2 when 8 then 3 when 16 then 4 when 32 then 5 end;
+  end if;
+
+  select coalesce(raw_user_meta_data->>'full_name', raw_user_meta_data->>'name', email)
+    into v_name from auth.users where id = v_user;
+  v_token := substr(translate(gen_random_uuid()::text, '-', ''), 1, 12);
+
+  insert into tournaments (
+    creator_id, creator_name, name, description, prize_description,
+    format, visibility, capacity, starts_at, ends_at,
+    share_token, paid,
+    difficulty, criterion,
+    round_deadline_hours, total_rounds,
+    time_control_seconds
+  ) values (
+    v_user, coalesce(v_name, 'Anônimo'), p_name, p_description, p_prize,
+    p_format, p_visibility, p_capacity, p_starts_at, p_ends_at,
+    v_token, false,
+    case when p_format = 'ai' then p_difficulty end,
+    case when p_format = 'ai' then p_criterion end,
+    case when p_format = 'pvp_bracket' then p_round_deadline_hours end,
+    v_total_rounds,
+    p_time_control_seconds
+  ) returning * into v_row;
+
+  return v_row;
+end;
+$$;
+
+grant execute on function create_tournament(text, text, text, tournament_format, tournament_visibility, int, timestamptz, timestamptz, smallint, tournament_criterion, int, int) to authenticated;
+
+
+-- Avancar bracket: extrai a logica de record_match_result pra ser
+-- reutilizada pelo trigger de games-finished
+create or replace function _advance_bracket(p_tournament_id uuid)
+returns void language plpgsql security definer set search_path = public as $$
+declare
+  v_t tournaments;
+  v_total int;
+  v_done int;
+  v_winners uuid[];
+  v_i int := 1;
+  v_pos int := 0;
+begin
+  select * into v_t from tournaments where id = p_tournament_id;
+  if v_t.format <> 'pvp_bracket' then return; end if;
+  if v_t.status <> 'active' then return; end if;
+
+  select count(*) into v_total from tournament_matches
+   where tournament_id = v_t.id and round = v_t.current_round;
+  select count(*) into v_done from tournament_matches
+   where tournament_id = v_t.id and round = v_t.current_round
+     and status in ('finished', 'walkover');
+
+  if v_total <> v_done then return; end if;
+
+  if v_t.current_round >= v_t.total_rounds then
+    update tournaments set status = 'finished' where id = v_t.id;
+    return;
+  end if;
+
+  select array_agg(winner_id order by slot) into v_winners
+    from tournament_matches where tournament_id = v_t.id and round = v_t.current_round;
+  while v_i <= coalesce(array_length(v_winners, 1), 0) loop
+    v_pos := v_pos + 1;
+    insert into tournament_matches (
+      tournament_id, round, slot, player1_id, player2_id, status, deadline_at
+    ) values (
+      v_t.id, v_t.current_round + 1, v_pos,
+      v_winners[v_i],
+      case when v_i + 1 <= array_length(v_winners, 1) then v_winners[v_i + 1] else null end,
+      'pending',
+      now() + (v_t.round_deadline_hours || ' hours')::interval
+    );
+    v_i := v_i + 2;
+  end loop;
+  update tournaments set current_round = current_round + 1 where id = v_t.id;
+end;
+$$;
+
+
+-- tournament_match_start_game: cria a sala (games row) pre-amarrada
+-- aos 2 jogadores da partida. Idempotente — se ja existe, retorna o id.
+create or replace function tournament_match_start_game(p_match_id uuid)
+returns text language plpgsql security definer set search_path = public as $$
+declare
+  v_user uuid := auth.uid();
+  v_m tournament_matches;
+  v_t tournaments;
+  v_game_id text;
+  v_w_user uuid; v_b_user uuid;
+  v_w_name text; v_b_name text;
+  v_chars text := 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  v_attempt int := 0;
+begin
+  if v_user is null then raise exception 'login required'; end if;
+  select * into v_m from tournament_matches where id = p_match_id;
+  if v_m.id is null then raise exception 'match not found'; end if;
+  if v_m.status <> 'pending' then raise exception 'match not pending'; end if;
+  if v_m.player1_id is null or v_m.player2_id is null then
+    raise exception 'match has no opponent (walkover ja resolvido)';
+  end if;
+
+  -- Soh os 2 jogadores podem abrir/iniciar a sala
+  if v_user not in (v_m.player1_id, v_m.player2_id) then
+    raise exception 'somente os jogadores da partida podem abrir a sala';
+  end if;
+
+  -- Ja existe games row: retorna o id
+  if v_m.game_id is not null then
+    return v_m.game_id;
+  end if;
+
+  select * into v_t from tournaments where id = v_m.tournament_id;
+  if v_t.status <> 'active' then raise exception 'tournament not active'; end if;
+
+  -- White/black aleatorios
+  if random() < 0.5 then
+    v_w_user := v_m.player1_id; v_b_user := v_m.player2_id;
+  else
+    v_w_user := v_m.player2_id; v_b_user := v_m.player1_id;
+  end if;
+
+  select user_name into v_w_name from tournament_participants
+    where tournament_id = v_t.id and user_id = v_w_user;
+  select user_name into v_b_name from tournament_participants
+    where tournament_id = v_t.id and user_id = v_b_user;
+
+  -- Gera id curto de 6 chars com retry em colisao
+  loop
+    v_attempt := v_attempt + 1;
+    v_game_id := '';
+    for i in 1..6 loop
+      v_game_id := v_game_id || substr(v_chars, 1 + floor(random() * length(v_chars))::int, 1);
+    end loop;
+    exit when not exists(select 1 from games where id = v_game_id);
+    if v_attempt > 10 then raise exception 'failed to generate unique game id'; end if;
+  end loop;
+
+  insert into games (
+    id, white_user_id, black_user_id, white_username, black_username,
+    status, time_control, current_turn, tournament_match_id
+  ) values (
+    v_game_id, v_w_user, v_b_user, coalesce(v_w_name, 'Branco'), coalesce(v_b_name, 'Preto'),
+    'active', v_t.time_control_seconds, 'w', v_m.id
+  );
+
+  update tournament_matches set game_id = v_game_id, status = 'in_progress' where id = p_match_id;
+
+  return v_game_id;
+end;
+$$;
+
+grant execute on function tournament_match_start_game(uuid) to authenticated;
+
+
+-- Trigger: quando games termina e tem tournament_match_id, registra o
+-- vencedor no bracket e avanca rodada se a rodada inteira terminou.
+create or replace function _games_finished_to_tournament()
+returns trigger language plpgsql security definer set search_path = public as $$
+declare
+  v_winner uuid;
+  v_m tournament_matches;
+begin
+  if NEW.status <> 'finished' then return NEW; end if;
+  if OLD.status = 'finished' then return NEW; end if; -- ja processado
+  if NEW.tournament_match_id is null then return NEW; end if;
+
+  select * into v_m from tournament_matches where id = NEW.tournament_match_id;
+  if v_m.id is null or v_m.status = 'finished' then return NEW; end if;
+
+  v_winner := case NEW.result
+    when 'white_wins' then NEW.white_user_id
+    when 'black_wins' then NEW.black_user_id
+    else null
+  end;
+
+  -- Draw / abandoned: nao registra automatico, deixa pro criador resolver
+  if v_winner is null then return NEW; end if;
+
+  update tournament_matches
+     set winner_id = v_winner,
+         game_pgn = null,
+         status = 'finished',
+         finished_at = now()
+   where id = v_m.id;
+
+  perform _advance_bracket(v_m.tournament_id);
+  return NEW;
+end;
+$$;
+
+drop trigger if exists trg_games_finished_to_tournament on games;
+create trigger trg_games_finished_to_tournament
+  after update of status on games
+  for each row execute function _games_finished_to_tournament();
+
+
+-- Walkover automatico: sweep que marca partidas vencidas em rodadas
+-- com deadline estourado. Roda quando o cliente chama (no load do bracket).
+-- Regra: se um jogador entrou na sala (a partida virou 'in_progress') e
+-- o oponente nao reagiu ate o deadline → vitoria por W.O. pra quem entrou.
+-- Se nenhum entrou → ambos perdem (cancela a partida — proxima rodada fica
+-- sem esse slot avancando, soh trate quando ambos no-show).
+create or replace function tournament_apply_walkovers(p_tournament_id uuid)
+returns int language plpgsql security definer set search_path = public as $$
+declare
+  v_m record;
+  v_g games;
+  v_winner uuid;
+  v_count int := 0;
+begin
+  for v_m in
+    select * from tournament_matches
+     where tournament_id = p_tournament_id
+       and status in ('pending', 'in_progress')
+       and deadline_at is not null
+       and deadline_at < now()
+  loop
+    v_winner := null;
+    -- Se ja tem game e ela esta "active" sem finalizar, considera quem fez
+    -- mais lances como nao-no-show. Simplificacao: quem move primeiro vence.
+    if v_m.game_id is not null then
+      select * into v_g from games where id = v_m.game_id;
+      if v_g.id is not null and v_g.status <> 'finished' then
+        -- abandona o jogo
+        update games set status = 'abandoned', ended_at = now() where id = v_g.id;
+        -- vencedor = quem fez mais lances; se empate, ninguem
+        select case
+          when (select count(*) from moves where game_id = v_g.id and player_color = 'w') >
+               (select count(*) from moves where game_id = v_g.id and player_color = 'b') then v_g.white_user_id
+          when (select count(*) from moves where game_id = v_g.id and player_color = 'b') >
+               (select count(*) from moves where game_id = v_g.id and player_color = 'w') then v_g.black_user_id
+          else null end into v_winner;
+      end if;
+    end if;
+
+    if v_winner is null then
+      -- Ninguem entrou na sala: cancela ambos. Pra avancar o bracket,
+      -- escolhe player1 como "ganhador tecnico" (alternativa: cancelar torneio)
+      v_winner := v_m.player1_id;
+    end if;
+
+    update tournament_matches
+       set winner_id = v_winner, status = 'walkover', finished_at = now()
+     where id = v_m.id;
+    v_count := v_count + 1;
+  end loop;
+
+  if v_count > 0 then perform _advance_bracket(p_tournament_id); end if;
+  return v_count;
+end;
+$$;
+
+grant execute on function tournament_apply_walkovers(uuid) to authenticated;
+
+
+-- Permite leitura de games via RLS pra qualquer authenticated.
+-- Ja existe a policy "games readable by all auth" em friend-match.sql,
+-- entao espectador ja consegue ver games + moves via realtime.
+
+
 -- =========================================================
 -- FIM
 -- =========================================================

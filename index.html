@@ -3007,6 +3007,9 @@ async function checkPendingScore() {
     } else if (postAction.startsWith('joinOnline:')) {
       const gid = postAction.split(':')[1];
       setTimeout(() => joinOnlineGame(gid), 200);
+    } else if (postAction.startsWith('spectate:')) {
+      const gid = postAction.split(':')[1];
+      setTimeout(() => setupSpectateGame(gid), 200);
     }
   }
 }
@@ -3634,6 +3637,12 @@ function leaveOnlineMode() {
   opponentName = null;
   onlineLastSeenMove = 0;
   isWaitingForOpponent = false;
+  isSpectator = false;
+  // Restaura reactions e copy-link (caso tenham sido escondidos por spectator)
+  const reactRow = document.querySelector('#online-controls .reactions-row');
+  if (reactRow) reactRow.style.display = '';
+  const copyBtn = document.getElementById('online-copy-link-btn');
+  if (copyBtn) copyBtn.style.display = '';
   // Reabilita o botao Desfazer
   const undoBtn = document.getElementById('btn-undo');
   if (undoBtn) {
@@ -3859,9 +3868,51 @@ function checkUrlForGameJoin() {
   const params = new URLSearchParams(window.location.search);
   const gameId = params.get('game');
   if (gameId && /^[A-Z2-9]{6}$/.test(gameId)) {
+    const spectate = params.get('spectate') === '1';
     // Aguarda auth resolver antes de tentar joinar
-    setTimeout(() => joinOnlineGame(gameId), 500);
+    setTimeout(() => {
+      if (spectate) setupSpectateGame(gameId);
+      else joinOnlineGame(gameId);
+    }, 500);
   }
+}
+
+async function setupSpectateGame(gameId) {
+  if (!supa) { await showAlert(tr('modal.connecting')); return; }
+  if (!currentUser) {
+    const ok = await showConfirm('Precisa estar logado pra assistir a partida.', { okLabel: tr('nav.login') });
+    if (!ok) { cleanGameUrlParam(); return; }
+    sessionStorage.setItem('postLoginAction', 'spectate:' + gameId);
+    return loginWithGoogle();
+  }
+  const { data: game, error } = await supa.from('games').select('*').eq('id', gameId).single();
+  if (error || !game) {
+    await showAlert(tr('online.matchNotFound'), { error: true });
+    cleanGameUrlParam();
+    return;
+  }
+  // Sincroniza time control visualmente
+  if (typeof game.time_control === 'number') {
+    const tcSel = document.getElementById('time-control');
+    if (tcSel) tcSel.value = String(game.time_control);
+  }
+  isSpectator = true;
+  setupOnlineGame(gameId, 'w'); // visualiza pelo lado das brancas
+  opponentName = game.black_username; // mostra na barra superior
+  // Customiza painel pra espectador
+  const colorDisp = document.getElementById('online-color-display');
+  if (colorDisp) {
+    colorDisp.innerHTML = '👁 <strong>Modo espectador</strong> — '
+      + escapeHtml(game.white_username || '?') + ' (Brancas) vs '
+      + escapeHtml(game.black_username || '?') + ' (Pretas)';
+  }
+  // Esconde reacoes + copy-link
+  const reactRow = document.querySelector('#online-controls .reactions-row');
+  if (reactRow) reactRow.style.display = 'none';
+  const copyBtn = document.getElementById('online-copy-link-btn');
+  if (copyBtn) copyBtn.style.display = 'none';
+  updateOnlinePlayerBars();
+  replayMovesFromDb(gameId);
 }
 
 // Init quando DOM e Supabase estiverem prontos
@@ -3979,6 +4030,7 @@ let moveNotations = [];
 // Friend Match (online) state
 let gameMode = 'ai';  // 'ai' | 'online'
 let onlineGameId = null;
+let isSpectator = false;
 let myOnlineColor = null;  // 'w' | 'b' (apenas em online)
 let opponentName = null;
 let onlineMovesChannel = null;
@@ -4841,12 +4893,13 @@ function renderBoard() {
 }
 
 function onSquareClick(e) {
-  if (gameOver || aiThinking || dragging || replayMode) return;
+  if (gameOver || aiThinking || dragging || replayMode || isSpectator) return;
   const idx = parseInt(e.currentTarget.dataset.idx);
   handleSquareAction(idx);
 }
 
 function handleSquareAction(idx) {
+  if (isSpectator) return;
   if (tutorialMode) {
     const lesson = LESSONS[currentLesson];
     if (!lesson || !lesson.interactive) return; // Non-interactive: no moves

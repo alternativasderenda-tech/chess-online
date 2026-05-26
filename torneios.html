@@ -476,6 +476,16 @@
         <input type="number" id="f-deadline" value="48" min="1" max="720">
         <div class="hint">Se um jogador não jogar dentro do prazo, leva W.O.</div>
       </div>
+      <div class="form-row">
+        <label>Tempo por jogador na partida</label>
+        <select id="f-time-control">
+          <option value="0">Sem limite</option>
+          <option value="300">5 minutos</option>
+          <option value="600" selected>10 minutos</option>
+          <option value="900">15 minutos</option>
+          <option value="1800">30 minutos</option>
+        </select>
+      </div>
     </div>
 
     <div class="form-row">
@@ -860,6 +870,14 @@ async function loadDetail(id) {
   document.getElementById('detail-area').innerHTML =
     '<div class="detail-empty">Carregando...</div>';
 
+  // Aplica walkovers automaticos (fire-and-forget; nao bloqueia render)
+  supa.rpc('tournament_apply_walkovers', { p_tournament_id: id }).then(({ data, error }) => {
+    if (!error && data && data > 0) {
+      // Se algum walkover rolou, recarrega o detalhe
+      loadDetail(id);
+    }
+  });
+
   const [tRes, pRes, mRes] = await Promise.all([
     supa.from('tournaments').select('*').eq('id', id).maybeSingle(),
     supa.rpc('get_tournament_participants', { p_tournament_id: id }),
@@ -1013,6 +1031,7 @@ function renderBracketCompact(t, matches) {
   const byRound = {};
   matches.forEach(m => { (byRound[m.round] = byRound[m.round] || []).push(m); });
   const totalRounds = t.total_rounds || Math.max(...Object.keys(byRound).map(Number));
+  const isCreator = t.creator_id === currentUser.id;
 
   let html = '<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin: 14px 0 8px">⚔ Chaveamento</div>';
   html += '<div class="bracket">';
@@ -1026,9 +1045,30 @@ function renderBracketCompact(t, matches) {
       const w1 = m.winner_id === m.player1_id;
       const w2 = m.winner_id === m.player2_id;
       const youIn = m.player1_id === currentUser.id || m.player2_id === currentUser.id;
-      const pending = m.status === 'pending';
-      const canReport = pending && (youIn || t.creator_id === currentUser.id || isAdmin);
-      html += `<div class="match-card ${canReport ? 'actionable' : ''}">
+      const opponent = m.player1_id === currentUser.id ? m.player2_name : m.player1_name;
+
+      // Botoes de acao por status
+      let actions = '';
+      if (m.status === 'pending') {
+        if (youIn && m.player1_id && m.player2_id) {
+          actions = `<button class="btn small primary" onclick="enterMatchRoom('${m.id}')">▶ Entrar na sala (vs ${esc(opponent || '?')})</button>`;
+        } else if (isCreator || isAdmin) {
+          actions = `<button class="btn small" onclick="openResultModal('${m.id}')">⚖ Forçar resultado</button>`;
+        } else if (m.player1_id && m.player2_id) {
+          actions = `<div style="font-size:11px; color:var(--text-muted); text-align:center; padding:4px 0">🕐 Aguardando início</div>`;
+        }
+      } else if (m.status === 'in_progress' && m.game_id) {
+        if (youIn) {
+          actions = `<button class="btn small primary" onclick="goToGame('${m.game_id}')">▶ Continuar partida</button>`;
+        } else {
+          actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">👁 Assistir ao vivo</button>`;
+        }
+      } else if (m.status === 'finished' && m.game_id) {
+        actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">📺 Ver replay</button>`;
+      }
+
+      const actionable = m.status === 'pending' && youIn && m.player1_id && m.player2_id;
+      html += `<div class="match-card ${actionable ? 'actionable' : ''}">
         <div class="match-player ${w1 ? 'winner' : (m.winner_id ? 'loser' : '')}">
           <span>${esc(m.player1_name || 'TBD')}</span>${w1 ? '<span>✓</span>' : ''}
         </div>
@@ -1038,15 +1078,30 @@ function renderBracketCompact(t, matches) {
         </div>
         <div class="meta">
           <span class="pill ${m.status}">${m.status}</span>
-          ${pending && m.deadline_at ? `<span>até ${fmtDT(m.deadline_at)}</span>` : ''}
+          ${m.status === 'pending' && m.deadline_at ? `<span>até ${fmtDT(m.deadline_at)}</span>` : ''}
         </div>
-        ${canReport ? `<button class="btn small primary" onclick="openResultModal('${m.id}')">Reportar resultado</button>` : ''}
+        ${actions}
       </div>`;
     });
     html += '</div></div>';
   }
   html += '</div>';
   return html;
+}
+
+async function enterMatchRoom(matchId) {
+  const { data, error } = await supa.rpc('tournament_match_start_game', { p_match_id: matchId });
+  if (error) { await showAlert(error.message, { error: true }); return; }
+  if (!data) { await showAlert('Não foi possível abrir a sala.', { error: true }); return; }
+  // data e o game_id (text). Navega pra /?game=ID
+  window.location.href = '/?game=' + encodeURIComponent(data);
+}
+
+function goToGame(gameId) {
+  window.location.href = '/?game=' + encodeURIComponent(gameId);
+}
+function goToGameSpectate(gameId) {
+  window.location.href = '/?game=' + encodeURIComponent(gameId) + '&spectate=1';
 }
 
 // ============== AÇÕES ==============
@@ -1181,6 +1236,7 @@ async function submitCreate() {
     if (!params.p_round_deadline_hours || params.p_round_deadline_hours < 1) {
       errEl.textContent = 'Prazo de rodada inválido.'; return;
     }
+    params.p_time_control_seconds = parseInt(document.getElementById('f-time-control').value, 10);
   }
 
   const btn = document.getElementById('btn-submit-create');
