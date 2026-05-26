@@ -229,7 +229,8 @@ begin
   select coalesce(raw_user_meta_data->>'full_name', raw_user_meta_data->>'name', email)
     into v_name from auth.users where id = v_user;
 
-  v_token := replace(replace(replace(encode(gen_random_bytes(9), 'base64'), '+', '-'), '/', '_'), '=', '');
+  -- Token curto: 12 chars hex do gen_random_uuid (evita dep do pgcrypto)
+  v_token := substr(translate(gen_random_uuid()::text, '-', ''), 1, 12);
 
   insert into tournaments (
     creator_id, creator_name, name, description, prize_description,
