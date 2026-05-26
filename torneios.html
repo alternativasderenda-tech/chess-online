@@ -323,6 +323,7 @@
     <h1>🏆 Torneios</h1>
     <div class="header-actions">
       <span class="user-chip" id="user-chip"></span>
+      <button class="btn small" id="btn-logout" onclick="logout()" style="display:none">↩ Sair</button>
       <button class="btn primary" id="btn-create" onclick="openCreateModal()" style="display:none">+ Criar Torneio</button>
       <a class="btn" href="/">← Voltar pro jogo</a>
     </div>
@@ -550,6 +551,16 @@
   </div>
 </div>
 
+<!-- =================== Modal: Aviso/Confirmação genéricos =================== -->
+<div class="modal-bg" id="modal-notice">
+  <div class="modal" style="max-width: 420px; text-align: center;">
+    <div id="notice-icon" style="font-size: 44px; line-height: 1; margin-bottom: 10px;">ℹ️</div>
+    <h2 id="notice-title" style="display:block; text-align:center; margin-bottom: 12px; justify-content: center;">Aviso</h2>
+    <p id="notice-message" style="font-size: 14px; color: var(--text-light); margin-bottom: 18px; line-height: 1.5; white-space: pre-line;"></p>
+    <div id="notice-buttons" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;"></div>
+  </div>
+</div>
+
 <script>
 const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
 const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrZ2NseWxkYmJnYmZqZ3lvZWVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MDkyNTgsImV4cCI6MjA5MzE4NTI1OH0.Pk5PEc9dbWBc4amjGa4AZgsNTyvg2728ZQwhxZOY4-E';
@@ -610,6 +621,59 @@ async function loginWithGoogle() {
   });
 }
 
+async function logout() {
+  const ok = await showConfirm('Sair da sua conta?', { okLabel: 'Sair', cancelLabel: 'Continuar logado' });
+  if (!ok) return;
+  await supa.auth.signOut();
+  window.location.href = '/';
+}
+
+// ============== MODAIS DE AVISO / CONFIRMACAO ==============
+function showNotice(opts) {
+  return new Promise(resolve => {
+    document.getElementById('notice-icon').textContent = opts.icon || 'ℹ️';
+    document.getElementById('notice-title').textContent = opts.title || 'Aviso';
+    document.getElementById('notice-message').textContent = opts.message || '';
+    const container = document.getElementById('notice-buttons');
+    container.innerHTML = '';
+    (opts.buttons || [{ label: 'OK', value: true, primary: true }]).forEach(btn => {
+      const button = document.createElement('button');
+      button.className = 'btn' + (btn.primary ? ' primary' : '');
+      button.style.minWidth = '100px';
+      button.textContent = btn.label;
+      button.addEventListener('click', () => {
+        document.getElementById('modal-notice').classList.remove('show');
+        resolve(btn.value);
+      });
+      container.appendChild(button);
+    });
+    document.getElementById('modal-notice').classList.add('show');
+  });
+}
+
+function showAlert(message, opts) {
+  opts = opts || {};
+  const icon = opts.icon || (opts.error ? '⚠️' : (opts.success ? '✅' : 'ℹ️'));
+  const title = opts.title || (opts.error ? 'Erro' : (opts.success ? 'Sucesso' : 'Aviso'));
+  return showNotice({
+    icon, title, message,
+    buttons: [{ label: opts.okLabel || 'OK', value: true, primary: true }]
+  });
+}
+
+function showConfirm(message, opts) {
+  opts = opts || {};
+  return showNotice({
+    icon: opts.icon || '❓',
+    title: opts.title || 'Confirmar',
+    message,
+    buttons: [
+      { label: opts.cancelLabel || 'Cancelar', value: false, primary: false },
+      { label: opts.okLabel || 'Confirmar', value: true, primary: true }
+    ]
+  });
+}
+
 async function init() {
   const { data: { session } } = await supa.auth.getSession();
   if (!session) {
@@ -620,6 +684,7 @@ async function init() {
   currentUser = session.user;
   const userName = currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email;
   document.getElementById('user-chip').textContent = '👤 ' + userName;
+  document.getElementById('btn-logout').style.display = 'inline-flex';
 
   // Verifica admin
   const { data: adminRow } = await supa.from('admin_users')
@@ -986,37 +1051,37 @@ function renderBracketCompact(t, matches) {
 
 // ============== AÇÕES ==============
 async function joinTournament() {
-  if (!confirm('Confirma inscrição neste torneio?')) return;
+  if (!await showConfirm('Confirma inscrição neste torneio?', { okLabel: 'Inscrever' })) return;
   const { error } = await supa.rpc('join_tournament', { p_tournament_id: selectedId });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   await Promise.all([loadTournaments(), loadDetail(selectedId)]);
 }
 
 async function leaveTournament() {
-  if (!confirm('Sair do torneio?')) return;
+  if (!await showConfirm('Sair do torneio?', { okLabel: 'Sair' })) return;
   const { error } = await supa.rpc('leave_tournament', { p_tournament_id: selectedId });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   await Promise.all([loadTournaments(), loadDetail(selectedId)]);
 }
 
 async function cancelTournament() {
-  if (!confirm('Cancelar este torneio? Essa ação não pode ser desfeita.')) return;
+  if (!await showConfirm('Cancelar este torneio? Essa ação não pode ser desfeita.', { okLabel: 'Cancelar torneio', cancelLabel: 'Voltar' })) return;
   const { error } = await supa.rpc('cancel_tournament', { p_tournament_id: selectedId });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   await Promise.all([loadTournaments(), loadDetail(selectedId)]);
 }
 
 async function startBracket() {
-  if (!confirm('Iniciar chaveamento agora? Não dá pra voltar atrás.')) return;
+  if (!await showConfirm('Iniciar chaveamento agora? Não dá pra voltar atrás.', { okLabel: 'Iniciar' })) return;
   const { error } = await supa.rpc('start_bracket_tournament', { p_tournament_id: selectedId });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   await Promise.all([loadTournaments(), loadDetail(selectedId)]);
 }
 
 async function finalizeRanking() {
-  if (!confirm('Encerrar este ranking agora?')) return;
+  if (!await showConfirm('Encerrar este ranking agora?', { okLabel: 'Encerrar' })) return;
   const { error } = await supa.rpc('finalize_ranking_tournament', { p_tournament_id: selectedId });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   await Promise.all([loadTournaments(), loadDetail(selectedId)]);
 }
 
@@ -1181,7 +1246,7 @@ async function setPartStatus(participantId, status) {
   const { error } = await supa.rpc('set_participant_status', {
     p_participant_id: participantId, p_status: status
   });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   await loadDetail(selectedId);
   openManageModal();
 }
@@ -1210,7 +1275,7 @@ async function submitResult(winnerId) {
   const { error } = await supa.rpc('record_match_result', {
     p_match_id: resultMatchId, p_winner_id: winnerId, p_pgn: null
   });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   closeResultModal();
   await loadDetail(selectedId);
 }
@@ -1240,9 +1305,9 @@ async function loadAdminPending() {
 }
 
 async function confirmPayment(id) {
-  if (!confirm('Confirma que o Pix de R$1 foi recebido?')) return;
+  if (!await showConfirm('Confirma que o Pix de R$1 foi recebido?', { okLabel: 'Confirmar' })) return;
   const { error } = await supa.rpc('confirm_tournament_payment', { p_tournament_id: id });
-  if (error) { alert('Erro: ' + error.message); return; }
+  if (error) { await showAlert(error.message, { error: true }); return; }
   await Promise.all([loadTournaments(), loadAdminPending()]);
 }
 
