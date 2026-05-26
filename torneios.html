@@ -236,21 +236,31 @@
 
   /* Filtros da lista */
   .filters { margin-bottom: 14px; }
-  .filters .chip-row { margin-bottom: 8px; }
-  .filters .chip-row.sub-filter { padding-left: 4px; align-items: center; }
-  .filter-label {
-    font-size: 11px; color: var(--text-muted); text-transform: uppercase;
-    letter-spacing: 0.5px; margin-right: 4px; font-weight: 600;
+  .filters .chip-row { margin-bottom: 10px; }
+  .filter-line {
+    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
   }
-  .filters .sub-filter .chip { padding: 4px 11px; font-size: 11px; }
-  .filter-extras { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+  .filter-sel {
+    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08);
+    color: var(--text-light); padding: 7px 28px 7px 11px; border-radius: 7px;
+    font-family: inherit; font-size: 12px; cursor: pointer; appearance: none;
+    -webkit-appearance: none; -moz-appearance: none;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%238899aa' d='M0 0l5 6 5-6z'/></svg>");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+  }
+  .filter-sel:hover, .filter-sel:focus { outline: none; border-color: var(--accent); }
+  .filter-sel option { background: var(--bg-card); color: var(--text-light); }
   .filter-toggle {
     display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
     color: var(--text-muted); cursor: pointer; user-select: none;
+    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08);
+    padding: 6px 11px; border-radius: 7px;
   }
-  .filter-toggle input { accent-color: var(--accent); }
+  .filter-toggle:hover { border-color: var(--accent); }
+  .filter-toggle input { accent-color: var(--accent); margin: 0; }
   .filter-search {
-    flex: 1; min-width: 180px; background: var(--bg-soft);
+    flex: 1; min-width: 160px; background: var(--bg-soft);
     border: 1px solid rgba(255,255,255,0.08); color: var(--text-light);
     padding: 7px 11px; border-radius: 7px; font-family: inherit; font-size: 12px;
   }
@@ -358,26 +368,24 @@
             <div class="chip" data-val="ai">🤖 Ranking IA</div>
             <div class="chip" data-val="pvp_bracket">⚔ Chaveamento</div>
           </div>
-          <div class="chip-row sub-filter" id="filter-difficulty" style="display:none">
-            <span class="filter-label">Dificuldade:</span>
-            <div class="chip active" data-val="all">Todas</div>
-            <div class="chip" data-val="1">Fácil</div>
-            <div class="chip" data-val="2">Médio</div>
-            <div class="chip" data-val="3">Difícil</div>
-            <div class="chip" data-val="4">Expert</div>
-          </div>
-          <div class="chip-row sub-filter" id="filter-criterion" style="display:none">
-            <span class="filter-label">Critério:</span>
-            <div class="chip active" data-val="all">Todos</div>
-            <div class="chip" data-val="most_wins">Mais vitórias</div>
-            <div class="chip" data-val="fastest_win">Vitória mais rápida</div>
-          </div>
-          <div class="filter-extras">
+          <div class="filter-line">
+            <select id="filter-difficulty-sel" class="filter-sel" style="display:none">
+              <option value="all">⚙ Toda dificuldade</option>
+              <option value="1">⚙ Fácil</option>
+              <option value="2">⚙ Médio</option>
+              <option value="3">⚙ Difícil</option>
+              <option value="4">⚙ Expert</option>
+            </select>
+            <select id="filter-criterion-sel" class="filter-sel" style="display:none">
+              <option value="all">🎯 Todo critério</option>
+              <option value="most_wins">🎯 Mais vitórias</option>
+              <option value="fastest_win">🎯 Vitória mais rápida</option>
+            </select>
             <label class="filter-toggle" id="filter-available-wrap">
               <input type="checkbox" id="filter-available" checked>
               <span>Só com vagas</span>
             </label>
-            <input type="text" id="filter-search" placeholder="Buscar por nome ou criador..." class="filter-search">
+            <input type="text" id="filter-search" placeholder="🔍 Buscar..." class="filter-search">
           </div>
         </div>
 
@@ -640,24 +648,31 @@ async function init() {
 }
 
 // Filtros
-function bindChipFilter(containerId, key, onChange) {
-  document.getElementById(containerId).addEventListener('click', e => {
-    const chip = e.target.closest('.chip'); if (!chip) return;
-    document.querySelectorAll('#' + containerId + ' .chip').forEach(c => c.classList.remove('active'));
-    chip.classList.add('active');
-    filters[key] = chip.dataset.val;
-    if (onChange) onChange();
-    renderList();
-  });
-}
-bindChipFilter('filter-format', 'format', () => {
+document.getElementById('filter-format').addEventListener('click', e => {
+  const chip = e.target.closest('.chip'); if (!chip) return;
+  document.querySelectorAll('#filter-format .chip').forEach(c => c.classList.remove('active'));
+  chip.classList.add('active');
+  filters.format = chip.dataset.val;
   // Sub-filtros só fazem sentido em formato IA
   const showAi = filters.format === 'ai';
-  document.getElementById('filter-difficulty').style.display = showAi ? '' : 'none';
-  document.getElementById('filter-criterion').style.display = showAi ? '' : 'none';
+  document.getElementById('filter-difficulty-sel').style.display = showAi ? '' : 'none';
+  document.getElementById('filter-criterion-sel').style.display = showAi ? '' : 'none';
+  if (!showAi) {
+    filters.difficulty = 'all';
+    filters.criterion = 'all';
+    document.getElementById('filter-difficulty-sel').value = 'all';
+    document.getElementById('filter-criterion-sel').value = 'all';
+  }
+  renderList();
 });
-bindChipFilter('filter-difficulty', 'difficulty');
-bindChipFilter('filter-criterion', 'criterion');
+document.getElementById('filter-difficulty-sel').addEventListener('change', e => {
+  filters.difficulty = e.target.value;
+  renderList();
+});
+document.getElementById('filter-criterion-sel').addEventListener('change', e => {
+  filters.criterion = e.target.value;
+  renderList();
+});
 document.getElementById('filter-available').addEventListener('change', e => {
   filters.available = e.target.checked;
   renderList();
