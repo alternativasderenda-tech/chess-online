@@ -115,6 +115,33 @@ alter table tournaments enable row level security;
 alter table tournament_participants enable row level security;
 alter table tournament_matches enable row level security;
 
+-- Helpers security definer: evitam recursão de RLS quando uma policy
+-- de uma tabela precisa consultar a outra. Como rodam fora do contexto
+-- RLS do chamador, nao disparam o ciclo.
+create or replace function _trn_is_creator(p_tid uuid)
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists (select 1 from tournaments where id = p_tid and creator_id = auth.uid());
+$$;
+grant execute on function _trn_is_creator(uuid) to authenticated;
+
+create or replace function _trn_is_listed(p_tid uuid)
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1 from tournaments
+    where id = p_tid and paid = true and visibility in ('public', 'approval')
+  );
+$$;
+grant execute on function _trn_is_listed(uuid) to authenticated;
+
+create or replace function _trn_is_participant(p_tid uuid)
+returns boolean language sql stable security definer set search_path = public as $$
+  select exists (
+    select 1 from tournament_participants
+    where tournament_id = p_tid and user_id = auth.uid()
+  );
+$$;
+grant execute on function _trn_is_participant(uuid) to authenticated;
+
 -- Tournaments: logado vê pagos (público OU aprovação), próprio criador vê os seus,
 -- participante vê os que está. Modo 'link' fica oculto (só via share_token).
 drop policy if exists "tournaments visible" on tournaments;
@@ -124,10 +151,7 @@ create policy "tournaments visible" on tournaments for select
     auth.uid() is not null and (
       (paid = true and visibility in ('public', 'approval'))
       or creator_id = auth.uid()
-      or exists (
-        select 1 from tournament_participants p
-        where p.tournament_id = tournaments.id and p.user_id = auth.uid()
-      )
+      or _trn_is_participant(id)
       or is_admin()
     )
   );
@@ -139,12 +163,8 @@ create policy "participants visible" on tournament_participants for select
   using (
     auth.uid() is not null and (
       user_id = auth.uid()
-      or exists (
-        select 1 from tournaments t
-        where t.id = tournament_participants.tournament_id
-          and (t.creator_id = auth.uid()
-               or (t.paid = true and t.visibility in ('public', 'approval')))
-      )
+      or _trn_is_creator(tournament_id)
+      or _trn_is_listed(tournament_id)
       or is_admin()
     )
   );
@@ -154,18 +174,11 @@ drop policy if exists "matches visible" on tournament_matches;
 create policy "matches visible" on tournament_matches for select
   to authenticated
   using (
-    auth.uid() is not null and exists (
-      select 1 from tournaments t
-      where t.id = tournament_matches.tournament_id
-        and (
-          (t.paid = true and t.visibility in ('public', 'approval'))
-          or t.creator_id = auth.uid()
-          or exists (
-            select 1 from tournament_participants p
-            where p.tournament_id = t.id and p.user_id = auth.uid()
-          )
-          or is_admin()
-        )
+    auth.uid() is not null and (
+      _trn_is_listed(tournament_id)
+      or _trn_is_creator(tournament_id)
+      or _trn_is_participant(tournament_id)
+      or is_admin()
     )
   );
 
