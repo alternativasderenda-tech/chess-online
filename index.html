@@ -1102,6 +1102,53 @@
     width: min(520px, 72vh);
     height: min(520px, 72vh);
     cursor: pointer;
+    position: relative;
+  }
+
+  /* Marca d'agua diagonal no centro do tabuleiro — sutil, mas impossivel
+     de cortar sem destruir o board. Aparece em qualquer modo de jogo. */
+  #board::after {
+    content: '♚ xadrezonline.app';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(-22deg);
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(22px, 5vmin, 44px);
+    font-weight: 700;
+    color: #1a1a2e;
+    opacity: 0.07;
+    white-space: nowrap;
+    pointer-events: none;
+    z-index: 5;
+    letter-spacing: 1px;
+    text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+  }
+
+  /* Marca pequena no canto inferior-direito (logo abaixo do tabuleiro,
+     entre as labels das colunas a-h) */
+  #board::before {
+    content: '♚ xadrezonline.app';
+    position: absolute;
+    bottom: 2px;
+    right: 4px;
+    font-family: 'Playfair Display', serif;
+    font-size: 10px;
+    font-weight: 600;
+    color: var(--accent);
+    opacity: 0.4;
+    pointer-events: none;
+    z-index: 5;
+    letter-spacing: 0.3px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  }
+
+  /* Cinema mode: marca d'agua mais visivel pra quem grava replay */
+  body.cinema-mode #board::after { opacity: 0.10; }
+  body.cinema-mode #board::before {
+    opacity: 0.65;
+    font-size: 12px;
+    bottom: 4px;
   }
 
   .square {
@@ -2290,6 +2337,9 @@
       <button class="btn" onclick="downloadGame();" style="min-width:140px;" data-i18n="gameover.save">💾 Salvar Partida</button>
     </div>
     <div id="go-score-feedback" style="display:none;" class="score-feedback"></div>
+    <div style="margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.08); font-family: 'Playfair Display', serif; font-size: 12px; color: var(--accent); opacity: 0.7; letter-spacing: 0.5px;">
+      ♚ xadrezonline.app
+    </div>
   </div>
 </div>
 
