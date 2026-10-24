@@ -19,7 +19,7 @@ if [ "$AMB" = oficial ]; then
 fi
 timeout 30 aws sts get-caller-identity --profile $PERFIL --region $REGIAO >/dev/null \
   || { echo "Sessão AWS vencida: rode  aws login --profile $PERFIL --region $REGIAO"; exit 1; }
-REV=$(git rev-parse --short HEAD)$([ -n "$(git status --porcelain)" ] && echo -sujo)
+REV=$(git rev-parse --short HEAD)$([ -n "$(git status --porcelain)" ] && echo -sujo || true)
 TMP=$(mktemp -d)
 git ls-files --cached --others --exclude-standard | grep -v -E '^(servidor/|supabase/|supabase-.*\.sql$|vercel\.json$|\.gitignore$)' > "$TMP/lista"
 tar czf "$TMP/site.tar.gz" -T "$TMP/lista"
