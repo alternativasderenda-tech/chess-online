@@ -56,6 +56,7 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 
 | D-TRN-28 | **O organizador controla o compartilhamento** (pedido do dono, 24/10/2026): "inscritos podem compartilhar" (padrão: sim; no formulário e no painel); desligado, o código do convite só vai ao criador/admin e o botão some para os demais. "Gerar novo link de convite" (torneio privado) troca o código — o link antigo para de valer, inscritos continuam. O `share_token` saiu da leitura direta da tabela (privilégio por coluna) e de `list_my_tournaments` para quem não pode tê-lo; botão Compartilhar só com `can_share` (`get_tournament`). Em torneio público desligar só esconde o botão (a página é pública) | Quem entrou pelo convite já conhece o código (fica no endereço): sem trocar o código, "desligar" não fecharia o torneio. Vazamento pela API achado pelo agente da página e medido fechado (42501) |
 | D-TRN-29 | Compartilhar: no celular, a lista nativa (`navigator.share`); sem ela, WhatsApp/Telegram/X/Facebook/Copiar; texto conforme o momento (inscrições abertas, ranking valendo, em andamento, campeão). Pix vencido: a tela confere por ~2 min e confere de novo antes de gerar outro | Pagamento feito no último minuto não pode virar segundo Pix |
+| D-TRN-30 | Placares (`scores`) só são lidos pelo próprio jogador ou pelo admin (011); os rankings públicos saem de funções `SECURITY DEFINER` | A leitura aberta expunha `session_id`, `fingerprint` e os sinais do antitrapaça a qualquer visitante (TRN-SEG-05) |
 
 ### Pagamento
 
