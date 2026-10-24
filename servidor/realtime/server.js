@@ -70,8 +70,10 @@ const canais = new Map();   // topic → Set(ws)
 const enviar = (ws, m) => { if (ws.readyState === 1) ws.send(JSON.stringify(m)); };
 
 async function aoNotificar(msg) {
+  if (msg.channel === 'xadrez_conferir') { enfileirar(msg.payload); return; }
   let n;
   try { n = JSON.parse(msg.payload); } catch { return; }
+  if (n.t === 'moves' && n.g) juizTorneio(n.g);       // D-TRN-01: o servidor acompanha o jogo de torneio lance a lance
   const evento = TABELAS[n.t];
   if (!evento || n.op !== evento) return;
   const cache = new Map();   // claims (papel+sub) → linha
@@ -100,7 +102,7 @@ async function escutar() {
   const refazer = motivo => { if (refeito) return; refeito = true; console.error('[listen] reconectando:', motivo); c.end().catch(() => {}); setTimeout(escutar, 3000); };
   c.on('error', e => refazer(e.message));
   c.on('end', () => refazer('conexão encerrada'));
-  try { await c.connect(); await c.query('listen xadrez_rt'); console.log('escutando xadrez_rt'); }
+  try { await c.connect(); await c.query('listen xadrez_rt'); await c.query('listen xadrez_conferir'); console.log('escutando xadrez_rt e xadrez_conferir'); }
   catch (e) { refazer(e.message); }
 }
 
@@ -256,6 +258,85 @@ setInterval(() => {
     ws.ping();
   }
 }, 30000).unref();
+
+// ---------- torneios: juiz das partidas, conferência das vitórias contra a IA e rotina (D-TRN-01/02/04/12)
+const path = require('node:path');
+const { Worker } = require('node:worker_threads');
+const X = require('./motor/xadrez');
+
+// juiz: reproduz o jogo de torneio com o motor do site; lance ilegal perde; mate/afogamento/50 lances/material encerram
+const juizPendente = new Map();
+function juizTorneio(gameId) {
+  clearTimeout(juizPendente.get(gameId));
+  juizPendente.set(gameId, setTimeout(() => { juizPendente.delete(gameId); julgar(gameId).catch(e => console.error('[juiz]', gameId, e.message)); }, 250));
+}
+async function encerrarJogo(g, resultado, motivo) {
+  await pool.query('select xadrez_rt.encerrar_jogo($1, $2, $3)', [g, resultado, motivo]);
+  console.log('[juiz]', g, resultado, motivo);
+}
+async function julgar(gameId) {
+  const r = await pool.query('select xadrez_rt.jogo_torneio($1) j', [gameId]);
+  const d = r.rows[0]?.j;
+  if (!d || d.game.status !== 'active') return;
+  let e = X.inicial();
+  for (const l of d.lances) {
+    const prox = X.jogar(e, { from: l.from_sq, to: l.to_sq, promo: l.promotion || undefined });
+    if (!prox) return encerrarJogo(gameId, l.player_color === 'w' ? 'black_wins' : 'white_wins', 'lance_ilegal');
+    e = prox;
+  }
+  const f = X.fim(e);
+  if (!f) return;
+  if (f.tipo === 'mate') return encerrarJogo(gameId, f.vencedor === 'w' ? 'white_wins' : 'black_wins', 'xeque_mate');
+  return encerrarJogo(gameId, 'draw', f.tipo);
+}
+
+// conferência das vitórias contra a IA, uma por vez, numa thread separada
+const fila = new Set();
+let conferindo = false;
+let conferidor = null;
+function obterConferidor() {
+  if (!conferidor) {
+    conferidor = new Worker(path.join(__dirname, 'conferidor.js'));
+    conferidor.on('error', e => { console.error('[conferidor] thread caiu:', e.message); conferidor = null; });
+    conferidor.on('exit', () => { conferidor = null; });
+  }
+  return conferidor;
+}
+function enfileirar(id) { if (/^[0-9a-f-]{36}$/.test(String(id))) { fila.add(String(id)); proximoPlacar(); } }
+async function proximoPlacar() {
+  if (conferindo || !fila.size) return;
+  const id = fila.values().next().value;
+  fila.delete(id);
+  conferindo = true;
+  try {
+    const r = await pool.query('select xadrez_rt.placar_para_conferir($1) j', [id]);
+    const d = r.rows[0]?.j;
+    if (d) {
+      const w = obterConferidor();
+      const v = await new Promise((ok, falha) => {
+        const t = setTimeout(() => { w.terminate(); falha(new Error('conferência passou de 10 min')); }, 10 * 60_000);
+        w.once('message', m => { clearTimeout(t); ok(m); });
+        w.postMessage({ id, lances: d.lances, dificuldade: d.score.difficulty });
+      });
+      await pool.query('select xadrez_rt.veredito_placar($1, $2, $3, $4, $5)', [id, v.ok, v.motivo, v.segundos, v.aoVivo]);
+      console.log(`[conferidor] ${id} ${v.ok ? 'ok' : 'rejeitado (' + v.motivo + ')'} ${v.ms} ms${v.aoVivo ? '' : ' (não ao vivo)'}`);
+    }
+  } catch (e) { console.error('[conferidor]', id, e.message); }
+  conferindo = false;
+  setImmediate(proximoPlacar);
+}
+
+// rotina a cada minuto: W.O., tempo, início de chave, encerramento de ranking, Pix vencido + reconferências
+async function rotina() {
+  try {
+    const r = await pool.query('select xadrez_rt.tick() j');
+    if (Object.values(r.rows[0].j).some(v => v > 0)) console.log('[rotina]', JSON.stringify(r.rows[0].j));
+    for (const x of (await pool.query('select xadrez_rt.placares_pendentes() id')).rows) enfileirar(x.id);
+    for (const x of (await pool.query('select xadrez_rt.jogos_torneio_ativos() id')).rows) juizTorneio(x.id);
+  } catch (e) { console.error('[rotina]', e.message); }
+}
+setInterval(rotina, 60_000).unref();
+setTimeout(rotina, 5_000).unref();
 
 escutar();
 servidor.listen(PORTA, '127.0.0.1', () => console.log(`tempo real do xadrez em 127.0.0.1:${PORTA}`));

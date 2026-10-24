@@ -37,6 +37,11 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 | D-TRN-12 | Conferência de partida da IA numa **fila em segundo plano** no servidor; o placar fica "conferindo" até sair o veredito | Medido (PC local): conferir 1 lance da IA custa 8 ms (fácil) … ~2 s (expert) no meio-jogo; uma partida expert inteira, 1–2 min de CPU |
 | D-TRN-13 | O motor do servidor é o do site, EXTRAÍDO (`servidor/motor/extrair.js` → `motor-gerado.js`); `node servidor/motor/teste.js` falha se o site mudar e o servidor não | Mesmas regras dos dois lados. Medido: perft da posição inicial (20/400/8.902/197.281), Kiwipete (48/2.039/97.862) e posição 3 (14/191/2.812/43.238) batem — o gerador de lances do site está correto |
 
+| D-TRN-14 | Rankings globais (`ranking_wins`, `ranking_my_position`) contam só placar `normal`; "mais rápido" só com tempo ao vivo (`timed_live`; placares antigos, nulos, continuam) | Achado na leitura: as duas funções contavam TODO placar, inclusive `cheater` (migração 002) |
+| D-TRN-15 | Sala da partida: abrir marca presença; o jogo só é criado com os DOIS presentes. Prazo da rodada vale para COMEÇAR (cada lado ao menos 1 lance); jogo em andamento é decidido pelo relógio, nunca por W.O. | W.O. de partida em andamento punia quem estava jogando |
+| D-TRN-16 | Relógio do torneio pelos horários do servidor; o 1º lance de cada lado não consome tempo (como no Lichess); tempo esgotado = derrota, decidido pela rotina mesmo com os dois fora do site. Torneio de chaveamento sempre com relógio (5/10/15/30 min) e prazo de rodada ≥ 2×tempo + 30 min | Partida "sem tempo" podia ficar aberta para sempre |
+| D-TRN-17 | Tudo o que é interno fica no schema PRIVADO `xadrez_rt` (o PostgREST só expõe `public`); no `public`, função nova nasce executável por anon/authenticated (privilégio padrão herdado do Supabase) — cada RPC confere quem chama | Medido em `pg_default_acl`: `xadrez_owner` concede EXECUTE/ALL a anon e authenticated por padrão |
+
 ### Pagamento
 
 | ID | Decisão | Motivo |
@@ -45,7 +50,10 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 
 ## 3. Armadilhas de medição
 
-- (preencher a cada rodada)
+- **PostgREST guarda a lista de funções em cache:** função nova ou com assinatura nova dá "Could not find the function … in the schema cache" até `NOTIFY pgrst, 'reload schema'` (o `publicar-servidor.sh` faz). Custou 3 falhas falsas no 1º e2e.
+- **PL/pgSQL: `IF x <> CASE … THEN … END THEN`** corta a condição no 1º `THEN` → "syntax error at end of input". CASE dentro de IF vai entre parênteses.
+- **Saída do SSM com "→"** quebra o AWS CLI no Windows (charmap): exportar `PYTHONIOENCODING=utf-8 PYTHONUTF8=1` antes do `rodar.sh`.
+- **Teste e2e:** `servidor/testes/e2e-torneio.js` roda NO servidor contra o banco de teste (aborta em outro banco), com jogadores fictícios `@teste.invalid` apagados no fim. 1ª rodada completa: 17/17.
 
 ## 4. Aberto de propósito
 
