@@ -820,6 +820,7 @@ const STRINGS = {
     'card.convite': '🔒 Convite',
     'card.papelOrg': 'Você organiza',
     'card.papelJoga': 'Você joga',
+    'card.papelJogou': 'Você participou',
     'card.por': 'organizado por {nome}',
 
     // página do torneio
@@ -1364,6 +1365,7 @@ const STRINGS = {
     'card.convite': '🔒 Invite',
     'card.papelOrg': 'Organizer',
     'card.papelJoga': 'Playing',
+    'card.papelJogou': 'Joined',
     'card.por': 'organized by {nome}',
 
     't.carregando': 'Loading tournament…',
@@ -2242,7 +2244,7 @@ function cartao(t, meu) {
   }
   const destaque = meu && ((t.paid === false && t.status === 'open') || (E.alertas[t.id] && E.alertas[t.id] !== tr('alerta.eliminado')));
   return `<article class="cartao${destaque ? ' destaque' : ''}" data-acao="abrir" data-id="${t.id}" tabindex="0" role="link" aria-label="${esc(t.name)}">
-    <div class="cartao-topo">${seloFormato(t)}<span class="selo ${s.cls}">${s.txt}</span>${t.visibility === 'link' ? `<span class="selo conv">${tr('card.convite')}</span>` : ''}${meu ? `<span class="selo papel">${t.role === 'creator' ? tr('card.papelOrg') : tr('card.papelJoga')}</span>` : ''}</div>
+    <div class="cartao-topo">${seloFormato(t)}<span class="selo ${s.cls}">${s.txt}</span>${t.visibility === 'link' ? `<span class="selo conv">${tr('card.convite')}</span>` : ''}${meu ? `<span class="selo papel">${t.role === 'creator' ? tr('card.papelOrg') : (t.status === 'cancelled' || t.status === 'finished' ? tr('card.papelJogou') : tr('card.papelJoga'))}</span>` : ''}</div>
     <h3>${esc(t.name)}</h3>
     <div class="por">${tr('card.por', { nome: esc(t.creator_name) })}</div>
     ${t.prize_description ? `<div class="premio">🏆 ${esc(t.prize_description)}</div>` : ''}
@@ -2665,8 +2667,9 @@ function inicioReal(d) {
 // ---------------------------------------------------------------- compartilhar (pedido do dono, D-TRN-27)
 // Link curto com prévia gerada no servidor: /t/<id> para torneio listado; /t/<código> para o privado (por link).
 function linkCompartilhar(t) {
-  if (t.visibility === 'link') return t.share_token ? `${location.origin}/t/${encodeURIComponent(t.share_token)}` : null;
-  return `${location.origin}/t/${t.id}`;
+  const pre = location.origin + (EN ? '/en/t/' : '/t/');   // EN-01: link curto em inglês abre a página em inglês
+  if (t.visibility === 'link') return t.share_token ? pre + encodeURIComponent(t.share_token) : null;
+  return pre + t.id;
 }
 // o privado só para quem tem o código (o servidor só devolve share_token para organizador/inscrito/admin/quem tem o link)
 // D-TRN-28: o botão só aparece quando o servidor diz que ESTE usuário pode compartilhar (can_share)

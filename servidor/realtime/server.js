@@ -220,24 +220,41 @@ const escHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '
 const dataBr = d => d ? new Date(d).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit' })
   + ' às ' + new Date(d).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' }) : '';
 async function compartilhar(req, res) {
-  const codigo = req.url.split('?')[0].split('/')[2];
+  // /t/<código> (português) ou /en/t/<código> (inglês, EN-01): prévia, textos e destino no idioma do link
+  const partes = req.url.split('?')[0].split('/');
+  const en = partes[1] === 'en';
+  const codigo = en ? partes[3] : partes[2];
   const r = await pool.query('select xadrez_rt.torneio_para_compartilhar($1) j', [codigo]);
   const t = r.rows[0]?.j;
   const host = process.env.PUBLIC_URL || 'https://xadrezonline.app';   // nunca do cabeçalho Host (manipulável)
+  const pagina = host + (en ? '/en/tournaments' : '/torneios');
   // código desconhecido (inválido, ou trocado por "Gerar novo link"): a página do torneio explica — e reconhece o inscrito
-  const destino = !t ? `${host}/torneios?t=${encodeURIComponent(codigo)}` : t.token ? `${host}/torneios?t=${encodeURIComponent(t.token)}` : `${host}/torneios?id=${t.id}`;
-  let titulo = 'Torneios de xadrez online', desc = 'Crie ou entre num torneio de xadrez e jogue com a galera.';
+  const destino = !t ? `${pagina}?t=${encodeURIComponent(codigo)}` : t.token ? `${pagina}?t=${encodeURIComponent(t.token)}` : `${pagina}?id=${t.id}`;
+  const data = d => en ? (d ? new Date(d).toLocaleString('en-US', { timeZone: 'America/Sao_Paulo', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }) + ' (Brasília)' : '') : dataBr(d);
+  let titulo = en ? 'Online chess tournaments' : 'Torneios de xadrez online';
+  let desc = en ? 'Create or join a chess tournament and play with friends.' : 'Crie ou entre num torneio de xadrez e jogue com a galera.';
   if (t) {
-    const fmt = t.formato === 'ai' ? 'Ranking contra o computador' : 'Eliminatória entre jogadores';
-    if (t.status === 'finished' && t.campeao) { titulo = `🏆 ${t.campeao} venceu o torneio ${t.nome}`; desc = `${fmt} · prêmio: ${t.premio}`; }
-    else if (t.status === 'active' && t.formato === 'ai') { titulo = `Ranking valendo: ${t.nome}`; desc = `${fmt} · inscrições até ${dataBr(t.fim)} · ${t.inscritos} jogadores · prêmio: ${t.premio}`; }
-    else if (t.status === 'active') { titulo = `Torneio ${t.nome} — em andamento`; desc = `${fmt} · ${t.inscritos} jogadores · prêmio: ${t.premio}`; }
-    else if (t.status === 'cancelled') { titulo = `Torneio ${t.nome} (cancelado)`; }
-    else { titulo = `Inscrições abertas: ${t.nome}`; desc = `${fmt} · começa ${dataBr(t.inicio)} · ${t.inscritos}/${t.vagas} vagas · prêmio: ${t.premio}`; }
+    const fmt = t.formato === 'ai' ? (en ? 'Leaderboard vs. the computer' : 'Ranking contra o computador') : (en ? 'Knockout between players' : 'Eliminatória entre jogadores');
+    const premio = (en ? 'prize: ' : 'prêmio: ') + t.premio;
+    if (t.status === 'finished' && t.campeao) {
+      titulo = en ? `🏆 ${t.campeao} won ${t.nome}` : `🏆 ${t.campeao} venceu o torneio ${t.nome}`; desc = `${fmt} · ${premio}`;
+    } else if (t.status === 'active' && t.formato === 'ai') {
+      titulo = en ? `Leaderboard live: ${t.nome}` : `Ranking valendo: ${t.nome}`;
+      desc = en ? `${fmt} · join until ${data(t.fim)} · ${t.inscritos} players · ${premio}` : `${fmt} · inscrições até ${data(t.fim)} · ${t.inscritos} jogadores · ${premio}`;
+    } else if (t.status === 'active') {
+      titulo = en ? `${t.nome} — in progress` : `Torneio ${t.nome} — em andamento`;
+      desc = en ? `${fmt} · ${t.inscritos} players · ${premio}` : `${fmt} · ${t.inscritos} jogadores · ${premio}`;
+    } else if (t.status === 'cancelled') {
+      titulo = en ? `${t.nome} (cancelled)` : `Torneio ${t.nome} (cancelado)`;
+    } else {
+      titulo = en ? `Registration open: ${t.nome}` : `Inscrições abertas: ${t.nome}`;
+      desc = en ? `${fmt} · starts ${data(t.inicio)} · ${t.inscritos}/${t.vagas} spots · ${premio}` : `${fmt} · começa ${data(t.inicio)} · ${t.inscritos}/${t.vagas} vagas · ${premio}`;
+    }
   }
-  const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${escHtml(titulo)}</title>
+  const html = `<!doctype html><html lang="${en ? 'en' : 'pt-BR'}"><head><meta charset="utf-8"><title>${escHtml(titulo)}</title>
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta property="og:type" content="website"><meta property="og:site_name" content="Xadrez Online">
+<meta property="og:locale" content="${en ? 'en_US' : 'pt_BR'}">
 <meta property="og:title" content="${escHtml(titulo)}"><meta property="og:description" content="${escHtml(desc)}">
 <meta property="og:url" content="${escHtml(host + req.url.split('?')[0])}"><meta property="og:image" content="${host}/icon-512.png">
 <meta property="og:image:width" content="512"><meta property="og:image:height" content="512">
@@ -250,7 +267,7 @@ async function compartilhar(req, res) {
 }
 const servidor = http.createServer(async (req, res) => {
   if (pix && await pix.rota(req, res)) return;
-  if (req.method === 'GET' && /^\/t\/[A-Za-z0-9-]{12,40}\/?$/.test(req.url.split('?')[0])) { compartilhar(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
+  if (req.method === 'GET' && /^\/(en\/)?t\/[A-Za-z0-9-]{12,40}\/?$/.test(req.url.split('?')[0])) { compartilhar(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
   if (req.url === '/xrt/saude') { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ ok: true, conexoes: wss.clients.size })); return; }
   if (req.url.split('?')[0] === '/functions/v1/ga-stats' && req.method === 'POST') { gaStats(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
   res.writeHead(404); res.end();

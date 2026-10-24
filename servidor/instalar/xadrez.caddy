@@ -20,6 +20,9 @@ xadrezonline.app {
 	handle /t/* {
 		reverse_proxy 127.0.0.1:3202
 	}
+	handle /en/t/* {
+		reverse_proxy 127.0.0.1:3202
+	}
 	handle {
 		root * /opt/xadrez/site
 		# /en/tournaments = a página de torneios em inglês (mesmo arquivo; o idioma sai da URL)
@@ -57,6 +60,9 @@ novo.xadrezonline.app {
 		reverse_proxy 127.0.0.1:3212
 	}
 	handle /t/* {
+		reverse_proxy 127.0.0.1:3212
+	}
+	handle /en/t/* {
 		reverse_proxy 127.0.0.1:3212
 	}
 	handle {

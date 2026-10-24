@@ -5302,7 +5302,10 @@ function showTournamentBanner() {
   const criterionLabel = t.criterion === 'fastest_win' ? tr('trn.ctx.fastest') : tr('trn.ctx.wins');
   const diffLabel = tr('settings.diff.' + t.difficulty);
   const loc = currentLang === 'en' ? 'en-US' : 'pt-BR';
-  const fmtData = iso => new Date(iso).toLocaleString(loc, { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+  // EN-02: no inglês, o mesmo formato da página de torneios ("Tue, Oct 27, 7:45 PM")
+  const fmtData = iso => new Date(iso).toLocaleString(loc, loc === 'en-US'
+    ? { weekday: 'short', month: 'short', day: 'numeric', hour: 'numeric', minute: '2-digit' }
+    : { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
   const quando = (t.starts_at && Date.parse(t.starts_at) > Date.now())
     ? tr('trn.ctx.starts', { when: fmtData(t.starts_at) })
     : (t.ends_at ? tr('trn.ctx.ends', { when: fmtData(t.ends_at) }) : '');

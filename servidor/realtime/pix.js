@@ -190,6 +190,13 @@ module.exports = function criarPix({ pool, verificar }) {
     try { await umaRodada(); } finally { rodando = false; }
   }
   async function umaRodada() {
+    // D-PAG-13: Pix pendente de torneio cancelado (ou já liberado por outro caminho) é cancelado no MP — não fica pagável
+    for (const x of (await pool.query('select xadrez_rt.pix_para_cancelar() id')).rows) {
+      try { await mp('POST', '/v1/orders/' + encodeURIComponent(x.id) + '/cancel', undefined, 'cancelar-' + x.id); }
+      catch (e) { console.error('[pix] cancelar sobra', x.id, e.message); }
+      try { console.log('[pix] sobra cancelada', x.id, await confirmarPeloProvedor(x.id)); }
+      catch (e) { console.error('[pix] sobra', x.id, e.message); }
+    }
     for (const x of (await pool.query('select xadrez_rt.pix_pendentes() id')).rows) {
       if (String(x.id).startsWith('sim-')) continue;
       try { const r = await confirmarPeloProvedor(x.id); if (r !== 'sem_mudanca') console.log('[pix] conferência', x.id, r); }

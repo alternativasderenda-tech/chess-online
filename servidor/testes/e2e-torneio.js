@@ -362,6 +362,9 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
     const nada = await (await fetch(RT + '/t/' + '0'.repeat(16))).text();
     // R2-UX-01: código desconhecido (inválido ou trocado) abre a página do torneio pelo código, que explica o que houve
     assert.ok(nada.includes('/torneios?t=' + '0'.repeat(16)), 'código desconhecido deveria abrir /torneios?t=<código>');
+    // D-TRN-35: /en/t/ dá prévia em inglês e leva à página em inglês
+    const en = await (await fetch(RT + '/en/t/' + T7.share_token)).text();
+    assert.ok(en.includes('/en/tournaments?t=' + T7.share_token) && en.includes('lang="en"'), '/en/t/ deveria ir para /en/tournaments');
   });
 
   // ---------- limpeza: some tudo que o teste criou (partida ↔ jogo se referenciam: desfazer o vínculo antes)

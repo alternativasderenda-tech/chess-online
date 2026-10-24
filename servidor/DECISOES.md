@@ -79,6 +79,8 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 | D-PAG-10 | Aviso de pagamento desconhecido só é consultado se vier **assinado** — vira `pix_orfao` (uma vez por id); relógio da tela do Pix acertado pelo do servidor | TRN-PIX-15/20 |
 | D-PAG-11 | Pix pela **API de Orders** (`/v1/orders`: criar com `expiration_time` `PT<n>M`, consultar, `/cancel`, `/refund` com corpo vazio); aviso `type=order` configurado no painel (sem `notification_url`); o estado do pedido é traduzido para o vocabulário de `pix_confirmar` (`processed`→approved, `canceled`/`failed`+`expired`→expired, `refunded`, `charged_back`); estorno sempre conferido com nova consulta | O painel do MP marca a API de Payments como "será descontinuada em breve" (24/10/2026) |
 | D-PAG-12 | Chave de idempotência da cobrança = torneio + nº da cobrança (013); valor conferido só pelo `paid_amount` do pagamento (aprovado sem ele → `pix_valor_divergente`, nunca libera às cegas); assinatura do aviso sem `request-id` quando o MP não o manda; quem pagou tarde vê no torneio que o valor volta | TRN-PIX-22/23/26/27 |
+| D-PAG-13 | Pix pendente de torneio cancelado ou já liberado é cancelado no MP pela rotina (014, `pix_para_cancelar`) | Ficava pagável até vencer; pago, viraria estorno à toa |
+| D-TRN-35 | Torneios bilíngues: `/en/tournaments` serve o mesmo `torneios.html` (idioma pela URL) e `/en/t/<código>` dá prévia e destino em inglês; termos e privacidade em inglês com Pix/torneios | Pedido do dono: "vms ver a audiência"; Pix continua o único meio (um estrangeiro pode ter conta no MP) |
 
 ## 3. Armadilhas de medição
 
