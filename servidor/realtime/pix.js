@@ -34,7 +34,14 @@ async function mp(metodo, caminho, corpo, idem, extras) {
     signal: AbortSignal.timeout(15000),
   });
   const j = await r.json().catch(() => ({}));
-  if (!r.ok) throw new Error(`Mercado Pago ${r.status}: ${(j && (j.message || j.error)) || 'erro'}`);
+  if (!r.ok) {
+    // API de Orders: erros em errors[0].code/message (a de Payments usava message/error) — TRN-PIX-29
+    const e0 = (j && Array.isArray(j.errors) && j.errors[0]) || {};
+    const codigo = e0.code || (j && j.error) || '';
+    const err = new Error(`Mercado Pago ${r.status}${codigo ? ' ' + codigo : ''}: ${e0.message || (j && j.message) || 'erro'}`);
+    err.status = r.status; err.codigo = codigo;
+    throw err;
+  }
   return j;
 }
 
@@ -201,8 +208,8 @@ module.exports = function criarPix({ pool, verificar }) {
       }
       catch (e) {
         console.error('[pix] estorno', x.id, e.message);
-        // TRN-PIX-24: 409 = já existe estorno em andamento para o pedido — não é falha
-        if (/Mercado Pago 409/.test(e.message)) { await pool.query('select xadrez_rt.pix_estorno_em_andamento($1)', [x.id]).catch(() => {}); continue; }
+        // TRN-PIX-24/29: só "estorno já em andamento" não é falha; outro 409 (ex.: cannot_refund_order) conta tentativa
+        if (e.status === 409 && /already_in_process|in_process/i.test(e.codigo || '')) { await pool.query('select xadrez_rt.pix_estorno_em_andamento($1)', [x.id]).catch(() => {}); continue; }
         await pool.query('select xadrez_rt.pix_estorno_falhou($1, $2)', [x.id, e.message]).catch(() => {});
       }
     }
