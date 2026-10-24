@@ -1,11 +1,11 @@
 'use strict';
 /**
- * Pix automático pelo Mercado Pago (D-PAG-01). Rotas (atrás do Caddy):
+ * Pix automático pelo Mercado Pago, API de Orders (D-PAG-01/11 — a API de Payments está sendo descontinuada). Rotas:
  *   POST /functions/v1/pix-cobranca   { tournament_id }   → cria ou reaproveita a cobrança (só o criador ou admin)
  *   POST /pagamentos/mp                                    → webhook do Mercado Pago (assinatura x-signature conferida)
  *   POST /functions/v1/pix-simular    { tournament_id }   → SÓ no ambiente de teste sem credencial: simula o pagamento
- * O webhook nunca é tomado como verdade: o servidor consulta GET /v1/payments/{id} e só libera com status `approved` e o
- * valor exato (xadrez_rt.pix_confirmar). A rotina reconsulta as cobranças pendentes (webhook perdido) e pede o estorno
+ * O webhook nunca é tomado como verdade: o servidor consulta GET /v1/orders/{id} e só libera com o pedido `processed`
+ * e o valor exato (xadrez_rt.pix_confirmar, que fala a língua antiga: approved/cancelled/expired/refunded/charged_back). A rotina reconsulta as cobranças pendentes (webhook perdido) e pede o estorno
  * de torneio pago cancelado antes de começar.
  * Ambiente: MP_ACCESS_TOKEN, MP_WEBHOOK_SECRET, PUBLIC_URL, AMBIENTE ('teste' | 'oficial').
  */
@@ -14,7 +14,6 @@ const crypto = require('node:crypto');
 const MP = 'https://api.mercadopago.com';
 const TOKEN = process.env.MP_ACCESS_TOKEN || '';
 const SEGREDO_WEBHOOK = process.env.MP_WEBHOOK_SECRET || '';
-const PUBLICO = process.env.PUBLIC_URL || '';
 const SIMULADO = !TOKEN && process.env.AMBIENTE === 'teste';
 
 function corpoJson(req, limite = 8 * 1024) {
@@ -65,11 +64,27 @@ function assinaturaValida(req, dataId) {
   return esperado.length === partes.v1.length && crypto.timingSafeEqual(Buffer.from(esperado), Buffer.from(partes.v1));
 }
 
+/** status do pedido (Orders) → o vocabulário de pix_confirmar. Pedido sem pagamento ainda (action_required, created,
+ *  processing) → 'pending' (sem mudança). Valor pago: o do pagamento Pix do pedido. */
+function situacaoDoPedido(o) {
+  const pg = (o.transactions && o.transactions.payments && o.transactions.payments[0]) || {};
+  const st = o.status, det = o.status_detail;
+  let status = 'pending';
+  if (st === 'processed') status = 'approved';                         // accredited ou partially_refunded
+  else if (st === 'refunded') status = 'refunded';
+  else if (st === 'charged_back') status = 'charged_back';
+  else if (st === 'canceled') status = det === 'expired' ? 'expired' : 'cancelled';
+  else if (st === 'failed') status = det === 'expired' ? 'expired' : 'rejected';
+  const valor = Number(pg.paid_amount ?? pg.amount ?? o.total_paid_amount ?? o.total_amount);
+  return { status, valor, pg };
+}
+
 module.exports = function criarPix({ pool, verificar }) {
   async function confirmarPeloProvedor(id) {
-    const p = await mp('GET', '/v1/payments/' + encodeURIComponent(id));
+    const o = await mp('GET', '/v1/orders/' + encodeURIComponent(id));
+    const { status, valor } = situacaoDoPedido(o);
     const r = await pool.query('select xadrez_rt.pix_confirmar($1, $2, $3, $4) r',
-      [String(p.id), p.status, p.transaction_amount, JSON.stringify({ status: p.status, status_detail: p.status_detail, date_approved: p.date_approved, valor: p.transaction_amount, ref: p.external_reference })]);
+      [String(o.id), status, valor, JSON.stringify({ status: o.status, status_detail: o.status_detail, valor, ref: o.external_reference, atualizado: o.last_updated_date })]);
     return r.rows[0].r;
   }
 
@@ -93,7 +108,7 @@ module.exports = function criarPix({ pool, verificar }) {
     // segundo pagamento vira "a mais" e é estornado pela rotina)
     for (const ant of prep.anteriores || []) {
       if (String(ant).startsWith('sim-') || !TOKEN) continue;
-      try { await mp('PUT', '/v1/payments/' + encodeURIComponent(ant), { status: 'cancelled' }); await confirmarPeloProvedor(ant); }
+      try { await mp('POST', '/v1/orders/' + encodeURIComponent(ant) + '/cancel', undefined, 'cancelar-' + ant); await confirmarPeloProvedor(ant); }
       catch (e) { console.error('[pix] cancelar anterior', ant, e.message); }
     }
     let expiraEm = expira;
@@ -102,14 +117,18 @@ module.exports = function criarPix({ pool, verificar }) {
       qr = '00020126SIMULADO-AMBIENTE-DE-TESTE-' + id.slice(4, 12);
       qr64 = null; bruto = { simulado: true };
     } else if (TOKEN) {
-      const p = await mp('POST', '/v1/payments', {
-        transaction_amount: valor, description: `Torneio de xadrez: ${String(prep.nome).slice(0, 60)}`, payment_method_id: 'pix',
-        payer: { email: prep.email }, date_of_expiration: dataMp(expira), external_reference: tid,
-        notification_url: PUBLICO ? PUBLICO + '/pagamentos/mp' : undefined,
+      // o aviso vai para a URL configurada no painel do MP (Webhooks › Order); a validade é uma duração ISO 8601
+      const minutos = Math.max(30, Number(prep.validade_min || 30));
+      const o = await mp('POST', '/v1/orders', {
+        type: 'online', processing_mode: 'automatic', external_reference: tid,
+        total_amount: valor.toFixed(2), payer: { email: prep.email },
+        transactions: { payments: [{ amount: valor.toFixed(2), payment_method: { id: 'pix', type: 'bank_transfer' }, expiration_time: `PT${minutos}M` }] },
       }, 'trn-' + tid + '-' + Math.floor(Date.now() / 600_000));
-      const td = (p.point_of_interaction && p.point_of_interaction.transaction_data) || {};
-      id = String(p.id); qr = td.qr_code; qr64 = td.qr_code_base64; bruto = { status: p.status, id: p.id };
-      if (p.date_of_expiration && !Number.isNaN(Date.parse(p.date_of_expiration))) expiraEm = new Date(p.date_of_expiration);
+      const pm = (o.transactions && o.transactions.payments && o.transactions.payments[0] && o.transactions.payments[0].payment_method) || {};
+      id = String(o.id); qr = pm.qr_code; qr64 = pm.qr_code_base64; bruto = { status: o.status, status_detail: o.status_detail, id: o.id };
+      expiraEm = new Date(Date.now() + minutos * 60_000);
+      const venc = o.transactions.payments[0].date_of_expiration || o.transactions.payments[0].expiration_date;
+      if (venc && !Number.isNaN(Date.parse(venc))) expiraEm = new Date(venc);
     } else {
       return responder(res, 503, { error: 'Pix indisponível no momento' });
     }
@@ -129,7 +148,7 @@ module.exports = function criarPix({ pool, verificar }) {
     const tipo = u.searchParams.get('type') || u.searchParams.get('topic') || corpo.type || corpo.topic || '';
     const assinado = assinaturaValida(req, dataId);
     responder(res, 200, { ok: true });
-    if (!/payment/.test(tipo) || !/^\d{1,20}$/.test(dataId)) return;
+    if (!/order|payment/.test(tipo) || !/^[A-Za-z0-9]{1,40}$/.test(dataId)) return;
     if (Date.now() - (ultimaConsulta.get(dataId) || 0) < 10_000) return;
     ultimaConsulta.set(dataId, Date.now());
     if (ultimaConsulta.size > 5000) ultimaConsulta.delete(ultimaConsulta.keys().next().value);
@@ -170,10 +189,11 @@ module.exports = function criarPix({ pool, verificar }) {
       try {
         // estorno pode já ter acontecido (em andamento que concluiu, ou devolvido pelo painel do MP com o aviso perdido)
         if ((await confirmarPeloProvedor(x.id)) === 'estornado') { console.log('[pix] estorno já feito', x.id); continue; }
-        // TRN-PIX-19: sem o cabeçalho, o estorno em contingência do Pix volta como 400; com ele, volta `in_process`
-        const r = await mp('POST', `/v1/payments/${x.id}/refunds`, {}, 'estorno-' + x.id, { 'X-Render-In-Process-Refunds': 'true' });
-        if (r && r.status === 'in_process') { await pool.query('select xadrez_rt.pix_estorno_em_andamento($1)', [x.id]); console.log('[pix] estorno em andamento', x.id); continue; }
-        await pool.query('select xadrez_rt.pix_estornado($1)', [x.id]); console.log('[pix] estorno', x.id);
+        // estorno total do pedido: corpo vazio. A resposta não é tomada como verdade — reconsulta o pedido: `refunded`
+        // é estorno feito; qualquer outra coisa é estorno aceito ainda em andamento (Pix em contingência, banco lento)
+        await mp('POST', `/v1/orders/${encodeURIComponent(x.id)}/refund`, undefined, 'estorno-' + x.id);
+        if ((await confirmarPeloProvedor(x.id)) === 'estornado') { console.log('[pix] estorno', x.id); continue; }
+        await pool.query('select xadrez_rt.pix_estorno_em_andamento($1)', [x.id]); console.log('[pix] estorno em andamento', x.id);
       }
       catch (e) { console.error('[pix] estorno', x.id, e.message); await pool.query('select xadrez_rt.pix_estorno_falhou($1, $2)', [x.id, e.message]).catch(() => {}); }
     }

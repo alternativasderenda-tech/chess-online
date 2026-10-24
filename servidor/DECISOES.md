@@ -76,6 +76,7 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 | D-PAG-08 | Reconsulta só Pix `pendente` (o MP não paga cancelado/expirado): todo minuto na validade, depois 5 min / 30 min / 2 h até 3 dias; a rotina do Pix não roda por cima de si mesma | TRN-PIX-17: ~72 mil consultas inúteis/dia e tentativas de estorno contadas em dobro |
 | D-PAG-09 | Estorno: confere antes (pode já ter sido feito), manda `X-Render-In-Process-Refunds`, `in_process` espera 30 min sem contar tentativa, falha espera 1/5/15/60 min; admin vê o id do Pix e o "pago após confirmação manual" | TRN-PIX-18/19 |
 | D-PAG-10 | Aviso de pagamento desconhecido só é consultado se vier **assinado** — vira `pix_orfao` (uma vez por id); relógio da tela do Pix acertado pelo do servidor | TRN-PIX-15/20 |
+| D-PAG-11 | Pix pela **API de Orders** (`/v1/orders`: criar com `expiration_time` `PT<n>M`, consultar, `/cancel`, `/refund` com corpo vazio); aviso `type=order` configurado no painel (sem `notification_url`); o estado do pedido é traduzido para o vocabulário de `pix_confirmar` (`processed`→approved, `canceled`/`failed`+`expired`→expired, `refunded`, `charged_back`); estorno sempre conferido com nova consulta | O painel do MP marca a API de Payments como "será descontinuada em breve" (24/10/2026) |
 
 ## 3. Armadilhas de medição
 
