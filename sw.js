@@ -1,5 +1,5 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v13';
+const CACHE_NAME = 'xadrez-v14';
 const ASSETS = [
   '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
   '/privacidade', '/termos', '/torneios',
@@ -38,6 +38,8 @@ self.addEventListener('fetch', e => {
   const req = e.request;
   // Cache.put() so' aceita GET. POST (RPC do Supabase) vai direto pra rede.
   if (req.method !== 'GET') return;
+  // API, login e tempo real agora ficam no mesmo domínio: nunca passam pelo cache
+  if (/^\/(rest|auth|functions)\/|^\/xrt/.test(new URL(req.url).pathname)) return;
   e.respondWith(
     fetch(req).then(resp => {
       // So' cacheia respostas OK do proprio dominio (nao cacheia ads,

@@ -6,6 +6,7 @@
 
 <!-- Supabase (auth + ranking) -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
+<script src="/rt.js"></script>
 
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-EEK1343CPW"></script>
@@ -2611,8 +2612,8 @@ function showConfirm(message, opts) {
 
 // ======================== SUPABASE / AUTH / RANKING ========================
 
-const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrZ2NseWxkYmJnYmZqZ3lvZWVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MDkyNTgsImV4cCI6MjA5MzE4NTI1OH0.Pk5PEc9dbWBc4amjGa4AZgsNTyvg2728ZQwhxZOY4-E';
+const SUPABASE_URL = location.origin;
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ4YWRyZXoiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc5MjgyMTA0NiwiZXhwIjoyMTA4MTgxMDQ2fQ.BsLt9X0ERUjXacUvWvOjOFG5-eKiA37HurrJASmqXwc';
 
 let supa = null;
 let currentUser = null;
@@ -2622,7 +2623,7 @@ function initSupabase() {
     console.warn('Supabase JS não carregou.');
     return;
   }
-  supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+  supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON); xadrezRealtime(supa, SUPABASE_ANON);
 
   supa.auth.getSession().then(({ data: { session } }) => {
     onAuthChange(session ? session.user : null);

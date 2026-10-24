@@ -322,8 +322,8 @@
 </div>
 
 <script>
-const SUPABASE_URL = 'https://qkgclyldbbgbfjgyoeej.supabase.co';
-const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InFrZ2NseWxkYmJnYmZqZ3lvZWVqIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzc2MDkyNTgsImV4cCI6MjA5MzE4NTI1OH0.Pk5PEc9dbWBc4amjGa4AZgsNTyvg2728ZQwhxZOY4-E';
+const SUPABASE_URL = location.origin;
+const SUPABASE_ANON = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJ4YWRyZXoiLCJyb2xlIjoiYW5vbiIsImlhdCI6MTc5MjgyMTA0NiwiZXhwIjoyMTA4MTgxMDQ2fQ.BsLt9X0ERUjXacUvWvOjOFG5-eKiA37HurrJASmqXwc';
 const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
 
 let currentUser = null;

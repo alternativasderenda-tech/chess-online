@@ -1,0 +1,32 @@
+# Xadrez online (servidor próprio; antes Vercel + Supabase). Incluído no fim do /etc/caddy/Caddyfile — não muda o
+# bloco do energiawatt.com. API (PostgREST), login (GoTrue) e tempo real ficam só em 127.0.0.1, atrás daqui.
+xadrezonline.app, novo.xadrezonline.app {
+	encode zstd gzip
+	handle_path /rest/v1/* {
+		reverse_proxy 127.0.0.1:3201
+	}
+	handle_path /auth/v1/* {
+		reverse_proxy 127.0.0.1:9999
+	}
+	handle /xrt* {
+		reverse_proxy 127.0.0.1:3202
+	}
+	handle /functions/v1/* {
+		respond "Indisponivel" 503
+	}
+	handle {
+		root * /opt/xadrez/site
+		rewrite /en /
+		try_files {path} {path}.html {path}/index.html
+		header Cache-Control "public, max-age=3600"
+		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
+		header @img Cache-Control "public, max-age=86400, immutable"
+		@semcache path / /sw.js /privacidade /termos /torneios *.html
+		header @semcache Cache-Control "public, max-age=0, must-revalidate"
+		file_server
+	}
+}
+
+www.xadrezonline.app {
+	redir https://xadrezonline.app{uri} permanent
+}
