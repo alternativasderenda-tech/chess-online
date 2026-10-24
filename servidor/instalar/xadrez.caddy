@@ -22,12 +22,14 @@ xadrezonline.app {
 	}
 	handle {
 		root * /opt/xadrez/site
+		# /en/tournaments = a página de torneios em inglês (mesmo arquivo; o idioma sai da URL)
+		rewrite /en/tournaments /torneios.html
 		rewrite /en /
 		try_files {path} {path}.html {path}/index.html
 		header Cache-Control "public, max-age=3600"
 		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
 		header @img Cache-Control "public, max-age=86400, immutable"
-		@semcache path / /sw.js /config.js /privacidade /termos /torneios *.html
+		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
 		header @semcache Cache-Control "public, max-age=0, must-revalidate"
 		file_server
 	}
@@ -58,12 +60,14 @@ novo.xadrezonline.app {
 	}
 	handle {
 		root * /opt/xadrez/site-teste
+		# /en/tournaments = a página de torneios em inglês (mesmo arquivo; o idioma sai da URL)
+		rewrite /en/tournaments /torneios.html
 		rewrite /en /
 		try_files {path} {path}.html {path}/index.html
 		header Cache-Control "public, max-age=3600"
 		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
 		header @img Cache-Control "public, max-age=86400, immutable"
-		@semcache path / /sw.js /config.js /privacidade /termos /torneios *.html
+		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
 		header @semcache Cache-Control "public, max-age=0, must-revalidate"
 		file_server
 	}

@@ -254,6 +254,9 @@
       'trn.preparingTiebreak': 'Preparando o desempate…',
       'trn.tiebreakNotFound': 'Não encontrei o jogo de desempate. Abra a partida de novo pela página de torneios.',
       'trn.backToTournaments': '⚔ Ver torneios',
+      'trn.pageHref': '/torneios',
+      'trn.navLabel': '⚔ Torneios',
+      'trn.navNew': 'NOVO',
       'trn.reason.xeque_mate': 'xeque-mate',
       'trn.reason.lance_ilegal': 'lance ilegal',
       'trn.reason.tempo': 'tempo esgotado',
@@ -642,6 +645,9 @@
       'trn.preparingTiebreak': 'Preparing the tiebreak…',
       'trn.tiebreakNotFound': 'Could not find the tiebreak game. Open the match again from the tournaments page.',
       'trn.backToTournaments': '⚔ Tournaments',
+      'trn.pageHref': '/en/tournaments',
+      'trn.navLabel': '⚔ Tournaments',
+      'trn.navNew': 'NEW',
       'trn.reason.xeque_mate': 'checkmate',
       'trn.reason.lance_ilegal': 'illegal move',
       'trn.reason.tempo': 'time ran out',
@@ -2637,9 +2643,9 @@
         <button class="btn primary" onclick="createOnlineGame()" style="grid-column: span 2;" data-i18n="settings.playFriend">🎯 Jogar com Amigo</button>
       </div>
       <div class="controls" style="margin-top: 6px;">
-        <a class="btn" href="/torneios" style="grid-column: span 2; text-align: center; text-decoration: none; background: linear-gradient(135deg, #6f4cb4, #e2b96f); color: #fff; border: none; font-weight: 600; box-shadow: 0 2px 12px rgba(111,76,180,0.35);">
-          <span style="background: rgba(255,255,255,0.22); padding: 2px 7px; border-radius: 4px; font-size: 10px; margin-right: 6px; letter-spacing: 0.5px;">NOVO</span>
-          ⚔ Torneios
+        <a class="btn" href="/torneios" data-i18n-href="trn.pageHref" style="grid-column: span 2; text-align: center; text-decoration: none; background: linear-gradient(135deg, #6f4cb4, #e2b96f); color: #fff; border: none; font-weight: 600; box-shadow: 0 2px 12px rgba(111,76,180,0.35);">
+          <span style="background: rgba(255,255,255,0.22); padding: 2px 7px; border-radius: 4px; font-size: 10px; margin-right: 6px; letter-spacing: 0.5px;" data-i18n="trn.navNew">NOVO</span>
+          <span data-i18n="trn.navLabel">⚔ Torneios</span>
         </a>
       </div>
     </div>
@@ -2679,7 +2685,7 @@
 <footer class="site-footer">
   <a href="/aprenda" data-i18n-href="footer.learnHref" data-i18n="footer.learn">📖 Aprenda Xadrez</a>
   <span class="sep">•</span>
-  <a href="/torneios">⚔ Torneios</a>
+  <a href="/torneios" data-i18n-href="trn.pageHref" data-i18n="trn.navLabel">⚔ Torneios</a>
   <span class="sep">•</span>
   <a href="/privacidade" data-i18n-href="footer.privacyHref" data-i18n="footer.privacy">Política de Privacidade</a>
   <span class="sep">•</span>
@@ -3411,7 +3417,7 @@ async function registerCurrentScore() {
   const win = lastWinData;
   const trn = activeTournament;
   const token = scoreFbToken;
-  const trnLink = trn ? { href: '/torneios?id=' + encodeURIComponent(trn.id), text: tr('score.seeTrn') } : null;
+  const trnLink = trn ? { href: tr('trn.pageHref') + '?id=' + encodeURIComponent(trn.id), text: tr('score.seeTrn') } : null;
   const prefixo = trn ? tr('score.trnSent', { name: trn.name }) + ' — ' : '';
   scoreRegistering = true;
   if (btn) btn.style.display = 'none';
@@ -4522,7 +4528,7 @@ let trnTiebreakGameId = null;   // jogo de desempate encontrado (botao "Ir para 
 let trnTiebreakAuto = null;
 let trnRoomMatchId = null;      // sala de espera aberta (?match=)
 let trnRoomTimer = null;
-let trnTournamentId = null;     // torneio da partida atual ("Ver o torneio" leva a /torneios?id=)
+let trnTournamentId = null;     // torneio da partida atual ("Ver o torneio" leva a /torneios?id= — ou /en/tournaments?id= no inglês)
 let trnRound = 0;               // rodada desta partida (para dizer se avançou, foi eliminado ou é campeão)
 let trnTournamentInfo = null;   // get_tournament (nome, total_rounds)
 let spectNames = null;          // espectador: { w, b } nomes dos dois jogadores
@@ -5026,7 +5032,7 @@ async function showRoomProblem(matchId, msg) {
   const v = await showGameModal({ icon, title, message: text, buttons: [
     { label: tr('trn.room.close'), value: 'close' },
     { label: tid ? tr('trn.viewTournament') : tr('trn.backToTournaments'), value: 'go', primary: true }] });
-  if (v === 'go') location.href = tid ? '/torneios?id=' + encodeURIComponent(tid) : '/torneios';
+  if (v === 'go') location.href = tid ? tr('trn.pageHref') + '?id=' + encodeURIComponent(tid) : tr('trn.pageHref');
 }
 
 // TRN-UX-11: o jogo nasceu enquanto a aba estava em segundo plano — título piscando, som curto, vibração e
@@ -5259,7 +5265,7 @@ async function enterTournamentContext(tid) {
   if (!part || part.status !== 'approved') {
     const v = await showGameModal({ icon: '⚠️', title: tr('modal.error'), message: tr('trn.ctx.notApproved'),
       buttons: [{ label: tr('trn.room.close'), value: 'close' }, { label: tr('trn.viewTournament'), value: 'go', primary: true }] });
-    if (v === 'go') location.href = '/torneios?id=' + encodeURIComponent(tid);
+    if (v === 'go') location.href = tr('trn.pageHref') + '?id=' + encodeURIComponent(tid);
     return;
   }
 
@@ -7987,7 +7993,7 @@ async function playAgainFromPopup(kind) {
 // "Ver o torneio": a página DO torneio (não a lista), quando se sabe qual é
 function goToTournamentPage() {
   const tid = trnTournamentId || spectTournamentId || (activeTournament && activeTournament.id) || null;
-  location.href = tid ? '/torneios?id=' + encodeURIComponent(tid) : '/torneios';
+  location.href = tid ? tr('trn.pageHref') + '?id=' + encodeURIComponent(tid) : tr('trn.pageHref');
 }
 
 function closeGameOverPopup() {
