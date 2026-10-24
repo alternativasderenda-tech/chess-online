@@ -1,6 +1,6 @@
 # Xadrez online (servidor próprio; antes Vercel + Supabase). Incluído no fim do /etc/caddy/Caddyfile — não muda o
 # bloco do energiawatt.com. API (PostgREST), login (GoTrue) e tempo real ficam só em 127.0.0.1, atrás daqui.
-xadrezonline.app, novo.xadrezonline.app {
+xadrezonline.app {
 	encode zstd gzip
 	handle_path /rest/v1/* {
 		reverse_proxy 127.0.0.1:3201
@@ -24,7 +24,40 @@ xadrezonline.app, novo.xadrezonline.app {
 		header Cache-Control "public, max-age=3600"
 		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
 		header @img Cache-Control "public, max-age=86400, immutable"
-		@semcache path / /sw.js /privacidade /termos /torneios *.html
+		@semcache path / /sw.js /config.js /privacidade /termos /torneios *.html
+		header @semcache Cache-Control "public, max-age=0, must-revalidate"
+		file_server
+	}
+}
+
+
+novo.xadrezonline.app {
+	encode zstd gzip
+	# ambiente de TESTE (banco xadrez_teste): fora do Google
+	header X-Robots-Tag "noindex, nofollow"
+	handle_path /rest/v1/* {
+		reverse_proxy 127.0.0.1:3211
+	}
+	handle_path /auth/v1/* {
+		reverse_proxy 127.0.0.1:9909
+	}
+	handle /xrt* {
+		reverse_proxy 127.0.0.1:3212
+	}
+	handle /functions/v1/ga-stats {
+		reverse_proxy 127.0.0.1:3212
+	}
+	handle /functions/v1/* {
+		respond 404
+	}
+	handle {
+		root * /opt/xadrez/site-teste
+		rewrite /en /
+		try_files {path} {path}.html {path}/index.html
+		header Cache-Control "public, max-age=3600"
+		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
+		header @img Cache-Control "public, max-age=86400, immutable"
+		@semcache path / /sw.js /config.js /privacidade /termos /torneios *.html
 		header @semcache Cache-Control "public, max-age=0, must-revalidate"
 		file_server
 	}

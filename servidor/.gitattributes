@@ -1,4 +1,3 @@
-# scripts e configuração do servidor rodam no Linux: sempre LF
 *.sh text eol=lf
 *.caddy text eol=lf
-realtime/*.js text eol=lf
+*.js text eol=lf

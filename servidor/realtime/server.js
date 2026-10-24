@@ -18,7 +18,7 @@ const { Client, Pool } = require('pg');
 
 const PORTA = Number(process.env.PORT || 3202);
 const SEGREDO = process.env.JWT_SECRET;
-const DB = { host: '127.0.0.1', port: 5432, database: 'xadrez', user: 'xadrez_rt', password: process.env.PG_RT };
+const DB = { host: '127.0.0.1', port: 5432, database: process.env.PG_DB || 'xadrez', user: 'xadrez_rt', password: process.env.PG_RT };
 if (!SEGREDO || !DB.password) { console.error('JWT_SECRET/PG_RT ausentes'); process.exit(2); }
 
 const MAX_CONEXOES = 400, MAX_CANAIS = 10, MAX_MSG = 16 * 1024, MAX_MSGS_POR_10S = 60;
