@@ -27,10 +27,10 @@ function corpoJson(req, limite = 8 * 1024) {
 }
 const responder = (res, st, o) => { res.writeHead(st, { 'content-type': 'application/json', 'cache-control': 'private, no-store' }); res.end(JSON.stringify(o)); };
 
-async function mp(metodo, caminho, corpo, idem) {
+async function mp(metodo, caminho, corpo, idem, extras) {
   const r = await fetch(MP + caminho, {
     method: metodo,
-    headers: { Authorization: 'Bearer ' + TOKEN, 'Content-Type': 'application/json', ...(idem ? { 'X-Idempotency-Key': idem } : {}) },
+    headers: { Authorization: 'Bearer ' + TOKEN, 'Content-Type': 'application/json', ...(idem ? { 'X-Idempotency-Key': idem } : {}), ...(extras || {}) },
     body: corpo ? JSON.stringify(corpo) : undefined,
     signal: AbortSignal.timeout(15000),
   });
@@ -69,7 +69,7 @@ module.exports = function criarPix({ pool, verificar }) {
   async function confirmarPeloProvedor(id) {
     const p = await mp('GET', '/v1/payments/' + encodeURIComponent(id));
     const r = await pool.query('select xadrez_rt.pix_confirmar($1, $2, $3, $4) r',
-      [String(p.id), p.status, p.transaction_amount, JSON.stringify({ status: p.status, status_detail: p.status_detail, date_approved: p.date_approved, valor: p.transaction_amount })]);
+      [String(p.id), p.status, p.transaction_amount, JSON.stringify({ status: p.status, status_detail: p.status_detail, date_approved: p.date_approved, valor: p.transaction_amount, ref: p.external_reference })]);
     return r.rows[0].r;
   }
 
@@ -133,8 +133,10 @@ module.exports = function criarPix({ pool, verificar }) {
     if (Date.now() - (ultimaConsulta.get(dataId) || 0) < 10_000) return;
     ultimaConsulta.set(dataId, Date.now());
     if (ultimaConsulta.size > 5000) ultimaConsulta.delete(ultimaConsulta.keys().next().value);
-    const nosso = (await pool.query('select 1 from xadrez_rt.pix_pendentes() id where id = $1 union select 1 from xadrez_rt.pagamentos where provedor_id = $1', [dataId]).catch(() => ({ rows: [] }))).rows.length;
-    if (!nosso) return;
+    const nosso = (await pool.query('select 1 from xadrez_rt.pagamentos where provedor_id = $1', [dataId]).catch(() => ({ rows: [] }))).rows.length;
+    // TRN-PIX-15: pagamento que não é nosso só é consultado com aviso ASSINADO (vira `pix_orfao` para o admin);
+    // sem assinatura, ignorado (senão qualquer um faria o servidor consultar ids aleatórios)
+    if (!nosso && !assinado) return;
     try { console.log('[pix] aviso', dataId, assinado ? 'assinado' : 'sem assinatura', await confirmarPeloProvedor(dataId)); }
     catch (e) { console.error('[pix] aviso', dataId, e.message); }
   }
@@ -150,8 +152,14 @@ module.exports = function criarPix({ pool, verificar }) {
     return responder(res, 200, { resultado: r.rows[0].r });
   }
 
+  // TRN-PIX-17: com o MP lento, uma rotina pode passar de 1 min; a seguinte não começa por cima (contaria estorno em dobro)
+  let rodando = false;
   async function rotina() {
-    if (!TOKEN && !SIMULADO) return;
+    if ((!TOKEN && !SIMULADO) || rodando) return;
+    rodando = true;
+    try { await umaRodada(); } finally { rodando = false; }
+  }
+  async function umaRodada() {
     for (const x of (await pool.query('select xadrez_rt.pix_pendentes() id')).rows) {
       if (String(x.id).startsWith('sim-')) continue;
       try { const r = await confirmarPeloProvedor(x.id); if (r !== 'sem_mudanca') console.log('[pix] conferência', x.id, r); }
@@ -159,7 +167,14 @@ module.exports = function criarPix({ pool, verificar }) {
     }
     for (const x of (await pool.query('select xadrez_rt.pix_para_estornar() id')).rows) {
       if (String(x.id).startsWith('sim-')) { await pool.query('select xadrez_rt.pix_estornado($1)', [x.id]); continue; }
-      try { await mp('POST', `/v1/payments/${x.id}/refunds`, {}, 'estorno-' + x.id); await pool.query('select xadrez_rt.pix_estornado($1)', [x.id]); console.log('[pix] estorno', x.id); }
+      try {
+        // estorno pode já ter acontecido (em andamento que concluiu, ou devolvido pelo painel do MP com o aviso perdido)
+        if ((await confirmarPeloProvedor(x.id)) === 'estornado') { console.log('[pix] estorno já feito', x.id); continue; }
+        // TRN-PIX-19: sem o cabeçalho, o estorno em contingência do Pix volta como 400; com ele, volta `in_process`
+        const r = await mp('POST', `/v1/payments/${x.id}/refunds`, {}, 'estorno-' + x.id, { 'X-Render-In-Process-Refunds': 'true' });
+        if (r && r.status === 'in_process') { await pool.query('select xadrez_rt.pix_estorno_em_andamento($1)', [x.id]); console.log('[pix] estorno em andamento', x.id); continue; }
+        await pool.query('select xadrez_rt.pix_estornado($1)', [x.id]); console.log('[pix] estorno', x.id);
+      }
       catch (e) { console.error('[pix] estorno', x.id, e.message); await pool.query('select xadrez_rt.pix_estorno_falhou($1, $2)', [x.id, e.message]).catch(() => {}); }
     }
   }
