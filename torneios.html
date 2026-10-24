@@ -634,7 +634,7 @@
       <div class="dica">Desmarcado: em torneio só para convidados, só você convida; em torneio aberto, o botão Compartilhar some (a página continua pública). Dá para mudar depois.</div>
     </div>
 
-    <div class="resumo-preco">Para publicar, você paga <b class="preco-txt">R$ 1,00</b> por Pix (Mercado Pago) logo depois de criar; o Pix vale por 45 minutos. O torneio só aparece para os outros depois do pagamento. Se você cancelar antes de começar, o valor volta. <a href="/termos#torneios" target="_blank" rel="noopener">Regras</a></div>
+    <div class="resumo-preco">Para publicar, você paga <b class="preco-txt">R$ 1,00</b> por Pix (Mercado Pago) logo depois de criar; o Pix vale por até 45 minutos (na eliminatória, vence 10 minutos antes do início). O torneio só aparece para os outros depois do pagamento. Se você cancelar antes de começar, o valor volta. <a href="/termos#torneios" target="_blank" rel="noopener">Regras</a></div>
 
     <div class="form-err" id="criar-erro" role="alert"></div>
     <div class="form-actions">
@@ -1320,7 +1320,10 @@ function blocoFaixas(d, souOrg, podeGerir) {
     }
   }
   if (t.status === 'cancelled') h += `<div class="faixa erro"><strong>${esc(motivoCancel(t.cancel_reason))}</strong>${souOrg && t.paid ? (canceladoAntes(t) ? ' O valor pago volta sozinho pelo Pix, para a conta que pagou.' : ' Como o torneio já tinha começado, o valor pago não é devolvido automaticamente.') : ''}</div>`;
-  if (t.status === 'open' && t.paid === false && podeGerir) {
+  // TRN-PIX-23: Pix pago tarde (a menos de 10 min do início) — não publica; o valor volta sozinho
+  if (t.status === 'open' && t.paid === false && podeGerir && d.pag && (d.pag.status === 'pago' || d.pag.status === 'estornado')) {
+    h += `<div class="faixa aviso"><strong>O pagamento chegou tarde demais.</strong> Faltavam menos de 10 minutos para o início, sem tempo para inscrições — por isso o torneio não foi publicado. ${d.pag.status === 'estornado' ? 'O valor já foi devolvido' : 'O valor volta sozinho'} para a conta que pagou, pelo Mercado Pago. Para jogar, crie outro torneio começando daqui a pelo menos 1 hora.</div>`;
+  } else if (t.status === 'open' && t.paid === false && podeGerir) {
     const pg = d.pag;
     h += `<div class="faixa aviso"><strong>Falta pagar.</strong> O torneio só aparece para os outros jogadores depois do Pix de <span class="preco-txt">${fmtBRL(pg?.valor ?? E.preco ?? 1)}</span>.
       ${pg && pg.status === 'pendente' && ms(pg.expira_em) > agora() ? ' Já existe um Pix gerado esperando pagamento.' : ''}

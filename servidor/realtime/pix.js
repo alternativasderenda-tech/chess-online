@@ -59,7 +59,8 @@ function assinaturaValida(req, dataId) {
   const reqId = String(req.headers['x-request-id'] || '');
   if (!partes.ts || !partes.v1 || !dataId) return false;
   const id = /^[a-z0-9]+$/i.test(dataId) ? dataId.toLowerCase() : dataId;
-  const manifesto = `id:${id};request-id:${reqId};ts:${partes.ts};`;
+  // sem x-request-id, a parte sai do manifesto (documentação de notificações do MP)
+  const manifesto = `id:${id};` + (reqId ? `request-id:${reqId};` : '') + `ts:${partes.ts};`;
   const esperado = crypto.createHmac('sha256', SEGREDO_WEBHOOK).update(manifesto).digest('hex');
   return esperado.length === partes.v1.length && crypto.timingSafeEqual(Buffer.from(esperado), Buffer.from(partes.v1));
 }
@@ -75,7 +76,10 @@ function situacaoDoPedido(o) {
   else if (st === 'charged_back') status = 'charged_back';
   else if (st === 'canceled') status = det === 'expired' ? 'expired' : 'cancelled';
   else if (st === 'failed') status = det === 'expired' ? 'expired' : 'rejected';
-  const valor = Number(pg.paid_amount ?? pg.amount ?? o.total_paid_amount ?? o.total_amount);
+  // valor PAGO (não o cobrado), só do pagamento: `total_paid_amount` vem preenchido mesmo em pedido não pago (medido).
+  // Aprovado sem `paid_amount` vai nulo → `pix_valor_divergente` para o admin decidir, nunca libera às cegas (TRN-PIX-26)
+  const bruto = pg.paid_amount ?? (status === 'approved' ? null : pg.amount ?? o.total_amount);
+  const valor = bruto === null || bruto === undefined ? null : Number(bruto);
   return { status, valor, pg };
 }
 
@@ -123,7 +127,7 @@ module.exports = function criarPix({ pool, verificar }) {
         type: 'online', processing_mode: 'automatic', external_reference: tid,
         total_amount: valor.toFixed(2), payer: { email: prep.email },
         transactions: { payments: [{ amount: valor.toFixed(2), payment_method: { id: 'pix', type: 'bank_transfer' }, expiration_time: `PT${minutos}M` }] },
-      }, 'trn-' + tid + '-' + Math.floor(Date.now() / 600_000));
+      }, 'trn-' + tid + '-' + (prep.n_cobrancas || 0));   // TRN-PIX-22: uma chave por cobrança nova, não por janela de tempo
       const pm = (o.transactions && o.transactions.payments && o.transactions.payments[0] && o.transactions.payments[0].payment_method) || {};
       id = String(o.id); qr = pm.qr_code; qr64 = pm.qr_code_base64; bruto = { status: o.status, status_detail: o.status_detail, id: o.id };
       expiraEm = new Date(Date.now() + minutos * 60_000);
@@ -195,7 +199,12 @@ module.exports = function criarPix({ pool, verificar }) {
         if ((await confirmarPeloProvedor(x.id)) === 'estornado') { console.log('[pix] estorno', x.id); continue; }
         await pool.query('select xadrez_rt.pix_estorno_em_andamento($1)', [x.id]); console.log('[pix] estorno em andamento', x.id);
       }
-      catch (e) { console.error('[pix] estorno', x.id, e.message); await pool.query('select xadrez_rt.pix_estorno_falhou($1, $2)', [x.id, e.message]).catch(() => {}); }
+      catch (e) {
+        console.error('[pix] estorno', x.id, e.message);
+        // TRN-PIX-24: 409 = já existe estorno em andamento para o pedido — não é falha
+        if (/Mercado Pago 409/.test(e.message)) { await pool.query('select xadrez_rt.pix_estorno_em_andamento($1)', [x.id]).catch(() => {}); continue; }
+        await pool.query('select xadrez_rt.pix_estorno_falhou($1, $2)', [x.id, e.message]).catch(() => {});
+      }
     }
   }
 
