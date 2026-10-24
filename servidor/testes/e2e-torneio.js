@@ -70,7 +70,7 @@ const intruso = criarJogador('Intruso');
 
 async function criarTorneioPago(dono, campos) {
   const base = { p_name: 'Torneio ' + PREFIXO, p_description: 'teste', p_prize: 'medalha', p_capacity: 8,
-    p_starts_at: new Date(Date.now() + 3600_000).toISOString(), p_ends_at: null, p_difficulty: null, p_criterion: null,
+    p_starts_at: new Date(Date.now() + 7200_000).toISOString(), p_ends_at: null, p_difficulty: null, p_criterion: null,
     p_round_deadline_hours: 2, p_time_control_seconds: 300, p_format: 'pvp_bracket', p_visibility: 'public', ...campos };
   const r = await rpc(dono, 'create_tournament', base);
   assert.ok(r.ok, 'create_tournament: ' + r.erro);
@@ -313,7 +313,7 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
   };
   await caso('Pix: só o criador gera a cobrança; a mesma é reaproveitada; o pagamento libera o torneio', async () => {
     const r = await rpc(org, 'create_tournament', { p_name: 'Pix ' + PREFIXO, p_description: null, p_prize: 'troféu', p_format: 'pvp_bracket',
-      p_visibility: 'public', p_capacity: 4, p_starts_at: new Date(Date.now() + 3600_000).toISOString(), p_ends_at: null, p_difficulty: null,
+      p_visibility: 'public', p_capacity: 4, p_starts_at: new Date(Date.now() + 7200_000).toISOString(), p_ends_at: null, p_difficulty: null,
       p_criterion: null, p_round_deadline_hours: 2, p_time_control_seconds: 300 });
     assert.ok(r.ok, r.erro);
     assert.equal((await post(intruso, '/functions/v1/pix-cobranca', { tournament_id: r.j.id })).status, 404, 'intruso gerou cobrança');
@@ -321,12 +321,20 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
     const c1 = await post(org, '/functions/v1/pix-cobranca', { tournament_id: r.j.id });
     assert.equal(c1.status, 200, JSON.stringify(c1.j));
     assert.equal(c1.j.status, 'pendente');
-    assert.ok(c1.j.qr_code && c1.j.simulado);
+    assert.ok(c1.j.qr_code, 'sem QR');
     const c2 = await post(org, '/functions/v1/pix-cobranca', { tournament_id: r.j.id });
     assert.equal(c2.j.qr_code, c1.j.qr_code, 'gerou outra cobrança em vez de reaproveitar');
     const st = (await rpc(org, 'tournament_payment_status', { p_tournament_id: r.j.id })).j[0];
     assert.deepEqual([st.paid, st.status], [false, 'pendente']);
     assert.equal((await rpc(intruso, 'tournament_payment_status', { p_tournament_id: r.j.id })).j.length, 0, 'intruso viu o pagamento');
+    if (!c1.j.simulado) {
+      // credencial de TESTE do Mercado Pago instalada: o pedido é real (API de Orders), vence em ~45 min e é reconsultado.
+      // Pix de teste não se paga por API — a liberação fica coberta no modo simulado; aqui só confere a cobrança real.
+      const pg = sql(`select provedor_id || '|' || round(extract(epoch from expira_em - criado_em) / 60) from xadrez_rt.pagamentos where tournament_id = '${r.j.id}'`);
+      assert.match(pg, /^ORD[A-Z0-9]+\|4[45]$/, 'pedido do MP: ' + pg);
+      console.log('    (Mercado Pago de verdade, modo de teste: pedido criado; liberação não testada aqui)');
+      return;
+    }
     const s = await post(org, '/functions/v1/pix-simular', { tournament_id: r.j.id });
     assert.equal(s.j.resultado, 'liberado');
     assert.equal(sql(`select paid from tournaments where id = '${r.j.id}'`), 't');
@@ -343,7 +351,7 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
     await espera(500);
     assert.equal(sql(`select count(*) || '|' || coalesce(sum(case when status = 'pago' then 1 else 0 end), 0) from xadrez_rt.pagamentos`), antes);
   });
-  await caso('compartilhar: /t/<id> mostra a prévia do torneio público; privado só com o código; desconhecido vai para a lista', async () => {
+  await caso('compartilhar: /t/<id> mostra a prévia do torneio público; privado só com o código; desconhecido abre a página que explica', async () => {
     const T6 = await criarTorneioPago(org, { p_name: 'Copa Prévia ' + PREFIXO });
     const pub = await (await fetch(RT + '/t/' + T6.id, { headers: { host: 'novo.xadrezonline.app' } })).text();
     assert.match(pub, /og:title" content="Inscrições abertas: Copa Prévia/);
@@ -352,7 +360,8 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
     assert.doesNotMatch(await (await fetch(RT + '/t/' + T7.id)).text(), /Privado/, 'privado vazou pelo id');
     assert.match(await (await fetch(RT + '/t/' + T7.share_token)).text(), /Privado/);
     const nada = await (await fetch(RT + '/t/' + '0'.repeat(16))).text();
-    assert.ok(nada.includes('/torneios"') || nada.includes('/torneios\\"'), 'código desconhecido deveria ir para a lista');
+    // R2-UX-01: código desconhecido (inválido ou trocado) abre a página do torneio pelo código, que explica o que houve
+    assert.ok(nada.includes('/torneios?t=' + '0'.repeat(16)), 'código desconhecido deveria abrir /torneios?t=<código>');
   });
 
   // ---------- limpeza: some tudo que o teste criou (partida ↔ jogo se referenciam: desfazer o vínculo antes)
