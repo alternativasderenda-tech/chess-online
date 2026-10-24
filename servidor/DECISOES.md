@@ -42,11 +42,29 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 | D-TRN-16 | Relógio do torneio pelos horários do servidor; o 1º lance de cada lado não consome tempo (como no Lichess); tempo esgotado = derrota, decidido pela rotina mesmo com os dois fora do site. Torneio de chaveamento sempre com relógio (5/10/15/30 min) e prazo de rodada ≥ 2×tempo + 30 min | Partida "sem tempo" podia ficar aberta para sempre |
 | D-TRN-17 | Tudo o que é interno fica no schema PRIVADO `xadrez_rt` (o PostgREST só expõe `public`); no `public`, função nova nasce executável por anon/authenticated (privilégio padrão herdado do Supabase) — cada RPC confere quem chama | Medido em `pg_default_acl`: `xadrez_owner` concede EXECUTE/ALL a anon e authenticated por padrão |
 
+| D-TRN-18 | **Lance contra a IA: horário do servidor e ordem conferida na gravação** (gatilho `conferir_lance_ia`: `created_at := now()`, `move_number` = último+1, só o próprio usuário, nada depois de registrada). Lance do jogador a menos de 0,15 s do anterior tira a partida do "mais rápido" (vale a vitória) | TRN-SEG-01 (r1, alto): `created_at` vinha do navegador e uma partida legítima "durou 1 s" e foi a 1º no ranking |
+| D-TRN-19 | Cota de placares: no máximo 3 em conferência e 30 por hora por jogador | TRN-SEG-04 (r1): conferência Expert custa 1–2 min de CPU numa fila única |
+| D-TRN-20 | Torneio por link: participantes, partidas e classificação só com o código (`p_token`) ou para quem já participa/criou/admin; "chamada interna" = conexão aberta pelo papel `xadrez_rt` ou `postgres` (`session_user`), nunca pela API. Tempo real: só os jogadores transmitem no canal `game-<id>`; remetente e `initiator` vêm do token | TRN-SEG-02/03 (r1, médios). "Sem token = interno" seria uma brecha (visitante sem login) |
+
+| D-TRN-21 | Jogo criado (1º ou desempate) ganha 20 min para começar, mesmo perto ou depois do prazo da rodada | TRN-REG-01 (r1, alto): final empatada perto do prazo virava W.O. 172 ms depois do empate |
+| D-TRN-22 | Ranking de IA: `open` → `active` no `starts_at`; aceita inscrição até o fim; fecha 10 min depois do `ends_at` (tolerância do envio) e sem conferência recente na fila; partida tem de começar depois do `starts_at` e terminar antes do `ends_at`; a mesma partida (mesma sequência de lances) não conta duas vezes | TRN-REG-02/05/07/08 (r1): ranking nunca saía de `open`; líder recusado na tolerância perdeu o título; partida de antes do início e partida reenviada contavam |
+| D-TRN-23 | Criador cancela só ANTES de começar (eliminatória sem rodada; ranking antes do `starts_at`); depois, só admin. Estorno só para cancelado antes de começar (`cancelled_before_start`) | TRN-REG-02/TRN-PIX-09: criador cancelava ranking com 20 dias e inscritos e recebia estorno integral |
+| D-TRN-24 | Empate na classificação: quem chegou primeiro (última vitória mais cedo; no "mais rápido", o melhor tempo feito antes) — não a ordem alfabética | TRN-REG-06 |
+| D-TRN-25 | Juiz encerra no PRIMEIRO fim de jogo (lance enviado depois de mate/afogamento/50 lances não conta); rotina com trava (`pg_try_advisory_xact_lock`) e erro repetido registrado 1×/hora | TRN-REG-04/10 |
+| D-TRN-26 | Conferência da IA: veredito de "lance possível da IA" por melhor valor + valor do lance jogado (mesmo resultado dos candidatos do site, provado em todas as jogadas de 60 posições, 4 níveis); duas filas (Fácil/Médio × Difícil/Expert); falha → 1 nova tentativa, depois `nao_foi_possivel_conferir` | TRN-REG-03/TRN-UX-04. Medido (PC): Expert 2.102 → 444 ms por lance conferido |
+| D-TRN-27 | Página pública do torneio: `get_tournament(id, token)` (visitante vê torneio listado; `share_token` só para criador/participante/admin/quem tem o código). Compartilhar: `/t/<id>` (listado) e `/t/<código>` (privado) com prévia Open Graph gerada no servidor; endereço do redirecionamento vem do `PUBLIC_URL`, nunca do cabeçalho Host | TRN-UX-02 (link de divulgação vazio sem login) e pedido do dono (24/10): compartilhar em redes sociais |
+
 ### Pagamento
 
 | ID | Decisão | Motivo |
 |---|---|---|
 | D-PAG-01 | Pix automático pelo **Mercado Pago** (escolha do dono, 24/10/2026): cobrança criada pelo servidor (QR + copia-e-cola na tela), confirmação pelo webhook (assinatura `x-signature` conferida) **e** consulta à API (`GET /v1/payments/{id}`: status `approved` e valor exato); conferência periódica de pendentes no agendador cobre webhook perdido; idempotente por `payment_id` | Pagamento de madrugada liberava só quando o admin acordasse; taxa percentual (cobrança de R$ 1 não é engolida) |
+
+| D-PAG-02 | Pix com validade de 45 min e o vencimento gravado é o devolvido pelo Mercado Pago | TRN-PIX-01: a doc exige ≥ 30 min da emissão; "agora + 30" calculado antes da chamada podia ser recusado |
+| D-PAG-03 | Gerar Pix novo cancela o anterior no Mercado Pago; pagamento a mais (outro Pix do mesmo torneio já liberou) é estornado pela rotina; pagamento que chega com a cobrança já vencida/cancelada ainda é reconhecido (reconsulta de pendentes E vencidos/cancelados recentes) | TRN-PIX-02/03 |
+| D-PAG-04 | Aviso do Mercado Pago (formato novo ou antigo, com ou sem assinatura) recebe 200 e a ÚNICA ação é reconsultar na API, só se o pagamento for nosso, no máximo 1×/10 s por id | TRN-PIX-06: o formato antigo levava 401 e era reenviado sem fim |
+| D-PAG-05 | Estorno que falha é tentado até 5×; depois `estorno_falhou`. Tudo o que é dinheiro com problema (estorno pendente/falhou, pago sem liberar, valor divergente, Pix órfão, contestação) e erro de rotina aparece para o admin em `admin_payment_problems()` | TRN-PIX-04/05: dinheiro preso só aparecia no psql |
+| D-PAG-06 | Eliminatória começa ≥ 30 min depois da criação; cobrança recusada se começar em < 10 min (ranking: se terminar em < 1 h) | TRN-PIX-07: pagar torneio com início já vencido liberava, cancelava e estornava no mesmo minuto |
 
 ## 3. Armadilhas de medição
 
@@ -57,6 +75,11 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 - **Teste e2e:** `servidor/testes/e2e-torneio.js` roda NO servidor contra o banco de teste (aborta em outro banco), com jogadores fictícios `@teste.invalid` apagados no fim. 1ª rodada completa: 17/17.
 
 ## 4. Aberto de propósito
+
+- **Escolha da IA entre os candidatos é do navegador.** O servidor confere que cada lance da IA está entre os que ela
+  escolheria (margem de 10–80 centipeões), mas não QUAL deles: um trapaceiro pode sempre escolher o pior para a IA dentro
+  da margem, e pode usar um motor forte para os próprios lances. Fechar isso exige a IA jogar no servidor (custo de CPU
+  por partida Expert e risco de DoS) — decisão de produto para depois do lançamento.
 
 - Ranking global de IA: placares antigos (antes de D-TRN-02) continuam valendo — não há como revalidar partidas sem
   os lances da IA gravados com a regra nova.

@@ -110,5 +110,32 @@ caso('fraude: lance da IA marcado como do jogador', () => {
   assert.equal(X.conferirPartidaIA(l, 1).motivo, 'alternancia');
 });
 
+caso('conferência rápida da IA dá o MESMO veredito que os candidatos do site (todas as jogadas, 4 níveis, 60 posições)', () => {
+  let s2 = 7; const rnd = () => { s2 = (s2 * 1103515245 + 12345) & 0x7fffffff; return s2 / 0x7fffffff; };
+  let difs = 0, n = 0;
+  for (let jogo = 0; jogo < 6; jogo++) {
+    let e = X.inicial();
+    for (let ply = 0; ply < 40 && !X.fim(e); ply++) {
+      const leg = X.legais(e);
+      if (ply % 4 === 3) {
+        const dif = 1 + (jogo % 3);                       // 1..3 (o 4 é caro demais para a suíte; coberto abaixo)
+        const cand = X.candidatosIA(e, dif);
+        for (const m of leg) { n++; if (X.lanceDaIAValido(e, dif, m) !== cand.some(c => X.igual(c, m))) difs++; }
+      }
+      e = X.jogar(e, leg[Math.floor(rnd() * leg.length)]);
+    }
+  }
+  assert.equal(difs, 0, `${difs} de ${n} lances com veredito diferente`);
+});
+caso('conferência rápida = candidatos também no Expert (2 posições de meio-jogo) e é mais barata', () => {
+  let e = X.inicial();
+  for (const [f, t] of [[52, 36], [12, 28], [62, 45], [1, 18], [61, 34], [6, 21]]) e = X.jogar(e, { from: f, to: t });
+  const t0 = Date.now(); const cand = X.candidatosIA(e, 4); const tCand = Date.now() - t0;
+  const t1 = Date.now(); let difs = 0;
+  for (const m of X.legais(e)) if (X.lanceDaIAValido(e, 4, m) !== cand.some(c => X.igual(c, m))) difs++;
+  const tRap = (Date.now() - t1) / X.legais(e).length;
+  assert.equal(difs, 0);
+  console.log(`      Expert: candidatos ${tCand} ms; conferência rápida ${tRap.toFixed(0)} ms por lance`);
+});
 console.log(falhas ? `\n${falhas} FALHA(S)` : '\ntudo ok');
 process.exit(falhas ? 1 : 0);

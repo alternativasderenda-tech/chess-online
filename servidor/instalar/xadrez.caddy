@@ -17,6 +17,9 @@ xadrezonline.app {
 	handle /pagamentos/* {
 		reverse_proxy 127.0.0.1:3202
 	}
+	handle /t/* {
+		reverse_proxy 127.0.0.1:3202
+	}
 	handle {
 		root * /opt/xadrez/site
 		rewrite /en /
@@ -48,6 +51,9 @@ novo.xadrezonline.app {
 		reverse_proxy 127.0.0.1:3212
 	}
 	handle /pagamentos/* {
+		reverse_proxy 127.0.0.1:3212
+	}
+	handle /t/* {
 		reverse_proxy 127.0.0.1:3212
 	}
 	handle {

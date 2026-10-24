@@ -80,7 +80,8 @@ module.exports = function criarPix({ pool, verificar }) {
     const tid = String(corpo.tournament_id || '');
     if (!/^[0-9a-f-]{36}$/.test(tid)) return responder(res, 400, { error: 'tournament_id inválido' });
     const prep = (await pool.query('select xadrez_rt.pix_preparar($1, $2) j', [tid, claims.sub])).rows[0].j;
-    if (prep.erro) return responder(res, prep.erro === 'not_found' ? 404 : 409, { error: prep.erro });
+    if (prep.erro) return responder(res, prep.erro === 'not_found' ? 404 : 409, { error: prep.erro,
+      mensagem: prep.erro === 'starts_too_soon' ? 'O torneio começa (ou termina) cedo demais para pagar e receber inscrições: ajuste a data.' : undefined });
     if (prep.pago) return responder(res, 200, { status: 'pago' });
     const e = prep.existente;
     if (e) return responder(res, 200, { status: 'pendente', valor: Number(e.valor), qr_code: e.qr_code, qr_code_base64: e.qr_code_base64, expira_em: e.expira_em, simulado: String(e.provedor_id).startsWith('sim-') });
@@ -88,6 +89,14 @@ module.exports = function criarPix({ pool, verificar }) {
     const valor = Number(prep.valor);
     const expira = new Date(Date.now() + Number(prep.validade_min || 30) * 60_000);
     let id, qr, qr64, bruto;
+    // TRN-PIX-02: Pix anterior perto de vencer — cancela no Mercado Pago antes de gerar outro (se ainda assim for pago, o
+    // segundo pagamento vira "a mais" e é estornado pela rotina)
+    for (const ant of prep.anteriores || []) {
+      if (String(ant).startsWith('sim-') || !TOKEN) continue;
+      try { await mp('PUT', '/v1/payments/' + encodeURIComponent(ant), { status: 'cancelled' }); await confirmarPeloProvedor(ant); }
+      catch (e) { console.error('[pix] cancelar anterior', ant, e.message); }
+    }
+    let expiraEm = expira;
     if (SIMULADO) {
       id = 'sim-' + crypto.randomUUID();
       qr = '00020126SIMULADO-AMBIENTE-DE-TESTE-' + id.slice(4, 12);
@@ -100,22 +109,34 @@ module.exports = function criarPix({ pool, verificar }) {
       }, 'trn-' + tid + '-' + Math.floor(Date.now() / 600_000));
       const td = (p.point_of_interaction && p.point_of_interaction.transaction_data) || {};
       id = String(p.id); qr = td.qr_code; qr64 = td.qr_code_base64; bruto = { status: p.status, id: p.id };
+      if (p.date_of_expiration && !Number.isNaN(Date.parse(p.date_of_expiration))) expiraEm = new Date(p.date_of_expiration);
     } else {
       return responder(res, 503, { error: 'Pix indisponível no momento' });
     }
-    await pool.query('select xadrez_rt.pix_registrar($1, $2, $3, $4, $5, $6, $7)', [tid, id, valor, qr, qr64, expira.toISOString(), JSON.stringify(bruto)]);
-    return responder(res, 200, { status: 'pendente', valor, qr_code: qr, qr_code_base64: qr64, expira_em: expira.toISOString(), simulado: SIMULADO });
+    await pool.query('select xadrez_rt.pix_registrar($1, $2, $3, $4, $5, $6, $7)', [tid, id, valor, qr, qr64, expiraEm.toISOString(), JSON.stringify(bruto)]);
+    return responder(res, 200, { status: 'pendente', valor, qr_code: qr, qr_code_base64: qr64, expira_em: expiraEm.toISOString(), simulado: SIMULADO });
   }
 
+  // TRN-PIX-06: o Mercado Pago manda o formato novo (data.id + x-signature) e o antigo (topic/id, sem assinatura).
+  // Nenhum conteúdo do aviso é tomado como verdade: a ÚNICA ação é reconsultar o pagamento na API do Mercado Pago, e só
+  // se ele for nosso. Por isso o aviso sem assinatura também recebe 200 (senão o MP reenvia sem fim); a assinatura vale
+  // como registro. Reconsulta limitada a 1 a cada 10 s por pagamento.
+  const ultimaConsulta = new Map();
   async function webhook(req, res) {
     const u = new URL(req.url, 'http://x');
-    let corpo = {}; try { corpo = await corpoJson(req, 32 * 1024); } catch { /* corpo é opcional: o id vem na URL */ }
-    const dataId = u.searchParams.get('data.id') || (corpo.data && corpo.data.id && String(corpo.data.id)) || '';
-    const tipo = u.searchParams.get('type') || corpo.type || '';
-    if (!assinaturaValida(req, dataId)) { console.error('[pix] webhook com assinatura inválida', dataId); return responder(res, 401, { error: 'assinatura' }); }
-    responder(res, 200, { ok: true });       // responde já; a conferência é no servidor do Mercado Pago
-    if (tipo !== 'payment' || !/^\d+$/.test(dataId)) return;
-    try { console.log('[pix] webhook', dataId, await confirmarPeloProvedor(dataId)); } catch (e) { console.error('[pix] webhook', dataId, e.message); }
+    let corpo = {}; try { corpo = await corpoJson(req, 32 * 1024); } catch { /* opcional */ }
+    const dataId = u.searchParams.get('data.id') || u.searchParams.get('id') || (corpo.data && corpo.data.id && String(corpo.data.id)) || (corpo.resource && String(corpo.resource).split('/').pop()) || '';
+    const tipo = u.searchParams.get('type') || u.searchParams.get('topic') || corpo.type || corpo.topic || '';
+    const assinado = assinaturaValida(req, dataId);
+    responder(res, 200, { ok: true });
+    if (!/payment/.test(tipo) || !/^\d{1,20}$/.test(dataId)) return;
+    if (Date.now() - (ultimaConsulta.get(dataId) || 0) < 10_000) return;
+    ultimaConsulta.set(dataId, Date.now());
+    if (ultimaConsulta.size > 5000) ultimaConsulta.delete(ultimaConsulta.keys().next().value);
+    const nosso = (await pool.query('select 1 from xadrez_rt.pix_pendentes() id where id = $1 union select 1 from xadrez_rt.pagamentos where provedor_id = $1', [dataId]).catch(() => ({ rows: [] }))).rows.length;
+    if (!nosso) return;
+    try { console.log('[pix] aviso', dataId, assinado ? 'assinado' : 'sem assinatura', await confirmarPeloProvedor(dataId)); }
+    catch (e) { console.error('[pix] aviso', dataId, e.message); }
   }
 
   async function simular(req, res) {
@@ -139,7 +160,7 @@ module.exports = function criarPix({ pool, verificar }) {
     for (const x of (await pool.query('select xadrez_rt.pix_para_estornar() id')).rows) {
       if (String(x.id).startsWith('sim-')) { await pool.query('select xadrez_rt.pix_estornado($1)', [x.id]); continue; }
       try { await mp('POST', `/v1/payments/${x.id}/refunds`, {}, 'estorno-' + x.id); await pool.query('select xadrez_rt.pix_estornado($1)', [x.id]); console.log('[pix] estorno', x.id); }
-      catch (e) { console.error('[pix] estorno', x.id, e.message); }
+      catch (e) { console.error('[pix] estorno', x.id, e.message); await pool.query('select xadrez_rt.pix_estorno_falhou($1, $2)', [x.id, e.message]).catch(() => {}); }
     }
   }
 

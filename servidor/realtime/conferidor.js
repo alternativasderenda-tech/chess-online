@@ -25,7 +25,10 @@ parentPort.on('message', ({ id, lances, dificuldade }) => {
     if (lances.some(l => l.undone)) r = { ok: false, motivo: 'lance_desfeito' };
     else r = X.conferirPartidaIA(lances, dificuldade);
   } catch (e) { r = { ok: false, motivo: 'erro_conferencia', erro: String(e && e.message || e) }; }
-  const vivo = aoVivo(lances);
+  // TRN-SEG-01: lance do jogador feito a menos de 0,15 s do anterior (horário do servidor) não é de gente: a partida
+  // vale como vitória, mas não para "mais rápido"
+  const maquina = lances.some((l, i) => i > 0 && !l.is_ai_move && (new Date(l.created_at) - new Date(lances[i - 1].created_at)) < 150);
+  const vivo = aoVivo(lances) && !maquina;
   parentPort.postMessage({ id, ok: !!r.ok, motivo: r.motivo || null, segundos: r.ok && vivo ? r.segundosJogador : null,
                            aoVivo: vivo, ms: Date.now() - t0 });
 });

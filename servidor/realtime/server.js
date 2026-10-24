@@ -67,6 +67,24 @@ async function linhaComo(claims, tabela, id) {
 }
 
 const canais = new Map();   // topic → Set(ws)
+
+// jogadores de cada partida (cache curto) — para autorizar broadcast no canal "game-<id>"
+const jogadoresCache = new Map();
+async function jogadorDoCanal(ws, topic) {
+  const mt = /^game-([A-Za-z0-9]{4,16})$/.exec(topic);
+  if (!mt || ws.claims.role !== 'authenticated' || !ws.claims.sub) return null;
+  let c = jogadoresCache.get(mt[1]);
+  if (!c || Date.now() - c.em > 30_000) {
+    const r = await pool.query('select * from xadrez_rt.jogadores_do_jogo($1)', [mt[1]]);
+    c = { em: Date.now(), j: r.rows[0] || null };
+    jogadoresCache.set(mt[1], c);
+    if (jogadoresCache.size > 2000) jogadoresCache.delete(jogadoresCache.keys().next().value);
+  }
+  if (!c.j) return null;
+  if (c.j.white === ws.claims.sub) return { nome: c.j.white_name };
+  if (c.j.black === ws.claims.sub) return { nome: c.j.black_name };
+  return null;
+}
 const enviar = (ws, m) => { if (ws.readyState === 1) ws.send(JSON.stringify(m)); };
 
 async function aoNotificar(msg) {
@@ -195,8 +213,42 @@ async function gaStats(req, res) {
 }
 
 let pix = null;   // criado depois do pool e do verificar (abaixo)
+
+// ---------- /t/<código>: link curto de compartilhamento com a prévia (Open Graph) que WhatsApp/Facebook/X leem — essas
+// redes não rodam o JavaScript da página. Quem abre é levado na hora para a página do torneio.
+const escHtml = s => String(s ?? '').replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
+const dataBr = d => d ? new Date(d).toLocaleDateString('pt-BR', { timeZone: 'America/Sao_Paulo', day: '2-digit', month: '2-digit' })
+  + ' às ' + new Date(d).toLocaleTimeString('pt-BR', { timeZone: 'America/Sao_Paulo', hour: '2-digit', minute: '2-digit' }) : '';
+async function compartilhar(req, res) {
+  const codigo = req.url.split('?')[0].split('/')[2];
+  const r = await pool.query('select xadrez_rt.torneio_para_compartilhar($1) j', [codigo]);
+  const t = r.rows[0]?.j;
+  const host = process.env.PUBLIC_URL || 'https://xadrezonline.app';   // nunca do cabeçalho Host (manipulável)
+  const destino = !t ? host + '/torneios' : t.token ? `${host}/torneios?t=${encodeURIComponent(t.token)}` : `${host}/torneios?id=${t.id}`;
+  let titulo = 'Torneios de xadrez online', desc = 'Crie ou entre num torneio de xadrez e jogue com a galera.';
+  if (t) {
+    const fmt = t.formato === 'ai' ? 'Ranking contra o computador' : 'Eliminatória entre jogadores';
+    if (t.status === 'finished' && t.campeao) { titulo = `🏆 ${t.campeao} venceu o torneio ${t.nome}`; desc = `${fmt} · prêmio: ${t.premio}`; }
+    else if (t.status === 'active') { titulo = `Torneio ${t.nome} — em andamento`; desc = `${fmt} · ${t.inscritos} jogadores · prêmio: ${t.premio}`; }
+    else if (t.status === 'cancelled') { titulo = `Torneio ${t.nome} (cancelado)`; }
+    else { titulo = `Inscrições abertas: ${t.nome}`; desc = `${fmt} · começa ${dataBr(t.inicio)} · ${t.inscritos}/${t.vagas} vagas · prêmio: ${t.premio}`; }
+  }
+  const html = `<!doctype html><html lang="pt-BR"><head><meta charset="utf-8"><title>${escHtml(titulo)}</title>
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta property="og:type" content="website"><meta property="og:site_name" content="Xadrez Online">
+<meta property="og:title" content="${escHtml(titulo)}"><meta property="og:description" content="${escHtml(desc)}">
+<meta property="og:url" content="${escHtml(host + req.url.split('?')[0])}"><meta property="og:image" content="${host}/icon-512.png">
+<meta property="og:image:width" content="512"><meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary"><meta name="description" content="${escHtml(desc)}">
+<meta name="robots" content="noindex"><link rel="canonical" href="${escHtml(destino)}">
+<meta http-equiv="refresh" content="0;url=${escHtml(destino)}"></head>
+<body><p><a href="${escHtml(destino)}">${escHtml(titulo)}</a></p><script>location.replace(${JSON.stringify(destino)})</script></body></html>`;
+  res.writeHead(200, { 'content-type': 'text/html; charset=utf-8', 'cache-control': 'public, max-age=300' });
+  res.end(html);
+}
 const servidor = http.createServer(async (req, res) => {
   if (pix && await pix.rota(req, res)) return;
+  if (req.method === 'GET' && /^\/t\/[A-Za-z0-9-]{12,40}\/?$/.test(req.url.split('?')[0])) { compartilhar(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
   if (req.url === '/xrt/saude') { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ ok: true, conexoes: wss.clients.size })); return; }
   if (req.url.split('?')[0] === '/functions/v1/ga-stats' && req.method === 'POST') { gaStats(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
   res.writeHead(404); res.end();
@@ -240,8 +292,17 @@ wss.on('connection', ws => {
       canais.get(topic)?.delete(ws);
       if (canais.get(topic)?.size === 0) canais.delete(topic);
     } else if (m.t === 'bc' && topic && ws.canais.has(topic) && typeof m.event === 'string') {
-      for (const outro of canais.get(topic) ?? []) if (outro !== ws) enviar(outro, { t: 'bc', topic, event: m.event.slice(0, 60), payload: m.payload ?? {} });
-      enviar(ws, { t: 'ok', ref: m.ref });
+      // TRN-SEG-03: só quem JOGA a partida transmite no canal dela; remetente vem do token, não do navegador
+      jogadorDoCanal(ws, topic).then(j => {
+        if (!j) { enviar(ws, { t: 'erro', ref: m.ref, msg: 'só os jogadores da partida' }); return; }
+        const p = (m.payload && typeof m.payload === 'object' && !Array.isArray(m.payload)) ? { ...m.payload } : {};
+        p.sender_id = ws.claims.sub; p.sender_name = j.nome;
+        if (m.event === 'rematch') p.initiator = ws.claims.sub;
+        const corpo = JSON.stringify(p);
+        if (corpo.length > 2000) { enviar(ws, { t: 'erro', ref: m.ref, msg: 'mensagem grande demais' }); return; }
+        for (const outro of canais.get(topic) ?? []) if (outro !== ws) enviar(outro, { t: 'bc', topic, event: m.event.slice(0, 60), payload: p });
+        enviar(ws, { t: 'ok', ref: m.ref });
+      }).catch(() => enviar(ws, { t: 'erro', ref: m.ref, msg: 'falha' }));
     }
   });
   ws.on('close', () => {
@@ -280,52 +341,76 @@ async function julgar(gameId) {
   const r = await pool.query('select xadrez_rt.jogo_torneio($1) j', [gameId]);
   const d = r.rows[0]?.j;
   if (!d || d.game.status !== 'active') return;
+  // TRN-REG-04: a partida acaba no PRIMEIRO fim (mate, afogamento, 50 lances, material); lance enviado depois não conta
   let e = X.inicial();
+  let f = null;
   for (const l of d.lances) {
+    f = X.fim(e);
+    if (f) break;
     const prox = X.jogar(e, { from: l.from_sq, to: l.to_sq, promo: l.promotion || undefined });
     if (!prox) return encerrarJogo(gameId, l.player_color === 'w' ? 'black_wins' : 'white_wins', 'lance_ilegal');
     e = prox;
   }
-  const f = X.fim(e);
+  if (!f) f = X.fim(e);
   if (!f) return;
   if (f.tipo === 'mate') return encerrarJogo(gameId, f.vencedor === 'w' ? 'white_wins' : 'black_wins', 'xeque_mate');
   return encerrarJogo(gameId, 'draw', f.tipo);
 }
 
-// conferência das vitórias contra a IA, uma por vez, numa thread separada
-const fila = new Set();
-let conferindo = false;
-let conferidor = null;
-function obterConferidor() {
-  if (!conferidor) {
-    conferidor = new Worker(path.join(__dirname, 'conferidor.js'));
-    conferidor.on('error', e => { console.error('[conferidor] thread caiu:', e.message); conferidor = null; });
-    conferidor.on('exit', () => { conferidor = null; });
+// conferência das vitórias contra a IA em DUAS filas (threads separadas): Fácil/Médio nunca esperam atrás de uma Expert
+// (TRN-UX-04: um Fácil de 37 ms esperou 9 min). Falha ou estouro de tempo: uma nova tentativa; na 2ª, rejeita com motivo.
+const filas = { leve: { ids: new Set(), ocupada: false, w: null }, pesada: { ids: new Set(), ocupada: false, w: null } };
+const tentativas = new Map();
+function threadDe(f) {
+  if (!f.w) {
+    f.w = new Worker(path.join(__dirname, 'conferidor.js'));
+    f.w.on('error', e => { console.error('[conferidor] thread caiu:', e.message); f.w = null; });
+    f.w.on('exit', () => { f.w = null; });
   }
-  return conferidor;
+  return f.w;
 }
-function enfileirar(id) { if (/^[0-9a-f-]{36}$/.test(String(id))) { fila.add(String(id)); proximoPlacar(); } }
-async function proximoPlacar() {
-  if (conferindo || !fila.size) return;
-  const id = fila.values().next().value;
-  fila.delete(id);
-  conferindo = true;
+async function enfileirar(id) {
+  if (!/^[0-9a-f-]{36}$/.test(String(id))) return;
+  if (filas.leve.ids.has(id) || filas.pesada.ids.has(id)) return;
+  const r = await pool.query("select (j->'score'->>'difficulty')::int dif from (select xadrez_rt.placar_para_conferir($1) j) x", [id]).catch(() => ({ rows: [] }));
+  const dif = r.rows[0]?.dif;
+  if (!dif) return;
+  const f = dif >= 3 ? filas.pesada : filas.leve;
+  f.ids.add(String(id));
+  proximoPlacar(f);
+}
+async function proximoPlacar(f) {
+  if (f.ocupada || !f.ids.size) return;
+  const id = f.ids.values().next().value;
+  f.ids.delete(id);
+  f.ocupada = true;
   try {
     const r = await pool.query('select xadrez_rt.placar_para_conferir($1) j', [id]);
     const d = r.rows[0]?.j;
     if (d) {
-      const w = obterConferidor();
-      const v = await new Promise((ok, falha) => {
-        const t = setTimeout(() => { w.terminate(); falha(new Error('conferência passou de 10 min')); }, 10 * 60_000);
-        w.once('message', m => { clearTimeout(t); ok(m); });
-        w.postMessage({ id, lances: d.lances, dificuldade: d.score.difficulty });
-      });
-      await pool.query('select xadrez_rt.veredito_placar($1, $2, $3, $4, $5)', [id, v.ok, v.motivo, v.segundos, v.aoVivo]);
-      console.log(`[conferidor] ${id} ${v.ok ? 'ok' : 'rejeitado (' + v.motivo + ')'} ${v.ms} ms${v.aoVivo ? '' : ' (não ao vivo)'}`);
+      const w = threadDe(f);
+      let v;
+      try {
+        v = await new Promise((ok, falha) => {
+          const t = setTimeout(() => { w.terminate(); falha(new Error('conferência passou de 15 min')); }, 15 * 60_000);
+          w.once('message', m => { clearTimeout(t); ok(m); });
+          w.postMessage({ id, lances: d.lances, dificuldade: d.score.difficulty });
+        });
+      } catch (e) {
+        const n = (tentativas.get(id) || 0) + 1;
+        tentativas.set(id, n);
+        console.error('[conferidor]', id, e.message, 'tentativa', n);
+        v = n >= 2 ? { ok: false, motivo: 'nao_foi_possivel_conferir', segundos: null, aoVivo: false, ms: 0 } : null;
+      }
+      if (v) {
+        await pool.query('select xadrez_rt.veredito_placar($1, $2, $3, $4, $5)', [id, v.ok, v.motivo, v.segundos, v.aoVivo]);
+        tentativas.delete(id);
+        console.log(`[conferidor] ${id} ${v.ok ? 'ok' : 'rejeitado (' + v.motivo + ')'} ${v.ms} ms${v.aoVivo ? '' : ' (não ao vivo)'}`);
+      }
     }
   } catch (e) { console.error('[conferidor]', id, e.message); }
-  conferindo = false;
-  setImmediate(proximoPlacar);
+  f.ocupada = false;
+  setImmediate(() => proximoPlacar(f));
 }
 
 // rotina a cada minuto: W.O., tempo, início de chave, encerramento de ranking, Pix vencido + reconferências

@@ -300,7 +300,7 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
   });
 
   await caso('ranking de IA encerra sozinho no fim, com o campeão gravado', async () => {
-    sql(`update tournaments set ends_at = now() - interval '1 minute' where id = '${TA.id}'`);
+    sql(`update tournaments set ends_at = now() - interval '11 minutes' where id = '${TA.id}'`);
     sql('select xadrez_rt.tick()');
     assert.equal(sql(`select status || '|' || (winner_id = '${J[0].id}') from tournaments where id = '${TA.id}'`), 'finished|true');
   });
@@ -332,14 +332,27 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
     assert.equal(sql(`select paid from tournaments where id = '${r.j.id}'`), 't');
     assert.equal((await post(org, '/functions/v1/pix-cobranca', { tournament_id: r.j.id })).j.status, 'pago');
   });
-  await caso('webhook do Mercado Pago: sem assinatura ou com assinatura falsa é recusado', async () => {
-    const semAss = await fetch(RT + '/pagamentos/mp?data.id=123&type=payment', { method: 'POST', body: '{}' });
-    assert.equal(semAss.status, 401);
-    const falsa = await fetch(RT + '/pagamentos/mp?data.id=123&type=payment', { method: 'POST', body: '{}',
-      headers: { 'x-signature': 'ts=1,v1=' + 'a'.repeat(64), 'x-request-id': 'r1' } });
-    assert.equal(falsa.status, 401);
-    const { assinaturaValida } = require('../pix');
-    assert.equal(typeof assinaturaValida, 'function');
+  await caso('aviso do Mercado Pago falso (sem assinatura / assinatura falsa / formato antigo) não muda nenhum pagamento', async () => {
+    const antes = sql(`select count(*) || '|' || coalesce(sum(case when status = 'pago' then 1 else 0 end), 0) from xadrez_rt.pagamentos`);
+    for (const [url, h] of [['/pagamentos/mp?data.id=123&type=payment', {}],
+                            ['/pagamentos/mp?data.id=123&type=payment', { 'x-signature': 'ts=1,v1=' + 'a'.repeat(64), 'x-request-id': 'r1' }],
+                            ['/pagamentos/mp?topic=payment&id=999', {}]]) {
+      const r = await fetch(RT + url, { method: 'POST', body: '{}', headers: h });
+      assert.equal(r.status, 200, 'o MP reenviaria sem fim');
+    }
+    await espera(500);
+    assert.equal(sql(`select count(*) || '|' || coalesce(sum(case when status = 'pago' then 1 else 0 end), 0) from xadrez_rt.pagamentos`), antes);
+  });
+  await caso('compartilhar: /t/<id> mostra a prévia do torneio público; privado só com o código; desconhecido vai para a lista', async () => {
+    const T6 = await criarTorneioPago(org, { p_name: 'Copa Prévia ' + PREFIXO });
+    const pub = await (await fetch(RT + '/t/' + T6.id, { headers: { host: 'novo.xadrezonline.app' } })).text();
+    assert.match(pub, /og:title" content="Inscrições abertas: Copa Prévia/);
+    assert.ok(pub.includes('/torneios?id=' + T6.id), 'não redireciona para a página do torneio');
+    const T7 = await criarTorneioPago(org, { p_name: 'Privado ' + PREFIXO, p_visibility: 'link' });
+    assert.doesNotMatch(await (await fetch(RT + '/t/' + T7.id)).text(), /Privado/, 'privado vazou pelo id');
+    assert.match(await (await fetch(RT + '/t/' + T7.share_token)).text(), /Privado/);
+    const nada = await (await fetch(RT + '/t/' + '0'.repeat(16))).text();
+    assert.ok(nada.includes('/torneios"') || nada.includes('/torneios\\"'), 'código desconhecido deveria ir para a lista');
   });
 
   // ---------- limpeza: some tudo que o teste criou (partida ↔ jogo se referenciam: desfazer o vínculo antes)

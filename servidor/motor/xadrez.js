@@ -76,6 +76,31 @@ function candidatosIA(e, dificuldade) {
 }
 
 /**
+ * O lance é um dos que a IA do site poderia escolher? Mesmo veredito que `candidatosIA(...).some(igual)`, bem mais
+ * barato (TRN-REG-03: a conferência Expert de 120 meios-lances levava 573 s): em vez do valor EXATO de cada lance da raiz
+ * (o site avalia todos com janela cheia), basta (1) o valor do melhor lance — busca com a janela da raiz subindo, que
+ * dá o melhor valor exato — e (2) o valor exato do lance jogado. Candidato ⇔ valor(jogado) dentro da margem do melhor.
+ */
+function lanceDaIAValido(e, dificuldade, lance) {
+  const depth = Number(dificuldade);
+  const leg = legais(e);
+  const jogado = leg.find(x => igual(x, lance));
+  if (!jogado) return false;
+  const max = e.turn === 'w';
+  let melhor = max ? -Infinity : Infinity;
+  for (const m of M.orderMoves(leg, e.board)) {
+    const r = M.makeMove(m, e.board, e.castling);
+    const v = max ? M.minimax(r.board, r.castling, r.enPassant, depth - 1, melhor, Infinity, false)
+                  : M.minimax(r.board, r.castling, r.enPassant, depth - 1, -Infinity, melhor, true);
+    if (max ? v > melhor : v < melhor) melhor = v;
+  }
+  const r = M.makeMove(jogado, e.board, e.castling);
+  const v = M.minimax(r.board, r.castling, r.enPassant, depth - 1, -Infinity, Infinity, !max);
+  const margem = MARGEM_IA[depth] || 15;
+  return max ? v >= melhor - margem : v <= melhor + margem;
+}
+
+/**
  * Confere uma partida contra a IA (D-TRN-02). `lances`: em ordem de move_number, cada um { from_sq, to_sq, promotion,
  * is_ai_move, created_at }. Vale só se: alternância correta (quem joga é o jogador ou a IA conforme a cor), todo lance
  * legal, todo lance da IA entre os candidatos da IA, e a partida termina em MATE a favor do jogador (sem lance depois).
@@ -92,7 +117,7 @@ function conferirPartidaIA(lances, dificuldade) {
     const daIA = e.turn !== corJogador;
     if (!!l.is_ai_move !== daIA) return { ok: false, motivo: 'alternancia', lance: i + 1 };
     const lance = { from: l.from_sq, to: l.to_sq, promo: l.promotion || undefined };
-    if (daIA && !candidatosIA(e, dificuldade).some(c => igual(c, lance))) return { ok: false, motivo: 'lance_da_ia_impossivel', lance: i + 1 };
+    if (daIA && !lanceDaIAValido(e, dificuldade, lance)) return { ok: false, motivo: 'lance_da_ia_impossivel', lance: i + 1 };
     const prox = jogar(e, lance);
     if (!prox) return { ok: false, motivo: 'lance_ilegal', lance: i + 1 };
     if (!daIA && i > 0 && l.created_at && lances[i - 1].created_at) {
@@ -105,4 +130,4 @@ function conferirPartidaIA(lances, dificuldade) {
   return { ok: true, corJogador, lances: lances.length, segundosJogador: Math.max(1, Math.round(segundos)) };
 }
 
-module.exports = { inicial, legais, jogar, fim, candidatosIA, conferirPartidaIA, materialInsuficiente, igual, MARGEM_IA, GETBESTMOVE_CONFERIDO, M };
+module.exports = { inicial, legais, jogar, fim, candidatosIA, lanceDaIAValido, conferirPartidaIA, materialInsuficiente, igual, MARGEM_IA, GETBESTMOVE_CONFERIDO, M };
