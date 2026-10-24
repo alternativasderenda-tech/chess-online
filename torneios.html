@@ -4,8 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Torneios — Xadrez Online</title>
-<meta name="description" content="Torneios de xadrez criados pela comunidade. Crie o seu ou inscreva-se nos abertos.">
+<meta name="description" content="Torneios de xadrez criados pela comunidade: eliminatória contra outras pessoas ou ranking contra a IA. Crie o seu ou inscreva-se nos abertos.">
 <meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#1a1a2e">
 <link rel="icon" href="/icon-192.png">
 <link rel="manifest" href="/manifest.json">
 
@@ -13,10 +14,11 @@
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
     --bg-dark: #1a1a2e;
+    --bg-deep: #16213e;
     --bg-card: #1e2a4a;
     --bg-soft: #232f54;
     --accent: #e2b96f;
@@ -26,482 +28,454 @@
     --danger: #ff6b6b;
     --success: #9be09b;
     --info: #6fa8e2;
+    --warn: #ffd86b;
+    --linha: rgba(255,255,255,0.08);
+    --conector: rgba(226,185,111,0.38);
   }
+  html { -webkit-text-size-adjust: 100%; }
   body {
     font-family: 'Inter', sans-serif;
     background: var(--bg-dark);
     background-image: radial-gradient(ellipse at 20% 50%, #1e2a4a 0%, transparent 50%),
                       radial-gradient(ellipse at 80% 20%, #2a1e3e 0%, transparent 50%);
+    background-attachment: fixed;
     color: var(--text-light);
     min-height: 100vh;
     padding: 18px;
+    line-height: 1.45;
   }
-  .container { max-width: 1400px; margin: 0 auto; }
+  .container { max-width: 1180px; margin: 0 auto; }
+  a { color: var(--accent); }
+  h1, h2, h3 { font-weight: 700; }
 
-  header.top {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 22px; flex-wrap: wrap; gap: 12px;
-  }
-  header.top h1 {
-    font-family: 'Playfair Display', serif; font-size: 26px; color: var(--accent);
-  }
+  /* ---------- topo ---------- */
+  header.top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 18px; flex-wrap: wrap; gap: 10px; }
+  header.top .marca { font-family: 'Playfair Display', serif; font-size: 24px; color: var(--accent); text-decoration: none; }
   .header-actions { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
-  .user-chip { font-size: 12px; color: var(--text-muted); }
+  .user-chip { font-size: 12px; color: var(--text-muted); max-width: 220px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
+  /* ---------- botões ---------- */
   .btn {
     background: var(--bg-card); border: 1px solid rgba(226,185,111,0.4);
-    color: var(--text-light); padding: 8px 14px; border-radius: 8px; cursor: pointer;
-    font-family: inherit; font-size: 13px; text-decoration: none;
-    display: inline-flex; align-items: center; gap: 6px;
+    color: var(--text-light); padding: 9px 15px; border-radius: 9px; cursor: pointer;
+    font-family: inherit; font-size: 14px; text-decoration: none; line-height: 1.2;
+    display: inline-flex; align-items: center; justify-content: center; gap: 6px; min-height: 40px;
   }
   .btn:hover { border-color: var(--accent); }
   .btn:disabled { opacity: 0.45; cursor: not-allowed; }
-  .btn.primary { background: var(--accent); color: var(--bg-dark); border: none; font-weight: 600; }
-  .btn.primary:hover { background: var(--accent2); }
-  .btn.danger { color: var(--danger); border-color: rgba(255,107,107,0.4); }
-  .btn.success { color: var(--success); border-color: rgba(155,224,155,0.4); }
-  .btn.small { padding: 5px 10px; font-size: 12px; }
+  .btn.primary { background: var(--accent); color: var(--bg-dark); border: 1px solid var(--accent); font-weight: 600; }
+  .btn.primary:hover { background: var(--accent2); border-color: var(--accent2); }
+  .btn.jogar { background: linear-gradient(135deg, #6f4cb4, #e2b96f); color: #fff; border: none; font-weight: 700; box-shadow: 0 2px 12px rgba(111,76,180,0.35); }
+  .btn.danger { color: var(--danger); border-color: rgba(255,107,107,0.45); }
+  .btn.success { color: var(--success); border-color: rgba(155,224,155,0.45); }
+  .btn.ghost { background: transparent; border-color: var(--linha); color: var(--text-muted); }
+  .btn.small { padding: 6px 11px; font-size: 12.5px; min-height: 32px; }
+  .btn.block { width: 100%; }
+  .btn.grande { font-size: 16px; padding: 13px 20px; min-height: 50px; }
 
   .status-msg { text-align: center; padding: 36px 16px; color: var(--text-muted); font-size: 14px; }
   .status-msg.error { color: var(--danger); }
 
-  /* MVP teaser pra quem não é admin */
+  /* ---------- faixas ---------- */
+  .faixa { border-radius: 10px; padding: 11px 14px; font-size: 13px; line-height: 1.5; margin-bottom: 14px; border: 1px solid; }
+  .faixa strong { font-weight: 600; }
+  .faixa.teste { background: rgba(200,140,255,0.08); border-color: rgba(200,140,255,0.35); color: #d9b3ff; }
+  .faixa.aviso { background: rgba(255,216,107,0.07); border-color: rgba(255,216,107,0.3); color: #f3dc9a; }
+  .faixa.erro { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.35); color: #ffb3b3; }
+  .faixa.ok { background: rgba(155,224,155,0.08); border-color: rgba(155,224,155,0.35); color: var(--success); }
+  .faixa.info { background: rgba(111,168,226,0.08); border-color: rgba(111,168,226,0.3); color: #b9d6f5; }
+  .faixa .acoes { margin-top: 8px; display: flex; gap: 8px; flex-wrap: wrap; }
+
   .teaser {
     background: linear-gradient(135deg, rgba(226,185,111,0.08), rgba(111,168,226,0.06));
-    border: 1px solid rgba(226,185,111,0.3);
-    border-radius: 14px; padding: 32px 28px; text-align: center; margin-bottom: 22px;
+    border: 1px solid rgba(226,185,111,0.3); border-radius: 14px; padding: 32px 24px; text-align: center; margin-bottom: 22px;
   }
-  .teaser h2 {
-    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 22px; margin-bottom: 10px;
-  }
+  .teaser h2 { font-family: 'Playfair Display', serif; color: var(--accent); font-size: 22px; margin-bottom: 10px; }
   .teaser p { color: var(--text-muted); font-size: 14px; max-width: 520px; margin: 0 auto 6px; line-height: 1.55; }
 
-  /* Disclaimer */
-  .disclaimer {
-    background: rgba(255,216,107,0.06); border-left: 3px solid #ffd86b;
-    border-radius: 4px; padding: 10px 12px; font-size: 12px; color: var(--text-muted);
-    line-height: 1.5; margin-bottom: 14px;
-  }
-  .disclaimer strong { color: #ffd86b; }
+  /* ---------- herói da lista ---------- */
+  .heroi { display: flex; justify-content: space-between; align-items: flex-end; gap: 14px; flex-wrap: wrap; margin-bottom: 16px; }
+  .heroi h1 { font-family: 'Playfair Display', serif; font-size: 30px; color: var(--text-light); line-height: 1.15; }
+  .heroi p { color: var(--text-muted); font-size: 14px; margin-top: 4px; max-width: 560px; }
 
-  /* Grid principal: lista + detalhe */
-  .main-grid {
-    display: grid; grid-template-columns: 1fr 380px; gap: 18px;
-  }
-  @media (max-width: 900px) {
-    .main-grid { grid-template-columns: 1fr; }
-    .detail-pane { position: static; max-height: none; }
-  }
+  .formatos { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 22px; }
+  .formato-box { background: rgba(30,42,74,0.7); border: 1px solid var(--linha); border-radius: 12px; padding: 13px 15px; font-size: 13px; color: var(--text-muted); }
+  .formato-box b { display: block; color: var(--text-light); font-size: 14px; margin-bottom: 3px; }
 
-  /* Painel/seção */
-  .panel {
-    background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06);
-    border-radius: 12px; padding: 18px 20px;
-  }
-  .panel h2 {
-    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 17px;
-    margin-bottom: 14px; display: flex; align-items: center; gap: 8px; justify-content: space-between;
-  }
-  .panel h2 .right { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); font-weight: 400; }
+  .secao-tit { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin: 6px 0 10px; flex-wrap: wrap; }
+  .secao-tit h2 { font-family: 'Playfair Display', serif; color: var(--accent); font-size: 19px; }
 
-  /* Tabela densa estilo "server list" */
-  table { width: 100%; border-collapse: collapse; font-size: 13px; }
-  table th {
-    text-align: left; color: var(--text-muted); font-weight: 500; padding: 8px 8px;
-    border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 11px;
-    text-transform: uppercase; letter-spacing: 0.5px; position: sticky; top: 0;
-    background: var(--bg-card); z-index: 1;
-  }
-  table td {
-    padding: 9px 8px; border-bottom: 1px solid rgba(255,255,255,0.04);
-    vertical-align: middle;
-  }
-  table tr.row { cursor: pointer; }
-  table tr.row:hover td { background: rgba(255,255,255,0.03); }
-  table tr.row.selected td { background: rgba(226,185,111,0.08); }
-  td.num, th.num { text-align: right; font-variant-numeric: tabular-nums; }
-  td.center, th.center { text-align: center; }
-
-  .pill {
-    display: inline-block; background: rgba(255,255,255,0.06); border-radius: 10px;
-    padding: 2px 9px; font-size: 10px; text-transform: uppercase; letter-spacing: 0.4px;
-    font-weight: 600;
-  }
-  .pill.ai { background: rgba(111,168,226,0.15); color: var(--info); }
-  .pill.bracket { background: rgba(226,185,111,0.15); color: var(--accent); }
-  .pill.pub { background: rgba(155,224,155,0.15); color: var(--success); }
-  .pill.appr { background: rgba(255,216,107,0.15); color: #ffd86b; }
-  .pill.link { background: rgba(200,140,255,0.15); color: #c88cff; }
-  .pill.open { background: rgba(155,224,155,0.15); color: var(--success); }
-  .pill.active { background: rgba(111,168,226,0.15); color: var(--info); }
-  .pill.finished { background: rgba(136,153,170,0.18); color: var(--text-muted); }
-  .pill.cancelled { background: rgba(255,107,107,0.15); color: var(--danger); }
-
-  /* Detalhe (right pane) */
-  .detail-pane { position: sticky; top: 18px; max-height: calc(100vh - 36px); overflow-y: auto; }
-  .detail-empty {
-    background: var(--bg-card); border: 1px dashed rgba(255,255,255,0.12);
-    border-radius: 12px; padding: 30px 20px; text-align: center; color: var(--text-muted); font-size: 13px;
-  }
-  .detail-card { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.06); border-radius: 12px; padding: 20px; }
-  .detail-card h3 {
-    font-family: 'Playfair Display', serif; font-size: 20px; color: var(--text-light);
-    line-height: 1.2; margin-bottom: 4px; word-wrap: break-word;
-  }
-  .detail-card .by { font-size: 12px; color: var(--text-muted); margin-bottom: 14px; }
-  .detail-card .prize-box {
-    background: rgba(226,185,111,0.08); border: 1px solid rgba(226,185,111,0.25);
-    border-radius: 8px; padding: 11px 13px; margin-bottom: 14px;
-  }
-  .detail-card .prize-box .lbl {
-    font-size: 10px; color: var(--accent); text-transform: uppercase;
-    letter-spacing: 0.6px; font-weight: 700; margin-bottom: 3px;
-  }
-  .detail-card .prize-box .val { font-size: 14px; color: var(--text-light); white-space: pre-wrap; }
-  .detail-card .meta { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 14px; margin-bottom: 14px; }
-  .detail-card .meta .lbl {
-    font-size: 10px; color: var(--text-muted); text-transform: uppercase;
-    letter-spacing: 0.5px; margin-bottom: 2px;
-  }
-  .detail-card .meta .val { font-size: 13px; color: var(--text-light); font-weight: 500; }
-  .detail-card .meta .full { grid-column: 1 / -1; }
-  .detail-card .description {
-    font-size: 13px; color: var(--text-muted); line-height: 1.5; margin-bottom: 14px;
-    white-space: pre-wrap; word-wrap: break-word;
-  }
-  .detail-card .actions { display: flex; flex-direction: column; gap: 8px; }
-  .detail-card .actions .btn { justify-content: center; }
-  .detail-card .state-msg {
-    background: rgba(155,224,155,0.08); border: 1px solid rgba(155,224,155,0.2); color: var(--success);
-    border-radius: 8px; padding: 10px 12px; font-size: 13px; text-align: center;
-  }
-  .detail-card .state-msg.pending { background: rgba(255,216,107,0.08); border-color: rgba(255,216,107,0.2); color: #ffd86b; }
-  .detail-card .state-msg.rejected { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.2); color: var(--danger); }
-  .detail-card .state-msg.full { background: rgba(136,153,170,0.1); border-color: rgba(136,153,170,0.2); color: var(--text-muted); }
-
-  /* Capacity bar */
-  .cap-bar {
-    background: rgba(255,255,255,0.05); border-radius: 4px; height: 6px;
-    overflow: hidden; margin-top: 6px;
-  }
-  .cap-fill { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); border-radius: 4px; }
-
-  /* Modal */
-  .modal-bg {
-    position: fixed; inset: 0; background: rgba(8,10,20,0.75); z-index: 100;
-    display: none; align-items: center; justify-content: center; padding: 18px;
-    overflow-y: auto;
-  }
-  .modal-bg.show { display: flex; }
-  .modal {
-    background: var(--bg-card); border: 1px solid rgba(255,255,255,0.08); border-radius: 14px;
-    padding: 22px 24px; max-width: 540px; width: 100%; max-height: 92vh; overflow-y: auto;
-  }
-  .modal h2 {
-    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 20px; margin-bottom: 16px;
-    display: flex; justify-content: space-between; align-items: center;
-  }
-  .modal h2 .close {
-    background: none; border: none; color: var(--text-muted); font-size: 22px;
-    cursor: pointer; line-height: 1;
-  }
-  .form-row { margin-bottom: 14px; }
-  .form-row label {
-    display: block; font-size: 11px; color: var(--text-muted);
-    text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 5px; font-weight: 600;
-  }
-  .form-row input[type=text], .form-row input[type=number], .form-row input[type=datetime-local],
-  .form-row select, .form-row textarea {
-    width: 100%; background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08);
-    color: var(--text-light); padding: 9px 11px; border-radius: 7px; font-family: inherit; font-size: 13px;
-  }
-  .form-row textarea { resize: vertical; min-height: 60px; }
-  .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
-  .form-row .hint { font-size: 11px; color: var(--text-muted); margin-top: 4px; line-height: 1.4; }
-
-  /* Tabs */
-  .tabs { display: flex; gap: 4px; border-bottom: 1px solid rgba(255,255,255,0.08); margin-bottom: 14px; }
-  .tab {
-    background: none; border: none; color: var(--text-muted); padding: 8px 14px;
-    cursor: pointer; font-family: inherit; font-size: 13px; font-weight: 500;
-    border-bottom: 2px solid transparent; margin-bottom: -1px;
+  /* abas e chips */
+  .abas { display: flex; gap: 4px; border-bottom: 1px solid var(--linha); margin-bottom: 12px; overflow-x: auto; scrollbar-width: none; }
+  .abas::-webkit-scrollbar { display: none; }
+  .aba {
+    background: none; border: none; color: var(--text-muted); padding: 9px 12px; cursor: pointer; font-family: inherit;
+    font-size: 14px; font-weight: 500; border-bottom: 2px solid transparent; margin-bottom: -1px; white-space: nowrap;
     display: inline-flex; align-items: center; gap: 6px;
   }
-  .tab:hover { color: var(--text-light); }
-  .tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-  .tab-count {
-    background: rgba(255,255,255,0.08); border-radius: 10px; padding: 1px 7px;
-    font-size: 11px; min-width: 18px; text-align: center;
-  }
-  .tab.active .tab-count { background: rgba(226,185,111,0.2); color: var(--accent); }
-
-  /* Filtros da lista */
-  .filters { margin-bottom: 14px; }
-  .filters .chip-row { margin-bottom: 10px; }
-  .filter-line {
-    display: flex; gap: 8px; align-items: center; flex-wrap: wrap;
-  }
-  .filter-sel {
-    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08);
-    color: var(--text-light); padding: 7px 28px 7px 11px; border-radius: 7px;
-    font-family: inherit; font-size: 12px; cursor: pointer; appearance: none;
-    -webkit-appearance: none; -moz-appearance: none;
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'><path fill='%238899aa' d='M0 0l5 6 5-6z'/></svg>");
-    background-repeat: no-repeat;
-    background-position: right 10px center;
-  }
-  .filter-sel:hover, .filter-sel:focus { outline: none; border-color: var(--accent); }
-  .filter-sel option { background: var(--bg-card); color: var(--text-light); }
-  .filter-toggle {
-    display: inline-flex; align-items: center; gap: 6px; font-size: 12px;
-    color: var(--text-muted); cursor: pointer; user-select: none;
-    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08);
-    padding: 6px 11px; border-radius: 7px;
-  }
-  .filter-toggle:hover { border-color: var(--accent); }
-  .filter-toggle input { accent-color: var(--accent); margin: 0; }
-  .filter-search {
-    flex: 1; min-width: 160px; background: var(--bg-soft);
-    border: 1px solid rgba(255,255,255,0.08); color: var(--text-light);
-    padding: 7px 11px; border-radius: 7px; font-family: inherit; font-size: 12px;
-  }
-  .filter-search:focus { outline: none; border-color: var(--accent); }
-
-  .chip-row { display: flex; gap: 6px; flex-wrap: wrap; }
+  .aba:hover { color: var(--text-light); }
+  .aba.ativa { color: var(--accent); border-bottom-color: var(--accent); }
+  .aba .n { background: rgba(255,255,255,0.08); border-radius: 10px; padding: 0 7px; font-size: 11px; min-width: 18px; text-align: center; }
+  .so-mob { display: none; }
+  .aba.ativa .n { background: rgba(226,185,111,0.2); }
+  .chips { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
   .chip {
-    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.08); color: var(--text-light);
-    padding: 6px 14px; border-radius: 999px; cursor: pointer; font-size: 13px; font-family: inherit;
+    background: var(--bg-soft); border: 1px solid var(--linha); color: var(--text-light);
+    padding: 6px 13px; border-radius: 999px; cursor: pointer; font-size: 13px; font-family: inherit; min-height: 32px;
   }
   .chip:hover { border-color: var(--accent); }
-  .chip.active { background: var(--accent); color: var(--bg-dark); border-color: var(--accent); font-weight: 600; }
+  .chip.ativa { background: var(--accent); color: var(--bg-dark); border-color: var(--accent); font-weight: 600; }
 
-  .form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 18px; }
-  .form-err { color: var(--danger); font-size: 13px; margin-top: 10px; }
+  /* ---------- cartões de torneio ---------- */
+  .grade { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 14px; }
+  .cartao {
+    background: var(--bg-card); border: 1px solid var(--linha); border-radius: 13px; padding: 15px 16px 14px;
+    cursor: pointer; display: flex; flex-direction: column; gap: 8px; transition: border-color .15s, transform .15s; min-width: 0;
+  }
+  .cartao:hover, .cartao:focus-visible { border-color: rgba(226,185,111,0.5); outline: none; transform: translateY(-1px); }
+  .cartao.destaque { border-color: rgba(226,185,111,0.55); box-shadow: 0 0 0 1px rgba(226,185,111,0.18); }
+  .cartao-topo { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+  .cartao h3 { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.2; color: var(--text-light); overflow-wrap: anywhere; }
+  .cartao .por { font-size: 12px; color: var(--text-muted); margin-top: -4px; }
+  .cartao .premio { font-size: 13px; color: var(--text-light); background: rgba(226,185,111,0.08); border: 1px solid rgba(226,185,111,0.2); border-radius: 8px; padding: 6px 9px; overflow-wrap: anywhere; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+  .fatos { list-style: none; display: flex; flex-direction: column; gap: 4px; font-size: 13px; color: var(--text-muted); }
+  .fatos li { display: flex; gap: 7px; align-items: baseline; }
+  .fatos li .i { width: 16px; flex: 0 0 16px; text-align: center; }
+  .fatos b { color: var(--text-light); font-weight: 500; }
+  .vagas-barra { background: rgba(255,255,255,0.06); border-radius: 4px; height: 5px; overflow: hidden; margin-top: 2px; }
+  .vagas-barra > div { height: 100%; background: linear-gradient(90deg, var(--accent2), var(--accent)); }
+  .cartao .rodape { display: flex; gap: 8px; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 4px; flex-wrap: wrap; }
+  .cartao .rodape .alerta { font-size: 12.5px; color: var(--accent); font-weight: 600; }
 
-  /* Manage modal */
-  .manage-list { max-height: 280px; overflow-y: auto; }
-  .manage-row {
-    display: flex; align-items: center; justify-content: space-between;
-    padding: 8px 4px; border-bottom: 1px solid rgba(255,255,255,0.04); gap: 8px;
+  .selo {
+    display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.06); border-radius: 999px;
+    padding: 2px 9px; font-size: 11px; font-weight: 600; letter-spacing: 0.2px; white-space: nowrap; color: var(--text-muted);
   }
-  .manage-row .who { font-size: 13px; }
-  .manage-row .actions { display: flex; gap: 6px; }
+  .selo.ai { background: rgba(111,168,226,0.15); color: var(--info); }
+  .selo.chave { background: rgba(226,185,111,0.15); color: var(--accent); }
+  .selo.aberto { background: rgba(155,224,155,0.14); color: var(--success); }
+  .selo.andamento { background: rgba(111,168,226,0.15); color: var(--info); }
+  .selo.fim { background: rgba(136,153,170,0.18); color: #b8c4d0; }
+  .selo.cancelado { background: rgba(255,107,107,0.14); color: var(--danger); }
+  .selo.pagar { background: rgba(255,216,107,0.16); color: var(--warn); }
+  .selo.conv { background: rgba(200,140,255,0.14); color: #d2a6ff; }
+  .selo.papel { background: rgba(255,255,255,0.08); color: var(--text-light); }
 
-  /* Bracket — match card (compartilhado entre tree e lista) */
-  .match-card {
-    background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px;
-    padding: 9px 11px; font-size: 12px;
-  }
-  .match-card .round-label { font-size: 10px; color: var(--text-muted); margin-bottom: 4px; }
-  .match-player {
-    display: flex; justify-content: space-between; align-items: center;
-    padding: 3px 0; gap: 6px;
-  }
-  .match-player.winner { color: var(--success); font-weight: 600; }
-  .match-player.loser { color: var(--text-muted); }
-  .match-card .vs { font-size: 10px; color: var(--text-muted); text-align: center; padding: 1px 0; }
-  .match-card .meta { font-size: 10px; color: var(--text-muted); margin-top: 6px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; justify-content: space-between; }
-  .match-card.actionable { border-color: rgba(226,185,111,0.4); box-shadow: 0 0 0 1px rgba(226,185,111,0.15); }
-  .match-card button { margin-top: 6px; width: 100%; }
+  .vazio { background: rgba(30,42,74,0.55); border: 1px dashed rgba(255,255,255,0.14); border-radius: 12px; padding: 26px 18px; text-align: center; color: var(--text-muted); font-size: 14px; }
+  .vazio .btn { margin-top: 12px; }
 
-  /* Bracket tree clássico (desktop) */
-  .bracket-tree {
-    display: flex; gap: 36px; padding: 20px 12px; overflow-x: auto; min-height: 460px;
-  }
-  .bracket-round {
-    display: flex; flex-direction: column;
-    min-width: 220px; max-width: 240px;
-  }
-  .bracket-round-label {
-    font-size: 11px; color: var(--text-muted); text-transform: uppercase;
-    letter-spacing: 0.6px; margin-bottom: 6px; text-align: center; font-weight: 600;
-  }
-  .bracket-round-content { flex: 1; display: flex; flex-direction: column; }
-  .bracket-match {
-    flex: 1; display: flex; align-items: center; position: relative; padding: 6px 0;
-  }
-  .bracket-match .match-card { width: 100%; }
+  .aviso-premio { font-size: 12px; color: var(--text-muted); line-height: 1.55; margin-top: 22px; padding: 12px 14px; border-left: 3px solid var(--warn); background: rgba(255,216,107,0.04); border-radius: 4px; }
+  .aviso-premio strong { color: var(--warn); }
 
-  /* Conectores: linha horizontal saindo pra direita */
-  .bracket-round:not(:last-child) .bracket-match::after {
-    content: ''; position: absolute; right: -18px; top: 50%;
-    width: 18px; border-top: 1px solid rgba(226,185,111,0.35);
-  }
-  /* Linha vertical entre pares (odd matches: estende pra baixo) */
-  .bracket-round:not(:last-child) .bracket-match:nth-child(odd)::before {
-    content: ''; position: absolute; right: -18px; top: 50%;
-    width: 0; height: 100%;
-    border-right: 1px solid rgba(226,185,111,0.35);
-  }
-  /* Linha horizontal de entrada (do lado esquerdo) — exceto rodada 1 */
-  .bracket-round:not(:first-child) .bracket-match {
-    padding-left: 18px;
-  }
-  .bracket-round:not(:first-child) .bracket-match .match-card {
-    position: relative;
-  }
-  .bracket-round:not(:first-child) .bracket-match .match-card::before {
-    content: ''; position: absolute; left: -18px; top: 50%;
-    width: 18px; border-top: 1px solid rgba(226,185,111,0.35);
-  }
+  /* ---------- página do torneio ---------- */
+  .voltar { margin-bottom: 12px; }
+  .t-cabeca { margin-bottom: 14px; }
+  .t-cabeca .selos { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
+  .t-cabeca h1 { font-family: 'Playfair Display', serif; font-size: 28px; line-height: 1.15; overflow-wrap: anywhere; }
+  .t-cabeca .por { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
 
-  /* Coluna do vencedor (separada à direita) */
-  .bracket-winner {
-    display: flex; flex-direction: column; justify-content: center;
-    min-width: 220px; padding: 20px 12px 20px 28px;
-    border-left: 1px dashed rgba(226,185,111,0.3); margin-left: 12px;
+  .campeao {
+    position: relative; overflow: hidden; text-align: center; border-radius: 16px; padding: 22px 18px; margin-bottom: 16px;
+    background: radial-gradient(ellipse at 50% 0%, rgba(226,185,111,0.28), rgba(226,185,111,0.05) 60%), var(--bg-card);
+    border: 1px solid rgba(226,185,111,0.55);
   }
-  .bracket-winner .crown {
-    text-align: center; font-size: 32px; margin-bottom: 8px;
-  }
-  .bracket-winner .label {
-    font-size: 10px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.6px;
-    text-align: center; margin-bottom: 4px; font-weight: 700;
-  }
-  .bracket-winner .name {
-    text-align: center; font-family: 'Playfair Display', serif; font-size: 18px;
-    color: var(--text-light); padding: 10px; background: rgba(226,185,111,0.1);
-    border: 1px solid rgba(226,185,111,0.3); border-radius: 8px;
-  }
-  .bracket-winner .pending { color: var(--text-muted); font-style: italic; }
+  .campeao .coroa { font-size: 40px; line-height: 1; }
+  .campeao .rot { font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; color: var(--accent); font-weight: 700; margin-top: 6px; }
+  .campeao .nome { font-family: 'Playfair Display', serif; font-size: 30px; color: #fff; margin: 4px 0; overflow-wrap: anywhere; }
+  .campeao .sub { font-size: 13px; color: var(--text-muted); }
 
-  /* Mobile: vira lista vertical */
-  @media (max-width: 800px) {
-    .bracket-tree { flex-direction: column; gap: 16px; padding: 8px; min-height: 0; }
-    .bracket-round { min-width: 0; max-width: none; }
-    .bracket-round-content { gap: 8px; }
-    .bracket-match { padding: 0 !important; }
-    .bracket-match .match-card::before,
-    .bracket-match::before,
-    .bracket-match::after { display: none !important; }
-    .bracket-winner { border-left: none; border-top: 1px dashed rgba(226,185,111,0.3); margin-left: 0; padding-left: 12px; padding-top: 16px; }
-  }
+  .duas { display: grid; grid-template-columns: minmax(0, 1.25fr) minmax(0, 1fr); gap: 14px; margin-bottom: 14px; align-items: start; }
+  .painel { background: var(--bg-card); border: 1px solid var(--linha); border-radius: 13px; padding: 16px 17px; min-width: 0; }
+  .painel + .painel { margin-top: 14px; }
+  .painel h2 { font-family: 'Playfair Display', serif; color: var(--accent); font-size: 18px; margin-bottom: 10px; display: flex; align-items: center; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+  .painel h2 .dir { font-family: 'Inter', sans-serif; font-size: 12px; color: var(--text-muted); font-weight: 400; }
+  .painel p { font-size: 14px; color: var(--text-muted); }
+  .painel p + p { margin-top: 6px; }
+  .painel .acoes { display: flex; flex-direction: column; gap: 8px; margin-top: 12px; }
+  .painel .acoes.linha { flex-direction: row; flex-wrap: wrap; }
 
-  /* Tournament focused view (full-width, replaces lobby) */
-  #tournament-view { display: none; }
-  #tournament-view.show { display: block; }
-  .tournament-view-header {
-    display: flex; justify-content: space-between; align-items: center;
-    margin-bottom: 14px; gap: 12px; flex-wrap: wrap;
-  }
-  .tournament-view-header h2 {
-    font-family: 'Playfair Display', serif; color: var(--accent); font-size: 22px;
-  }
-  .tournament-view-header .sub { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .sua-partida { border-color: rgba(226,185,111,0.55); box-shadow: 0 0 0 1px rgba(226,185,111,0.15); }
+  .sua-partida .vs { display: flex; align-items: center; gap: 10px; margin: 4px 0 10px; }
+  .sua-partida .vs .lado { flex: 1; min-width: 0; background: var(--bg-soft); border-radius: 10px; padding: 9px 11px; }
+  .sua-partida .vs .lado .n { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .sua-partida .vs .lado .p { font-size: 12px; color: var(--text-muted); margin-top: 2px; }
+  .sua-partida .vs .lado .p.sim { color: var(--success); }
+  .sua-partida .vs .x { color: var(--text-muted); font-size: 12px; }
+  .prazo { font-size: 13px; color: var(--text-muted); }
+  .prazo .cd { color: var(--text-light); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .espera { display: flex; align-items: center; gap: 10px; background: rgba(111,168,226,0.08); border: 1px solid rgba(111,168,226,0.3); color: #b9d6f5; border-radius: 10px; padding: 10px 12px; font-size: 13.5px; margin-top: 10px; }
+  .girando { width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.2); border-top-color: var(--info); border-radius: 50%; animation: gira 0.9s linear infinite; flex: 0 0 16px; }
+  @keyframes gira { to { transform: rotate(360deg); } }
 
-  /* Footer */
-  footer.site {
-    margin-top: 28px; text-align: center; padding-top: 18px; color: var(--text-muted);
-    font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05);
+  .ficha { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 14px; }
+  .ficha .c { min-width: 0; }
+  .ficha .c.cheia { grid-column: 1 / -1; }
+  .ficha .l { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 1px; }
+  .ficha .v { font-size: 14px; color: var(--text-light); overflow-wrap: anywhere; }
+  .ficha .v small { color: var(--text-muted); font-size: 12px; }
+  .premio-box { background: rgba(226,185,111,0.08); border: 1px solid rgba(226,185,111,0.25); border-radius: 9px; padding: 10px 12px; margin-bottom: 12px; }
+  .premio-box .l { font-size: 11px; color: var(--accent); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; margin-bottom: 2px; }
+  .premio-box .v { font-size: 14px; white-space: pre-wrap; overflow-wrap: anywhere; }
+  .descricao { font-size: 14px; color: var(--text-muted); white-space: pre-wrap; overflow-wrap: anywhere; margin-bottom: 12px; }
+
+  .estado { border-radius: 9px; padding: 10px 12px; font-size: 14px; border: 1px solid; }
+  .estado.ok { background: rgba(155,224,155,0.08); border-color: rgba(155,224,155,0.25); color: var(--success); }
+  .estado.espera { background: rgba(255,216,107,0.08); border-color: rgba(255,216,107,0.25); color: var(--warn); }
+  .estado.nao { background: rgba(255,107,107,0.08); border-color: rgba(255,107,107,0.25); color: var(--danger); }
+  .estado.neutro { background: rgba(136,153,170,0.1); border-color: rgba(136,153,170,0.22); color: #c5d0db; }
+
+  .copiar { display: flex; gap: 6px; margin-top: 6px; }
+  .copiar input, .copiar textarea {
+    flex: 1; min-width: 0; background: var(--bg-soft); border: 1px solid var(--linha); color: var(--text-light);
+    padding: 8px 10px; border-radius: 8px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px;
   }
+  .copiar textarea { resize: none; height: 64px; word-break: break-all; }
+
+  .lista-gente { display: flex; flex-direction: column; }
+  .lista-gente .pessoa { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 8px 2px; border-bottom: 1px solid rgba(255,255,255,0.05); font-size: 14px; }
+  .lista-gente .pessoa:last-child { border-bottom: none; }
+  .lista-gente .pessoa .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .lista-gente .pessoa .bts { display: flex; gap: 6px; flex: 0 0 auto; }
+  .nomes { display: flex; flex-wrap: wrap; gap: 6px; }
+  .nomes span { background: var(--bg-soft); border-radius: 999px; padding: 4px 10px; font-size: 13px; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .nomes span.eu { background: rgba(226,185,111,0.18); color: var(--accent); }
+  .sub-tit { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin: 12px 0 4px; font-weight: 600; }
+
+  /* ---------- chaveamento ---------- */
+  .rodadas-chips { display: none; gap: 6px; overflow-x: auto; margin-bottom: 10px; padding-bottom: 2px; scrollbar-width: none; }
+  .rodadas-chips::-webkit-scrollbar { display: none; }
+  .rodadas-chips .chip { white-space: nowrap; }
+  .chave-scroll { overflow-x: auto; padding-bottom: 6px; }
+  .chave { display: flex; min-width: min-content; }
+  .rodada { display: flex; flex-direction: column; width: 228px; flex: 0 0 228px; }
+  .rodada-tit { text-align: center; font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.6px; font-weight: 700; height: 26px; }
+  .rodada.atual .rodada-tit { color: var(--accent); }
+  .rodada-jogos { flex: 1; display: flex; flex-direction: column; }
+  .slot { flex: 1; display: flex; align-items: center; position: relative; padding: 6px 16px; }
+  .rodada:first-child .slot { padding-left: 0; }
+  .slot::after { content: ''; position: absolute; right: 0; top: 50%; width: 16px; border-top: 1px solid var(--conector); }
+  .rodada:not(.ultima) .slot:nth-child(odd)::before { content: ''; position: absolute; right: 0; top: 50%; height: 100%; border-right: 1px solid var(--conector); }
+  .rodada:not(:first-child) .slot .jogo::before { content: ''; position: absolute; left: -16px; top: 50%; width: 16px; border-top: 1px solid var(--conector); }
+
+  .jogo { position: relative; width: 100%; background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.07); border-radius: 9px; padding: 7px 9px; font-size: 13px; }
+  .jogo.meu { border-color: rgba(226,185,111,0.6); box-shadow: 0 0 0 1px rgba(226,185,111,0.18); }
+  .jogo.vazio-j { background: rgba(35,47,84,0.45); border-style: dashed; }
+  .jogo .ld { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 2px 0; }
+  .jogo .ld + .ld { border-top: 1px solid rgba(255,255,255,0.05); }
+  .jogo .ld .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .jogo .ld.venceu .nm { color: var(--success); font-weight: 600; }
+  .jogo .ld.perdeu .nm { color: var(--text-muted); text-decoration: line-through; text-decoration-color: rgba(136,153,170,0.5); }
+  .jogo .ld.nada .nm { color: var(--text-muted); font-style: italic; }
+  .jogo .ld .tag { font-size: 10.5px; flex: 0 0 auto; color: var(--text-muted); }
+  .jogo .ld .tag.sala { color: var(--success); }
+  .jogo .ld .tag.ok { color: var(--success); font-size: 13px; }
+  .jogo .pe { font-size: 11.5px; color: var(--text-muted); margin-top: 5px; padding-top: 5px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 6px; justify-content: space-between; align-items: center; flex-wrap: wrap; }
+  .jogo .pe .ao-vivo { color: var(--info); font-weight: 600; }
+  .jogo .pe a { color: var(--accent); text-decoration: none; }
+  .jogo .bt-forcar { margin-top: 6px; width: 100%; }
+  .voce { font-size: 10px; background: rgba(226,185,111,0.2); color: var(--accent); border-radius: 6px; padding: 0 5px; margin-left: 4px; font-weight: 700; }
+
+  .campeao-col { display: flex; flex-direction: column; width: 190px; flex: 0 0 190px; }
+  .campeao-col .slot { padding-right: 0; }
+  .campeao-col .slot::after { display: none; }
+  .campeao-col .jogo { text-align: center; padding: 12px 10px; border-color: rgba(226,185,111,0.45); background: rgba(226,185,111,0.08); }
+  .campeao-col .jogo .cr { font-size: 26px; }
+  .campeao-col .jogo .nm { font-family: 'Playfair Display', serif; font-size: 16px; overflow-wrap: anywhere; }
+  .campeao-col .jogo .nm.nada { color: var(--text-muted); font-style: italic; font-family: 'Inter', sans-serif; font-size: 13px; }
+
+  /* ---------- classificação ---------- */
+  .tabela { width: 100%; border-collapse: collapse; font-size: 14px; }
+  .tabela th { text-align: left; color: var(--text-muted); font-weight: 600; padding: 8px 6px; border-bottom: 1px solid var(--linha); font-size: 11px; text-transform: uppercase; letter-spacing: 0.4px; }
+  .tabela td { padding: 9px 6px; border-bottom: 1px solid rgba(255,255,255,0.04); }
+  .tabela .num { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+  .tabela .pos { width: 34px; text-align: center; }
+  .tabela .crit { color: var(--accent); font-weight: 700; }
+  .tabela th.crit { color: var(--accent); }
+  .tabela tr.eu td { background: rgba(226,185,111,0.08); }
+  .tabela td.nm { max-width: 0; width: 100%; padding-right: 10px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .meus-placares { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 12px; }
+  .meus-placares .mp { background: var(--bg-soft); border-radius: 9px; padding: 7px 11px; font-size: 13px; }
+  .meus-placares .mp b { font-size: 16px; margin-right: 4px; }
+  .nota { font-size: 12.5px; color: var(--text-muted); margin-top: 10px; line-height: 1.5; }
+
+  /* ---------- modais ---------- */
+  .modal-bg { position: fixed; inset: 0; background: rgba(8,10,20,0.78); z-index: 100; display: none; align-items: flex-start; justify-content: center; padding: 24px 16px; overflow-y: auto; }
+  .modal-bg.show { display: flex; }
+  .modal { background: var(--bg-card); border: 1px solid rgba(255,255,255,0.09); border-radius: 15px; padding: 20px 22px; max-width: 560px; width: 100%; margin: auto 0; }
+  .modal h2 { font-family: 'Playfair Display', serif; color: var(--accent); font-size: 21px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+  .modal h2 .fechar { background: none; border: none; color: var(--text-muted); font-size: 24px; cursor: pointer; line-height: 1; padding: 4px 6px; }
+  .form-row { margin-bottom: 15px; }
+  .form-row > label, .form-row .rot { display: block; font-size: 12px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; font-weight: 600; }
+  .form-row input[type=text], .form-row input[type=datetime-local], .form-row select, .form-row textarea {
+    width: 100%; background: var(--bg-soft); border: 1px solid var(--linha); color: var(--text-light);
+    padding: 10px 11px; border-radius: 8px; font-family: inherit; font-size: 15px; min-height: 42px;
+  }
+  .form-row input[type=datetime-local] { color-scheme: dark; }
+  .form-row textarea { resize: vertical; min-height: 64px; }
+  .form-row input:focus, .form-row select:focus, .form-row textarea:focus { outline: none; border-color: var(--accent); }
+  .form-row .dica { font-size: 12px; color: var(--text-muted); margin-top: 5px; line-height: 1.45; }
+  .form-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 12px; }
+  .opcoes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .opcoes.tres { grid-template-columns: repeat(3, 1fr); }
+  .opcoes.quatro { grid-template-columns: repeat(4, 1fr); }
+  .opcao { position: relative; display: block; cursor: pointer; }
+  .opcao input { position: absolute; opacity: 0; pointer-events: none; }
+  .opcao .cx { display: block; height: 100%; background: var(--bg-soft); border: 1px solid var(--linha); border-radius: 10px; padding: 10px 11px; font-size: 13px; color: var(--text-muted); }
+  .opcao .cx b { display: block; color: var(--text-light); font-size: 14px; margin-bottom: 2px; }
+  .opcao.mini .cx { text-align: center; padding: 9px 4px; font-size: 15px; color: var(--text-light); font-weight: 600; }
+  .opcao input:checked + .cx { border-color: var(--accent); background: rgba(226,185,111,0.1); box-shadow: 0 0 0 1px var(--accent) inset; }
+  .opcao input:focus-visible + .cx { outline: 2px solid var(--accent); outline-offset: 1px; }
+  .form-actions { display: flex; gap: 8px; justify-content: flex-end; margin-top: 16px; flex-wrap: wrap; }
+  .form-err { color: var(--danger); font-size: 13.5px; margin-top: 8px; min-height: 1em; }
+  .resumo-preco { background: var(--bg-deep); border-radius: 10px; padding: 10px 12px; font-size: 13px; color: var(--text-muted); }
+  .resumo-preco b { color: var(--accent); }
+
+  /* pagamento */
+  .pix { text-align: center; }
+  .pix .valor { font-size: 30px; font-weight: 700; color: var(--accent); }
+  .pix .qr { width: 220px; height: 220px; margin: 12px auto; background: #fff; border-radius: 12px; padding: 10px; display: flex; align-items: center; justify-content: center; }
+  .pix .qr img { width: 100%; height: 100%; image-rendering: pixelated; }
+  .pix .qr.sem { background: var(--bg-soft); border: 1px dashed rgba(255,255,255,0.2); color: var(--text-muted); font-size: 13px; padding: 18px; }
+  .pix .expira { font-size: 13px; color: var(--text-muted); margin-top: 8px; }
+  .pix .expira .cd { color: var(--text-light); font-weight: 600; font-variant-numeric: tabular-nums; }
+  .pix .copiar { text-align: left; }
+  .pix .passos { text-align: left; font-size: 13px; color: var(--text-muted); margin: 10px 0 4px; padding-left: 18px; }
+  .pix .grande-ok { font-size: 48px; line-height: 1; margin: 6px 0; }
+
+  .aviso-modal { max-width: 430px; text-align: center; }
+  .aviso-modal .ic { font-size: 42px; line-height: 1; margin-bottom: 8px; }
+  .aviso-modal h2 { justify-content: center; margin-bottom: 10px; }
+  .aviso-modal p { font-size: 14.5px; margin-bottom: 16px; white-space: pre-line; }
+  .aviso-modal .bts { display: flex; gap: 8px; justify-content: center; flex-wrap: wrap; }
+
+  .toast { position: fixed; left: 50%; bottom: 20px; transform: translateX(-50%) translateY(20px); background: #0f1830; border: 1px solid rgba(226,185,111,0.5); color: var(--text-light); padding: 10px 16px; border-radius: 10px; font-size: 14px; opacity: 0; pointer-events: none; transition: all .2s; z-index: 200; max-width: calc(100% - 32px); }
+  .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+  footer.site { margin-top: 30px; text-align: center; padding-top: 18px; color: var(--text-muted); font-size: 12px; border-top: 1px solid rgba(255,255,255,0.05); }
   footer.site a { color: var(--text-muted); margin: 0 6px; text-decoration: none; }
   footer.site a:hover { color: var(--accent); }
+
+  /* ---------- celular ---------- */
+  @media (max-width: 860px) {
+    .duas { grid-template-columns: 1fr; }
+  }
+  @media (max-width: 720px) {
+    body { padding: 14px 16px; }
+    .heroi h1 { font-size: 25px; }
+    .t-cabeca h1 { font-size: 23px; }
+    .formatos { grid-template-columns: 1fr; gap: 8px; }
+    .grade { grid-template-columns: 1fr; }
+    .rodadas-chips { display: flex; }
+    .chave-scroll { overflow: visible; }
+    .chave { flex-direction: column; min-width: 0; }
+    .rodada { width: auto; flex: none; }
+    .rodada:not(.sel) { display: none; }
+    .rodada-tit { display: none; }
+    .slot { padding: 4px 0 !important; }
+    .slot::after, .slot::before, .slot .jogo::before { display: none !important; }
+    .campeao-col { display: none; }
+    .jogo { font-size: 14px; padding: 9px 11px; }
+    .modal-bg { padding: 10px; }
+    .modal { padding: 18px 16px; }
+    .form-2 { grid-template-columns: 1fr; }
+    .opcoes.tres { grid-template-columns: 1fr; }
+    .campeao .nome { font-size: 25px; }
+    header.top .marca { font-size: 21px; }
+    .user-chip { max-width: 130px; }
+    .aba { padding: 9px 9px; font-size: 13.5px; }
+    .so-desk { display: none; }
+    .so-mob { display: inline !important; }
+  }
+  @media (max-width: 380px) {
+    .opcoes { grid-template-columns: 1fr; }
+    .opcoes.quatro { grid-template-columns: repeat(4, 1fr); }
+  }
 </style>
 </head>
 <body>
 
 <div class="container">
   <header class="top">
-    <h1>🏆 Torneios</h1>
+    <a class="marca" href="/torneios" data-acao="ir-lista">🏆 Torneios</a>
     <div class="header-actions">
       <span class="user-chip" id="user-chip"></span>
-      <button class="btn small" id="btn-logout" onclick="logout()" style="display:none">↩ Sair</button>
-      <button class="btn primary" id="btn-create" onclick="openCreateModal()" style="display:none">+ Criar Torneio</button>
-      <a class="btn" href="/">← Voltar pro jogo</a>
+      <button class="btn small ghost" id="btn-sair" data-acao="sair" style="display:none">Sair</button>
+      <button class="btn small" id="btn-entrar" data-acao="entrar" style="display:none">Entrar com Google</button>
+      <a class="btn small" href="/">← Voltar ao jogo</a>
     </div>
   </header>
 
-  <div id="not-logged" class="status-msg" style="display:none">
-    Você precisa estar logado pra ver os torneios.
-    <div style="margin-top: 12px;">
-      <button class="btn primary" onclick="loginWithGoogle()">Entrar com Google</button>
-    </div>
+  <div id="faixa-teste" class="faixa teste" style="display:none">
+    <strong>Ambiente de teste.</strong> Torneios, jogadores e pagamentos daqui são de mentira e não aparecem no site oficial.
+  </div>
+
+  <div id="carregando" class="status-msg">Carregando torneios…</div>
+
+  <div id="pedir-login" class="status-msg" style="display:none">
+    Entre com sua conta Google para ver os torneios.
+    <div style="margin-top: 12px;"><button class="btn primary" data-acao="entrar">Entrar com Google</button></div>
   </div>
 
   <div id="teaser" class="teaser" style="display:none">
     <h2>🚧 Torneios em fase de testes</h2>
-    <p>Estamos rodando os primeiros torneios com um grupo restrito de jogadores pra ajustar tudo antes de abrir pra geral.</p>
-    <p style="margin-top:10px;">Em breve qualquer pessoa vai poder criar e participar — fica de olho!</p>
+    <p>Estamos rodando os primeiros torneios com um grupo pequeno de jogadores para ajustar tudo antes de abrir para todo mundo.</p>
+    <p style="margin-top:10px;">Em breve qualquer pessoa vai poder criar e participar — fique de olho!</p>
   </div>
 
-  <div id="loading" class="status-msg">Carregando torneios...</div>
-
-  <div id="app" style="display:none">
-    <div class="disclaimer">
-      <strong>⚠ Sobre os prêmios:</strong> os prêmios são definidos exclusivamente pelo criador do torneio e a entrega é responsabilidade dele(a). O Xadrez Online não intermedia, garante nem é responsável por qualquer premiação combinada entre criador e participantes. A taxa de R$1 paga ao site cobre apenas a criação do torneio.
-    </div>
-
-    <div id="lobby-view">
-    <div class="main-grid">
-      <div class="panel">
-        <h2 id="list-title">📋 Torneios
-          <span class="right" style="display:flex; gap:10px; align-items:center;">
-            <span id="count-label"></span>
-            <button class="btn small" onclick="refreshAll()" style="padding:3px 10px; font-size:11px;">↻ Atualizar</button>
-          </span>
-        </h2>
-
-        <div class="tabs">
-          <button class="tab active" data-tab="public" onclick="setTab('public')">🌐 Públicos <span class="tab-count" id="count-public"></span></button>
-          <button class="tab" data-tab="mine" onclick="setTab('mine')">⭐ Meus <span class="tab-count" id="count-mine"></span></button>
-        </div>
-
-        <div class="filters">
-          <div class="chip-row" id="filter-format">
-            <div class="chip active" data-val="all">Todos</div>
-            <div class="chip" data-val="ai">🤖 Ranking IA</div>
-            <div class="chip" data-val="pvp_bracket">⚔ Chaveamento</div>
-          </div>
-          <div class="filter-line">
-            <select id="filter-difficulty-sel" class="filter-sel" style="display:none">
-              <option value="all">⚙ Toda dificuldade</option>
-              <option value="1">⚙ Fácil</option>
-              <option value="2">⚙ Médio</option>
-              <option value="3">⚙ Difícil</option>
-              <option value="4">⚙ Expert</option>
-            </select>
-            <select id="filter-criterion-sel" class="filter-sel" style="display:none">
-              <option value="all">🎯 Todo critério</option>
-              <option value="most_wins">🎯 Mais vitórias</option>
-              <option value="fastest_win">🎯 Vitória mais rápida</option>
-            </select>
-            <label class="filter-toggle" id="filter-available-wrap">
-              <input type="checkbox" id="filter-available" checked>
-              <span>Só com vagas</span>
-            </label>
-            <input type="text" id="filter-search" placeholder="🔍 Buscar..." class="filter-search">
-          </div>
-        </div>
-
-        <div id="list-area"></div>
+  <!-- ================= LISTA ================= -->
+  <main id="vista-lista" style="display:none">
+    <div class="heroi">
+      <div>
+        <h1>Torneios de xadrez</h1>
+        <p>Inscreva-se num torneio aberto ou crie o seu em 1 minuto. Quem cria define o prêmio.</p>
       </div>
+      <button class="btn primary grande" data-acao="criar" id="btn-criar">+ Criar torneio</button>
+    </div>
 
-      <div class="detail-pane">
-        <div id="detail-area">
-          <div class="detail-empty">Selecione um torneio à esquerda pra ver os detalhes.</div>
-        </div>
+    <div class="formatos">
+      <div class="formato-box"><b>⚔ Eliminatória</b>Você joga contra outras pessoas. Quem perde sai, quem vence passa de fase até sobrar o campeão.</div>
+      <div class="formato-box"><b>🤖 Ranking contra a IA</b>Cada um joga contra o computador quando quiser, até a data final. Ganha quem tiver mais vitórias (ou a vitória mais rápida).</div>
+    </div>
+
+    <div id="faixa-login" class="faixa info" style="display:none">
+      Para se inscrever ou criar um torneio, <a href="#" data-acao="entrar">entre com sua conta Google</a>.
+    </div>
+
+    <section id="secao-meus" style="display:none; margin-bottom: 26px;">
+      <div class="secao-tit"><h2>Meus torneios</h2></div>
+      <div class="grade" id="grade-meus"></div>
+      <div style="text-align:center; margin-top:10px;"><button class="btn small ghost" id="btn-mais-meus" data-acao="mais-meus" style="display:none">Ver todos</button></div>
+    </section>
+
+    <section>
+      <div class="abas" role="tablist">
+        <button class="aba ativa" data-acao="aba" data-aba="abertos" role="tab"><span class="so-desk">Inscrições abertas</span><span class="so-mob">Abertos</span> <span class="n" id="n-abertos"></span></button>
+        <button class="aba" data-acao="aba" data-aba="andamento" role="tab">Em andamento <span class="n" id="n-andamento"></span></button>
+        <button class="aba" data-acao="aba" data-aba="encerrados" role="tab">Encerrados <span class="n" id="n-encerrados"></span></button>
       </div>
-    </div>
-
-    <!-- Painel admin: torneios aguardando confirmação de pagamento -->
-    <div id="admin-pending-panel" class="panel" style="display:none; margin-top: 18px;">
-      <h2>💳 Aguardando confirmação de pagamento <span class="right">(admin)</span></h2>
-      <div id="admin-pending-list"></div>
-    </div>
-    </div><!-- /#lobby-view -->
-
-    <!-- View focada num torneio especifico (full width) -->
-    <div id="tournament-view" class="panel" style="padding: 18px 20px;">
-      <div class="tournament-view-header">
-        <div>
-          <h2 id="tv-name">Torneio</h2>
-          <div class="sub" id="tv-sub"></div>
-        </div>
-        <button class="btn" onclick="backToLobby()">← Voltar pra lista</button>
+      <div class="chips" id="chips-formato">
+        <button class="chip ativa" data-acao="formato" data-f="todos">Todos</button>
+        <button class="chip" data-acao="formato" data-f="pvp_bracket">⚔ Eliminatória</button>
+        <button class="chip" data-acao="formato" data-f="ai">🤖 Contra a IA</button>
       </div>
-      <div id="tv-body"></div>
+      <div class="grade" id="grade-lista"></div>
+    </section>
+
+    <div class="aviso-premio">
+      <strong>Sobre os prêmios:</strong> o prêmio é definido por quem cria o torneio, e a entrega é responsabilidade dele(a).
+      O Xadrez Online não intermedia, não garante e não se responsabiliza pela premiação combinada entre organizador e jogadores.
+      A taxa paga ao site (<span class="preco-txt">R$ 1,00</span>) cobre só a criação do torneio.
     </div>
-  </div>
+
+    <section id="secao-admin" class="painel" style="display:none; margin-top: 18px;">
+      <h2>Pagamentos pendentes <span class="dir">só admin · reserva</span></h2>
+      <p class="nota" style="margin-top:0">O Pix é confirmado sozinho. Use a confirmação manual só se um pagamento caiu e o torneio não foi liberado.</p>
+      <div id="admin-pendentes"></div>
+    </section>
+  </main>
+
+  <!-- ================= TORNEIO ================= -->
+  <main id="vista-torneio" style="display:none"></main>
 
   <footer class="site">
     <a href="/">Jogar</a> •
@@ -511,1046 +485,1257 @@
   </footer>
 </div>
 
-<!-- =================== Modal: Criar Torneio =================== -->
-<div class="modal-bg" id="modal-create">
+<!-- ================= Modal: criar ================= -->
+<div class="modal-bg" id="modal-criar" role="dialog" aria-modal="true" aria-labelledby="tit-criar">
   <div class="modal">
-    <h2>+ Criar Torneio <button class="close" onclick="closeCreateModal()">✕</button></h2>
+    <h2 id="tit-criar">Criar torneio <button class="fechar" data-acao="fechar-criar" aria-label="Fechar">✕</button></h2>
 
     <div class="form-row">
-      <label>Nome do torneio</label>
-      <input type="text" id="f-name" maxlength="60" placeholder="Ex: Copa de Domingo">
-    </div>
-
-    <div class="form-row">
-      <label>Descrição (opcional)</label>
-      <textarea id="f-description" maxlength="300" placeholder="Conte rapidinho do que se trata o torneio"></textarea>
-    </div>
-
-    <div class="form-row">
-      <label>Premiação (texto livre)</label>
-      <textarea id="f-prize" maxlength="200" placeholder="Ex: R$50 via Pix pro 1º lugar"></textarea>
-      <div class="hint">Você escolhe o que oferece. A entrega do prêmio é por sua conta — o site não intermedia.</div>
-    </div>
-
-    <div class="form-row">
-      <label>Formato</label>
-      <div class="chip-row" id="f-format-chips">
-        <div class="chip active" data-val="ai">🤖 Ranking contra IA</div>
-        <div class="chip" data-val="pvp_bracket">⚔ Chaveamento PvP</div>
+      <span class="rot">Formato</span>
+      <div class="opcoes">
+        <label class="opcao"><input type="radio" name="f-formato" value="pvp_bracket" checked><span class="cx"><b>⚔ Eliminatória</b>Contra outras pessoas. Quem perde sai.</span></label>
+        <label class="opcao"><input type="radio" name="f-formato" value="ai"><span class="cx"><b>🤖 Contra a IA</b>Ranking até a data final.</span></label>
       </div>
-      <div class="hint" id="format-hint">Cada jogador joga contra a IA. Quem fizer mais vitórias (ou a mais rápida) ganha.</div>
     </div>
 
-    <!-- Campos específicos AI -->
-    <div id="ai-fields">
+    <div class="form-row">
+      <label for="f-nome">Nome do torneio</label>
+      <input type="text" id="f-nome" maxlength="80" placeholder="Ex.: Copa de Domingo" autocomplete="off">
+    </div>
+
+    <div class="form-row">
+      <label for="f-premio">Prêmio</label>
+      <textarea id="f-premio" maxlength="200" placeholder="Ex.: R$ 50 por Pix para o campeão"></textarea>
+      <div class="dica">Você escolhe o prêmio e é você quem entrega. O site não intermedia.</div>
+    </div>
+
+    <div class="form-row">
+      <label for="f-desc">Descrição (opcional)</label>
+      <textarea id="f-desc" maxlength="1000" placeholder="Regras extras, horário combinado, grupo de WhatsApp…"></textarea>
+    </div>
+
+    <!-- eliminatória -->
+    <div id="campos-chave">
+      <div class="form-2">
+        <div class="form-row">
+          <label for="f-tempo">Tempo de cada jogador</label>
+          <select id="f-tempo">
+            <option value="300">5 minutos</option>
+            <option value="600" selected>10 minutos</option>
+            <option value="900">15 minutos</option>
+            <option value="1800">30 minutos</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="f-prazo">Prazo de cada rodada</label>
+          <select id="f-prazo">
+            <option value="1">1 hora</option>
+            <option value="2">2 horas</option>
+            <option value="6">6 horas</option>
+            <option value="12">12 horas</option>
+            <option value="24" selected>1 dia</option>
+            <option value="48">2 dias</option>
+            <option value="72">3 dias</option>
+            <option value="168">7 dias</option>
+          </select>
+        </div>
+      </div>
+      <div class="dica" style="font-size:12px; color:var(--text-muted); margin:-6px 0 14px;">Prazo para começar a partida. Quem não aparecer até o fim do prazo perde por W.O.</div>
+    </div>
+
+    <!-- IA -->
+    <div id="campos-ia" style="display:none">
+      <div class="form-2">
+        <div class="form-row">
+          <label for="f-dific">Nível da IA</label>
+          <select id="f-dific">
+            <option value="1">Fácil</option>
+            <option value="2" selected>Médio</option>
+            <option value="3">Difícil</option>
+            <option value="4">Expert</option>
+          </select>
+        </div>
+        <div class="form-row">
+          <label for="f-crit">Quem ganha</label>
+          <select id="f-crit">
+            <option value="most_wins" selected>Mais vitórias</option>
+            <option value="fastest_win">Vitória mais rápida</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <span class="rot" id="rot-vagas">Número de vagas</span>
+      <div class="opcoes quatro" role="radiogroup" aria-labelledby="rot-vagas">
+        <label class="opcao mini"><input type="radio" name="f-vagas" value="4"><span class="cx">4</span></label>
+        <label class="opcao mini"><input type="radio" name="f-vagas" value="8" checked><span class="cx">8</span></label>
+        <label class="opcao mini"><input type="radio" name="f-vagas" value="16"><span class="cx">16</span></label>
+        <label class="opcao mini"><input type="radio" name="f-vagas" value="32"><span class="cx">32</span></label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <span class="rot">Quem pode entrar</span>
+      <div class="opcoes tres">
+        <label class="opcao"><input type="radio" name="f-vis" value="public" checked><span class="cx"><b>Qualquer pessoa</b>Inscrição direta.</span></label>
+        <label class="opcao"><input type="radio" name="f-vis" value="approval"><span class="cx"><b>Com aprovação</b>Você aprova cada um.</span></label>
+        <label class="opcao"><input type="radio" name="f-vis" value="link"><span class="cx"><b>Só convidados</b>Fora da lista; entra quem tiver o link.</span></label>
+      </div>
+    </div>
+
+    <div class="form-2">
       <div class="form-row">
-        <label>Dificuldade da IA</label>
-        <select id="f-difficulty">
-          <option value="1">Fácil</option>
-          <option value="2" selected>Médio</option>
-          <option value="3">Difícil</option>
-          <option value="4">Expert</option>
-        </select>
+        <label for="f-inicio">Começa em</label>
+        <input type="datetime-local" id="f-inicio">
       </div>
-      <div class="form-row">
-        <label>Critério de classificação</label>
-        <select id="f-criterion">
-          <option value="most_wins" selected>Mais vitórias</option>
-          <option value="fastest_win">Vitória mais rápida</option>
-        </select>
-      </div>
-      <div class="form-row">
-        <label>Encerra em</label>
-        <input type="datetime-local" id="f-ends-at">
+      <div class="form-row" id="linha-fim" style="display:none">
+        <label for="f-fim">Termina em</label>
+        <input type="datetime-local" id="f-fim">
       </div>
     </div>
+    <div class="dica" id="dica-inicio" style="font-size:12px; color:var(--text-muted); margin:-6px 0 14px;"></div>
 
-    <!-- Campos específicos Bracket -->
-    <div id="bracket-fields" style="display:none">
-      <div class="form-row">
-        <label>Prazo de cada rodada (horas)</label>
-        <input type="number" id="f-deadline" value="48" min="1" max="720">
-        <div class="hint">Se um jogador não jogar dentro do prazo, leva W.O.</div>
-      </div>
-      <div class="form-row">
-        <label>Tempo por jogador na partida</label>
-        <select id="f-time-control">
-          <option value="0">Sem limite</option>
-          <option value="300">5 minutos</option>
-          <option value="600" selected>10 minutos</option>
-          <option value="900">15 minutos</option>
-          <option value="1800">30 minutos</option>
-        </select>
-      </div>
-    </div>
+    <div class="resumo-preco">Para publicar, você paga <b class="preco-txt">R$ 1,00</b> por Pix logo depois de criar. O torneio só aparece para os outros depois do pagamento.</div>
 
-    <div class="form-row">
-      <label>Capacidade</label>
-      <div class="chip-row" id="f-capacity-chips">
-        <div class="chip" data-val="4">4</div>
-        <div class="chip active" data-val="8">8</div>
-        <div class="chip" data-val="16">16</div>
-        <div class="chip" data-val="32">32</div>
-      </div>
-    </div>
-
-    <div class="form-row">
-      <label>Quem pode entrar</label>
-      <div class="chip-row" id="f-visibility-chips">
-        <div class="chip active" data-val="public">🌐 Público</div>
-        <div class="chip" data-val="approval">🛡 Com aprovação</div>
-        <div class="chip" data-val="link">🔗 Só com link</div>
-      </div>
-      <div class="hint" id="vis-hint">Qualquer jogador logado pode se inscrever direto.</div>
-    </div>
-
-    <div class="form-row">
-      <label>Início</label>
-      <input type="datetime-local" id="f-starts-at">
-    </div>
-
-    <div class="form-err" id="create-err"></div>
-
+    <div class="form-err" id="criar-erro" role="alert"></div>
     <div class="form-actions">
-      <button class="btn" onclick="closeCreateModal()">Cancelar</button>
-      <button class="btn primary" id="btn-submit-create" onclick="submitCreate()">Criar (R$1)</button>
+      <button class="btn ghost" data-acao="fechar-criar">Cancelar</button>
+      <button class="btn primary" id="btn-enviar-criar" data-acao="enviar-criar">Criar e pagar</button>
     </div>
   </div>
 </div>
 
-<!-- =================== Modal: Pagamento =================== -->
-<div class="modal-bg" id="modal-payment">
-  <div class="modal">
-    <h2>💳 Confirmação de pagamento <button class="close" onclick="closePaymentModal()">✕</button></h2>
-    <p style="font-size:13px; color: var(--text-muted); line-height: 1.55; margin-bottom: 14px;">
-      Seu torneio foi criado, mas ainda não está visível pra outros jogadores.
-      Pra liberar, faça um Pix de <strong style="color: var(--accent)">R$ 1,00</strong> pra a chave abaixo e
-      mande comprovante pra <a href="mailto:alternativasderenda@gmail.com" style="color:var(--accent)">alternativasderenda@gmail.com</a>.
-    </p>
-    <div style="background: var(--bg-soft); padding: 14px; border-radius: 8px; text-align: center; margin-bottom: 14px;">
-      <div style="font-size: 11px; color: var(--text-muted); margin-bottom: 4px;">Chave Pix (e-mail)</div>
-      <div style="font-family: monospace; font-size: 15px; color: var(--accent); user-select: all;">alternativasderenda@gmail.com</div>
-    </div>
-    <p style="font-size: 12px; color: var(--text-muted); line-height: 1.4;">
-      Depois que o pagamento for confirmado manualmente pelo admin, o torneio aparece pros outros jogadores.
-      Você pode acompanhar em "Meus torneios" (em breve).
-    </p>
-    <div class="form-actions">
-      <button class="btn primary" onclick="closePaymentModal()">Entendi</button>
-    </div>
+<!-- ================= Modal: pagamento ================= -->
+<div class="modal-bg" id="modal-pix" role="dialog" aria-modal="true" aria-labelledby="tit-pix">
+  <div class="modal" style="max-width: 460px;">
+    <h2 id="tit-pix">Pagar com Pix <button class="fechar" data-acao="fechar-pix" aria-label="Fechar">✕</button></h2>
+    <div id="pix-corpo"></div>
   </div>
 </div>
 
-<!-- =================== Modal: Gerenciar =================== -->
-<div class="modal-bg" id="modal-manage">
-  <div class="modal">
-    <h2>⚙ Gerenciar torneio <button class="close" onclick="closeManageModal()">✕</button></h2>
-    <div id="manage-body"></div>
+<!-- ================= Modal: forçar resultado ================= -->
+<div class="modal-bg" id="modal-resultado" role="dialog" aria-modal="true" aria-labelledby="tit-res">
+  <div class="modal" style="max-width: 440px;">
+    <h2 id="tit-res">Definir vencedor <button class="fechar" data-acao="fechar-resultado" aria-label="Fechar">✕</button></h2>
+    <div id="resultado-corpo"></div>
   </div>
 </div>
 
-<!-- =================== Modal: Reportar resultado =================== -->
-<div class="modal-bg" id="modal-result">
-  <div class="modal">
-    <h2>📝 Reportar resultado <button class="close" onclick="closeResultModal()">✕</button></h2>
-    <div id="result-body"></div>
+<!-- ================= Modal: aviso/confirmação ================= -->
+<div class="modal-bg" id="modal-aviso" role="alertdialog" aria-modal="true" aria-labelledby="aviso-tit">
+  <div class="modal aviso-modal">
+    <div class="ic" id="aviso-ic">ℹ️</div>
+    <h2 id="aviso-tit">Aviso</h2>
+    <p id="aviso-msg"></p>
+    <div class="bts" id="aviso-bts"></div>
   </div>
 </div>
 
-<!-- =================== Modal: Aviso/Confirmação genéricos =================== -->
-<div class="modal-bg" id="modal-notice">
-  <div class="modal" style="max-width: 420px; text-align: center;">
-    <div id="notice-icon" style="font-size: 44px; line-height: 1; margin-bottom: 10px;">ℹ️</div>
-    <h2 id="notice-title" style="display:block; text-align:center; margin-bottom: 12px; justify-content: center;">Aviso</h2>
-    <p id="notice-message" style="font-size: 14px; color: var(--text-light); margin-bottom: 18px; line-height: 1.5; white-space: pre-line;"></p>
-    <div id="notice-buttons" style="display: flex; gap: 8px; justify-content: center; flex-wrap: wrap;"></div>
-  </div>
-</div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script>
-const SUPABASE_URL = location.origin;
-const SUPABASE_ANON = (window.XADREZ_CONFIG || {}).anon;
-const supa = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON);
+'use strict';
+// ============================================================ configuração
+const CFG = window.XADREZ_CONFIG || {};
+const AMBIENTE_TESTE = CFG.ambiente === 'teste';
+// TRAVA DE LANÇAMENTO (único lugar): no site oficial, só admin e estes e-mails veem os torneios.
+// Para lançar para todo mundo, troque `paraTodos` para true. No ambiente de teste fica sempre liberado.
+const TORNEIOS_LIBERADOS = { paraTodos: false, emails: ['novacanabiodieselbr@gmail.com'] };
 
-// E-mails liberados pra usar a UI durante o MVP (sem ser admin).
-// Veem a tela completa mas NAO veem o painel admin de Pix.
-const BETA_EMAILS = ['novacanabiodieselbr@gmail.com'];
+const supa = window.supabase.createClient(location.origin, CFG.anon);
 
-let currentUser = null;
-let isAdmin = false;
-let isBeta = false;
-let publicTournaments = [];   // list_open_tournaments (paid + public/approval)
-let myTournaments = [];       // list_my_tournaments (criados + participo, qualquer status)
-let selectedId = null;
-let selectedDetail = null;
-let currentTab = 'public';
-let filters = {
-  format: 'all', search: '', available: true,
-  difficulty: 'all', criterion: 'all'
+const E = {
+  user: null, admin: false, preco: null, liberado: false,
+  abertos: [], andamento: [], encerrados: [], meus: [], nomesCampeoes: {}, alertas: {},
+  aba: 'abertos', formato: 'todos', verTodosMeus: false,
+  tid: null, token: null, det: null, assinatura: '', rodadaSel: null, esperandoSala: null,
+  timer: null, pix: null, resultadoMatch: null,
 };
 
-// Compat: alguns lugares ainda usam 'tournaments'
-function activeList() { return currentTab === 'mine' ? myTournaments : publicTournaments; }
-Object.defineProperty(window, 'tournaments', { get: () => activeList() });
-
+// ============================================================ utilidades
+const $ = id => document.getElementById(id);
 function esc(s) {
   if (s === null || s === undefined) return '';
-  return String(s).replace(/[<>&"']/g, c => ({'<':'&lt;','>':'&gt;','&':'&amp;','"':'&quot;',"'":'&#39;'}[c]));
+  return String(s).replace(/[<>&"']/g, c => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;', '"': '&quot;', "'": '&#39;' }[c]));
 }
-function fmtDT(iso) {
-  if (!iso) return '-';
+const DIAS = ['dom', 'seg', 'ter', 'qua', 'qui', 'sex', 'sáb'];
+const p2 = n => String(n).padStart(2, '0');
+function fmtData(iso) {
+  if (!iso) return '—';
   const d = new Date(iso);
-  return d.toLocaleString('pt-BR', { day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' });
+  return `${DIAS[d.getDay()]} ${p2(d.getDate())}/${p2(d.getMonth() + 1)} às ${p2(d.getHours())}:${p2(d.getMinutes())}`;
 }
-function fmtSeconds(s) {
-  if (!s) return '-';
-  const m = Math.floor(s / 60);
-  return `${m}:${String(s % 60).padStart(2, '0')}`;
+function fmtDur(ms, grosso) {
+  if (ms < 0) ms = 0;
+  const s = Math.floor(ms / 1000), d = Math.floor(s / 86400), h = Math.floor((s % 86400) / 3600), m = Math.floor((s % 3600) / 60), ss = s % 60;
+  if (d) return h ? `${d} d ${h} h` : `${d} d`;
+  if (h) return `${h} h ${p2(m)} min`;
+  if (grosso || m >= 10) return `${Math.max(1, m)} min`;
+  return `${m}:${p2(ss)}`;
 }
-function fmtDifficulty(d) {
-  return ({1:'Fácil', 2:'Médio', 3:'Difícil', 4:'Expert'})[d] || ('Nv ' + d);
+function rel(iso) {
+  const ms = new Date(iso) - Date.now();
+  return ms >= 0 ? 'em ' + fmtDur(ms, true) : 'há ' + fmtDur(-ms, true);
 }
-function fmtCriterion(c) {
-  return c === 'fastest_win' ? 'Vitória mais rápida' : 'Mais vitórias';
+function fmtSeg(s) {
+  if (s === null || s === undefined) return '—';
+  s = Math.round(s);
+  if (s < 60) return s + ' s';
+  if (s < 3600) return Math.floor(s / 60) + ' min ' + p2(s % 60) + ' s';
+  return Math.floor(s / 3600) + ' h ' + p2(Math.floor((s % 3600) / 60)) + ' min';
 }
-function fmtFormat(f) {
-  return f === 'ai' ? 'Ranking IA' : 'Chaveamento';
-}
-function fmtVisibility(v) {
-  return v === 'public' ? 'Público' : v === 'approval' ? 'Aprovação' : 'Link';
+const fmtBRL = v => Number(v || 0).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+const DIFIC = { 1: 'Fácil', 2: 'Médio', 3: 'Difícil', 4: 'Expert' };
+const CRIT = { most_wins: 'Mais vitórias', fastest_win: 'Vitória mais rápida' };
+const CRIT_EXPL = {
+  most_wins: 'Ganha quem tiver <b>mais vitórias</b> contra a IA até o fim. Empate em vitórias: vence quem tiver o melhor tempo.',
+  fastest_win: 'Ganha quem vencer a IA <b>no menor tempo</b>. Conta só o seu tempo pensando (o da IA não entra). Empate: vence quem tiver mais vitórias.',
+};
+const VIS = { public: 'Qualquer pessoa', approval: 'Com aprovação', link: 'Só convidados' };
+const agora = () => Date.now();
+const ms = iso => (iso ? new Date(iso).getTime() : NaN);
+const minutos = s => Math.round(s / 60) + ' min';
+function horas(h) { return h >= 24 && h % 24 === 0 ? (h / 24) + (h === 24 ? ' dia' : ' dias') : h + (h === 1 ? ' hora' : ' horas'); }
+
+let toastT = null;
+function toast(msg) {
+  const el = $('toast'); el.textContent = msg; el.classList.add('show');
+  clearTimeout(toastT); toastT = setTimeout(() => el.classList.remove('show'), 2600);
 }
 
-async function loginWithGoogle() {
-  await supa.auth.signInWithOAuth({
-    provider: 'google',
-    options: { redirectTo: window.location.origin + '/torneios' }
-  });
+// mensagens do servidor (em inglês) em linguagem simples
+function traduz(err) {
+  const m = String((err && (err.message || err.error)) || err || '');
+  const T = [
+    [/login required|authentication required/i, 'Entre com sua conta Google para continuar.'],
+    [/JWT expired|invalid JWT|PGRST30/i, 'Sua sessão expirou. Saia e entre de novo.'],
+    [/tournament not found|not found/i, 'Torneio não encontrado. Se veio por convite, confira se o link está completo.'],
+    [/tournament not open/i, 'As inscrições deste torneio estão fechadas.'],
+    [/tournament has ended/i, 'Este torneio já terminou.'],
+    [/has not started yet/i, 'O torneio ainda não começou.'],
+    [/creator cannot join/i, 'Quem organiza o torneio não pode jogar nele.'],
+    [/registration was rejected/i, 'Sua inscrição foi recusada pelo organizador.'],
+    [/tournament full/i, 'Não há mais vagas.'],
+    [/cannot leave after start/i, 'Não dá para sair depois que o torneio começou.'],
+    [/already started/i, 'O torneio já começou.'],
+    [/participant left/i, 'Esse jogador saiu do torneio.'],
+    [/need at least 2/i, 'É preciso ter pelo menos 2 inscritos aprovados para começar.'],
+    [/not paid/i, 'O torneio ainda não foi pago.'],
+    [/match not active/i, 'Esta partida já terminou.'],
+    [/tournament not active/i, 'O torneio não está em andamento.'],
+    [/match already decided/i, 'Essa partida já tem resultado.'],
+    [/winner must be/i, 'O vencedor tem de ser um dos dois jogadores.'],
+    [/only admin can cancel after start/i, 'Depois que o torneio começa, só a administração do site pode cancelar.'],
+    [/already closed/i, 'Este torneio já foi encerrado.'],
+    [/still being checked/i, 'Ainda há partidas sendo conferidas. Tente de novo em um minuto.'],
+    [/starts_at must be in the future/i, 'A data de início precisa ser no futuro.'],
+    [/too many unpaid/i, 'Você já tem 5 torneios esperando pagamento. Pague ou cancele algum antes de criar outro.'],
+    [/at most 60 days/i, 'O ranking pode durar no máximo 60 dias.'],
+    [/ends_at must be after/i, 'O fim precisa ser depois do início.'],
+    [/round deadline too short/i, 'O prazo da rodada é curto demais para esse tempo de partida.'],
+    [/name must have/i, 'O nome precisa ter de 3 a 80 caracteres.'],
+    [/prize must have/i, 'Descreva o prêmio (até 200 caracteres).'],
+    [/description too long/i, 'A descrição passou de 1000 caracteres.'],
+    [/only creator|only creator\/admin/i, 'Só quem organiza o torneio pode fazer isso.'],
+    [/somente os jogadores/i, 'Só os dois jogadores da partida podem entrar na sala.'],
+    [/Failed to fetch|NetworkError|Load failed/i, 'Sem conexão com o servidor. Confira sua internet e tente de novo.'],
+  ];
+  for (const [re, txt] of T) if (re.test(m)) return txt;
+  return m || 'Algo deu errado. Tente de novo.';
 }
 
-async function logout() {
-  const ok = await showConfirm('Sair da sua conta?', { okLabel: 'Sair', cancelLabel: 'Continuar logado' });
-  if (!ok) return;
-  await supa.auth.signOut();
-  window.location.href = '/';
-}
-
-// ============== MODAIS DE AVISO / CONFIRMACAO ==============
-function showNotice(opts) {
-  return new Promise(resolve => {
-    document.getElementById('notice-icon').textContent = opts.icon || 'ℹ️';
-    document.getElementById('notice-title').textContent = opts.title || 'Aviso';
-    document.getElementById('notice-message').textContent = opts.message || '';
-    const container = document.getElementById('notice-buttons');
-    container.innerHTML = '';
-    (opts.buttons || [{ label: 'OK', value: true, primary: true }]).forEach(btn => {
-      const button = document.createElement('button');
-      button.className = 'btn' + (btn.primary ? ' primary' : '');
-      button.style.minWidth = '100px';
-      button.textContent = btn.label;
-      button.addEventListener('click', () => {
-        document.getElementById('modal-notice').classList.remove('show');
-        resolve(btn.value);
-      });
-      container.appendChild(button);
+// ---------------------------------------------------------------- modais de aviso
+function aviso(o) {
+  return new Promise(res => {
+    $('aviso-ic').textContent = o.icone || 'ℹ️';
+    $('aviso-tit').textContent = o.titulo || 'Aviso';
+    $('aviso-msg').textContent = o.msg || '';
+    const c = $('aviso-bts'); c.innerHTML = '';
+    (o.botoes || [{ txt: 'OK', v: true, prim: true }]).forEach(b => {
+      const el = document.createElement('button');
+      el.className = 'btn' + (b.prim ? ' primary' : '') + (b.perigo ? ' danger' : '');
+      el.style.minWidth = '110px'; el.textContent = b.txt;
+      el.addEventListener('click', () => { $('modal-aviso').classList.remove('show'); res(b.v); });
+      c.appendChild(el);
     });
-    document.getElementById('modal-notice').classList.add('show');
+    $('modal-aviso').classList.add('show');
   });
 }
+const erro = e => aviso({ icone: '⚠️', titulo: 'Não deu certo', msg: traduz(e) });
+const confirma = (msg, ok, o = {}) => aviso({ icone: o.icone || '❓', titulo: o.titulo || 'Confirmar', msg,
+  botoes: [{ txt: o.voltar || 'Voltar', v: false }, { txt: ok || 'Confirmar', v: true, prim: !o.perigo, perigo: !!o.perigo }] });
 
-function showAlert(message, opts) {
-  opts = opts || {};
-  const icon = opts.icon || (opts.error ? '⚠️' : (opts.success ? '✅' : 'ℹ️'));
-  const title = opts.title || (opts.error ? 'Erro' : (opts.success ? 'Sucesso' : 'Aviso'));
-  return showNotice({
-    icon, title, message,
-    buttons: [{ label: opts.okLabel || 'OK', value: true, primary: true }]
-  });
+async function copiar(txt) {
+  try { await navigator.clipboard.writeText(txt); }
+  catch {
+    const t = document.createElement('textarea'); t.value = txt; document.body.appendChild(t); t.select();
+    try { document.execCommand('copy'); } catch { /* sem cópia */ } t.remove();
+  }
+  toast('Copiado!');
 }
 
-function showConfirm(message, opts) {
-  opts = opts || {};
-  return showNotice({
-    icon: opts.icon || '❓',
-    title: opts.title || 'Confirmar',
-    message,
-    buttons: [
-      { label: opts.cancelLabel || 'Cancelar', value: false, primary: false },
-      { label: opts.okLabel || 'Confirmar', value: true, primary: true }
-    ]
-  });
+// ============================================================ sessão e trava
+async function entrar() {
+  try { sessionStorage.setItem('torneios-voltar', location.search); } catch { /* ok */ }
+  await supa.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: location.origin + '/torneios' } });
+}
+async function sair() {
+  if (!await confirma('Sair da sua conta?', 'Sair')) return;
+  await supa.auth.signOut();
+  location.href = '/';
 }
 
 async function init() {
+  if (AMBIENTE_TESTE) $('faixa-teste').style.display = '';
+  // volta para o torneio que a pessoa abriu antes do login
+  try {
+    const v = sessionStorage.getItem('torneios-voltar');
+    if (v && !location.search) { sessionStorage.removeItem('torneios-voltar'); history.replaceState(null, '', '/torneios' + v); }
+  } catch { /* ok */ }
+
   const { data: { session } } = await supa.auth.getSession();
-  if (!session) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('not-logged').style.display = 'block';
+  E.user = session ? session.user : null;
+  if (E.user) {
+    const nome = E.user.user_metadata?.full_name || E.user.user_metadata?.name || E.user.email;
+    $('user-chip').textContent = '👤 ' + nome;
+    $('btn-sair').style.display = '';
+    const { data: adm } = await supa.from('admin_users').select('user_id').eq('user_id', E.user.id).maybeSingle();
+    E.admin = !!adm;
+  } else {
+    $('btn-entrar').style.display = '';
+  }
+  const email = (E.user?.email || '').toLowerCase();
+  E.liberado = AMBIENTE_TESTE || TORNEIOS_LIBERADOS.paraTodos || E.admin || TORNEIOS_LIBERADOS.emails.includes(email);
+  if (!E.liberado) {
+    $('carregando').style.display = 'none';
+    if (!E.user) $('pedir-login').style.display = '';
+    $('teaser').style.display = '';
     return;
   }
-  currentUser = session.user;
-  const userName = currentUser.user_metadata?.full_name || currentUser.user_metadata?.name || currentUser.email;
-  document.getElementById('user-chip').textContent = '👤 ' + userName;
-  document.getElementById('btn-logout').style.display = 'inline-flex';
-
-  // Verifica admin
-  const { data: adminRow } = await supa.from('admin_users')
-    .select('user_id').eq('user_id', currentUser.id).maybeSingle();
-  isAdmin = !!adminRow;
-  isBeta = BETA_EMAILS.includes((currentUser.email || '').toLowerCase());
-
-  // MVP: só admin + beta-testers veem a UI completa.
-  // Resto vê o teaser "em breve".
-  if (!isAdmin && !isBeta) {
-    document.getElementById('loading').style.display = 'none';
-    document.getElementById('teaser').style.display = 'block';
-    return;
-  }
-
-  // Admin OU beta: pode criar e participar
-  document.getElementById('btn-create').style.display = 'inline-flex';
-  await loadTournaments();
-  // Painel admin de Pix: só pra admin
-  if (isAdmin) {
-    document.getElementById('admin-pending-panel').style.display = 'block';
-    await loadAdminPending();
-  }
-  document.getElementById('loading').style.display = 'none';
-  document.getElementById('app').style.display = 'block';
+  supa.rpc('tournament_price').then(({ data }) => {
+    if (data !== null && data !== undefined) { E.preco = Number(data); document.querySelectorAll('.preco-txt').forEach(el => { el.textContent = fmtBRL(E.preco); }); atualizarBotaoCriar(); }
+  });
+  if (!E.user) $('faixa-login').style.display = '';
+  window.addEventListener('popstate', rotear);
+  setInterval(tique, 1000);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) atualizarAgora(); });
+  await rotear();
+  $('carregando').style.display = 'none';
 }
 
-// Filtros
-document.getElementById('filter-format').addEventListener('click', e => {
-  const chip = e.target.closest('.chip'); if (!chip) return;
-  document.querySelectorAll('#filter-format .chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  filters.format = chip.dataset.val;
-  // Sub-filtros só fazem sentido em formato IA
-  const showAi = filters.format === 'ai';
-  document.getElementById('filter-difficulty-sel').style.display = showAi ? '' : 'none';
-  document.getElementById('filter-criterion-sel').style.display = showAi ? '' : 'none';
-  if (!showAi) {
-    filters.difficulty = 'all';
-    filters.criterion = 'all';
-    document.getElementById('filter-difficulty-sel').value = 'all';
-    document.getElementById('filter-criterion-sel').value = 'all';
+function lerUrl() {
+  const q = new URLSearchParams(location.search);
+  return { id: q.get('id'), token: q.get('t') || q.get('convite') };
+}
+async function rotear() {
+  const { id, token } = lerUrl();
+  clearTimeout(E.timer);
+  if (id || token) {
+    if (E.tid !== id || E.token !== token) { E.det = null; E.assinatura = ''; E.rodadaSel = null; E.rodadaManual = false; E.esperandoSala = null; }
+    E.tid = id; E.token = token;
+    $('vista-lista').style.display = 'none';
+    $('vista-torneio').style.display = '';
+    if (!E.det) $('vista-torneio').innerHTML = '<div class="status-msg">Carregando torneio…</div>';
+    await carregarTorneio();
+  } else {
+    E.tid = null; E.token = null; E.det = null; E.esperandoSala = null;
+    document.title = 'Torneios — Xadrez Online';
+    $('vista-torneio').style.display = 'none';
+    $('vista-lista').style.display = '';
+    await carregarLista();
   }
-  renderList();
-});
-document.getElementById('filter-difficulty-sel').addEventListener('change', e => {
-  filters.difficulty = e.target.value;
-  renderList();
-});
-document.getElementById('filter-criterion-sel').addEventListener('change', e => {
-  filters.criterion = e.target.value;
-  renderList();
-});
-document.getElementById('filter-available').addEventListener('change', e => {
-  filters.available = e.target.checked;
-  renderList();
-});
-document.getElementById('filter-search').addEventListener('input', e => {
-  filters.search = e.target.value;
-  renderList();
-});
-
-// Refresh manual: recarrega tudo (lista pública + detalhe atual + painel admin)
-async function refreshAll() {
-  await loadTournaments();
-  if (selectedId) await loadDetail(selectedId);
-  if (isAdmin) await loadAdminPending();
+}
+function irPara(qs) {
+  history.pushState(null, '', '/torneios' + (qs ? '?' + qs : ''));
+  window.scrollTo(0, 0);
+  rotear();
+}
+function agendar() {
+  clearTimeout(E.timer);
+  let espera = 30000;
+  if (E.tid) espera = precisaRapido() ? 4000 : 15000;
+  E.timer = setTimeout(async () => {
+    if (!document.hidden) { try { await atualizarAgora(true); } catch (e) { console.error(e); } }
+    agendar();
+  }, espera);
+}
+async function atualizarAgora(silencioso) {
+  if (E.tid || E.token) await carregarTorneio(silencioso); else await carregarLista();
 }
 
-// ============== LISTAGEM ==============
-async function loadTournaments() {
-  const [pubRes, mineRes] = await Promise.all([
+// relógios na tela: <span data-ate="ISO" data-fim="texto">
+function tique() {
+  document.querySelectorAll('[data-ate]').forEach(el => {
+    const falta = ms(el.dataset.ate) - agora();
+    if (falta > 0) el.textContent = fmtDur(falta);
+    else if (!el.dataset.zerou) {
+      el.dataset.zerou = '1'; el.textContent = el.dataset.fim || 'agora';
+      if (el.dataset.recarregar) setTimeout(() => atualizarAgora(true), 2500);
+    }
+  });
+  if (E.pix && E.pix.estado === 'pendente' && E.pix.dados && ms(E.pix.dados.expira_em) < agora()) { E.pix.estado = 'expirado'; renderPix(); }
+}
+
+// ============================================================ LISTA
+function normaliza(t) {
+  return { status: 'open', paid: true, ...t };
+}
+function situacao(t) {
+  if (t.status === 'open' && t.paid === false) return { cls: 'pagar', txt: 'Falta pagar' };
+  if (t.status === 'cancelled') return { cls: 'cancelado', txt: 'Cancelado' };
+  if (t.status === 'finished') return { cls: 'fim', txt: 'Encerrado' };
+  if (t.format === 'ai') {
+    if (agora() < ms(t.starts_at)) return { cls: 'aberto', txt: 'Inscrições abertas' };
+    if (agora() < ms(t.ends_at)) return { cls: 'andamento', txt: 'Valendo agora' };
+    return { cls: 'fim', txt: 'Fechando resultado' };
+  }
+  if (t.status === 'active') return { cls: 'andamento', txt: 'Em andamento' };
+  return { cls: 'aberto', txt: 'Inscrições abertas' };
+}
+const seloFormato = t => t.format === 'ai'
+  ? `<span class="selo ai">🤖 Contra a IA</span>`
+  : `<span class="selo chave">⚔ Eliminatória</span>`;
+
+async function carregarLista() {
+  const logado = !!E.user;
+  const campos = 'id,name,creator_id,creator_name,prize_description,format,visibility,status,paid,capacity,starts_at,ends_at,difficulty,criterion,round_deadline_hours,time_control_seconds,current_round,total_rounds,winner_id,finished_at';
+  const [ab, meus, tab] = await Promise.all([
     supa.rpc('list_open_tournaments'),
-    supa.rpc('list_my_tournaments')
+    logado ? supa.rpc('list_my_tournaments') : Promise.resolve({ data: [] }),
+    logado ? supa.from('tournaments').select(campos).in('status', ['open', 'active', 'finished'])
+      .order('starts_at', { ascending: false }).limit(80) : Promise.resolve({ data: [] }),
   ]);
-  if (pubRes.error) {
-    document.getElementById('list-area').innerHTML =
-      '<div class="status-msg error">Erro: ' + esc(pubRes.error.message) + '</div>';
-    return;
+  if (ab.error) { $('grade-lista').innerHTML = `<div class="vazio">Não consegui carregar os torneios. ${esc(traduz(ab.error))}</div>`; agendar(); return; }
+  const porId = {};
+  (tab.data || []).forEach(t => { porId[t.id] = t; });
+  E.abertos = (ab.data || []).map(t => normaliza({ ...(porId[t.id] || {}), ...t }));
+  E.andamento = (tab.data || []).filter(t => t.paid && t.status === 'active').map(normaliza);
+  E.encerrados = (tab.data || []).filter(t => t.paid && t.status === 'finished')
+    .sort((a, b) => ms(b.finished_at || b.starts_at) - ms(a.finished_at || a.starts_at)).slice(0, 30).map(normaliza);
+  E.meus = (meus.data || []).map(t => normaliza({ ...(porId[t.id] || {}), ...t }));
+  // nomes dos campeões (lista de encerrados e meus)
+  const comCampeao = [...E.encerrados, ...E.meus].filter(t => t.winner_id && !E.nomesCampeoes[t.id]);
+  if (comCampeao.length) {
+    const { data } = await supa.from('tournament_participants').select('tournament_id,user_id,user_name')
+      .in('tournament_id', comCampeao.map(t => t.id)).in('user_id', comCampeao.map(t => t.winner_id));
+    (data || []).forEach(p => { const t = comCampeao.find(x => x.id === p.tournament_id && x.winner_id === p.user_id); if (t) E.nomesCampeoes[t.id] = p.user_name; });
   }
-  publicTournaments = pubRes.data || [];
-  myTournaments = mineRes.data || [];
-  document.getElementById('count-public').textContent = publicTournaments.length;
-  document.getElementById('count-mine').textContent = myTournaments.length;
-  renderList();
+  await conferirMinhasPartidas();
+  renderLista();
+  if (E.admin) carregarPendentesAdmin();
+  agendar();
 }
 
-function setTab(tab) {
-  currentTab = tab;
-  document.querySelectorAll('.tabs .tab').forEach(t => t.classList.toggle('active', t.dataset.tab === tab));
-  // "Só com vagas" só faz sentido em públicos
-  document.getElementById('filter-available-wrap').style.display = (tab === 'public') ? '' : 'none';
-  renderList();
+// para os torneios em andamento em que eu jogo: tenho partida esperando?
+async function conferirMinhasPartidas() {
+  E.alertas = {};
+  if (!E.user) return;
+  const ativos = E.meus.filter(t => t.format === 'pvp_bracket' && t.status === 'active' && t.role !== 'creator').slice(0, 6);
+  await Promise.all(ativos.map(async t => {
+    const { data } = await supa.rpc('get_tournament_matches', { p_tournament_id: t.id });
+    const minhas = (data || []).filter(m => m.player1_id === E.user.id || m.player2_id === E.user.id);
+    const aberta = minhas.find(m => m.status === 'pending' || m.status === 'in_progress');
+    if (aberta) E.alertas[t.id] = aberta.status === 'in_progress' ? 'Sua partida está em andamento' : 'Sua partida está esperando';
+    else if (minhas.some(m => m.winner_id && m.winner_id !== E.user.id)) E.alertas[t.id] = 'Você foi eliminado';
+  }));
 }
 
-function getFilteredTournaments() {
-  const q = filters.search.trim().toLowerCase();
-  const src = activeList();
-  return src.filter(t => {
-    if (filters.format !== 'all' && t.format !== filters.format) return false;
-    if (filters.format === 'ai') {
-      if (filters.difficulty !== 'all' && String(t.difficulty) !== filters.difficulty) return false;
-      if (filters.criterion !== 'all' && t.criterion !== filters.criterion) return false;
-    }
-    // "Só com vagas" só na aba públicos
-    if (currentTab === 'public' && filters.available && (t.participant_count || 0) >= t.capacity) return false;
-    if (q && !((t.name || '').toLowerCase().includes(q) ||
-               (t.creator_name || '').toLowerCase().includes(q))) return false;
-    return true;
-  });
-}
-
-function renderList() {
-  const area = document.getElementById('list-area');
-  const list = getFilteredTournaments();
-  const total = activeList().length;
-  const totalLabel = total === list.length ? total + ' item(s)' : list.length + ' / ' + total + ' item(s)';
-  document.getElementById('count-label').textContent = totalLabel;
-  document.getElementById('list-title').firstChild.textContent =
-    (currentTab === 'mine' ? '⭐ Meus torneios ' : '📋 Torneios públicos ');
-
-  if (total === 0) {
-    const msg = currentTab === 'mine'
-      ? 'Você ainda não criou nem participa de nenhum torneio.'
-      : 'Nenhum torneio público aberto. Seja o primeiro a criar! 🚀';
-    area.innerHTML = '<div class="status-msg">' + msg + '</div>';
-    return;
+function cartao(t, meu) {
+  const s = situacao(t);
+  const vagas = t.participant_count !== undefined && t.participant_count !== null
+    ? `<li><span class="i">👥</span><div style="flex:1"><b>${t.participant_count}</b> de ${t.capacity} vagas preenchidas<div class="vagas-barra"><div style="width:${Math.min(100, 100 * t.participant_count / t.capacity)}%"></div></div></div></li>`
+    : `<li><span class="i">👥</span><span>Até <b>${t.capacity}</b> jogadores</span></li>`;
+  const fatos = [];
+  if (t.format === 'ai') {
+    fatos.push(`<li><span class="i">🤖</span><span>IA <b>${DIFIC[t.difficulty] || '—'}</b> · ${CRIT[t.criterion] || '—'}</span></li>`);
+  } else if (t.time_control_seconds) {
+    fatos.push(`<li><span class="i">⏱</span><span><b>${minutos(t.time_control_seconds)}</b> por jogador${t.round_deadline_hours ? ` · ${horas(t.round_deadline_hours)} por rodada` : ''}</span></li>`);
   }
-  if (list.length === 0) {
-    area.innerHTML = '<div class="status-msg">Nenhum torneio bate com os filtros.</div>';
-    return;
-  }
-
-  const rows = list.map(t => {
-    const sel = (t.id === selectedId) ? 'selected' : '';
-    const fmtPill = t.format === 'ai' ? 'ai' : 'bracket';
-    const fmtLabel = t.format === 'ai' ? '🤖 IA' : '⚔ PvP';
-    // Pills extras pra aba "mine"
-    let stamps = '';
-    if (currentTab === 'mine') {
-      const role = t.role === 'creator' ? '👑 criador' : '🎮 participo';
-      stamps += `<span class="pill" style="margin-left:6px">${role}</span>`;
-      if (!t.paid) stamps += `<span class="pill appr" style="margin-left:4px">⏳ aguardando Pix</span>`;
-      else if (t.status && t.status !== 'open') stamps += `<span class="pill ${t.status}" style="margin-left:4px">${t.status}</span>`;
-    }
-    return `<tr class="row ${sel}" onclick="selectTournament('${t.id}')">
-      <td><div style="font-weight:600">${esc(t.name)}${stamps}</div>
-          ${currentTab === 'public'
-            ? `<div style="font-size:11px; color:var(--text-muted)">por ${esc(t.creator_name)}</div>`
-            : `<div style="font-size:11px; color:var(--text-muted)">por ${esc(t.creator_name)}</div>`
-          }</td>
-      <td><span class="pill ${fmtPill}">${fmtLabel}</span></td>
-      <td class="num">${t.participant_count}/${t.capacity}</td>
-      <td>${fmtDT(t.starts_at)}</td>
-    </tr>`;
-  }).join('');
-  area.innerHTML = `<div style="overflow-x:auto"><table>
-    <thead><tr>
-      <th>Nome / Criador</th><th>Formato</th><th class="num">Vagas</th><th>Início</th>
-    </tr></thead>
-    <tbody>${rows}</tbody>
-  </table></div>`;
-}
-
-// ============== DETALHE ==============
-async function selectTournament(id) {
-  selectedId = id;
-  renderList();
-  await loadDetail(id);
-}
-
-async function loadDetail(id) {
-  document.getElementById('detail-area').innerHTML =
-    '<div class="detail-empty">Carregando...</div>';
-
-  // Aplica walkovers automaticos (fire-and-forget; nao bloqueia render)
-  supa.rpc('tournament_apply_walkovers', { p_tournament_id: id }).then(({ data, error }) => {
-    if (!error && data && data > 0) {
-      // Se algum walkover rolou, recarrega o detalhe
-      loadDetail(id);
-    }
-  });
-
-  const [tRes, pRes, mRes] = await Promise.all([
-    supa.from('tournaments').select('*').eq('id', id).maybeSingle(),
-    supa.rpc('get_tournament_participants', { p_tournament_id: id }),
-    supa.rpc('get_tournament_matches', { p_tournament_id: id })
-  ]);
-  if (tRes.error) {
-    console.error('loadDetail tournaments error:', tRes.error);
-    document.getElementById('detail-area').innerHTML =
-      '<div class="detail-empty">Erro: ' + esc(tRes.error.message) + '</div>';
-    return;
-  }
-  if (!tRes.data) {
-    // Fallback: usa o registro da lista (que vem via RPC security definer,
-    // por cima da RLS). Cobre o caso de RLS bloquear visualizacao.
-    const fallback = tournaments.find(t => t.id === id);
-    if (!fallback) {
-      document.getElementById('detail-area').innerHTML =
-        '<div class="detail-empty">Torneio não encontrado (RLS pode estar bloqueando — confira se rodou as policies atualizadas).</div>';
-      return;
-    }
-    selectedDetail = {
-      tournament: { ...fallback, status: 'open', paid: true, current_round: 0, total_rounds: null, share_token: null },
-      participants: pRes.data || [],
-      matches: mRes.data || [],
-      my: (pRes.data || []).find(p => p.user_id === currentUser.id)
-    };
-    renderDetail();
-    return;
-  }
-  const t = tRes.data;
-  const participants = pRes.data || [];
-  const matches = mRes.data || [];
-  const my = participants.find(p => p.user_id === currentUser.id);
-
-  selectedDetail = { tournament: t, participants, matches, my };
-  renderDetail();
-}
-
-function renderDetail() {
-  const { tournament: t, participants, matches, my } = selectedDetail;
-  const isCreator = t.creator_id === currentUser.id;
-  const approvedCount = participants.filter(p => p.status === 'approved').length;
-  const pendingCount = participants.filter(p => p.status === 'pending').length;
-
-  // bloco de ação
-  let actionHtml = '';
-  if (isCreator) {
-    actionHtml = `
-      <button class="btn primary" onclick="openManageModal()">⚙ Gerenciar (${pendingCount} pendente${pendingCount===1?'':'s'})</button>
-      ${t.status === 'open' && t.format === 'pvp_bracket' ? `<button class="btn success" onclick="startBracket()">▶ Iniciar chaveamento</button>` : ''}
-      ${t.status === 'open' && t.format === 'ai' ? `<button class="btn success" onclick="finalizeRanking()">🏁 Encerrar ranking</button>` : ''}
-      ${(t.status === 'open' || t.status === 'active') ? `<button class="btn danger" onclick="cancelTournament()">Cancelar torneio</button>` : ''}
-    `;
-  } else if (my && my.status === 'approved') {
-    actionHtml = `<div class="state-msg">✓ Você está inscrito</div>`;
-    if (t.status === 'open') actionHtml += `<button class="btn small" onclick="leaveTournament()">Sair do torneio</button>`;
-  } else if (my && my.status === 'pending') {
-    actionHtml = `<div class="state-msg pending">⏳ Aguardando aprovação do criador...</div>`;
-  } else if (my && my.status === 'rejected') {
-    actionHtml = `<div class="state-msg rejected">✗ Inscrição rejeitada pelo criador</div>`;
-  } else if (t.status === 'open' && approvedCount + pendingCount < t.capacity) {
-    const label = t.visibility === 'approval' ? 'Solicitar entrada' : 'Inscrever-se';
-    actionHtml = `<button class="btn primary" onclick="joinTournament()">${label}</button>`;
-  } else if (t.status === 'open') {
-    actionHtml = `<div class="state-msg full">Torneio cheio</div>`;
+  if (t.status === 'finished') {
+    const nome = E.nomesCampeoes[t.id];
+    fatos.push(`<li><span class="i">👑</span><span>${nome ? `Campeão: <b>${esc(nome)}</b>` : (t.winner_id ? 'Campeão definido' : 'Terminou sem vencedor')}</span></li>`);
+    fatos.push(`<li><span class="i">🏁</span><span>Terminou ${fmtData(t.finished_at || t.ends_at)}</span></li>`);
+  } else if (t.status === 'active' && t.format === 'pvp_bracket') {
+    fatos.push(`<li><span class="i">⚔</span><span>Rodada <b>${t.current_round || 1}</b> de ${t.total_rounds || '—'}</span></li>`);
+  } else if (t.status === 'cancelled') {
+    fatos.push(`<li><span class="i">✕</span><span>${esc(motivoCancel(t.cancel_reason))}</span></li>`);
   } else {
-    actionHtml = `<div class="state-msg full">Torneio ${t.status === 'finished' ? 'encerrado' : 'cancelado'}</div>`;
+    fatos.push(vagas);
+    if (t.format === 'ai' && agora() >= ms(t.starts_at)) fatos.push(`<li><span class="i">🏁</span><span>Termina ${fmtData(t.ends_at)} <small>(${rel(t.ends_at)})</small></span></li>`);
+    else fatos.push(`<li><span class="i">📅</span><span>Começa ${fmtData(t.starts_at)} <small>(${rel(t.starts_at)})</small></span></li>`);
   }
-
-  // share link (criador ou se já aprovado, e modo link)
-  let shareHtml = '';
-  if (t.visibility === 'link' && (isCreator || (my && my.status === 'approved'))) {
-    const link = window.location.origin + '/torneios?t=' + encodeURIComponent(t.share_token);
-    shareHtml = `
-      <div class="form-row" style="margin-top:14px">
-        <label>Link de convite</label>
-        <input type="text" readonly value="${esc(link)}" onclick="this.select()" style="font-family:monospace; font-size:11px">
-      </div>`;
+  let rodape = '';
+  if (meu) {
+    const alerta = E.alertas[t.id];
+    if (t.paid === false && t.status === 'open') rodape = `<span class="alerta">Só aparece para os outros depois do Pix</span><button class="btn small primary" data-acao="pagar" data-id="${t.id}" data-nome="${esc(t.name)}">Pagar</button>`;
+    else if (alerta) rodape = `<span class="alerta">${alerta === 'Você foi eliminado' ? '' : '⚔ '}${esc(alerta)}</span>`;
   }
-
-  const capPct = Math.min(100, (approvedCount / t.capacity) * 100);
-
-  // Botao "Entrar" — disponivel quando torneio ja comecou OU pra ranking AI aberto
-  let enterBtn = '';
-  if (t.format === 'pvp_bracket' && (t.status === 'active' || t.status === 'finished')) {
-    enterBtn = `<button class="btn primary" onclick="openTournamentView('${t.id}')" style="background: linear-gradient(135deg, #6f4cb4, #e2b96f); color:#fff; border:none; font-weight:600">
-      ⚔ Entrar no chaveamento
-    </button>`;
-  } else if (t.format === 'ai' && (t.status === 'open' || t.status === 'active')) {
-    enterBtn = `<button class="btn primary" onclick="enterAiTournament('${t.id}')" style="background: linear-gradient(135deg, #6f4cb4, #e2b96f); color:#fff; border:none; font-weight:600">
-      🎮 Jogar e disputar ranking
-    </button>`;
-  }
-
-  document.getElementById('detail-area').innerHTML = `<div class="detail-card">
+  const destaque = meu && ((t.paid === false && t.status === 'open') || (E.alertas[t.id] && E.alertas[t.id] !== 'Você foi eliminado'));
+  return `<article class="cartao${destaque ? ' destaque' : ''}" data-acao="abrir" data-id="${t.id}" tabindex="0" role="link" aria-label="${esc(t.name)}">
+    <div class="cartao-topo">${seloFormato(t)}<span class="selo ${s.cls}">${s.txt}</span>${t.visibility === 'link' ? '<span class="selo conv">🔒 Convite</span>' : ''}${meu ? `<span class="selo papel">${t.role === 'creator' ? 'Você organiza' : 'Você joga'}</span>` : ''}</div>
     <h3>${esc(t.name)}</h3>
-    <div class="by">criado por ${esc(t.creator_name)}</div>
-
-    <div class="prize-box">
-      <div class="lbl">🏆 Premiação</div>
-      <div class="val">${esc(t.prize_description)}</div>
-    </div>
-
-    ${t.description ? `<div class="description">${esc(t.description)}</div>` : ''}
-
-    <div class="meta">
-      <div><div class="lbl">Formato</div><div class="val">${fmtFormat(t.format)}</div></div>
-      <div><div class="lbl">Visibilidade</div><div class="val">${fmtVisibility(t.visibility)}</div></div>
-      ${t.format === 'ai' ? `
-        <div><div class="lbl">Dificuldade</div><div class="val">${fmtDifficulty(t.difficulty)}</div></div>
-        <div><div class="lbl">Critério</div><div class="val">${fmtCriterion(t.criterion)}</div></div>
-      ` : `
-        <div><div class="lbl">Prazo/rodada</div><div class="val">${t.round_deadline_hours}h</div></div>
-        <div><div class="lbl">Tempo/partida</div><div class="val">${t.time_control_seconds ? Math.floor(t.time_control_seconds / 60) + ' min' : 'Sem limite'}</div></div>
-        <div><div class="lbl">Rodada atual</div><div class="val">${t.current_round || '—'}/${t.total_rounds || '—'}</div></div>
-      `}
-      <div><div class="lbl">Início</div><div class="val">${fmtDT(t.starts_at)}</div></div>
-      <div><div class="lbl">${t.format === 'ai' ? 'Encerra em' : 'Status'}</div>
-           <div class="val">${t.format === 'ai' ? fmtDT(t.ends_at) : `<span class="pill ${t.status}">${t.status}</span>`}</div></div>
-      <div class="full">
-        <div class="lbl">Inscritos</div>
-        <div class="val">${approvedCount} / ${t.capacity} aprovados${pendingCount ? ` (${pendingCount} pendente${pendingCount===1?'':'s'})` : ''}</div>
-        <div class="cap-bar"><div class="cap-fill" style="width:${capPct}%"></div></div>
-      </div>
-    </div>
-
-    <div class="actions">
-      ${enterBtn}
-      ${actionHtml}
-    </div>
-    ${shareHtml}
-  </div>`;
+    <div class="por">organizado por ${esc(t.creator_name)}</div>
+    ${t.prize_description ? `<div class="premio">🏆 ${esc(t.prize_description)}</div>` : ''}
+    <ul class="fatos">${fatos.join('')}</ul>
+    ${rodape ? `<div class="rodape">${rodape}</div>` : ''}
+  </article>`;
 }
 
-function enterAiTournament(tid) {
-  // Pro torneio AI: redireciona pra pagina do jogo com contexto do torneio
-  window.location.href = '/?tournament=' + encodeURIComponent(tid);
-}
+function renderLista() {
+  // meus
+  const ordem = t => (t.paid === false && t.status === 'open') ? 0 : E.alertas[t.id] && E.alertas[t.id] !== 'Você foi eliminado' ? 1
+    : t.status === 'active' ? 2 : t.status === 'open' ? 3 : t.status === 'finished' ? 4 : 5;
+  const meus = E.meus.slice().sort((a, b) => ordem(a) - ordem(b) || ms(b.starts_at) - ms(a.starts_at));
+  const visiveis = E.verTodosMeus ? meus : meus.filter(t => t.status !== 'cancelled').slice(0, 6);
+  $('secao-meus').style.display = meus.length ? '' : 'none';
+  $('grade-meus').innerHTML = visiveis.map(t => cartao(t, true)).join('');
+  $('btn-mais-meus').style.display = (!E.verTodosMeus && meus.length > visiveis.length) ? '' : 'none';
+  $('btn-mais-meus').textContent = `Ver todos os ${meus.length}`;
 
-async function loadLeaderboard(tid) {
-  const { data, error } = await supa.rpc('tournament_leaderboard', { p_tournament_id: tid });
-  if (error) return { rows: [], err: error.message };
-  return { rows: data || [], err: null };
-}
-
-function renderLeaderboardHtml(lb) {
-  if (lb.err) return '<div class="status-msg error">Erro: ' + esc(lb.err) + '</div>';
-  const rows = lb.rows.map((r, i) => `
-    <tr>
-      <td class="num">${i + 1}</td>
-      <td>${esc(r.user_name)}</td>
-      <td class="num">${r.wins}</td>
-      <td class="num">${r.best_seconds ? fmtSeconds(r.best_seconds) : '-'}</td>
-    </tr>`).join('');
-  return `<div style="overflow-x:auto"><table>
-    <thead><tr>
-      <th class="num">#</th><th>Jogador</th><th class="num">Vitórias</th><th class="num">Melhor tempo</th>
-    </tr></thead><tbody>${rows || '<tr><td colspan="4" style="text-align:center; color:var(--text-muted)">Sem partidas ainda</td></tr>'}</tbody></table></div>`;
-}
-
-function renderMatchCardHtml(t, m, isCreator) {
-  const w1 = m.winner_id === m.player1_id;
-  const w2 = m.winner_id === m.player2_id;
-  const youIn = m.player1_id === currentUser.id || m.player2_id === currentUser.id;
-  const opponent = m.player1_id === currentUser.id ? m.player2_name : m.player1_name;
-  let actions = '';
-  if (m.status === 'pending') {
-    if (youIn && m.player1_id && m.player2_id) {
-      actions = `<button class="btn small primary" onclick="enterMatchRoom('${m.id}')">▶ Entrar na sala (vs ${esc(opponent || '?')})</button>`;
-    } else if (isCreator || isAdmin) {
-      actions = `<button class="btn small" onclick="openResultModal('${m.id}')">⚖ Forçar resultado</button>`;
-    } else if (m.player1_id && m.player2_id) {
-      actions = `<div style="font-size:11px; color:var(--text-muted); text-align:center; padding:4px 0">🕐 Aguardando início</div>`;
-    }
-  } else if (m.status === 'in_progress' && m.game_id) {
-    if (youIn) {
-      actions = `<button class="btn small primary" onclick="goToGame('${m.game_id}')">▶ Continuar partida</button>`;
-    } else {
-      actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">👁 Assistir ao vivo</button>`;
-    }
-  } else if (m.status === 'finished' && m.game_id) {
-    actions = `<button class="btn small" onclick="goToGameSpectate('${m.game_id}')">📺 Ver replay</button>`;
-  }
-  const actionable = m.status === 'pending' && youIn && m.player1_id && m.player2_id;
-  return `<div class="match-card ${actionable ? 'actionable' : ''}">
-    <div class="match-player ${w1 ? 'winner' : (m.winner_id ? 'loser' : '')}">
-      <span>${esc(m.player1_name || 'TBD')}</span>${w1 ? '<span>✓</span>' : ''}
-    </div>
-    <div class="vs">vs</div>
-    <div class="match-player ${w2 ? 'winner' : (m.winner_id ? 'loser' : '')}">
-      <span>${esc(m.player2_name || (m.status === 'walkover' ? 'W.O.' : 'TBD'))}</span>${w2 ? '<span>✓</span>' : ''}
-    </div>
-    <div class="meta">
-      <span class="pill ${m.status}">${m.status}</span>
-      ${m.status === 'pending' && m.deadline_at ? `<span>até ${fmtDT(m.deadline_at)}</span>` : ''}
-    </div>
-    ${actions}
-  </div>`;
-}
-
-function renderBracketTree(t, matches) {
-  const byRound = {};
-  matches.forEach(m => { (byRound[m.round] = byRound[m.round] || []).push(m); });
-  const totalRounds = t.total_rounds || Math.max(...Object.keys(byRound).map(Number));
-  const isCreator = t.creator_id === currentUser.id;
-
-  let html = '<div class="bracket-tree">';
-  for (let r = 1; r <= totalRounds; r++) {
-    const list = (byRound[r] || []).sort((a, b) => a.slot - b.slot);
-    const label = r === totalRounds ? '🏁 Final' : (r === totalRounds - 1 ? '⚔ Semifinal' : `Rodada ${r}`);
-    html += `<div class="bracket-round">
-      <div class="bracket-round-label">${label}</div>
-      <div class="bracket-round-content">`;
-    list.forEach(m => {
-      html += `<div class="bracket-match">${renderMatchCardHtml(t, m, isCreator)}</div>`;
-    });
-    html += `</div></div>`;
-  }
-
-  // Coluna do vencedor
-  const finalMatch = (byRound[totalRounds] || [])[0];
-  const winnerName = finalMatch && finalMatch.winner_id
-    ? (finalMatch.winner_id === finalMatch.player1_id ? finalMatch.player1_name : finalMatch.player2_name)
-    : null;
-  html += `<div class="bracket-winner">
-    <div class="crown">${winnerName ? '👑' : '🏆'}</div>
-    <div class="label">Campeão</div>
-    <div class="name ${winnerName ? '' : 'pending'}">${winnerName ? esc(winnerName) : 'a definir'}</div>
-  </div>`;
-
-  html += '</div>';
-  return html;
-}
-
-async function enterMatchRoom(matchId) {
-  const { data, error } = await supa.rpc('tournament_match_start_game', { p_match_id: matchId });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  if (!data) { await showAlert('Não foi possível abrir a sala.', { error: true }); return; }
-  // data e o game_id (text). Navega pra /?game=ID
-  window.location.href = '/?game=' + encodeURIComponent(data);
-}
-
-function goToGame(gameId) {
-  window.location.href = '/?game=' + encodeURIComponent(gameId);
-}
-function goToGameSpectate(gameId) {
-  window.location.href = '/?game=' + encodeURIComponent(gameId) + '&spectate=1';
-}
-
-// ============== TOURNAMENT FOCUSED VIEW (bracket tree) ==============
-let viewTournamentId = null;
-let viewRefreshTimer = null;
-
-async function openTournamentView(tid) {
-  viewTournamentId = tid;
-  // Esconde lobby, mostra view
-  document.getElementById('lobby-view').style.display = 'none';
-  document.getElementById('tournament-view').classList.add('show');
-  await loadTournamentView();
-  // Atualiza a cada 10s pra pegar mudancas em real-time leve
-  if (viewRefreshTimer) clearInterval(viewRefreshTimer);
-  viewRefreshTimer = setInterval(loadTournamentView, 10000);
-}
-
-function backToLobby() {
-  document.getElementById('tournament-view').classList.remove('show');
-  document.getElementById('lobby-view').style.display = '';
-  viewTournamentId = null;
-  if (viewRefreshTimer) { clearInterval(viewRefreshTimer); viewRefreshTimer = null; }
-  // Recarrega lista pra refletir mudancas
-  refreshAll();
-}
-
-async function loadTournamentView() {
-  if (!viewTournamentId) return;
-  // Walkover sweep oportunista
-  supa.rpc('tournament_apply_walkovers', { p_tournament_id: viewTournamentId });
-
-  const [tRes, mRes, lbData] = await Promise.all([
-    supa.from('tournaments').select('*').eq('id', viewTournamentId).maybeSingle(),
-    supa.rpc('get_tournament_matches', { p_tournament_id: viewTournamentId }),
-    null  // leaderboard fetched abaixo se for IA
-  ]);
-
-  // Fallback se RLS bloquear
-  const t = tRes.data || tournaments.find(x => x.id === viewTournamentId) || myTournaments.find(x => x.id === viewTournamentId);
-  if (!t) {
-    document.getElementById('tv-body').innerHTML = '<div class="status-msg error">Torneio não encontrado.</div>';
-    return;
-  }
-  const matches = mRes.data || [];
-
-  document.getElementById('tv-name').textContent = t.name;
-  document.getElementById('tv-sub').innerHTML =
-    'por <strong>' + esc(t.creator_name) + '</strong> · '
-    + (t.format === 'pvp_bracket' ? '⚔ Chaveamento' : '🤖 Ranking IA')
-    + ' · <span class="pill ' + t.status + '">' + t.status + '</span>'
-    + (t.format === 'pvp_bracket' && t.time_control_seconds
-        ? ' · ⏱ ' + Math.floor(t.time_control_seconds / 60) + ' min/jogador'
-        : '');
-
-  if (t.format === 'pvp_bracket') {
-    document.getElementById('tv-body').innerHTML = renderBracketTree(t, matches);
+  const filtra = l => l.filter(t => E.formato === 'todos' || t.format === E.formato);
+  $('n-abertos').textContent = filtra(E.abertos).length;
+  $('n-andamento').textContent = filtra(E.andamento).length;
+  $('n-encerrados').textContent = filtra(E.encerrados).length;
+  document.querySelectorAll('.aba').forEach(a => a.classList.toggle('ativa', a.dataset.aba === E.aba));
+  // sem login, o banco só mostra os abertos: as outras abas ficariam sempre vazias
+  document.querySelectorAll('.aba').forEach(a => { if (a.dataset.aba !== 'abertos') a.style.display = E.user ? '' : 'none'; });
+  document.querySelectorAll('#chips-formato .chip').forEach(c => c.classList.toggle('ativa', c.dataset.f === E.formato));
+  const lista = filtra(E[E.aba]);
+  if (!lista.length) {
+    const txt = { abertos: 'Nenhum torneio com inscrições abertas agora.', andamento: 'Nenhum torneio em andamento.', encerrados: 'Nenhum torneio encerrado ainda.' }[E.aba];
+    $('grade-lista').innerHTML = `<div class="vazio" style="grid-column:1/-1">${txt}${E.aba === 'abertos' ? '<br>Que tal criar o primeiro?<br><button class="btn primary" data-acao="criar">+ Criar torneio</button>' : ''}</div>`;
   } else {
-    // IA: deve nem cair aqui (enterAiTournament redireciona), mas por seguranca:
-    const lb = await loadLeaderboard(t.id);
-    document.getElementById('tv-body').innerHTML = renderLeaderboardHtml(lb);
+    $('grade-lista').innerHTML = lista.map(t => cartao(t, false)).join('');
   }
 }
 
-// ============== AÇÕES ==============
-async function joinTournament() {
-  if (!await showConfirm('Confirma inscrição neste torneio?', { okLabel: 'Inscrever' })) return;
-  const { error } = await supa.rpc('join_tournament', { p_tournament_id: selectedId });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
-}
-
-async function leaveTournament() {
-  if (!await showConfirm('Sair do torneio?', { okLabel: 'Sair' })) return;
-  const { error } = await supa.rpc('leave_tournament', { p_tournament_id: selectedId });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
-}
-
-async function cancelTournament() {
-  if (!await showConfirm('Cancelar este torneio? Essa ação não pode ser desfeita.', { okLabel: 'Cancelar torneio', cancelLabel: 'Voltar' })) return;
-  const { error } = await supa.rpc('cancel_tournament', { p_tournament_id: selectedId });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
-}
-
-async function startBracket() {
-  if (!await showConfirm('Iniciar chaveamento agora? Não dá pra voltar atrás.', { okLabel: 'Iniciar' })) return;
-  const { error } = await supa.rpc('start_bracket_tournament', { p_tournament_id: selectedId });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
-}
-
-async function finalizeRanking() {
-  if (!await showConfirm('Encerrar este ranking agora?', { okLabel: 'Encerrar' })) return;
-  const { error } = await supa.rpc('finalize_ranking_tournament', { p_tournament_id: selectedId });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  await Promise.all([loadTournaments(), loadDetail(selectedId)]);
-}
-
-// ============== CRIAR ==============
-let createForm = {
-  format: 'ai',
-  capacity: 8,
-  visibility: 'public'
-};
-
-function openCreateModal() {
-  document.getElementById('create-err').textContent = '';
-  document.getElementById('f-name').value = '';
-  document.getElementById('f-description').value = '';
-  document.getElementById('f-prize').value = '';
-  document.getElementById('f-deadline').value = 48;
-  // Default starts_at = agora + 1h, ends_at = +7 dias
-  const now = new Date();
-  const startDefault = new Date(now.getTime() + 60 * 60 * 1000);
-  const endDefault = new Date(now.getTime() + 7 * 24 * 60 * 60 * 1000);
-  document.getElementById('f-starts-at').value = toDTLocal(startDefault);
-  document.getElementById('f-ends-at').value = toDTLocal(endDefault);
-  document.getElementById('modal-create').classList.add('show');
-}
-function closeCreateModal() { document.getElementById('modal-create').classList.remove('show'); }
-
-function toDTLocal(d) {
-  const pad = n => String(n).padStart(2, '0');
-  return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-}
-
-document.getElementById('f-format-chips').addEventListener('click', e => {
-  const chip = e.target.closest('.chip'); if (!chip) return;
-  document.querySelectorAll('#f-format-chips .chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  createForm.format = chip.dataset.val;
-  document.getElementById('ai-fields').style.display = createForm.format === 'ai' ? 'block' : 'none';
-  document.getElementById('bracket-fields').style.display = createForm.format === 'pvp_bracket' ? 'block' : 'none';
-  document.getElementById('format-hint').textContent = createForm.format === 'ai'
-    ? 'Cada jogador joga contra a IA. Quem fizer mais vitórias (ou a mais rápida) ganha.'
-    : 'Pareamento aleatório. Eliminação simples — quem perde, sai. Necessário 4/8/16/32 jogadores.';
-});
-
-document.getElementById('f-capacity-chips').addEventListener('click', e => {
-  const chip = e.target.closest('.chip'); if (!chip) return;
-  document.querySelectorAll('#f-capacity-chips .chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  createForm.capacity = parseInt(chip.dataset.val, 10);
-});
-
-document.getElementById('f-visibility-chips').addEventListener('click', e => {
-  const chip = e.target.closest('.chip'); if (!chip) return;
-  document.querySelectorAll('#f-visibility-chips .chip').forEach(c => c.classList.remove('active'));
-  chip.classList.add('active');
-  createForm.visibility = chip.dataset.val;
-  document.getElementById('vis-hint').textContent = ({
-    public: 'Qualquer jogador logado pode se inscrever direto.',
-    approval: 'Jogadores solicitam entrada — você aprova um por um.',
-    link: 'Só quem tiver o link consegue ver e entrar. O link fica na tela do torneio.'
-  })[createForm.visibility];
-});
-
-async function submitCreate() {
-  const errEl = document.getElementById('create-err');
-  errEl.textContent = '';
-  const name = document.getElementById('f-name').value.trim();
-  const description = document.getElementById('f-description').value.trim() || null;
-  const prize = document.getElementById('f-prize').value.trim();
-  const startsAt = document.getElementById('f-starts-at').value;
-
-  if (name.length < 3) { errEl.textContent = 'Nome muito curto.'; return; }
-  if (!prize) { errEl.textContent = 'Descreva a premiação.'; return; }
-  if (!startsAt) { errEl.textContent = 'Defina a data de início.'; return; }
-
-  const params = {
-    p_name: name,
-    p_description: description,
-    p_prize: prize,
-    p_format: createForm.format,
-    p_visibility: createForm.visibility,
-    p_capacity: createForm.capacity,
-    p_starts_at: new Date(startsAt).toISOString(),
-    p_ends_at: null,
-    p_difficulty: null,
-    p_criterion: null,
-    p_round_deadline_hours: null
-  };
-
-  if (createForm.format === 'ai') {
-    const endsAt = document.getElementById('f-ends-at').value;
-    if (!endsAt) { errEl.textContent = 'Defina quando encerra o ranking.'; return; }
-    params.p_ends_at = new Date(endsAt).toISOString();
-    params.p_difficulty = parseInt(document.getElementById('f-difficulty').value, 10);
-    params.p_criterion = document.getElementById('f-criterion').value;
-  } else {
-    params.p_round_deadline_hours = parseInt(document.getElementById('f-deadline').value, 10);
-    if (!params.p_round_deadline_hours || params.p_round_deadline_hours < 1) {
-      errEl.textContent = 'Prazo de rodada inválido.'; return;
-    }
-    params.p_time_control_seconds = parseInt(document.getElementById('f-time-control').value, 10);
-  }
-
-  const btn = document.getElementById('btn-submit-create');
-  btn.disabled = true; btn.textContent = 'Criando...';
-  const { error } = await supa.rpc('create_tournament', params);
-  btn.disabled = false; btn.textContent = 'Criar (R$1)';
-  if (error) { errEl.textContent = 'Erro: ' + error.message; return; }
-
-  closeCreateModal();
-  document.getElementById('modal-payment').classList.add('show');
-  await loadTournaments();
-  if (isAdmin) await loadAdminPending();
-  setTab('mine'); // mostra o recém-criado (ainda pending Pix) na aba "Meus"
-}
-
-function closePaymentModal() { document.getElementById('modal-payment').classList.remove('show'); }
-
-// ============== GERENCIAR ==============
-function openManageModal() {
-  if (!selectedDetail) return;
-  const { participants } = selectedDetail;
-  const pending = participants.filter(p => p.status === 'pending');
-  const approved = participants.filter(p => p.status === 'approved');
-
-  let html = '';
-  if (pending.length === 0 && approved.length === 0) {
-    html = '<div class="status-msg">Sem inscritos ainda.</div>';
-  } else {
-    if (pending.length > 0) {
-      html += '<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px">Pendentes</div>';
-      html += '<div class="manage-list">';
-      pending.forEach(p => {
-        html += `<div class="manage-row">
-          <span class="who">${esc(p.user_name)}</span>
-          <div class="actions">
-            <button class="btn small success" onclick="setPartStatus('${p.id}', 'approved')">✓ Aprovar</button>
-            <button class="btn small danger" onclick="setPartStatus('${p.id}', 'rejected')">✗ Rejeitar</button>
-          </div>
-        </div>`;
-      });
-      html += '</div>';
-    }
-    if (approved.length > 0) {
-      html += '<div style="font-size:11px; color:var(--text-muted); text-transform:uppercase; letter-spacing:0.5px; margin: 14px 0 6px">Aprovados</div>';
-      html += '<div class="manage-list">';
-      approved.forEach(p => {
-        html += `<div class="manage-row">
-          <span class="who">${esc(p.user_name)}</span>
-          <div class="actions">
-            <button class="btn small danger" onclick="setPartStatus('${p.id}', 'rejected')">Remover</button>
-          </div>
-        </div>`;
-      });
-      html += '</div>';
-    }
-  }
-  document.getElementById('manage-body').innerHTML = html;
-  document.getElementById('modal-manage').classList.add('show');
-}
-function closeManageModal() { document.getElementById('modal-manage').classList.remove('show'); }
-
-async function setPartStatus(participantId, status) {
-  const { error } = await supa.rpc('set_participant_status', {
-    p_participant_id: participantId, p_status: status
-  });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  await loadDetail(selectedId);
-  openManageModal();
-}
-
-// ============== REPORTAR RESULTADO ==============
-let resultMatchId = null;
-
-function openResultModal(matchId) {
-  resultMatchId = matchId;
-  const m = (selectedDetail.matches || []).find(x => x.id === matchId);
-  if (!m) return;
-  document.getElementById('result-body').innerHTML = `
-    <p style="font-size:13px; color:var(--text-muted); margin-bottom:14px">
-      Marque quem venceu a partida. Ambos jogadores e o criador podem reportar.
-    </p>
-    <div style="display:flex; flex-direction:column; gap:8px">
-      <button class="btn primary" onclick="submitResult('${m.player1_id}')">${esc(m.player1_name)} venceu</button>
-      <button class="btn primary" onclick="submitResult('${m.player2_id}')">${esc(m.player2_name)} venceu</button>
-      <button class="btn" onclick="closeResultModal()">Cancelar</button>
-    </div>`;
-  document.getElementById('modal-result').classList.add('show');
-}
-function closeResultModal() { document.getElementById('modal-result').classList.remove('show'); }
-
-async function submitResult(winnerId) {
-  const { error } = await supa.rpc('record_match_result', {
-    p_match_id: resultMatchId, p_winner_id: winnerId, p_pgn: null
-  });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  closeResultModal();
-  await loadDetail(selectedId);
-}
-
-// ============== ADMIN: PENDENTES DE PAGAMENTO ==============
-async function loadAdminPending() {
+async function carregarPendentesAdmin() {
   const { data, error } = await supa.rpc('admin_list_pending_tournaments');
-  const area = document.getElementById('admin-pending-list');
-  if (error) { area.innerHTML = '<div class="status-msg error">Erro: ' + esc(error.message) + '</div>'; return; }
-  const list = data || [];
-  if (list.length === 0) {
-    area.innerHTML = '<div class="status-msg">Nenhum torneio aguardando pagamento.</div>';
+  $('secao-admin').style.display = '';
+  const area = $('admin-pendentes');
+  if (error) { area.innerHTML = `<div class="status-msg error">${esc(traduz(error))}</div>`; return; }
+  if (!data || !data.length) { area.innerHTML = '<p class="nota">Nenhum torneio esperando pagamento.</p>'; return; }
+  area.innerHTML = `<div class="lista-gente">${data.map(t => `<div class="pessoa">
+      <span class="nm"><b>${esc(t.name)}</b> <small style="color:var(--text-muted)">· ${esc(t.creator_name)} · criado ${rel(t.created_at)}</small></span>
+      <span class="bts"><button class="btn small success" data-acao="admin-confirmar" data-id="${t.id}">Confirmar pagamento</button></span>
+    </div>`).join('')}</div>`;
+}
+
+// ============================================================ TORNEIO
+async function carregarTorneio(silencioso) {
+  let t = null, erroT = null;
+  if (E.token) {
+    const r = await supa.rpc('get_tournament_by_token', { p_token: E.token });
+    erroT = r.error; t = r.data && r.data.id ? r.data : null;
+  }
+  if (!t && E.tid) {
+    const r = await supa.from('tournaments').select('*').eq('id', E.tid).maybeSingle();
+    erroT = erroT || r.error; t = r.data;
+    if (!t) { const l = E.abertos.find(x => x.id === E.tid); if (l) t = l; }
+  }
+  if (!t) {
+    if (!silencioso || !E.det) {
+      $('vista-torneio').innerHTML = `<div class="voltar"><button class="btn small ghost" data-acao="ir-lista">← Todos os torneios</button></div>
+        <div class="vazio">${E.user ? 'Torneio não encontrado. Se você veio por um convite, confira se o link está completo.' : 'Entre com sua conta Google para ver este torneio.<br><button class="btn primary" data-acao="entrar">Entrar com Google</button>'}${erroT ? `<br><small>${esc(traduz(erroT))}</small>` : ''}</div>`;
+    }
     return;
   }
-  const rows = list.map(t => `<tr>
-    <td><div style="font-weight:600">${esc(t.name)}</div>
-        <div style="font-size:11px; color:var(--text-muted)">por ${esc(t.creator_name)}</div></td>
-    <td><span class="pill ${t.format === 'ai' ? 'ai' : 'bracket'}">${fmtFormat(t.format)}</span></td>
-    <td>${esc(t.prize_description).slice(0, 60)}${t.prize_description.length > 60 ? '...' : ''}</td>
-    <td>${fmtDT(t.created_at)}</td>
-    <td class="center"><button class="btn small success" onclick="confirmPayment('${t.id}')">✓ Confirmar pagamento</button></td>
-  </tr>`).join('');
-  area.innerHTML = `<div style="overflow-x:auto"><table>
-    <thead><tr><th>Nome</th><th>Formato</th><th>Prêmio</th><th>Criado em</th><th class="center">Ação</th></tr></thead>
-    <tbody>${rows}</tbody>
-  </table></div>`;
+  t = normaliza(t);
+  E.tid = t.id;
+  const eu = E.user?.id;
+  const souOrg = !!eu && (t.creator_id === eu);
+  const [pr, mr, lr, sr, pg] = await Promise.all([
+    supa.rpc('get_tournament_participants', { p_tournament_id: t.id }),
+    t.format === 'pvp_bracket' && t.status !== 'open' ? supa.rpc('get_tournament_matches', { p_tournament_id: t.id }) : Promise.resolve({ data: [] }),
+    t.format === 'ai' ? supa.rpc('tournament_leaderboard', { p_tournament_id: t.id }) : Promise.resolve({ data: [] }),
+    t.format === 'ai' && eu ? supa.from('scores').select('id,status,reject_reason,player_seconds,timed_live,created_at')
+      .eq('tournament_id', t.id).eq('user_id', eu).order('created_at', { ascending: false }).limit(50) : Promise.resolve({ data: [] }),
+    (souOrg || E.admin) && t.paid === false ? supa.rpc('tournament_payment_status', { p_tournament_id: t.id }) : Promise.resolve({ data: null }),
+  ]);
+  const det = {
+    t, parts: pr.data || [], matches: mr.data || [], lb: lr.data || [], lbErro: lr.error, placares: sr.data || [],
+    pag: Array.isArray(pg.data) ? pg.data[0] : pg.data,
+  };
+  // se estou esperando o adversário e o jogo foi criado, vou para o tabuleiro
+  if (E.esperandoSala) {
+    const m = det.matches.find(x => x.id === E.esperandoSala);
+    if (m && m.game_id && m.status === 'in_progress') { toast('Seu adversário chegou! Abrindo o jogo…'); E.esperandoSala = null; setTimeout(() => { location.href = '/?game=' + encodeURIComponent(m.game_id); }, 1200); }
+    else if (!m || m.status === 'finished' || m.status === 'walkover') E.esperandoSala = null;
+  }
+  const assin = JSON.stringify(det) + '|' + E.esperandoSala;
+  E.det = det;
+  if (assin !== E.assinatura) { E.assinatura = assin; renderTorneio(); }
+  agendar();
 }
 
-async function confirmPayment(id) {
-  if (!await showConfirm('Confirma que o Pix de R$1 foi recebido?', { okLabel: 'Confirmar' })) return;
-  const { error } = await supa.rpc('confirm_tournament_payment', { p_tournament_id: id });
-  if (error) { await showAlert(error.message, { error: true }); return; }
-  await Promise.all([loadTournaments(), loadAdminPending()]);
+function precisaRapido() {
+  if (E.esperandoSala) return true;
+  const d = E.det; if (!d || !E.user || d.t.status !== 'active') return false;
+  const m = minhaPartidaAtual(d);
+  if (!m || (m.status !== 'pending' && m.status !== 'in_progress')) return false;
+  const souP1 = m.player1_id === E.user.id;
+  return !m.game_id && !!(souP1 ? m.present_p1_at : m.present_p2_at);
+}
+function minhaPartidaAtual(d) {
+  const eu = E.user?.id; if (!eu) return null;
+  const minhas = d.matches.filter(m => m.player1_id === eu || m.player2_id === eu).sort((a, b) => b.round - a.round);
+  return minhas[0] || null;
+}
+function nomeDe(d, uid) {
+  if (!uid) return null;
+  const p = d.parts.find(x => x.user_id === uid); if (p) return p.user_name;
+  for (const m of d.matches) { if (m.player1_id === uid) return m.player1_name; if (m.player2_id === uid) return m.player2_name; }
+  const l = d.lb.find(x => x.user_id === uid); return l ? l.user_name : null;
+}
+function motivoCancel(c) {
+  return ({ menos_de_2_inscritos: 'Cancelado: menos de 2 inscritos na hora de começar.', criador: 'Cancelado pelo organizador.',
+    admin: 'Cancelado pela administração do site.', admin_sem_estorno: 'Cancelado pela administração do site.' })[c] || 'Torneio cancelado.';
+}
+function motivoPartida(m) {
+  const r = m.reason || '';
+  const arm = /_armageddon$/.test(r); const base = r.replace(/_armageddon$/, '');
+  if (arm) return 'Empate no jogo decisivo (Armageddon): vencem as Pretas';
+  return ({
+    bye: 'Passou direto (sem adversário)', xeque_mate: 'Xeque-mate', lance_ilegal: 'Lance ilegal', tempo: 'Tempo esgotado',
+    desistencia: 'Desistência', afogamento: 'Afogamento', '50lances': 'Regra dos 50 lances', material: 'Material insuficiente',
+    wo_ausencia: 'W.O.: o adversário não entrou na sala', wo_sem_resposta: 'W.O.: as Pretas não responderam ao 1º lance',
+    wo_brancas_nao_jogaram: 'W.O.: as Brancas não fizeram o 1º lance', wo_sorteio: 'Ninguém apareceu: decidido por sorteio',
+    organizador: 'Decidido pelo organizador',
+  })[base] || (m.status === 'walkover' ? 'W.O.' : 'Encerrada');
+}
+function naRodada(r, total) {
+  const f = total - r;
+  return f === 0 ? 'na final' : f === 1 ? 'na semifinal' : f === 2 ? 'nas quartas de final' : f === 3 ? 'nas oitavas de final' : `na rodada ${r}`;
+}
+function nomeRodada(r, total) {
+  const f = total - r;
+  return f === 0 ? 'Final' : f === 1 ? 'Semifinal' : f === 2 ? 'Quartas de final' : f === 3 ? 'Oitavas de final' : `Rodada ${r}`;
 }
 
-// ============== INIT ==============
+function renderTorneio() {
+  const d = E.det; if (!d) return;
+  const t = d.t, eu = E.user?.id;
+  const souOrg = !!eu && t.creator_id === eu;
+  const podeGerir = souOrg || E.admin;
+  document.title = t.name + ' — Torneios — Xadrez Online';
+  const s = situacao(t);
+  const minha = d.parts.find(p => p.user_id === eu);
+
+  // scroll horizontal do chaveamento sobrevive à atualização
+  const sc = document.querySelector('.chave-scroll'); const scrollX = sc ? sc.scrollLeft : null;
+
+  let h = `<div class="voltar"><button class="btn small ghost" data-acao="ir-lista">← Todos os torneios</button></div>
+  <div class="t-cabeca">
+    <div class="selos">${seloFormato(t)}<span class="selo ${s.cls}">${s.txt}</span>${t.visibility === 'link' ? '<span class="selo conv">🔒 Só convidados</span>' : t.visibility === 'approval' ? '<span class="selo">Com aprovação</span>' : ''}</div>
+    <h1>${esc(t.name)}</h1>
+    <div class="por">organizado por ${esc(t.creator_name)}${souOrg ? ' (você)' : ''}</div>
+  </div>`;
+
+  h += blocoFaixas(d, souOrg, podeGerir);
+  h += `<div class="duas"><div>${blocoMinhaParte(d, minha, souOrg)}</div><div>${blocoDetalhes(d)}</div></div>`;
+  if (podeGerir && t.status !== 'cancelled' && t.status !== 'finished') h += blocoOrganizador(d, souOrg);
+  if (t.format === 'pvp_bracket') h += blocoChave(d, podeGerir);
+  else h += blocoClassificacao(d);
+  h += blocoInscritos(d, podeGerir);
+  $('vista-torneio').innerHTML = h;
+  const sc2 = document.querySelector('.chave-scroll');
+  if (sc2 && scrollX !== null) sc2.scrollLeft = scrollX;
+  tique();
+}
+
+function blocoFaixas(d, souOrg, podeGerir) {
+  const t = d.t; let h = '';
+  if (t.status === 'finished') {
+    const nome = nomeDe(d, t.winner_id);
+    if (t.winner_id) {
+      const sou = E.user && t.winner_id === E.user.id;
+      h += `<div class="campeao"><div class="coroa">👑</div><div class="rot">${sou ? 'Parabéns, você é o campeão!' : 'Campeão'}</div>
+        <div class="nome">${esc(nome || 'Campeão')}</div>
+        <div class="sub">🏆 ${esc(t.prize_description)}</div>
+        <div class="sub" style="margin-top:4px">Terminou ${fmtData(t.finished_at)}. A entrega do prêmio é combinada com o organizador.</div></div>`;
+    } else {
+      h += `<div class="faixa aviso"><strong>Torneio encerrado sem vencedor:</strong> ninguém teve vitória conferida contra a IA.</div>`;
+    }
+  }
+  if (t.status === 'cancelled') h += `<div class="faixa erro"><strong>${esc(motivoCancel(t.cancel_reason))}</strong>${souOrg && t.paid && !(t.current_round > 0) ? ' Se você pagou, o valor é devolvido pelo Pix automaticamente.' : ''}</div>`;
+  if (t.status === 'open' && t.paid === false && podeGerir) {
+    const pg = d.pag;
+    h += `<div class="faixa aviso"><strong>Falta pagar.</strong> O torneio só aparece para os outros jogadores depois do Pix de <span class="preco-txt">${fmtBRL(pg?.valor ?? E.preco ?? 1)}</span>.
+      ${pg && pg.status === 'pendente' && ms(pg.expira_em) > agora() ? ' Já existe um Pix gerado esperando pagamento.' : ''}
+      <div class="acoes"><button class="btn primary" data-acao="pagar" data-id="${t.id}" data-nome="${esc(t.name)}">Pagar agora</button>
+      <button class="btn danger small" data-acao="cancelar">Desistir e cancelar</button></div></div>`;
+  }
+  return h;
+}
+
+// --- quadro "Sua partida" / inscrição
+function blocoMinhaParte(d, minha, souOrg) {
+  const t = d.t, eu = E.user?.id;
+  if (!E.user) {
+    return `<div class="painel"><h2>Participar</h2><p>Entre com sua conta Google para se inscrever.</p>
+      <div class="acoes"><button class="btn primary" data-acao="entrar">Entrar com Google</button></div></div>`;
+  }
+  if (t.format === 'pvp_bracket' && (t.status === 'active' || t.status === 'finished') && minha && minha.status === 'approved') return blocoSuaPartida(d);
+  if (t.format === 'ai' && minha && minha.status === 'approved') return blocoIaJogar(d);
+
+  // inscrição
+  let corpo = '', tit = 'Inscrição';
+  const aprovados = d.parts.filter(p => p.status === 'approved').length;
+  const iaFechou = t.format === 'ai' && agora() > ms(t.ends_at);
+  const aberto = t.status === 'open' && t.paid !== false && !(t.format === 'pvp_bracket' && t.current_round > 0) && !iaFechou;
+  if (t.status === 'cancelled') {
+    corpo = `<div class="estado neutro">Este torneio foi cancelado.</div>`;
+  } else if (souOrg) {
+    tit = 'Você organiza';
+    corpo = `<p>Quem organiza não joga no próprio torneio. Use o painel do organizador abaixo para aprovar inscritos${t.format === 'pvp_bracket' ? ', começar e acompanhar as partidas' : ' e acompanhar a classificação'}.</p>`;
+  } else if (minha && minha.status === 'approved') {
+    corpo = `<div class="estado ok">✓ Você está inscrito.</div>
+      ${t.format === 'pvp_bracket' && t.status === 'open' ? `<p style="margin-top:10px">O chaveamento é sorteado ${fmtData(t.starts_at)} — faltam <span class="cd" data-ate="${t.starts_at}" data-fim="instantes" data-recarregar="1">${fmtDur(ms(t.starts_at) - agora())}</span>. Fique de olho: o prazo da 1ª rodada começa a contar no sorteio.</p>` : ''}
+      ${aberto ? `<div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Sair do torneio</button></div>` : ''}`;
+  } else if (minha && minha.status === 'pending') {
+    corpo = `<div class="estado espera">⏳ Pedido enviado. Agora é esperar o organizador aprovar.</div>
+      ${aberto ? `<div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Desistir do pedido</button></div>` : ''}`;
+  } else if (minha && minha.status === 'rejected') {
+    corpo = `<div class="estado nao">Sua inscrição foi recusada pelo organizador.</div>`;
+  } else if (t.status === 'finished') {
+    corpo = `<div class="estado neutro">Este torneio já terminou.</div>`;
+  } else if (!aberto) {
+    corpo = `<div class="estado neutro">${iaFechou ? 'O prazo do ranking acabou. Estamos fechando a classificação.' : 'As inscrições estão fechadas: o torneio já começou.'}</div>`;
+  } else if (aprovados >= t.capacity) {
+    corpo = `<div class="estado neutro">Vagas esgotadas (${aprovados} de ${t.capacity}).</div>`;
+  } else {
+    const aprov = t.visibility === 'approval';
+    corpo = `<p>${aprov ? 'O organizador aprova cada inscrição.' : 'Inscrição na hora, sem custo.'} ${aprovados} de ${t.capacity} vagas preenchidas.</p>
+      <div class="acoes"><button class="btn primary grande" data-acao="inscrever">${aprov ? 'Pedir para participar' : 'Inscrever-se'}</button></div>`;
+  }
+  return `<div class="painel"><h2>${tit}</h2>${corpo}</div>`;
+}
+
+function blocoSuaPartida(d) {
+  const t = d.t, eu = E.user.id;
+  const m = minhaPartidaAtual(d);
+  const total = t.total_rounds || 1;
+  if (t.status === 'finished') {
+    const venceu = t.winner_id === eu;
+    const ult = m;
+    return `<div class="painel"><h2>Sua campanha</h2>${venceu ? '<div class="estado ok">👑 Você venceu o torneio!</div>'
+      : ult && ult.round === total ? '<div class="estado ok">🥈 Vice-campeão! Você chegou à final.</div>'
+      : `<div class="estado neutro">Você parou ${ult ? naRodada(ult.round, total) : 'na 1ª rodada'}.</div>`}</div>`;
+  }
+  if (!m) return `<div class="painel"><h2>Sua partida</h2><div class="estado neutro">Aguardando o sorteio do chaveamento.</div></div>`;
+  const souP1 = m.player1_id === eu;
+  const adv = souP1 ? m.player2_name : m.player1_name;
+  const advId = souP1 ? m.player2_id : m.player1_id;
+  const rod = nomeRodada(m.round, total);
+  if (m.status === 'finished' || m.status === 'walkover') {
+    if (m.winner_id === eu) {
+      return `<div class="painel sua-partida"><h2>Sua partida <span class="dir">${esc(rod)}</span></h2>
+        <div class="estado ok">✓ Você ${m.reason === 'bye' ? 'passou direto' : 'venceu'}${m.reason && m.reason !== 'bye' ? ` (${esc(motivoPartida(m).toLowerCase())})` : ''}.</div>
+        <p style="margin-top:10px">A próxima rodada começa sozinha assim que todas as partidas desta rodada terminarem. Você verá seu próximo adversário aqui.</p></div>`;
+    }
+    return `<div class="painel"><h2>Sua partida <span class="dir">${esc(rod)}</span></h2>
+      <div class="estado neutro">Você foi eliminado ${naRodada(m.round, total)}${adv ? ` por ${esc(adv)}` : ''} — ${esc(motivoPartida(m).toLowerCase())}.</div>
+      <p style="margin-top:10px">Obrigado por jogar! Acompanhe o resto do chaveamento abaixo.</p></div>`;
+  }
+  const euNaSala = !!(souP1 ? m.present_p1_at : m.present_p2_at);
+  const advNaSala = !!(souP1 ? m.present_p2_at : m.present_p1_at);
+  const desempate = m.tiebreaks > 0 ? (m.tiebreaks >= 2 ? `<div class="faixa aviso" style="margin:8px 0 0"><strong>Jogo decisivo (Armageddon):</strong> cores invertidas de novo; se empatar, vencem as Pretas.</div>`
+    : `<div class="faixa info" style="margin:8px 0 0"><strong>Desempate ${m.tiebreaks}:</strong> a partida anterior empatou. Novo jogo com as cores invertidas e o mesmo tempo.</div>`) : '';
+  let acao = '';
+  if (m.status === 'in_progress' && m.game_id) {
+    acao = `<div class="acoes"><a class="btn jogar grande block" href="/?game=${encodeURIComponent(m.game_id)}">▶ Jogar agora</a></div>
+      <p class="nota">A partida já começou e vale o relógio: ${minutos(t.time_control_seconds)} para cada um. Se o seu tempo acabar, você perde — mesmo fora do site.</p>`;
+  } else if (euNaSala) {
+    acao = `<div class="espera"><span class="girando"></span><div>Você já está na sala. Assim que ${esc(adv || 'o adversário')} entrar, o jogo abre sozinho nesta página.</div></div>
+      <div class="acoes"><button class="btn small ghost" data-acao="sala" data-id="${m.id}">Conferir de novo</button></div>
+      <p class="nota">Se o prazo acabar e ${esc(adv || 'o adversário')} não aparecer, você vence por W.O.</p>`;
+  } else {
+    acao = `<div class="acoes"><button class="btn jogar grande block" data-acao="sala" data-id="${m.id}">Entrar na sala</button></div>
+      <p class="nota">Entrar na sala marca sua presença. O jogo começa quando os dois estiverem lá. Quem não aparecer até o fim do prazo perde por W.O.; se nenhum dos dois aparecer, o vencedor é sorteado.</p>`;
+  }
+  return `<div class="painel sua-partida"><h2>Sua partida <span class="dir">${esc(rod)}</span></h2>
+    <div class="vs">
+      <div class="lado"><div class="n">Você</div><div class="p ${euNaSala ? 'sim' : ''}">${m.game_id ? '● jogando' : euNaSala ? '● na sala' : 'ainda não entrou'}</div></div>
+      <div class="x">vs</div>
+      <div class="lado"><div class="n">${esc(adv || 'a definir')}</div><div class="p ${advNaSala ? 'sim' : ''}">${m.game_id ? '● jogando' : advNaSala ? '● já está na sala' : 'ainda não entrou'}</div></div>
+    </div>
+    ${m.game_id ? '' : `<div class="prazo">Prazo para começar: <span class="cd" data-ate="${m.deadline_at}" data-fim="acabou — o servidor está decidindo" data-recarregar="1">${fmtDur(ms(m.deadline_at) - agora())}</span> <small>(até ${fmtData(m.deadline_at)})</small></div>`}
+    ${desempate}${acao}</div>`;
+}
+
+function blocoIaJogar(d) {
+  const t = d.t;
+  let corpo = '';
+  if (t.status === 'finished') corpo = `<div class="estado neutro">O ranking terminou. Veja a classificação final abaixo.</div>`;
+  else if (t.status === 'cancelled') corpo = `<div class="estado neutro">Torneio cancelado.</div>`;
+  else if (agora() < ms(t.starts_at)) corpo = `<div class="estado ok">✓ Você está inscrito.</div>
+      <p style="margin-top:10px">As partidas começam a valer ${fmtData(t.starts_at)} — faltam <span class="cd" data-ate="${t.starts_at}" data-fim="instantes" data-recarregar="1">${fmtDur(ms(t.starts_at) - agora())}</span>.</p>
+      <div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Sair do torneio</button></div>`;
+  else if (agora() < ms(t.ends_at)) corpo = `<p>Jogue quantas vezes quiser contra a IA <b>${DIFIC[t.difficulty]}</b> até ${fmtData(t.ends_at)} (faltam <span class="cd" data-ate="${t.ends_at}" data-fim="acabou" data-recarregar="1">${fmtDur(ms(t.ends_at) - agora())}</span>).</p>
+      <div class="acoes"><a class="btn jogar grande block" href="/?tournament=${encodeURIComponent(t.id)}">▶ Jogar contra a IA</a></div>
+      <p class="nota">Só conta vitória por xeque-mate, jogada logado e sem desfazer lance.</p>`;
+  else corpo = `<div class="estado espera">O prazo acabou. Estamos conferindo as últimas partidas e fechando a classificação.</div>`;
+  return `<div class="painel sua-partida"><h2>Sua participação</h2>${corpo}</div>`;
+}
+
+function blocoDetalhes(d) {
+  const t = d.t;
+  const aprovados = d.parts.filter(p => p.status === 'approved').length;
+  const linhas = [];
+  if (t.format === 'ai') {
+    linhas.push(`<div class="c"><div class="l">Nível da IA</div><div class="v">${DIFIC[t.difficulty] || '—'}</div></div>`);
+    linhas.push(`<div class="c"><div class="l">Quem ganha</div><div class="v">${CRIT[t.criterion] || '—'}</div></div>`);
+    linhas.push(`<div class="c"><div class="l">Começa</div><div class="v">${fmtData(t.starts_at)}</div></div>`);
+    linhas.push(`<div class="c"><div class="l">Termina</div><div class="v">${fmtData(t.ends_at)}</div></div>`);
+  } else {
+    linhas.push(`<div class="c"><div class="l">Tempo por jogador</div><div class="v">${minutos(t.time_control_seconds)}</div></div>`);
+    linhas.push(`<div class="c"><div class="l">Prazo por rodada</div><div class="v">${t.round_deadline_hours ? horas(t.round_deadline_hours) : '—'}</div></div>`);
+    linhas.push(`<div class="c"><div class="l">${t.status === 'open' ? 'Sorteio e início' : 'Início marcado'}</div><div class="v">${fmtData(t.starts_at)}${t.status === 'open' ? ` <small>(${rel(t.starts_at)})</small>` : ''}</div></div>`);
+    linhas.push(`<div class="c"><div class="l">Rodada</div><div class="v">${!(t.current_round > 0) ? '—' : `${t.current_round} de ${t.total_rounds || '—'}`}</div></div>`);
+  }
+  linhas.push(`<div class="c"><div class="l">Inscritos</div><div class="v">${aprovados} de ${t.capacity}</div></div>`);
+  linhas.push(`<div class="c"><div class="l">Quem pode entrar</div><div class="v">${VIS[t.visibility] || '—'}</div></div>`);
+  return `<div class="painel"><h2>Detalhes</h2>
+    <div class="premio-box"><div class="l">🏆 Prêmio</div><div class="v">${esc(t.prize_description)}</div></div>
+    ${t.description ? `<div class="descricao">${esc(t.description)}</div>` : ''}
+    <div class="ficha">${linhas.join('')}</div>
+    ${t.format === 'pvp_bracket' ? `<p class="nota">Eliminatória simples. O chaveamento é sorteado no horário de início com quem estiver inscrito (mínimo 2). Se o número não fechar, alguns passam direto para a rodada seguinte. Empate gera desempate com as cores invertidas; no 3º jogo, empate dá vitória às Pretas.</p>` : ''}
+  </div>`;
+}
+
+function linkConvite(t) {
+  return t.visibility === 'link' && t.share_token ? `${location.origin}/torneios?t=${encodeURIComponent(t.share_token)}` : `${location.origin}/torneios?id=${t.id}`;
+}
+
+function blocoOrganizador(d, souOrg) {
+  const t = d.t;
+  const pend = d.parts.filter(p => p.status === 'pending');
+  const aprov = d.parts.filter(p => p.status === 'approved');
+  const recus = d.parts.filter(p => p.status === 'rejected');
+  const aberto = t.status === 'open' && !(t.current_round > 0);
+  let h = `<div class="painel" style="margin-bottom:14px"><h2>Painel do organizador ${!souOrg ? '<span class="dir">você é admin</span>' : ''}</h2>`;
+  if (t.paid !== false) {
+    h += `<div class="sub-tit" style="margin-top:0">${t.visibility === 'link' ? 'Link de convite (só quem tiver o link entra)' : 'Link para divulgar'}</div>
+      <div class="copiar"><input type="text" readonly value="${esc(linkConvite(t))}" aria-label="Link do torneio"><button class="btn small" data-acao="copiar" data-txt="${esc(linkConvite(t))}">Copiar</button></div>`;
+  }
+  if (aberto) {
+    if (pend.length) {
+      h += `<div class="sub-tit">Pedidos para aprovar (${pend.length})</div><div class="lista-gente">${pend.map(p => `<div class="pessoa"><span class="nm">${esc(p.user_name)}</span>
+        <span class="bts"><button class="btn small success" data-acao="aprovar" data-id="${p.id}">Aprovar</button><button class="btn small danger" data-acao="recusar" data-id="${p.id}" data-nome="${esc(p.user_name)}">Recusar</button></span></div>`).join('')}</div>`;
+    } else if (t.visibility === 'approval') {
+      h += `<p class="nota">Nenhum pedido esperando aprovação.</p>`;
+    }
+    if (aprov.length) {
+      h += `<div class="sub-tit">Inscritos (${aprov.length} de ${t.capacity})</div><div class="lista-gente">${aprov.map(p => `<div class="pessoa"><span class="nm">${esc(p.user_name)}</span>
+        <span class="bts"><button class="btn small ghost" data-acao="recusar" data-id="${p.id}" data-nome="${esc(p.user_name)}">Remover</button></span></div>`).join('')}</div>`;
+    }
+    if (recus.length) h += `<p class="nota">Recusados: ${recus.map(p => esc(p.user_name)).join(', ')} (não podem se inscrever de novo).</p>`;
+  }
+  const bts = [];
+  if (t.format === 'pvp_bracket' && aberto && t.paid !== false) {
+    bts.push(`<button class="btn success" data-acao="comecar" ${aprov.length < 2 ? 'disabled title="Precisa de pelo menos 2 inscritos"' : ''}>▶ Começar agora (${aprov.length} jogadores)</button>`);
+  }
+  if (t.format === 'ai' && (t.status === 'open' || t.status === 'active') && t.paid !== false) bts.push(`<button class="btn" data-acao="encerrar-ranking">🏁 Encerrar ranking agora</button>`);
+  if (aberto || (E.admin && t.status === 'active')) bts.push(`<button class="btn danger" data-acao="cancelar">Cancelar torneio${!aberto ? ' (admin)' : ''}</button>`);
+  if (bts.length) h += `<div class="acoes linha">${bts.join('')}</div>`;
+  if (t.format === 'pvp_bracket' && aberto && t.paid !== false) h += `<p class="nota">Se você não começar antes, o torneio começa sozinho ${fmtData(t.starts_at)}. Com menos de 2 inscritos nessa hora, ele é cancelado.</p>`;
+  if (t.format === 'pvp_bracket' && t.status === 'active') h += `<p class="nota">Partidas, W.O. por prazo e passagem de rodada são resolvidos sozinhos pelo servidor. Se precisar (jogador combinou desistir, problema técnico), use "Definir vencedor" na partida.</p>`;
+  return h + '</div>';
+}
+
+// --- chaveamento
+function montarRodadas(d) {
+  const t = d.t;
+  const total = t.total_rounds || Math.max(1, ...d.matches.map(m => m.round));
+  const R = [];
+  for (let r = 1; r <= total; r++) {
+    const n = Math.pow(2, total - r); const jogos = [];
+    for (let s = 1; s <= n; s++) {
+      let m = d.matches.find(x => x.round === r && x.slot === s) || null;
+      if (!m && r > 1) {   // rodada ainda não criada: mostra quem já avançou
+        const a = R[r - 2].jogos[2 * s - 2], b = R[r - 2].jogos[2 * s - 1];
+        const wa = a && a.winner_id ? a.winner_id : null, wb = b && b.winner_id ? b.winner_id : null;
+        m = { previa: true, round: r, slot: s, player1_id: wa, player1_name: nomeDe(d, wa), player2_id: wb, player2_name: nomeDe(d, wb) };
+      }
+      jogos.push(m);
+    }
+    R.push({ r, nome: nomeRodada(r, total), jogos });
+  }
+  return R;
+}
+
+function jogoHtml(d, m, podeGerir) {
+  const eu = E.user?.id;
+  if (!m) return `<div class="jogo vazio-j"><div class="ld nada"><span class="nm">a definir</span></div><div class="ld nada"><span class="nm">a definir</span></div></div>`;
+  const meu = eu && (m.player1_id === eu || m.player2_id === eu);
+  const decidido = !!m.winner_id && !m.previa;
+  const bye = m.reason === 'bye';
+  const lado = (id, nome, presente) => {
+    if (!id) return `<div class="ld nada"><span class="nm">${bye ? '— sem adversário —' : 'a definir'}</span></div>`;
+    const cls = decidido ? (m.winner_id === id ? 'venceu' : 'perdeu') : '';
+    let tag = '';
+    if (decidido && m.winner_id === id) tag = '<span class="tag ok">✓</span>';
+    else if (!m.previa && !decidido && !m.game_id && presente) tag = '<span class="tag sala">● na sala</span>';
+    return `<div class="ld ${cls}"><span class="nm">${esc(nome || 'Jogador')}${id === eu ? '<span class="voce">VOCÊ</span>' : ''}</span>${tag}</div>`;
+  };
+  let pe = '';
+  if (m.previa) pe = 'aguardando a rodada anterior';
+  else if (decidido) pe = `<span>${esc(motivoPartida(m))}</span>${m.game_id ? `<a href="/?game=${encodeURIComponent(m.game_id)}&spectate=1">ver jogo</a>` : ''}`;
+  else if (m.status === 'in_progress' && m.game_id) pe = `<span class="ao-vivo">● Em jogo${m.tiebreaks ? (m.tiebreaks >= 2 ? ' · Armageddon' : ` · desempate ${m.tiebreaks}`) : ''}</span>${!meu ? `<a href="/?game=${encodeURIComponent(m.game_id)}&spectate=1">assistir</a>` : ''}`;
+  else if (m.deadline_at) pe = `<span>começar até ${fmtData(m.deadline_at).replace(/^\S+ /, '')}</span>`;
+  const forcar = podeGerir && d.t.status === 'active' && !m.previa && !decidido && m.player1_id && m.player2_id
+    ? `<button class="btn small ghost bt-forcar" data-acao="forcar" data-id="${m.id}">Definir vencedor</button>` : '';
+  return `<div class="jogo${meu ? ' meu' : ''}">${lado(m.player1_id, m.player1_name, m.present_p1_at)}${lado(m.player2_id, m.player2_name, m.present_p2_at)}<div class="pe">${pe}</div>${forcar}</div>`;
+}
+
+function blocoChave(d, podeGerir) {
+  const t = d.t;
+  if (t.status === 'open' || (t.status === 'cancelled' && !d.matches.length)) {
+    if (t.status === 'cancelled') return '';
+    return `<div class="painel"><h2>Chaveamento</h2><p>O chaveamento é sorteado ${fmtData(t.starts_at)} com quem estiver inscrito. As partidas aparecem aqui.</p></div>`;
+  }
+  const R = montarRodadas(d);
+  const total = R.length;
+  const atual = t.status === 'finished' ? total : (t.current_round || 1);
+  if (!E.rodadaManual || !E.rodadaSel || E.rodadaSel > total) {
+    const m = minhaPartidaAtual(d);
+    E.rodadaSel = m && m.round === atual ? m.round : atual;
+  }
+  const campeao = nomeDe(d, t.winner_id);
+  const chips = R.map(x => `<button class="chip${x.r === E.rodadaSel ? ' ativa' : ''}" data-acao="rodada" data-r="${x.r}">${esc(x.nome)}${x.r === atual && t.status === 'active' ? ' •' : ''}</button>`).join('');
+  const cols = R.map(x => `<div class="rodada${x.r === total ? ' ultima' : ''}${x.r === E.rodadaSel ? ' sel' : ''}${x.r === atual && t.status === 'active' ? ' atual' : ''}" data-r="${x.r}">
+      <div class="rodada-tit">${esc(x.nome)}</div>
+      <div class="rodada-jogos">${x.jogos.map(m => `<div class="slot">${jogoHtml(d, m, podeGerir)}</div>`).join('')}</div></div>`).join('');
+  const colCampeao = `<div class="campeao-col"><div class="rodada-tit" style="color:var(--accent)">Campeão</div><div class="rodada-jogos"><div class="slot">
+      <div class="jogo"><div class="cr">${campeao ? '👑' : '🏆'}</div><div class="nm ${campeao ? '' : 'nada'}">${campeao ? esc(campeao) : 'a definir'}</div></div></div></div></div>`;
+  return `<div class="painel"><h2>Chaveamento <span class="dir">${t.status === 'active' ? `rodada ${atual} de ${total}` : t.status === 'finished' ? 'encerrado' : ''}</span></h2>
+    <div class="rodadas-chips">${chips}</div>
+    <div class="chave-scroll"><div class="chave">${cols}${colCampeao}</div></div></div>`;
+}
+
+// --- classificação (IA)
+function blocoClassificacao(d) {
+  const t = d.t, eu = E.user?.id;
+  const rapido = t.criterion === 'fastest_win';
+  let tabela;
+  if (d.lbErro) tabela = `<div class="faixa erro">${esc(traduz(d.lbErro))}</div>`;
+  else if (!d.lb.length) tabela = `<div class="vazio">Ninguém inscrito ainda.</div>`;
+  else {
+    const med = i => ['🥇', '🥈', '🥉'][i] || (i + 1);
+    const contaPos = r => rapido ? r.best_seconds !== null && r.best_seconds !== undefined : r.wins > 0;
+    tabela = `<table class="tabela"><thead><tr><th class="pos">#</th><th>Jogador</th><th class="num${rapido ? '' : ' crit'}">Vitórias</th><th class="num${rapido ? ' crit' : ''}">Melhor tempo</th></tr></thead><tbody>
+      ${d.lb.map((r, i) => `<tr class="${r.user_id === eu ? 'eu' : ''}"><td class="pos">${contaPos(r) ? med(i) : '–'}</td>
+        <td class="nm" title="${esc(r.user_name)}">${esc(r.user_name)}${r.user_id === eu ? ' <small style="color:var(--accent)">(você)</small>' : ''}</td>
+        <td class="num${rapido ? '' : ' crit'}">${r.wins}</td><td class="num${rapido ? ' crit' : ''}">${fmtSeg(r.best_seconds)}</td></tr>`).join('')}
+    </tbody></table>`;
+  }
+  let meus = '';
+  if (d.placares.length) {
+    const ok = d.placares.filter(p => p.status === 'normal').length;
+    const pend = d.placares.filter(p => p.status === 'pendente').length;
+    const nao = d.placares.filter(p => p.status === 'rejeitado' || p.status === 'cheater' || p.status === 'hacker');
+    meus = `<div class="sub-tit">Suas vitórias neste torneio</div><div class="meus-placares">
+      <div class="mp"><b>${ok}</b>valendo</div>
+      ${pend ? `<div class="mp" style="color:var(--info)"><b>${pend}</b>sendo conferida${pend > 1 ? 's' : ''}…</div>` : ''}
+      ${nao.length ? `<div class="mp" style="color:var(--danger)"><b>${nao.length}</b>não valeu${nao.length > 1 ? 'ram' : ''}</div>` : ''}</div>
+      ${nao.length ? `<p class="nota">Partida que não vale: com lance desfeito, que não terminou em xeque-mate a seu favor, ou que não passou na conferência do servidor.</p>` : ''}`;
+  }
+  return `<div class="painel"><h2>Classificação ${t.status === 'finished' ? '<span class="dir">final</span>' : ''}</h2>
+    <p style="margin-bottom:10px">${CRIT_EXPL[t.criterion] || ''}</p>
+    ${tabela}${meus}
+    <p class="nota">Cada vitória aparece depois que o servidor confere a partida — leva de alguns segundos a uns 2 minutos. ${t.status !== 'finished' ? 'O ranking fecha sozinho no horário final.' : ''}</p></div>`;
+}
+
+function blocoInscritos(d, podeGerir) {
+  const t = d.t, eu = E.user?.id;
+  if (podeGerir && t.status === 'open') return '';     // o organizador já vê a lista no painel
+  const aprov = d.parts.filter(p => p.status === 'approved');
+  if (!aprov.length) return '';
+  return `<div class="painel"><h2>Jogadores <span class="dir">${aprov.length} de ${t.capacity}</span></h2>
+    <div class="nomes">${aprov.map(p => `<span class="${p.user_id === eu ? 'eu' : ''}">${esc(p.user_name)}</span>`).join('')}</div></div>`;
+}
+
+// ============================================================ AÇÕES
+async function rpc(nome, args) {
+  const r = await supa.rpc(nome, args);
+  if (r.error) { await erro(r.error); return null; }
+  return r;
+}
+async function inscrever() {
+  const r = await rpc('join_tournament', { p_tournament_id: E.tid, p_token: E.token || null });
+  if (!r) return;
+  toast(r.data && r.data.status === 'pending' ? 'Pedido enviado ao organizador.' : 'Inscrição feita!');
+  await carregarTorneio();
+}
+async function sairTorneio() {
+  if (!await confirma('Sair deste torneio? Você pode se inscrever de novo enquanto houver vaga.', 'Sair do torneio', { perigo: true })) return;
+  if (await rpc('leave_tournament', { p_tournament_id: E.tid })) { toast('Você saiu do torneio.'); await carregarTorneio(); }
+}
+async function cancelarTorneio() {
+  const t = E.det?.t; if (!t) return;
+  const msg = t.paid === false ? 'Cancelar este torneio? Ele ainda não foi pago, então nada é cobrado.'
+    : t.status === 'active' ? 'Cancelar um torneio em andamento? As partidas abertas são encerradas. Não dá para desfazer.'
+    : 'Cancelar este torneio? Os inscritos deixam de ver a partida e o valor pago volta para você pelo Pix. Não dá para desfazer.';
+  if (!await confirma(msg, 'Cancelar torneio', { perigo: true, voltar: 'Não cancelar' })) return;
+  if (await rpc('cancel_tournament', { p_tournament_id: t.id })) { toast('Torneio cancelado.'); await carregarTorneio(); }
+}
+async function comecar() {
+  const n = E.det.parts.filter(p => p.status === 'approved').length;
+  const rod = Math.ceil(Math.log2(n)); const byes = Math.pow(2, rod) - n;
+  if (!await confirma(`Começar agora com ${n} jogadores? O sorteio é feito na hora: ${rod} rodada${rod > 1 ? 's' : ''}${byes ? `, ${byes} jogador${byes > 1 ? 'es passam' : ' passa'} direto para a 2ª rodada` : ''}. Depois disso ninguém mais entra.`, 'Começar agora')) return;
+  if (await rpc('start_bracket_tournament', { p_tournament_id: E.tid })) { toast('Torneio começou!'); E.rodadaSel = null; await carregarTorneio(); }
+}
+async function encerrarRanking() {
+  if (!await confirma('Encerrar o ranking agora? A classificação atual vira a final e o 1º colocado é o campeão.', 'Encerrar agora', { perigo: true })) return;
+  if (await rpc('finalize_ranking_tournament', { p_tournament_id: E.tid })) { toast('Ranking encerrado.'); await carregarTorneio(); }
+}
+async function definirStatus(pid, status, nome) {
+  if (status === 'rejected' && !await confirma(`Recusar ${nome}? Quem é recusado não pode se inscrever de novo neste torneio.`, 'Recusar', { perigo: true })) return;
+  if (await rpc('set_participant_status', { p_participant_id: pid, p_status: status })) await carregarTorneio();
+}
+async function entrarSala(mid) {
+  const r = await rpc('tournament_match_start_game', { p_match_id: mid });
+  if (!r) return;
+  if (r.data) { location.href = '/?game=' + encodeURIComponent(r.data); return; }
+  E.esperandoSala = mid;
+  toast('Presença marcada. Esperando o adversário…');
+  await carregarTorneio();
+}
+function abrirForcar(mid) {
+  const m = E.det.matches.find(x => x.id === mid); if (!m) return;
+  E.resultadoMatch = m;
+  $('resultado-corpo').innerHTML = `<p style="font-size:14px; color:var(--text-muted); margin-bottom:14px">Use só quando necessário (desistência combinada, problema técnico). ${m.game_id ? 'O jogo em andamento é encerrado. ' : ''}O vencedor passa para a próxima rodada e não dá para desfazer.</p>
+    <div style="display:flex; flex-direction:column; gap:8px">
+      <button class="btn primary" data-acao="forcar-ok" data-v="${m.player1_id}">${esc(m.player1_name)} venceu</button>
+      <button class="btn primary" data-acao="forcar-ok" data-v="${m.player2_id}">${esc(m.player2_name)} venceu</button>
+      <button class="btn ghost" data-acao="fechar-resultado">Voltar</button></div>`;
+  $('modal-resultado').classList.add('show');
+}
+async function forcar(vid) {
+  const m = E.resultadoMatch; if (!m) return;
+  $('modal-resultado').classList.remove('show');
+  if (await rpc('record_match_result', { p_match_id: m.id, p_winner_id: vid, p_pgn: null })) { toast('Resultado registrado.'); await carregarTorneio(); }
+}
+
+// ============================================================ CRIAR
+function valorRadio(n) { const el = document.querySelector(`input[name="${n}"]:checked`); return el ? el.value : null; }
+function paraLocal(d) { return `${d.getFullYear()}-${p2(d.getMonth() + 1)}-${p2(d.getDate())}T${p2(d.getHours())}:${p2(d.getMinutes())}`; }
+function atualizarBotaoCriar() { $('btn-enviar-criar').textContent = 'Criar e pagar ' + fmtBRL(E.preco ?? 1); }
+function abrirCriar() {
+  if (!E.user) { entrar(); return; }
+  $('criar-erro').textContent = '';
+  const ini = new Date(Date.now() + 60 * 60 * 1000); ini.setMinutes(Math.ceil(ini.getMinutes() / 5) * 5, 0, 0);
+  $('f-inicio').value = paraLocal(ini);
+  $('f-fim').value = paraLocal(new Date(ini.getTime() + 7 * 86400000));
+  atualizarFormCriar();
+  atualizarBotaoCriar();
+  $('modal-criar').classList.add('show');
+  setTimeout(() => $('f-nome').focus(), 50);
+}
+function atualizarFormCriar() {
+  const ia = valorRadio('f-formato') === 'ai';
+  $('campos-chave').style.display = ia ? 'none' : '';
+  $('campos-ia').style.display = ia ? '' : 'none';
+  $('linha-fim').style.display = ia ? '' : 'none';
+  $('rot-vagas').textContent = ia ? 'Máximo de jogadores' : 'Número de vagas';
+  $('dica-inicio').textContent = ia
+    ? 'As vitórias contam do início ao fim (no máximo 60 dias). O ranking fecha sozinho no horário final.'
+    : 'No horário de início o chaveamento é sorteado sozinho com quem estiver inscrito. Você pode começar antes.';
+  // prazo mínimo da rodada: 2 × tempo + 30 min
+  const tc = parseInt($('f-tempo').value, 10);
+  const minH = Math.ceil((tc * 2 + 1800) / 3600);
+  Array.from($('f-prazo').options).forEach(o => { o.disabled = parseInt(o.value, 10) < minH; });
+  if (parseInt($('f-prazo').value, 10) < minH) $('f-prazo').value = String(Array.from($('f-prazo').options).find(o => !o.disabled).value);
+}
+async function enviarCriar() {
+  const err = $('criar-erro'); err.textContent = '';
+  const fmt = valorRadio('f-formato');
+  const nome = $('f-nome').value.trim(), premio = $('f-premio').value.trim(), desc = $('f-desc').value.trim();
+  const ini = $('f-inicio').value ? new Date($('f-inicio').value) : null;
+  if (nome.length < 3) return void (err.textContent = 'Dê um nome com pelo menos 3 letras.');
+  if (!premio) return void (err.textContent = 'Descreva o prêmio (pode ser só "medalha virtual").');
+  if (!ini || isNaN(ini)) return void (err.textContent = 'Escolha quando o torneio começa.');
+  if (ini.getTime() < Date.now() - 60000) return void (err.textContent = 'O início precisa ser no futuro.');
+  const p = {
+    p_name: nome, p_description: desc || null, p_prize: premio, p_format: fmt, p_visibility: valorRadio('f-vis'),
+    p_capacity: parseInt(valorRadio('f-vagas'), 10), p_starts_at: ini.toISOString(), p_ends_at: null, p_difficulty: null,
+    p_criterion: null, p_round_deadline_hours: null, p_time_control_seconds: 600,
+  };
+  if (fmt === 'ai') {
+    const fim = $('f-fim').value ? new Date($('f-fim').value) : null;
+    if (!fim || isNaN(fim)) return void (err.textContent = 'Escolha quando o ranking termina.');
+    if (fim <= ini) return void (err.textContent = 'O fim precisa ser depois do início.');
+    if (fim - ini > 60 * 86400000) return void (err.textContent = 'O ranking pode durar no máximo 60 dias.');
+    p.p_ends_at = fim.toISOString(); p.p_difficulty = parseInt($('f-dific').value, 10); p.p_criterion = $('f-crit').value;
+  } else {
+    p.p_time_control_seconds = parseInt($('f-tempo').value, 10); p.p_round_deadline_hours = parseInt($('f-prazo').value, 10);
+  }
+  const bt = $('btn-enviar-criar'); bt.disabled = true; bt.textContent = 'Criando…';
+  const { data, error } = await supa.rpc('create_tournament', p);
+  bt.disabled = false; atualizarBotaoCriar();
+  if (error) { err.textContent = traduz(error); return; }
+  $('modal-criar').classList.remove('show');
+  ['f-nome', 'f-premio', 'f-desc'].forEach(id => { $(id).value = ''; });
+  history.pushState(null, '', '/torneios?id=' + data.id);
+  rotear();
+  abrirPix(data.id, data.name);
+}
+
+// ============================================================ PIX
+function abrirPix(tid, nome) {
+  pararPix();
+  E.pix = { tid, nome, estado: 'carregando', dados: null, msg: '' };
+  renderPix();
+  $('modal-pix').classList.add('show');
+  gerarPix();
+}
+function pararPix() { if (E.pix && E.pix.timer) clearInterval(E.pix.timer); }
+function fecharPix() {
+  const pago = E.pix && E.pix.estado === 'pago';
+  pararPix(); E.pix = null; $('modal-pix').classList.remove('show');
+  atualizarAgora(pago);
+}
+async function gerarPix() {
+  const P = E.pix; if (!P) return;
+  P.estado = 'carregando'; renderPix();
+  try {
+    const { data: { session } } = await supa.auth.getSession();
+    if (!session) { P.estado = 'erro'; P.msg = 'Entre com sua conta Google para pagar.'; renderPix(); return; }
+    const r = await fetch('/functions/v1/pix-cobranca', {
+      method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+      body: JSON.stringify({ tournament_id: P.tid }),
+    });
+    const j = await r.json().catch(() => ({}));
+    if (E.pix !== P) return;
+    if (r.status === 404) { P.estado = 'erro'; P.msg = 'Só quem criou o torneio pode pagar por ele.'; }
+    else if (r.status === 429) { P.estado = 'erro'; P.msg = 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.'; }
+    else if (r.status === 409) { P.estado = 'erro'; P.msg = j.error === 'not_open' ? 'Este torneio foi cancelado ou já começou; não dá mais para pagar.' : 'Não foi possível gerar o Pix agora.'; }
+    else if (r.status === 401) { P.estado = 'erro'; P.msg = 'Sua sessão expirou. Saia e entre de novo.'; }
+    else if (!r.ok) { P.estado = 'erro'; P.msg = 'O Pix está indisponível agora. Tente de novo em alguns minutos.'; }
+    else if (j.status === 'pago') { P.estado = 'pago'; }
+    else { P.estado = ms(j.expira_em) > agora() ? 'pendente' : 'expirado'; P.dados = j; }
+  } catch (e) {
+    P.estado = 'erro'; P.msg = traduz(e);
+  }
+  renderPix();
+  if (P.estado === 'pendente') { pararPix(); P.timer = setInterval(conferirPix, 4000); }
+}
+async function conferirPix() {
+  const P = E.pix; if (!P || P.estado !== 'pendente' || document.hidden) return;
+  const { data } = await supa.rpc('tournament_payment_status', { p_tournament_id: P.tid });
+  if (E.pix !== P) return;
+  const st = Array.isArray(data) ? data[0] : data;
+  if (!st) return;
+  if (st.paid) { P.estado = 'pago'; pararPix(); renderPix(); atualizarAgora(true); }
+  else if (st.status === 'expirado' || st.status === 'cancelado' || st.status === 'falhou') { P.estado = 'expirado'; pararPix(); renderPix(); }
+}
+async function simularPix() {
+  const P = E.pix; if (!P || !P.dados || !P.dados.simulado) return;
+  const { data: { session } } = await supa.auth.getSession();
+  const r = await fetch('/functions/v1/pix-simular', {
+    method: 'POST', headers: { 'Content-Type': 'application/json', Authorization: 'Bearer ' + session.access_token },
+    body: JSON.stringify({ tournament_id: P.tid }),
+  });
+  if (!r.ok) { toast('A simulação falhou (' + r.status + ').'); return; }
+  await conferirPix();
+}
+function renderPix() {
+  const P = E.pix; if (!P) return;
+  const c = $('pix-corpo');
+  const titulo = `<p style="font-size:13.5px; color:var(--text-muted); margin-bottom:10px; text-align:left">Torneio <b style="color:var(--text-light)">${esc(P.nome || '')}</b></p>`;
+  if (P.estado === 'carregando') { c.innerHTML = titulo + '<div class="status-msg"><span class="girando" style="display:inline-block; vertical-align:middle; margin-right:8px"></span>Gerando o Pix…</div>'; return; }
+  if (P.estado === 'erro') {
+    c.innerHTML = titulo + `<div class="faixa erro">${esc(P.msg)}</div><div class="form-actions"><button class="btn ghost" data-acao="fechar-pix">Fechar</button><button class="btn primary" data-acao="novo-pix">Tentar de novo</button></div>`; return;
+  }
+  if (P.estado === 'pago') {
+    c.innerHTML = `<div class="pix"><div class="grande-ok">✅</div><h3 style="font-family:'Playfair Display',serif; font-size:22px; margin:6px 0">Pagamento confirmado!</h3>
+      <p style="font-size:14px; color:var(--text-muted)">${P.nome ? `<b style="color:var(--text-light)">${esc(P.nome)}</b> já` : 'O torneio já'} está publicado. Agora é divulgar o link para os jogadores se inscreverem.</p>
+      <div class="form-actions" style="justify-content:center"><button class="btn primary" data-acao="pix-ver">Ver meu torneio</button></div></div>`;
+    return;
+  }
+  const dd = P.dados || {};
+  if (P.estado === 'expirado') {
+    c.innerHTML = titulo + `<div class="faixa aviso"><strong>Este Pix expirou.</strong> Se você já pagou, espere um minuto: a confirmação ainda pode chegar. Se não, gere um novo.</div>
+      <div class="form-actions"><button class="btn ghost" data-acao="fechar-pix">Fechar</button><button class="btn primary" data-acao="novo-pix">Gerar novo Pix</button></div>`;
+    return;
+  }
+  const qr = dd.qr_code_base64
+    ? `<div class="qr"><img alt="QR Code do Pix" src="data:image/png;base64,${esc(dd.qr_code_base64)}"></div>`
+    : `<div class="qr sem">${dd.simulado ? 'Sem QR Code no ambiente de teste.' : 'QR Code indisponível. Use o código copia e cola abaixo.'}</div>`;
+  c.innerHTML = `${dd.simulado ? `<div class="faixa teste"><strong>Ambiente de teste — Pix simulado.</strong> Nenhum dinheiro de verdade é cobrado.</div>` : ''}
+    ${titulo}
+    <div class="pix">
+      <div class="valor">${fmtBRL(dd.valor)}</div>
+      ${qr}
+      <ol class="passos"><li>Abra o app do seu banco e escolha pagar com Pix.</li><li>Leia o QR Code ou cole o código abaixo.</li><li>Pronto: esta tela confirma sozinha em segundos. Não precisa mandar comprovante.</li></ol>
+      <div class="copiar"><textarea readonly aria-label="Pix copia e cola">${esc(dd.qr_code || '')}</textarea></div>
+      <div style="margin-top:8px"><button class="btn block" data-acao="copiar" data-txt="${esc(dd.qr_code || '')}">Copiar código Pix</button></div>
+      <div class="expira">Válido por <span class="cd" data-ate="${esc(dd.expira_em)}" data-fim="0:00">${fmtDur(ms(dd.expira_em) - agora())}</span></div>
+      <div class="espera" style="justify-content:center"><span class="girando"></span>Esperando o pagamento…</div>
+      ${dd.simulado ? `<div style="margin-top:10px"><button class="btn block" style="border-color:rgba(200,140,255,0.5); color:#d9b3ff" data-acao="simular-pix">Simular pagamento (teste)</button></div>` : ''}
+      <p class="nota">Pode fechar esta janela: o pagamento continua valendo e o botão "Pagar" fica em "Meus torneios".</p>
+    </div>`;
+}
+
+// ============================================================ eventos
+document.addEventListener('click', e => {
+  const el = e.target.closest('[data-acao]'); if (!el) return;
+  const a = el.dataset.acao;
+  if (el.tagName === 'A' && (a === 'abrir' || a === 'ir-lista' || a === 'entrar')) e.preventDefault();
+  const F = {
+    'entrar': entrar, 'sair': sair,
+    'ir-lista': () => irPara(''),
+    'abrir': () => irPara('id=' + el.dataset.id),
+    'aba': () => { E.aba = el.dataset.aba; renderLista(); },
+    'formato': () => { E.formato = el.dataset.f; renderLista(); },
+    'mais-meus': () => { E.verTodosMeus = true; renderLista(); },
+    'criar': abrirCriar,
+    'fechar-criar': () => $('modal-criar').classList.remove('show'),
+    'enviar-criar': enviarCriar,
+    'pagar': () => abrirPix(el.dataset.id, el.dataset.nome),
+    'fechar-pix': fecharPix,
+    'novo-pix': gerarPix,
+    'simular-pix': simularPix,
+    'pix-ver': () => { const id = E.pix && E.pix.tid; fecharPix(); if (id) irPara('id=' + id); },
+    'copiar': () => copiar(el.dataset.txt),
+    'inscrever': inscrever,
+    'sair-torneio': sairTorneio,
+    'cancelar': cancelarTorneio,
+    'comecar': comecar,
+    'encerrar-ranking': encerrarRanking,
+    'aprovar': () => definirStatus(el.dataset.id, 'approved'),
+    'recusar': () => definirStatus(el.dataset.id, 'rejected', el.dataset.nome),
+    'sala': () => entrarSala(el.dataset.id),
+    'forcar': () => abrirForcar(el.dataset.id),
+    'forcar-ok': () => forcar(el.dataset.v),
+    'fechar-resultado': () => $('modal-resultado').classList.remove('show'),
+    'rodada': () => {
+      E.rodadaSel = parseInt(el.dataset.r, 10); E.rodadaManual = true;
+      document.querySelectorAll('.rodadas-chips .chip').forEach(c => c.classList.toggle('ativa', c === el));
+      document.querySelectorAll('.chave .rodada').forEach(r => r.classList.toggle('sel', parseInt(r.dataset.r, 10) === E.rodadaSel));
+    },
+    'admin-confirmar': async () => {
+      if (!await confirma('Confirmar manualmente que o Pix deste torneio foi recebido? Use só se o pagamento automático falhou.', 'Confirmar pagamento')) return;
+      if (await rpc('confirm_tournament_payment', { p_tournament_id: el.dataset.id })) { toast('Pagamento confirmado.'); carregarLista(); }
+    },
+  };
+  if (F[a]) { e.stopPropagation(); F[a](); }
+});
+document.addEventListener('keydown', e => {
+  if ((e.key === 'Enter' || e.key === ' ') && e.target.matches('.cartao[data-acao="abrir"]')) { e.preventDefault(); irPara('id=' + e.target.dataset.id); }
+  if (e.key === 'Escape') {
+    if ($('modal-aviso').classList.contains('show')) return;
+    if ($('modal-pix').classList.contains('show')) fecharPix();
+    $('modal-criar').classList.remove('show'); $('modal-resultado').classList.remove('show');
+  }
+});
+document.querySelectorAll('input[name="f-formato"]').forEach(r => r.addEventListener('change', atualizarFormCriar));
+$('f-tempo').addEventListener('change', atualizarFormCriar);
+
 init().catch(e => {
-  document.getElementById('loading').innerHTML =
-    '<span class="error">Erro: ' + esc(e.message || e) + '</span>';
+  console.error(e);
+  $('carregando').innerHTML = '<span class="error">Não consegui carregar a página: ' + esc(traduz(e)) + '</span>';
 });
 </script>
 

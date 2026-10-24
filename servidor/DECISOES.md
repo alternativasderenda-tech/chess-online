@@ -53,6 +53,7 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 - **PostgREST guarda a lista de funções em cache:** função nova ou com assinatura nova dá "Could not find the function … in the schema cache" até `NOTIFY pgrst, 'reload schema'` (o `publicar-servidor.sh` faz). Custou 3 falhas falsas no 1º e2e.
 - **PL/pgSQL: `IF x <> CASE … THEN … END THEN`** corta a condição no 1º `THEN` → "syntax error at end of input". CASE dentro de IF vai entre parênteses.
 - **Saída do SSM com "→"** quebra o AWS CLI no Windows (charmap): exportar `PYTHONIOENCODING=utf-8 PYTHONUTF8=1` antes do `rodar.sh`.
+- **Dono sem BYPASSRLS:** `auth.users` tem RLS (migração do GoTrue); o `xadrez_owner` não lia ninguém e todo nome novo virava 'Jogador'/'Anônimo' — também no oficial (papel é do cluster). No Supabase o `postgres` tem BYPASSRLS. Migração 005. O e2e só conferia ids, não nomes — agora confere.
 - **Teste e2e:** `servidor/testes/e2e-torneio.js` roda NO servidor contra o banco de teste (aborta em outro banco), com jogadores fictícios `@teste.invalid` apagados no fim. 1ª rodada completa: 17/17.
 
 ## 4. Aberto de propósito

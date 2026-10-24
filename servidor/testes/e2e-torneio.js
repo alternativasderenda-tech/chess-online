@@ -104,6 +104,9 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
       const r = await rpc(org, 'set_participant_status', { p_participant_id: p.id, p_status: st });
       assert.ok(r.ok, r.erro);
     }
+    // nomes de verdade (não 'Jogador'/'Anônimo'): o dono das funções precisa ler auth.users (migração 005)
+    assert.ok(ps.every(p => p.user_name && !/^(Jogador|Anônimo)$/.test(p.user_name)), 'nome caiu no padrão: ' + ps.map(p => p.user_name).join(', '));
+    assert.notEqual(sql(`select creator_name from tournaments where id = '${T.id}'`), 'Jogador');
     const volta = await rpc(intruso, 'join_tournament', { p_tournament_id: T.id });
     assert.equal(volta.ok, false, 'rejeitado conseguiu se reinscrever');
   });
