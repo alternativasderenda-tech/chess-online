@@ -26,7 +26,8 @@ xadrezonline.app {
 		rewrite /en/tournaments /torneios.html
 		rewrite /en /
 		try_files {path} {path}.html {path}/index.html
-		header Cache-Control "public, max-age=3600"
+		# "?" = só se ninguém definiu antes: sem ele, este padrão (sem matcher) roda por último e anula o @semcache
+		header ?Cache-Control "public, max-age=3600"
 		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
 		header @img Cache-Control "public, max-age=86400, immutable"
 		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
@@ -64,7 +65,8 @@ novo.xadrezonline.app {
 		rewrite /en/tournaments /torneios.html
 		rewrite /en /
 		try_files {path} {path}.html {path}/index.html
-		header Cache-Control "public, max-age=3600"
+		# "?" = só se ninguém definiu antes: sem ele, este padrão (sem matcher) roda por último e anula o @semcache
+		header ?Cache-Control "public, max-age=3600"
 		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
 		header @img Cache-Control "public, max-age=86400, immutable"
 		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
