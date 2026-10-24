@@ -229,6 +229,73 @@
       'online.endDraw': 'Empate',
       'online.endWhiteWins': 'Brancas vencem',
       'online.endBlackWins': 'Pretas vencem',
+      'trn.info': '⚔ Partida de torneio',
+      'trn.infoTiebreak': '⚔ Torneio · desempate (cores invertidas)',
+      'trn.infoArmageddon': '⚔ Torneio · Armageddon: empate = vitória das Pretas',
+      'trn.clockHint': 'O relógio começa depois do 1º lance de cada lado.',
+      'trn.resign': '🏳 Desistir',
+      'trn.resignConfirm': 'Desistir desta partida? O adversário vence e avança no torneio.',
+      'trn.resignYes': 'Desistir',
+      'trn.resignNo': 'Continuar jogando',
+      'trn.resignTitle': 'Desistir',
+      'trn.leaveConfirm': 'Sair de uma partida de torneio conta como desistência: o adversário vence e avança no torneio. Sair mesmo assim?',
+      'trn.leaveYes': 'Desistir e sair',
+      'trn.resignError': 'Não foi possível desistir agora: ',
+      'trn.timeoutClaim': '⏱ Tempo esgotado — conferindo no servidor…',
+      'trn.awaitJudge': 'Fim de jogo — aguardando o servidor confirmar o resultado…',
+      'trn.winText': 'Vitória contra {opp} — {reason}.',
+      'trn.lossText': '{opp} venceu — {reason}.',
+      'trn.endedTitle': 'Partida encerrada',
+      'trn.endedText': 'Partida encerrada — {reason}.',
+      'trn.drawTitle': 'Empate — vai para o desempate',
+      'trn.drawText': '{reason}. Desempate com as cores invertidas: agora você joga de {color}.',
+      'trn.armageddonNote': 'Este é o 3º jogo (Armageddon): empate conta como vitória das Pretas.',
+      'trn.goTiebreak': '▶ Ir para o desempate',
+      'trn.preparingTiebreak': 'Preparando o desempate…',
+      'trn.tiebreakNotFound': 'Não encontrei o jogo de desempate. Abra a partida de novo pela página de torneios.',
+      'trn.backToTournaments': '⚔ Ver torneios',
+      'trn.reason.xeque_mate': 'xeque-mate',
+      'trn.reason.lance_ilegal': 'lance ilegal',
+      'trn.reason.tempo': 'tempo esgotado',
+      'trn.reason.desistencia': 'desistência',
+      'trn.reason.afogamento': 'empate por afogamento',
+      'trn.reason.50lances': 'empate pela regra dos 50 lances',
+      'trn.reason.material': 'empate por material insuficiente',
+      'trn.reason.wo_prazo': 'W.O. — o prazo da rodada venceu',
+      'trn.reason.decidido_pelo_organizador': 'resultado definido pelo organizador',
+      'trn.reason.torneio_cancelado': 'o torneio foi cancelado',
+      'trn.reason.armageddon': '{reason} no Armageddon (empate conta como vitória das Pretas)',
+      'trn.reason.unknown': 'encerrada pelo servidor',
+      'trn.room.title': 'Sala da partida',
+      'trn.room.waiting': 'Aguardando {opp} entrar na sala…\n\nA partida começa assim que os dois estiverem aqui. Conferindo a cada 5 segundos (última: {time}).',
+      'trn.room.deadline': '\nPrazo para começar: {when}.',
+      'trn.room.cancel': 'Sair da sala',
+      'trn.room.needLogin': 'Precisa estar logado pra jogar a partida do torneio. Entrar agora?',
+      'trn.room.error': 'Não foi possível abrir a sala: ',
+      'trn.room.opponent': 'o adversário',
+      'score.checking': '⏳ Conferindo sua vitória…',
+      'score.checkingSlow': '⏳ Conferindo sua vitória… (no Expert pode levar 1–2 min)',
+      'score.checkingTitle': 'Conferindo',
+      'score.confirmedTitle': 'Vitória confirmada',
+      'score.rejectedTitle': 'Não confirmada',
+      'score.confirmed': '✓ Vitória confirmada! Seu tempo: {time}.',
+      'score.confirmedNoTime': '✓ Vitória confirmada! Conta no ranking de vitórias, mas não vale para "vitória mais rápida": os lances não foram gravados ao vivo (ex.: partida jogada antes do login).',
+      'score.rejected': '✗ Não confirmada: {reason}',
+      'score.stillChecking': 'A conferência ainda não terminou. O resultado aparece no ranking assim que sair.',
+      'score.reason.lance_desfeito': 'houve lance desfeito nesta partida.',
+      'score.reason.lance_ilegal': 'um lance da partida não é válido.',
+      'score.reason.lance_da_ia_impossivel': 'um lance registrado como do computador não é um que ele faria neste nível.',
+      'score.reason.alternancia': 'a ordem dos lances (seus e do computador) não confere.',
+      'score.reason.lance_depois_do_fim': 'há lances registrados depois do fim da partida.',
+      'score.reason.sem_lances': 'a partida não tem lances suficientes registrados.',
+      'score.reason.nao_terminou': 'a partida registrada não termina em xeque-mate.',
+      'score.reason.fim': 'a partida registrada não termina com o seu xeque-mate.',
+      'score.reason.erro_conferencia': 'não foi possível conferir a partida agora.',
+      'score.reason.cheater': 'o padrão de jogo parece automatizado.',
+      'score.reason.unknown': 'a partida não passou na conferência.',
+      'undo.confirm': 'Desfazer tira esta partida do ranking e do torneio. Continuar?',
+      'undo.confirmYes': 'Desfazer',
+      'undo.offRanking': '↩ Esta partida não conta para o ranking: houve lance desfeito.',
       'pgn.readError': 'Erro ao ler arquivo PGN: ',
       'pgn.empty': 'Arquivo PGN vazio ou inválido.',
       'pgn.noMoves': 'Não foi possível ler nenhum movimento do arquivo.',
@@ -461,6 +528,73 @@
       'online.endDraw': 'Draw',
       'online.endWhiteWins': 'White wins',
       'online.endBlackWins': 'Black wins',
+      'trn.info': '⚔ Tournament game',
+      'trn.infoTiebreak': '⚔ Tournament · tiebreak (colors swapped)',
+      'trn.infoArmageddon': '⚔ Tournament · Armageddon: a draw counts as a win for Black',
+      'trn.clockHint': 'The clock starts after each side has made its first move.',
+      'trn.resign': '🏳 Resign',
+      'trn.resignConfirm': 'Resign this game? Your opponent wins and advances in the tournament.',
+      'trn.resignYes': 'Resign',
+      'trn.resignNo': 'Keep playing',
+      'trn.resignTitle': 'Resign',
+      'trn.leaveConfirm': 'Leaving a tournament game counts as resigning: your opponent wins and advances. Leave anyway?',
+      'trn.leaveYes': 'Resign and leave',
+      'trn.resignError': 'Could not resign right now: ',
+      'trn.timeoutClaim': '⏱ Time is up — checking with the server…',
+      'trn.awaitJudge': 'Game over — waiting for the server to confirm the result…',
+      'trn.winText': 'You beat {opp} — {reason}.',
+      'trn.lossText': '{opp} won — {reason}.',
+      'trn.endedTitle': 'Game over',
+      'trn.endedText': 'Game over — {reason}.',
+      'trn.drawTitle': 'Draw — on to the tiebreak',
+      'trn.drawText': '{reason}. Tiebreak with colors swapped: you now play {color}.',
+      'trn.armageddonNote': 'This is game 3 (Armageddon): a draw counts as a win for Black.',
+      'trn.goTiebreak': '▶ Go to the tiebreak',
+      'trn.preparingTiebreak': 'Preparing the tiebreak…',
+      'trn.tiebreakNotFound': 'Could not find the tiebreak game. Open the match again from the tournaments page.',
+      'trn.backToTournaments': '⚔ Tournaments',
+      'trn.reason.xeque_mate': 'checkmate',
+      'trn.reason.lance_ilegal': 'illegal move',
+      'trn.reason.tempo': 'time ran out',
+      'trn.reason.desistencia': 'resignation',
+      'trn.reason.afogamento': 'draw by stalemate',
+      'trn.reason.50lances': 'draw by the 50-move rule',
+      'trn.reason.material': 'draw by insufficient material',
+      'trn.reason.wo_prazo': 'walkover — the round deadline passed',
+      'trn.reason.decidido_pelo_organizador': 'result set by the organizer',
+      'trn.reason.torneio_cancelado': 'the tournament was cancelled',
+      'trn.reason.armageddon': '{reason} in Armageddon (a draw counts as a win for Black)',
+      'trn.reason.unknown': 'ended by the server',
+      'trn.room.title': 'Match room',
+      'trn.room.waiting': 'Waiting for {opp} to enter the room…\n\nThe game starts as soon as both of you are here. Checking every 5 seconds (last: {time}).',
+      'trn.room.deadline': '\nDeadline to start: {when}.',
+      'trn.room.cancel': 'Leave the room',
+      'trn.room.needLogin': 'You need to sign in to play this tournament match. Sign in now?',
+      'trn.room.error': 'Could not open the room: ',
+      'trn.room.opponent': 'your opponent',
+      'score.checking': '⏳ Checking your win…',
+      'score.checkingSlow': '⏳ Checking your win… (Expert can take 1–2 min)',
+      'score.checkingTitle': 'Checking',
+      'score.confirmedTitle': 'Win confirmed',
+      'score.rejectedTitle': 'Not confirmed',
+      'score.confirmed': '✓ Win confirmed! Your time: {time}.',
+      'score.confirmedNoTime': '✓ Win confirmed! It counts in the wins leaderboard, but not for "fastest win": the moves were not recorded live (e.g. the game was played before signing in).',
+      'score.rejected': '✗ Not confirmed: {reason}',
+      'score.stillChecking': 'The check is not finished yet. The result will show in the leaderboard as soon as it is.',
+      'score.reason.lance_desfeito': 'a move was undone in this game.',
+      'score.reason.lance_ilegal': 'one of the moves is not valid.',
+      'score.reason.lance_da_ia_impossivel': 'a move recorded as the computer\'s is not one it would play at this level.',
+      'score.reason.alternancia': 'the order of moves (yours and the computer\'s) does not match.',
+      'score.reason.lance_depois_do_fim': 'there are moves recorded after the game ended.',
+      'score.reason.sem_lances': 'not enough moves were recorded.',
+      'score.reason.nao_terminou': 'the recorded game does not end in checkmate.',
+      'score.reason.fim': 'the recorded game does not end with your checkmate.',
+      'score.reason.erro_conferencia': 'the game could not be checked right now.',
+      'score.reason.cheater': 'the play pattern looks automated.',
+      'score.reason.unknown': 'the game did not pass the check.',
+      'undo.confirm': 'Undoing removes this game from the leaderboard and the tournament. Continue?',
+      'undo.confirmYes': 'Undo',
+      'undo.offRanking': '↩ This game does not count for the leaderboard: a move was undone.',
       'pgn.readError': 'Error reading PGN file: ',
       'pgn.empty': 'PGN file is empty or invalid.',
       'pgn.noMoves': 'Could not read any moves from the file.',
@@ -1873,6 +2007,31 @@
     margin-top: 8px;
     text-align: center;
   }
+  /* Popup de fim: textos longos (veredito, desempate) quebram linha em vez de alargar o cartão */
+  #gameover-popup .celebration-card { max-width: 440px; }
+  /* Placar contra a IA: conferência no servidor (pendente → confirmada / não confirmada) */
+  .score-feedback.pending {
+    background: rgba(226,185,111,0.12);
+    border-color: rgba(226,185,111,0.45);
+    color: var(--accent);
+  }
+  .score-feedback.rejected {
+    background: rgba(230,90,90,0.12);
+    border-color: rgba(230,90,90,0.45);
+    color: #f0a0a0;
+  }
+  /* Partida de torneio: faixa no painel online */
+  .trn-info {
+    font-size: 12px;
+    font-weight: 600;
+    color: #fff;
+    background: linear-gradient(135deg, rgba(111,76,180,0.85), rgba(226,185,111,0.75));
+    border-radius: 6px;
+    padding: 6px 8px;
+    margin-bottom: 10px;
+    line-height: 1.4;
+  }
+  .trn-info .trn-hint { display: block; font-weight: 400; opacity: 0.9; font-size: 11px; margin-top: 2px; }
 
   @media (max-width: 600px) {
     #auth-header { top: 6px; right: 6px; }
@@ -2194,8 +2353,10 @@
         ID: <span id="online-game-id-display" style="color:var(--accent); font-family:monospace; font-weight:600;">—</span>
       </div>
       <div id="online-color-display" style="font-size:12px; color:var(--text-muted); margin-bottom:10px;"></div>
+      <div id="online-trn-info" class="trn-info" style="display:none;"></div>
       <div class="controls">
         <button class="btn" onclick="copyOnlineGameLink()" id="online-copy-link-btn" data-i18n="online.copyLink">📋 Copiar Link</button>
+        <button class="btn" onclick="resignTournamentGame()" id="online-resign-btn" style="display:none;" data-i18n="trn.resign">🏳 Desistir</button>
         <button class="btn" onclick="leaveOnlineGameAction()" data-i18n="online.leave">🚪 Sair da Partida</button>
       </div>
       <div class="reactions-row">
@@ -2332,6 +2493,8 @@
     <div style="display:flex; gap:8px; justify-content:center; flex-wrap:wrap; max-width:360px;">
       <button class="btn primary" id="btn-register-score" onclick="registerCurrentScore()" style="display:none; min-width:160px;" data-i18n="gameover.register">🏆 Registrar no Ranking</button>
       <button class="btn primary" id="btn-go-rematch" onclick="startRematch()" style="display:none; min-width:140px;" data-i18n="gameover.rematch">🔄 Revanche</button>
+      <button class="btn primary" id="btn-go-tiebreak" onclick="goToTiebreakNow()" style="display:none; min-width:160px;" data-i18n="trn.goTiebreak">▶ Ir para o desempate</button>
+      <button class="btn" id="btn-go-tournaments" onclick="location.href='/torneios'" style="display:none; min-width:140px;" data-i18n="trn.backToTournaments">⚔ Ver torneios</button>
       <button class="btn" id="btn-go-leave-online" onclick="leaveOnlineFromPopup()" style="display:none; min-width:140px;" data-i18n="gameover.leave">🚪 Sair</button>
       <button class="btn primary" id="btn-go-newgame" onclick="closeGameOverPopup(); newGameWithAd();" style="min-width:140px;" data-i18n="gameover.newGame">Jogar Novamente</button>
       <button class="btn" onclick="closeGameOverPopup(); nextDifficulty();" style="min-width:140px;" id="go-next-btn" data-i18n="gameover.nextLevel">Próximo Nível →</button>
@@ -2718,6 +2881,7 @@ let aiSessionId = null;       // ID da sessao atual (vs IA)
 let aiSessionMoveNumber = 0;  // contador local de lances do jogador
 let aiSessionLocalMoves = []; // espelho local dos lances (pra registro pos-login)
 let aiSessionStartTs = 0;
+let aiSessionNoRank = false;  // D-TRN-10: houve lance desfeito -> a sessao nao conta pro ranking/torneio
 const IDLE_THRESHOLD_MS = 5000;
 const PENDING_GAME_KEY = 'pendingAiGame';
 const PENDING_GAME_MAX_AGE_MS = 60 * 60 * 1000;  // 1h
@@ -2917,6 +3081,7 @@ function captureWinData() {
 
 async function registerCurrentScore() {
   if (!lastWinData) return;
+  if (aiSessionNoRank) return;  // D-TRN-10: partida com lance desfeito nao conta
   const btn = document.getElementById('btn-register-score');
   const fb = document.getElementById('go-score-feedback');
 
@@ -2943,8 +3108,21 @@ async function registerCurrentScore() {
   const ok = await submitScore(lastWinData);
   if (ok) {
     if (btn) { btn.style.display = 'none'; }
-    if (fb) { fb.style.display = 'block'; fb.textContent = tr('register.feedbackOk'); }
     lastWinData = null;
+    // D-TRN-02/12: o placar nasce PENDENTE; o servidor reproduz a partida e decide
+    if (fb) {
+      fb.style.display = 'block';
+      if (ok.score_id) {
+        followScoreVerdict(ok, (state, text) => {
+          fb.classList.toggle('pending', state === 'pending');
+          fb.classList.toggle('rejected', state === 'rejected');
+          fb.textContent = text;
+        });
+      } else {
+        fb.classList.remove('pending', 'rejected');
+        fb.textContent = tr('register.feedbackOk');
+      }
+    }
   } else if (btn) {
     btn.disabled = false;
     btn.textContent = '🏆 Registrar no Ranking';
@@ -2986,7 +3164,8 @@ async function submitScore(data, opts) {
           server_validated: true
         });
       }
-      return true;
+      // devolve a resposta (score_id/status) pra quem chamou acompanhar a conferencia no servidor
+      return (rpcRes && typeof rpcRes === 'object') ? rpcRes : true;
     } catch (e) {
       console.error('RPC register_ai_score falhou:', e.message || e);
       // SEM fallback de INSERT direto — todo registro de score precisa
@@ -3029,7 +3208,9 @@ async function checkPendingScore() {
             player_seconds: data.player_seconds,
             behavior: data.behavior
           }, { clientValidated: true });
-          if (submitOk) {
+          if (submitOk && submitOk.score_id) {
+            showScoreVerdictModal(submitOk);
+          } else if (submitOk) {
             await showAlert(tr('register.winRegistered'), { success: true });
           }
         } else {
@@ -3066,8 +3247,87 @@ async function checkPendingScore() {
     } else if (postAction.startsWith('tournament:')) {
       const tid = postAction.split(':')[1];
       setTimeout(() => enterTournamentContext(tid), 200);
+    } else if (postAction.startsWith('match:')) {
+      const mid = postAction.split(':')[1];
+      setTimeout(() => enterTournamentMatchRoom(mid), 200);
     }
   }
+}
+
+// === Conferencia do placar contra a IA no servidor (D-TRN-02/11/12) ===
+// register_ai_score devolve status 'pendente'; o servidor reproduz a partida com o motor do site e muda o placar
+// para 'normal' (vale) ou 'rejeitado' (reject_reason). Expert pode levar 1-2 min.
+const SCORE_POLL_MS = 2000;
+const SCORE_POLL_MAX_MS = 4 * 60 * 1000;
+
+function scoreReasonText(code) {
+  let c = String(code || '');
+  if (c.indexOf('fim_') === 0) c = 'fim';
+  const key = 'score.reason.' + c;
+  const t = tr(key);
+  return (c && t !== key) ? t : tr('score.reason.unknown');
+}
+
+// v = linha de scores (status, reject_reason, player_seconds, timed_live) ou null (ainda conferindo)
+function scoreVerdict(v) {
+  if (!v || v.status === 'pendente') return { state: 'pending', title: tr('score.checkingTitle'), text: tr('score.stillChecking') };
+  if (v.status === 'normal') {
+    // timed_live=false: partida jogada antes do login (lances enviados de uma vez) — vale vitoria, nao "mais rapida"
+    const text = (v.timed_live === false || !v.player_seconds)
+      ? tr('score.confirmedNoTime')
+      : tr('score.confirmed', { time: fmtSeconds(v.player_seconds) });
+    return { state: 'ok', title: tr('score.confirmedTitle'), text };
+  }
+  const motivo = v.status === 'rejeitado' ? v.reject_reason : v.status;  // 'cheater'/'hacker' vem direto no status
+  return { state: 'rejected', title: tr('score.rejectedTitle'),
+           text: tr('score.rejected', { reason: scoreReasonText(motivo === 'hacker' ? 'cheater' : motivo) }) };
+}
+
+// Acompanha o placar ate sair o veredito. onUpdate(state, text): state = 'pending' | 'ok' | 'rejected'
+async function followScoreVerdict(rpcRes, onUpdate) {
+  const scoreId = rpcRes && rpcRes.score_id;
+  if (!scoreId || !supa) return null;
+  // placar que ja nasce decidido (ex.: 'cheater' pelos sinais de comportamento) sai na 1a leitura
+  onUpdate('pending', tr('score.checking'));
+  const t0 = Date.now();
+  let slowShown = false;
+  while (Date.now() - t0 < SCORE_POLL_MAX_MS) {
+    try {
+      const { data, error } = await supa.from('scores')
+        .select('status,reject_reason,player_seconds,timed_live').eq('id', scoreId).maybeSingle();
+      if (!error && data && data.status !== 'pendente') {
+        const v = scoreVerdict(data);
+        onUpdate(v.state, v.text);
+        return v;
+      }
+    } catch (e) { console.warn('scores poll err:', e); }
+    if (!slowShown && Date.now() - t0 > 15000) { slowShown = true; onUpdate('pending', tr('score.checkingSlow')); }
+    await new Promise(r => setTimeout(r, SCORE_POLL_MS));
+  }
+  const v = scoreVerdict(null);
+  onUpdate(v.state, v.text);
+  return v;
+}
+
+// Versao em modal (registro feito depois do login, fora do popup de fim de jogo)
+function showScoreVerdictModal(rpcRes) {
+  const modal = document.getElementById('game-modal');
+  const msgEl = document.getElementById('game-modal-message');
+  const titleEl = document.getElementById('game-modal-title');
+  const iconEl = document.getElementById('game-modal-icon');
+  let shownText = tr('score.checking');
+  showAlert(shownText, { icon: '⏳', title: tr('score.checkingTitle') });
+  followScoreVerdict(rpcRes, (state, text) => {
+    const stillOurs = modal && modal.style.display !== 'none' && msgEl && msgEl.textContent === shownText;
+    const icon = state === 'ok' ? '🏆' : (state === 'rejected' ? '⚠️' : '⏳');
+    const title = state === 'ok' ? tr('score.confirmedTitle') : (state === 'rejected' ? tr('score.rejectedTitle') : tr('score.checkingTitle'));
+    if (stillOurs) {
+      msgEl.textContent = text; titleEl.textContent = title; iconEl.textContent = icon;
+      shownText = text;
+    } else if (state !== 'pending') {
+      showAlert(text, { icon, title, error: state === 'rejected' });
+    }
+  });
 }
 
 // === Ranking modal ===
@@ -3358,6 +3618,11 @@ async function joinOnlineGame(gameId) {
     if (tcSel) tcSel.value = String(game.time_control);
   }
 
+  // Jogo de torneio (D-TRN-01): fluxo proprio — o resultado vem do servidor
+  if (game.tournament_match_id && (game.white_user_id === currentUser.id || game.black_user_id === currentUser.id)) {
+    return joinTournamentGame(game);
+  }
+
   // Reentrando como white (criador)
   if (game.white_user_id === currentUser.id) {
     setupOnlineGame(gameId, 'w');
@@ -3424,6 +3689,8 @@ async function joinOnlineGame(gameId) {
 }
 
 function setupOnlineGame(gameId, color) {
+  // Partida nova: zera o estado de torneio (joinTournamentGame liga de novo se for jogo de torneio)
+  resetTournamentGameState();
   // Sair de tutorial caso esteja
   if (typeof tutorialMode !== 'undefined' && tutorialMode && typeof exitTutorialMode === 'function') {
     exitTutorialMode();
@@ -3552,11 +3819,13 @@ function handleIncomingMove(move) {
     { from: move.from_sq, to: move.to_sq, promo: move.promotion || undefined },
     { fromRealtime: true }
   );
+  if (isTournamentGame()) afterTournamentMove();
 }
 
 function handleGameUpdate(game) {
   if (gameMode !== 'online' || !onlineGameId) return;
   if (game.id !== onlineGameId) return;
+  if (isTournamentGame()) { handleTournamentGameUpdate(game); return; }
 
   if (game.status === 'active' && isWaitingForOpponent) {
     isWaitingForOpponent = false;
@@ -3609,12 +3878,17 @@ async function sendMoveToServer(move, isGameOver, gameResult) {
   if (error) {
     console.error('Erro ao enviar movimento:', error);
     setStatus(tr('status.connError'));
+    // torneio: o lance pode ter sido recusado porque o servidor ja encerrou o jogo (ex.: tempo)
+    if (isTournamentGame()) checkTournamentGameRow();
     return;
   }
   // Atualiza turno no games
   await supa.from('games').update({
     current_turn: myOnlineColor === 'w' ? 'b' : 'w'
   }).eq('id', onlineGameId);
+
+  // Torneio (D-TRN-01): o navegador NAO grava status/result; o juiz do servidor reproduz o lance e encerra
+  if (isTournamentGame()) { afterTournamentMove(); return; }
 
   // Se acabou, marca partida como finalizada
   if (isGameOver) {
@@ -3690,6 +3964,7 @@ async function cancelOnlineGame() {
 
 function leaveOnlineMode() {
   unsubscribeFromOnlineGame();
+  resetTournamentGameState();
   gameMode = 'ai';
   onlineGameId = null;
   myOnlineColor = null;
@@ -3736,6 +4011,21 @@ async function copyOnlineGameLink() {
 }
 
 async function leaveOnlineGameAction() {
+  // Torneio: sair de jogo em andamento = desistencia (tournament_resign); o navegador nao grava status do jogo
+  if (isTournamentGame()) {
+    if (!gameOver) {
+      const okT = await showConfirm(tr('trn.leaveConfirm'), { icon: '🏳', okLabel: tr('trn.leaveYes'), cancelLabel: tr('online.leaveNo') });
+      if (!okT) return;
+      if (!gameOver) {
+        const { error } = await supa.rpc('tournament_resign', { p_game_id: onlineGameId });
+        if (error) { await showAlert(tr('trn.resignError') + error.message, { error: true }); return; }
+      }
+    }
+    leaveOnlineMode();
+    cleanGameUrlParam();
+    if (typeof newGame === 'function') newGame();
+    return;
+  }
   const ok = await showConfirm(tr('online.leaveConfirm'), { okLabel: tr('online.leaveYes'), cancelLabel: tr('online.leaveNo') });
   if (!ok) return;
   if (onlineGameId && supa) {
@@ -3812,11 +4102,411 @@ async function startRematch() {
 
 function handleRematchBroadcast(payload) {
   if (!payload || !payload.newGameId) return;
+  if (isTournamentGame()) return;  // torneio nao tem revanche (o desempate vem do servidor)
   // Se eu fui o iniciador, ja redirecionei localmente, ignorar echo
   if (currentUser && payload.initiator === currentUser.id) return;
   closeGameOverPopup();
   // Ir pra nova partida criada pelo oponente
   joinOnlineGame(payload.newGameId);
+}
+
+// =================== PARTIDA DE TORNEIO (chaveamento) ===================
+// servidor/DECISOES.md D-TRN-01/06/15/16: o navegador so insere lances; quem encerra o jogo e o SERVIDOR (juiz que
+// reproduz os lances, relogio pelos horarios do servidor, desistencia por RPC). O fim chega pelo UPDATE de games no
+// canal. Empate -> o servidor cria o jogo de desempate (cores invertidas; 3o jogo = Armageddon) e os dois vao pra ele.
+let trnMatchId = null;          // tournament_match_id do jogo online atual (null = partida casual)
+let trnTiebreaks = 0;           // desempates ja jogados na partida (1 = este e o 2o jogo; 2 = Armageddon)
+let trnClock = null;            // { w, b, turn, moves, last (ms), offset (ms servidor - local) }
+let trnClockTick = null;        // redesenha o relogio (local, a partir do ultimo relogio oficial)
+let trnClockPoll = null;        // relogio oficial + estado do jogo a cada 15 s
+let trnClaimAt = 0;             // ultimo pedido de conferencia de tempo esgotado
+let trnDesyncTimer = null;      // conferencia de lance perdido no canal
+let trnEndHandledFor = null;    // id do jogo cujo fim ja foi mostrado
+let trnTiebreakGameId = null;   // jogo de desempate encontrado (botao "Ir para o desempate")
+let trnTiebreakAuto = null;
+let trnRoomMatchId = null;      // sala de espera aberta (?match=)
+let trnRoomTimer = null;
+
+function isTournamentGame() {
+  return gameMode === 'online' && !!trnMatchId && !!onlineGameId && !isSpectator;
+}
+
+function capFirst(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+
+// end_reason do servidor -> texto (PT/EN). Os empates do 3o jogo chegam com sufixo _armageddon.
+function tournamentReasonText(code) {
+  let c = String(code || '');
+  const arm = /_armageddon$/.test(c);
+  if (arm) c = c.replace(/_armageddon$/, '');
+  const key = 'trn.reason.' + c;
+  let t = tr(key);
+  if (!c || t === key) t = tr('trn.reason.unknown');
+  return arm ? tr('trn.reason.armageddon', { reason: t }) : t;
+}
+
+function stopTournamentClock() {
+  if (trnClockTick) { clearInterval(trnClockTick); trnClockTick = null; }
+  if (trnClockPoll) { clearInterval(trnClockPoll); trnClockPoll = null; }
+}
+
+function resetTournamentGameState() {
+  stopTournamentClock();
+  if (trnDesyncTimer) { clearTimeout(trnDesyncTimer); trnDesyncTimer = null; }
+  if (trnTiebreakAuto) { clearTimeout(trnTiebreakAuto); trnTiebreakAuto = null; }
+  trnMatchId = null;
+  trnTiebreaks = 0;
+  trnClock = null;
+  trnClaimAt = 0;
+  trnEndHandledFor = null;
+  trnTiebreakGameId = null;
+  const resignBtn = document.getElementById('online-resign-btn');
+  if (resignBtn) resignBtn.style.display = 'none';
+  const info = document.getElementById('online-trn-info');
+  if (info) { info.style.display = 'none'; info.textContent = ''; }
+  const copyBtn = document.getElementById('online-copy-link-btn');
+  if (copyBtn) copyBtn.style.display = '';
+}
+
+function renderTournamentInfo() {
+  const info = document.getElementById('online-trn-info');
+  if (!info) return;
+  const label = trnTiebreaks >= 2 ? tr('trn.infoArmageddon') : (trnTiebreaks === 1 ? tr('trn.infoTiebreak') : tr('trn.info'));
+  info.innerHTML = escapeHtml(label) + '<span class="trn-hint">' + escapeHtml(tr('trn.clockHint')) + '</span>';
+  info.style.display = '';
+}
+
+async function joinTournamentGame(game) {
+  const color = game.white_user_id === currentUser.id ? 'w' : 'b';
+  const url = new URL(window.location.href);
+  if (url.searchParams.has('match')) { url.searchParams.delete('match'); window.history.replaceState({}, '', url); }
+  closeGameOverPopup();
+  setupOnlineGame(game.id, color);          // zera o estado, assina o canal, liga o relogio local...
+  stopTimer();                              // ...que em torneio nao decide nada: o relogio e o do servidor
+  trnMatchId = game.tournament_match_id;
+  opponentName = color === 'w' ? game.black_username : game.white_username;
+  updateOnlinePlayerBars();
+  timerEnabled = (game.time_control || 0) > 0;
+  timerWhite = timerBlack = game.time_control || 0;
+  updateTimerDisplay();
+  const copyBtn = document.getElementById('online-copy-link-btn');
+  if (copyBtn) copyBtn.style.display = 'none';
+  const resignBtn = document.getElementById('online-resign-btn');
+  if (resignBtn) resignBtn.style.display = '';
+  renderTournamentInfo();
+  try {
+    const { data: m } = await supa.from('tournament_matches').select('tiebreaks').eq('id', trnMatchId).maybeSingle();
+    if (m && onlineGameId === game.id) { trnTiebreaks = m.tiebreaks || 0; renderTournamentInfo(); }
+  } catch (e) { console.warn('tournament_matches err:', e); }
+  await replayMovesFromDb(game.id);
+  if (onlineGameId !== game.id) return;
+  if (game.status === 'finished' || game.status === 'abandoned') {
+    if (resignBtn) resignBtn.style.display = 'none';
+    handleTournamentGameUpdate(game);
+    return;
+  }
+  await refreshTournamentClock();
+  if (onlineGameId !== game.id || !isTournamentGame()) return;
+  trnClockTick = setInterval(renderTournamentClock, 500);
+  trnClockPoll = setInterval(() => { refreshTournamentClock(); checkTournamentGameRow(); }, 15000);
+  // o jogo pode ter acabado entre a leitura e a assinatura do canal
+  checkTournamentGameRow();
+}
+
+// Relogio OFICIAL (tournament_game_clock): segundos restantes contados pelos horarios do servidor ate o ultimo lance;
+// o lado da vez perde (agora - ultimo lance). O 1o lance de cada lado nao conta (moves < 2 => parado).
+async function refreshTournamentClock() {
+  if (!isTournamentGame()) return;
+  const gid = onlineGameId;
+  const t0 = Date.now();
+  const { data, error } = await supa.rpc('tournament_game_clock', { p_game_id: gid });
+  const t1 = Date.now();
+  if (error) { console.warn('tournament_game_clock err:', error.message); return; }
+  if (gid !== onlineGameId || !isTournamentGame()) return;
+  const r = Array.isArray(data) ? data[0] : data;
+  if (!r) return;
+  const serverNow = Date.parse(r.server_now);
+  trnClock = {
+    w: Number(r.white_left), b: Number(r.black_left), turn: r.turn, moves: Number(r.moves) || 0,
+    last: r.last_move_at ? Date.parse(r.last_move_at) : null,
+    offset: isNaN(serverNow) ? 0 : serverNow - (t0 + t1) / 2
+  };
+  renderTournamentClock();
+  checkTournamentDesync(gid);
+}
+
+// Lance perdido no canal (ex.: chegou antes da assinatura): o servidor tem N lances e o tabuleiro outro numero.
+// Confere de novo em 3 s (o evento pode so estar atrasado) e, se continuar diferente, recarrega o jogo do banco.
+function checkTournamentDesync(gid) {
+  if (!trnClock || gameOver || trnDesyncTimer || trnClock.moves === onlineLastSeenMove) return;
+  trnDesyncTimer = setTimeout(async () => {
+    trnDesyncTimer = null;
+    if (!isTournamentGame() || onlineGameId !== gid || gameOver) return;
+    const { data } = await supa.rpc('tournament_game_clock', { p_game_id: gid });
+    const r = Array.isArray(data) ? data[0] : data;
+    if (!r || onlineGameId !== gid || gameOver) return;
+    if (Number(r.moves) !== onlineLastSeenMove) {
+      console.warn('torneio: tabuleiro fora de sincronia (' + onlineLastSeenMove + ' x ' + r.moves + ' lances) — recarregando');
+      joinOnlineGame(gid);
+    }
+  }, 3000);
+}
+
+function tournamentClockLeft() {
+  if (!trnClock) return null;
+  let w = trnClock.w, b = trnClock.b;
+  if (!gameOver && trnClock.moves >= 2 && trnClock.last) {
+    const gasto = (Date.now() + trnClock.offset - trnClock.last) / 1000;
+    if (trnClock.turn === 'w') w -= gasto; else b -= gasto;
+  }
+  return { w: Math.max(0, w), b: Math.max(0, b) };
+}
+
+function renderTournamentClock() {
+  if (!isTournamentGame() || !trnClock || !timerEnabled) return;
+  const l = tournamentClockLeft();
+  timerWhite = Math.ceil(l.w);
+  timerBlack = Math.ceil(l.b);
+  updateTimerDisplay();
+  // zerou o tempo do lado da vez: pede a conferencia ao servidor (que decide pelos horarios dele)
+  if (!gameOver && trnClock.moves >= 2 && l[trnClock.turn] <= 0 && Date.now() - trnClaimAt > 4000) {
+    claimTournamentTimeout();
+  }
+}
+
+async function claimTournamentTimeout() {
+  if (!isTournamentGame()) return;
+  trnClaimAt = Date.now();
+  const gid = onlineGameId;
+  setStatus(tr('trn.timeoutClaim'));
+  const { data, error } = await supa.rpc('tournament_claim_timeout', { p_game_id: gid });
+  if (gid !== onlineGameId) return;
+  if (error) { console.warn('tournament_claim_timeout err:', error.message); return; }
+  if (data === 'active') { refreshTournamentClock(); return; }   // pelo servidor ainda ha tempo (diferenca de relogio)
+  checkTournamentGameRow();
+}
+
+// Le o jogo direto (caso o UPDATE do canal tenha se perdido) e trata o fim
+async function checkTournamentGameRow() {
+  if (!isTournamentGame()) return;
+  const gid = onlineGameId;
+  const { data: g, error } = await supa.from('games')
+    .select('id,status,result,end_reason,white_user_id,black_user_id,tournament_match_id').eq('id', gid).maybeSingle();
+  if (error || !g || gid !== onlineGameId) return;
+  if (g.status === 'finished' || g.status === 'abandoned') handleTournamentGameUpdate(g);
+}
+
+// Depois de cada lance (meu ou do adversario): relogio oficial de novo; se o tabuleiro acabou, confere o veredito
+function afterTournamentMove() {
+  refreshTournamentClock();
+  if (gameOver) {
+    setStatus(tr('trn.awaitJudge'));
+    setTimeout(checkTournamentGameRow, 2500);
+  }
+}
+
+async function handleTournamentGameUpdate(game) {
+  if (game.status !== 'finished' && game.status !== 'abandoned') return;
+  if (trnEndHandledFor === game.id) return;
+  trnEndHandledFor = game.id;
+  const gid = game.id;
+  gameOver = true;
+  stopTimer();
+  stopTournamentClock();
+  const resignBtn = document.getElementById('online-resign-btn');
+  if (resignBtn) resignBtn.style.display = 'none';
+  // relogio final (parado) pelo servidor; no tempo esgotado o relogio oficial so soma os lances feitos — zera o perdedor
+  try { await refreshTournamentClock(); } catch (e) {}
+  if (/^tempo/.test(game.end_reason || '') && timerEnabled && gid === onlineGameId) {
+    if (game.result === 'white_wins') timerBlack = 0; else if (game.result === 'black_wins') timerWhite = 0;
+    updateTimerDisplay();
+  }
+  const reason = tournamentReasonText(game.end_reason);
+  setStatus('🏁 ' + capFirst(reason));
+  if (game.result === 'draw') { goToTiebreak(game, reason); return; }
+  let winnerId = null;
+  if (game.result !== 'white_wins' && game.result !== 'black_wins') {
+    // W.O./organizador/cancelamento: games.result = 'abandoned' — o vencedor esta na partida
+    try {
+      const { data: m } = await supa.from('tournament_matches').select('winner_id').eq('id', trnMatchId).maybeSingle();
+      winnerId = m && m.winner_id;
+    } catch (e) {}
+  }
+  if (gid !== onlineGameId) return;
+  let playerWon = null;
+  if (game.result === 'white_wins') playerWon = myOnlineColor === 'w';
+  else if (game.result === 'black_wins') playerWon = myOnlineColor === 'b';
+  else if (winnerId && currentUser) playerWon = winnerId === currentUser.id;
+  showTournamentGameOver(playerWon, reason);
+}
+
+function prepareTournamentPopup() {
+  const ids = ['btn-register-score', 'btn-go-rematch', 'btn-go-newgame', 'go-next-btn', 'btn-go-tiebreak', 'go-score-info', 'go-score-feedback'];
+  ids.forEach(id => { const el = document.getElementById(id); if (el) el.style.display = 'none'; });
+  const info = document.getElementById('go-score-info');
+  if (info) info.textContent = '';
+  const leave = document.getElementById('btn-go-leave-online');
+  if (leave) leave.style.display = 'inline-flex';
+  const back = document.getElementById('btn-go-tournaments');
+  if (back) back.style.display = 'inline-flex';
+}
+
+function showTournamentGameOver(playerWon, reason) {
+  prepareTournamentPopup();
+  const opp = opponentName || tr('name.opponent');
+  const icon = document.getElementById('go-icon');
+  const title = document.getElementById('go-title');
+  const text = document.getElementById('go-text');
+  if (playerWon === true) {
+    icon.textContent = '🏆';
+    title.textContent = tr('gameover.winTitle');
+    text.textContent = tr('trn.winText', { opp: opp, reason: reason });
+  } else if (playerWon === false) {
+    icon.textContent = '😤';
+    title.textContent = tr('gameover.lossTitle');
+    text.textContent = tr('trn.lossText', { opp: opp, reason: reason });
+  } else {
+    icon.textContent = '🏁';
+    title.textContent = tr('trn.endedTitle');
+    text.textContent = tr('trn.endedText', { reason: reason });
+  }
+  document.getElementById('gameover-popup').classList.add('show');
+}
+
+// Empate: o servidor ja criou o jogo de desempate (cores invertidas) — acha o novo game_id da partida e entra nele
+async function goToTiebreak(oldGame, reason) {
+  const oldId = oldGame.id;
+  prepareTournamentPopup();
+  const newColor = myOnlineColor === 'w' ? tr('color.black') : tr('color.white');
+  document.getElementById('go-icon').textContent = '🤝';
+  document.getElementById('go-title').textContent = tr('trn.drawTitle');
+  document.getElementById('go-text').textContent = tr('trn.drawText', { reason: capFirst(reason), color: newColor.toLowerCase() });
+  const btn = document.getElementById('btn-go-tiebreak');
+  if (btn) { btn.style.display = 'inline-flex'; btn.disabled = true; btn.textContent = tr('trn.preparingTiebreak'); }
+  document.getElementById('gameover-popup').classList.add('show');
+
+  let novo = null, tb = 0;
+  for (let i = 0; i < 20 && !novo; i++) {
+    if (onlineGameId !== oldId) return;   // saiu da partida no meio
+    try {
+      const { data: m } = await supa.from('tournament_matches').select('game_id,tiebreaks,status').eq('id', trnMatchId).maybeSingle();
+      if (m && m.game_id && m.game_id !== oldId) { novo = m.game_id; tb = m.tiebreaks || 0; break; }
+    } catch (e) { console.warn('tiebreak lookup err:', e); }
+    await new Promise(r => setTimeout(r, 1500));
+  }
+  if (onlineGameId !== oldId) return;
+  const info = document.getElementById('go-score-info');
+  if (!novo) {
+    if (btn) btn.style.display = 'none';
+    if (info) { info.textContent = tr('trn.tiebreakNotFound'); info.style.display = 'block'; }
+    return;
+  }
+  if (tb >= 2 && info) { info.textContent = tr('trn.armageddonNote'); info.style.display = 'block'; }
+  trnTiebreakGameId = novo;
+  if (btn) { btn.disabled = false; btn.textContent = tr('trn.goTiebreak'); }
+  // vai sozinho em alguns segundos (os dois jogadores precisam chegar ao novo jogo)
+  trnTiebreakAuto = setTimeout(() => {
+    if (onlineGameId === oldId && trnTiebreakGameId === novo) goToTiebreakNow();
+  }, 4000);
+}
+
+function goToTiebreakNow() {
+  const novo = trnTiebreakGameId;
+  if (!novo) return;
+  if (trnTiebreakAuto) { clearTimeout(trnTiebreakAuto); trnTiebreakAuto = null; }
+  trnTiebreakGameId = null;
+  closeGameOverPopup();
+  joinOnlineGame(novo);
+}
+
+async function resignTournamentGame() {
+  if (!isTournamentGame() || gameOver) return;
+  const ok = await showConfirm(tr('trn.resignConfirm'), { icon: '🏳', title: tr('trn.resignTitle'), okLabel: tr('trn.resignYes'), cancelLabel: tr('trn.resignNo') });
+  if (!ok || !isTournamentGame() || gameOver) return;
+  const { error } = await supa.rpc('tournament_resign', { p_game_id: onlineGameId });
+  if (error) { await showAlert(tr('trn.resignError') + error.message, { error: true }); return; }
+  checkTournamentGameRow();
+}
+
+// Sala de espera (?match=<id>): tournament_match_start_game marca presenca e so cria o jogo com os DOIS presentes
+// (D-TRN-15); enquanto o adversario nao chega devolve null — tenta de novo a cada 5 s.
+async function enterTournamentMatchRoom(matchId) {
+  if (!supa) { await showAlert(tr('modal.connecting')); return; }
+  // a sessao salva pode ainda estar carregando
+  for (let i = 0; i < 10 && !currentUser; i++) await new Promise(r => setTimeout(r, 200));
+  if (!currentUser) {
+    const ok = await showConfirm(tr('trn.room.needLogin'), { okLabel: tr('nav.login') });
+    if (!ok) { cleanMatchUrlParam(); return; }
+    sessionStorage.setItem('postLoginAction', 'match:' + matchId);
+    return loginWithGoogle();
+  }
+  if (trnRoomTimer) { clearTimeout(trnRoomTimer); trnRoomTimer = null; }
+  trnRoomMatchId = matchId;
+  let roomInfo = null;   // { opp, deadline }
+  let modalOpen = false;
+  const fecharSala = () => {
+    trnRoomMatchId = null;
+    if (trnRoomTimer) { clearTimeout(trnRoomTimer); trnRoomTimer = null; }
+    if (modalOpen) { const md = document.getElementById('game-modal'); if (md) md.style.display = 'none'; modalOpen = false; }
+  };
+  const mensagem = () => {
+    const hora = new Date().toLocaleTimeString(currentLang === 'en' ? 'en-US' : 'pt-BR');
+    let msg = tr('trn.room.waiting', { opp: (roomInfo && roomInfo.opp) || tr('trn.room.opponent'), time: hora });
+    if (roomInfo && roomInfo.deadline) {
+      const quando = new Date(roomInfo.deadline).toLocaleString(currentLang === 'en' ? 'en-US' : 'pt-BR', { dateStyle: 'short', timeStyle: 'short' });
+      msg += tr('trn.room.deadline', { when: quando });
+    }
+    return msg;
+  };
+  const tentar = async () => {
+    if (trnRoomMatchId !== matchId) return;
+    const { data, error } = await supa.rpc('tournament_match_start_game', { p_match_id: matchId });
+    if (trnRoomMatchId !== matchId) return;
+    if (error) {
+      fecharSala();
+      await showAlert(tr('trn.room.error') + error.message, { error: true });
+      cleanMatchUrlParam();
+      return;
+    }
+    if (data) { fecharSala(); joinOnlineGame(String(data)); return; }
+    if (!modalOpen) {
+      modalOpen = true;
+      showGameModal({ icon: '⏳', title: tr('trn.room.title'), message: mensagem(),
+                      buttons: [{ label: tr('trn.room.cancel'), value: 'cancel' }] })
+        .then(v => {
+          if (v === 'cancel' && trnRoomMatchId === matchId) { modalOpen = false; fecharSala(); cleanMatchUrlParam(); }
+        });
+      if (!roomInfo) loadRoomInfo(matchId).then(info => {
+        roomInfo = info;
+        const el = document.getElementById('game-modal-message');
+        if (el && modalOpen && trnRoomMatchId === matchId) el.textContent = mensagem();
+      });
+    } else {
+      const el = document.getElementById('game-modal-message');
+      if (el) el.textContent = mensagem();
+    }
+    trnRoomTimer = setTimeout(tentar, 5000);
+  };
+  tentar();
+}
+
+// nome do adversario e prazo da rodada (so pra mostrar na sala)
+async function loadRoomInfo(matchId) {
+  try {
+    const { data: m } = await supa.from('tournament_matches').select('tournament_id,player1_id,player2_id,deadline_at').eq('id', matchId).maybeSingle();
+    if (!m) return null;
+    const oppId = m.player1_id === currentUser.id ? m.player2_id : m.player1_id;
+    let opp = null;
+    const { data: p } = await supa.from('tournament_participants').select('user_name').eq('tournament_id', m.tournament_id).eq('user_id', oppId).maybeSingle();
+    if (p && p.user_name) opp = p.user_name;
+    return { opp, deadline: m.deadline_at };
+  } catch (e) { return null; }
+}
+
+function cleanMatchUrlParam() {
+  const url = new URL(window.location.href);
+  if (!url.searchParams.has('match')) return;
+  url.searchParams.delete('match');
+  window.history.replaceState({}, '', url);
 }
 
 // =================== REACTIONS / EMOJI CHAT ===================
@@ -3932,6 +4622,12 @@ function checkUrlForGameJoin() {
       if (spectate) setupSpectateGame(gameId);
       else joinOnlineGame(gameId);
     }, 500);
+    return;
+  }
+  // Sala de partida de torneio: ?match=UUID (espera o adversario; o jogo so nasce com os dois presentes)
+  const mid = params.get('match');
+  if (mid && /^[0-9a-f-]{36}$/i.test(mid)) {
+    setTimeout(() => enterTournamentMatchRoom(mid), 500);
     return;
   }
   // Contexto de torneio AI: ?tournament=UUID
@@ -4794,7 +5490,7 @@ function executeMove(move, opts) {
       } else {
         lastWinData = null;
       }
-      if (!tutorialMode) {
+      if (!tutorialMode && !isTournamentGame()) {  // torneio: o resultado oficial vem do servidor
         setTimeout(() => showGameOverPopup(playerWon, winner, diffNames[depthVal] || depthVal), 600);
       }
       // Online: envia move com resultado de fim de partida
@@ -4805,7 +5501,7 @@ function executeMove(move, opts) {
     } else {
       setStatus(tr('game.stalemate'));
       trackEvent('game_over', { result: 'stalemate', total_moves: fullMoves });
-      if (!tutorialMode) {
+      if (!tutorialMode && !isTournamentGame()) {
         setTimeout(() => showGameOverPopup(null, null, null, 'stalemate'), 600);
       }
       if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
@@ -4818,7 +5514,7 @@ function executeMove(move, opts) {
     stopTimer();
     setStatus(tr('game.draw50'));
     trackEvent('game_over', { result: 'fifty_moves', total_moves: fullMoves });
-    if (!tutorialMode) {
+    if (!tutorialMode && !isTournamentGame()) {
       setTimeout(() => showGameOverPopup(null, null, null, 'fifty_moves'), 600);
     }
     if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
@@ -4830,7 +5526,7 @@ function executeMove(move, opts) {
     stopTimer();
     setStatus(tr('game.drawMaterial'));
     trackEvent('game_over', { result: 'insufficient_material', total_moves: fullMoves });
-    if (!tutorialMode) {
+    if (!tutorialMode && !isTournamentGame()) {
       setTimeout(() => showGameOverPopup(null, null, null, 'insufficient_material'), 600);
     }
     if (gameMode === 'online' && !opts.fromRealtime) sendMoveToServer(move, true, 'draw');
@@ -6503,9 +7199,14 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
   if (btnRematch) btnRematch.style.display = 'none';
   if (btnLeaveOnline) btnLeaveOnline.style.display = 'none';
   if (btnNewGame) btnNewGame.style.display = '';
+  const btnTiebreak = document.getElementById('btn-go-tiebreak');
+  const btnTournaments = document.getElementById('btn-go-tournaments');
+  if (btnTiebreak) btnTiebreak.style.display = 'none';
+  if (btnTournaments) btnTournaments.style.display = 'none';
+  if (scoreFb) scoreFb.classList.remove('pending', 'rejected');
 
   // Se foi vitória legítima e há dados capturados, mostra opção de registrar (so AI mode)
-  if (gameMode === 'ai' && playerWon && lastWinData && regBtn && scoreInfo) {
+  if (gameMode === 'ai' && playerWon && lastWinData && regBtn && scoreInfo && !aiSessionNoRank) {
     scoreInfo.textContent = tr('gameover.scoreInfo', { time: fmtSeconds(lastWinData.player_seconds), level: difficulty });
     scoreInfo.style.display = 'block';
     regBtn.style.display = 'inline-flex';
@@ -6597,6 +7298,13 @@ function showGameOverPopup(playerWon, winner, difficulty, drawReason) {
     nextBtn.style.display = 'none';
   }
 
+  // D-TRN-10: sessao com lance desfeito nao vai pro ranking — avisa no fim
+  if (aiSessionNoRank && aiGameCountsForRanking() && scoreInfo) {
+    const prev = scoreInfo.style.display !== 'none' ? scoreInfo.textContent + ' ' : '';
+    scoreInfo.textContent = prev + tr('undo.offRanking');
+    scoreInfo.style.display = 'block';
+  }
+
   popup.classList.add('show');
 }
 
@@ -6619,8 +7327,29 @@ function nextDifficulty() {
 let undoCount = 0;
 let newGameCount = 0;
 
+// Partida contra a IA que contaria pro ranking/torneio: single-player, fora do tutorial, com sessao
+function aiGameCountsForRanking() {
+  const playAs = document.getElementById('play-as').value;
+  return gameMode === 'ai' && playAs !== 'both' && !tutorialMode && !!aiSessionId;
+}
+
 // Vignette ad on Undo (shows overlay ad)
-function undoWithAd() {
+async function undoWithAd() {
+  // D-TRN-10: desfazer tira a partida do ranking e do torneio (o servidor recusa placar de sessao com lance desfeito)
+  if (aiGameCountsForRanking() && stateHistory.length > 0 && !gameOver) {
+    const n = stateHistory.length >= 2 ? 2 : 1;  // mesmo calculo do undoMove (lance da IA + o seu)
+    if (currentUser && !aiSessionNoRank) {
+      const ok = await showConfirm(tr('undo.confirm'), { icon: '↩', okLabel: tr('undo.confirmYes'), cancelLabel: tr('common.cancel') });
+      if (!ok) return;
+      if (stateHistory.length === 0 || gameOver) return;  // o jogo andou enquanto o aviso estava aberto
+    }
+    aiSessionNoRank = true;
+    if (supa && currentUser) {
+      supa.rpc('ai_game_undo', { p_session_id: aiSessionId, p_count: n }).then(({ error }) => {
+        if (error) console.warn('ai_game_undo err:', error.message);
+      });
+    }
+  }
   undoCount++;
   // Sinal de comportamento humano: registra uso do botao Desfazer
   if (behavior) behavior.undoCount++;
@@ -6717,6 +7446,7 @@ function newGame() {
   aiSessionMoveNumber = 0;
   aiSessionLocalMoves = [];
   aiSessionStartTs = Date.now();
+  aiSessionNoRank = false;
   // Comecando um novo jogo: limpa pending anterior (se existir)
   clearPendingAiGame();
 

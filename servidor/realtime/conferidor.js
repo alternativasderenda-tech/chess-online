@@ -6,11 +6,16 @@
 const { parentPort } = require('node:worker_threads');
 const X = require('./motor/xadrez');
 
-/** lances gravados ao vivo (um a um) × enviados de uma vez depois do login (D-TRN-11) */
+/**
+ * lances gravados ao vivo (um a um) × enviados de uma vez depois do login (D-TRN-11). O envio em lote grava todos com o
+ * MESMO horário exato (um só INSERT, mesmo now() da transação); ao vivo, cada lance é uma requisição e tem horário
+ * próprio — mesmo quem joga em menos de 1 s por lance. (Antes: "segundos distintos ≥ metade" tirava do "mais rápido"
+ * justamente quem joga rápido.)
+ */
 function aoVivo(lances) {
   if (lances.length < 4) return false;
-  const segundos = new Set(lances.map(l => Math.floor(new Date(l.created_at).getTime() / 1000)));
-  return segundos.size >= Math.ceil(lances.length / 2);
+  const horarios = new Set(lances.map(l => String(l.created_at)));
+  return horarios.size >= Math.ceil(lances.length * 0.9);
 }
 
 parentPort.on('message', ({ id, lances, dificuldade }) => {
