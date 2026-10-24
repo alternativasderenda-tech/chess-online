@@ -104,8 +104,97 @@ async function escutar() {
   catch (e) { refazer(e.message); }
 }
 
+// ---------- /functions/v1/ga-stats: o painel do /admin (porte da Edge Function do Supabase, mesma resposta).
+// Só admin (linha em public.admin_users, lida como o próprio usuário). Conta de serviço do GA em GA_SA_FILE (JSON),
+// propriedade em GA_PROPERTY_ID. Token do Google reaproveitado por ~55 min; relatório guardado por 5 min.
+const GA = { sa: null, token: null, tokenAte: 0, cache: null, cacheAte: 0 };
+function gaConta() {
+  if (GA.sa === null) {
+    try { GA.sa = JSON.parse(require('node:fs').readFileSync(process.env.GA_SA_FILE || '', 'utf8')); } catch { GA.sa = false; }
+  }
+  return GA.sa || null;
+}
+async function gaToken(sa) {
+  if (GA.token && Date.now() < GA.tokenAte) return GA.token;
+  const b = o => Buffer.from(JSON.stringify(o)).toString('base64url');
+  const agora = Math.floor(Date.now() / 1000);
+  const corpo = b({ alg: 'RS256', typ: 'JWT' }) + '.' + b({ iss: sa.client_email, scope: 'https://www.googleapis.com/auth/analytics.readonly',
+    aud: 'https://oauth2.googleapis.com/token', iat: agora, exp: agora + 3600 });
+  const jwt = corpo + '.' + crypto.sign('RSA-SHA256', Buffer.from(corpo), sa.private_key).toString('base64url');
+  const r = await fetch('https://oauth2.googleapis.com/token', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: 'grant_type=urn:ietf:params:oauth:grant-type:jwt-bearer&assertion=' + jwt });
+  const j = await r.json();
+  if (!j.access_token) throw new Error('GA token exchange failed: ' + (j.error_description || j.error || r.status));
+  GA.token = j.access_token; GA.tokenAte = Date.now() + 55 * 60_000;
+  return GA.token;
+}
+const RELATORIOS = {
+  totals: { metrics: ['activeUsers', 'newUsers', 'sessions', 'screenPageViews', 'averageSessionDuration'].map(name => ({ name })),
+    dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }], limit: 1 },
+  daily: { dimensions: [{ name: 'date' }], metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
+    dateRanges: [{ startDate: '13daysAgo', endDate: 'today' }], orderBys: [{ dimension: { dimensionName: 'date' } }], limit: 14 },
+  pages: { dimensions: [{ name: 'pagePath' }], metrics: [{ name: 'screenPageViews' }, { name: 'activeUsers' }],
+    dateRanges: [{ startDate: '7daysAgo', endDate: 'today' }], orderBys: [{ metric: { metricName: 'screenPageViews' }, desc: true }], limit: 10 },
+  events: { dimensions: [{ name: 'eventName' }], metrics: [{ name: 'eventCount' }],
+    dateRanges: [{ startDate: '7daysAgo', endDate: 'today' }], orderBys: [{ metric: { metricName: 'eventCount' }, desc: true }], limit: 15 },
+  sources: { dimensions: [{ name: 'sessionSource' }], metrics: [{ name: 'sessions' }, { name: 'activeUsers' }],
+    dateRanges: [{ startDate: '7daysAgo', endDate: 'today' }], orderBys: [{ metric: { metricName: 'sessions' }, desc: true }], limit: 10 },
+  devices: { dimensions: [{ name: 'deviceCategory' }], metrics: [{ name: 'activeUsers' }, { name: 'sessions' }],
+    dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }] },
+  countries: { dimensions: [{ name: 'country' }], metrics: [{ name: 'activeUsers' }],
+    dateRanges: [{ startDate: '28daysAgo', endDate: 'today' }], orderBys: [{ metric: { metricName: 'activeUsers' }, desc: true }], limit: 10 },
+};
+function linhasGa(rel) {
+  const d = (rel.dimensionHeaders || []).map(h => h.name), m = (rel.metricHeaders || []).map(h => h.name);
+  return (rel.rows || []).map(r => {
+    const o = {};
+    (r.dimensionValues || []).forEach((v, i) => { o[d[i]] = v.value; });
+    (r.metricValues || []).forEach((v, i) => { o[m[i]] = v.value; });
+    return o;
+  });
+}
+async function ehAdmin(claims) {
+  if (claims.role !== 'authenticated' || !claims.sub) return false;
+  const c = await pool.connect();
+  try {
+    await c.query('begin');
+    await c.query('set local role authenticated');
+    await c.query(`select set_config('request.jwt.claims', $1, true)`, [JSON.stringify(claims)]);
+    const r = await c.query('select 1 from public.admin_users where user_id = auth.uid()');
+    await c.query('commit');
+    return r.rowCount > 0;
+  } catch (e) { await c.query('rollback').catch(() => {}); console.error('[ga-stats admin]', e.message); return false; }
+  finally { c.release(); }
+}
+async function gaStats(req, res) {
+  const json = (st, o) => { res.writeHead(st, { 'content-type': 'application/json', 'cache-control': 'private, no-store' }); res.end(JSON.stringify(o)); };
+  const claims = verificar((req.headers.authorization || '').replace(/^Bearer\s+/i, ''));
+  if (!claims) return json(401, { error: 'invalid auth' });
+  if (!(await ehAdmin(claims))) return json(403, { error: 'forbidden: not admin' });
+  const sa = gaConta(), prop = process.env.GA_PROPERTY_ID;
+  if (!sa || !prop) return json(500, { error: 'GA credentials not configured', hint: 'GA_SA_FILE e GA_PROPERTY_ID no servidor (/opt/xadrez/etc).' });
+  if (GA.cache && Date.now() < GA.cacheAte) return json(200, GA.cache);
+  try {
+    const token = await gaToken(sa);
+    const nomes = Object.keys(RELATORIOS);
+    const rels = await Promise.all(nomes.map(async n => {
+      const r = await fetch(`https://analyticsdata.googleapis.com/v1beta/properties/${prop}:runReport`, {
+        method: 'POST', headers: { Authorization: 'Bearer ' + token, 'Content-Type': 'application/json' }, body: JSON.stringify(RELATORIOS[n]) });
+      if (!r.ok) throw new Error('GA report failed: ' + (await r.text()).slice(0, 300));
+      return r.json();
+    }));
+    const out = {};
+    nomes.forEach((n, i) => { out[n] = linhasGa(rels[i]); });
+    out.totals = out.totals[0] || {};
+    out.fetched_at = new Date().toISOString();
+    GA.cache = out; GA.cacheAte = Date.now() + 5 * 60_000;
+    return json(200, out);
+  } catch (e) { console.error('[ga-stats]', e.message); return json(500, { error: e.message }); }
+}
+
 const servidor = http.createServer((req, res) => {
   if (req.url === '/xrt/saude') { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ ok: true, conexoes: wss.clients.size })); return; }
+  if (req.url.split('?')[0] === '/functions/v1/ga-stats' && req.method === 'POST') { gaStats(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
   res.writeHead(404); res.end();
 });
 const wss = new WebSocketServer({ noServer: true, maxPayload: MAX_MSG });

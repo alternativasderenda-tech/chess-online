@@ -47,7 +47,10 @@ bash servidor/publicar-site.sh
 serviços) → `caddy-xadrez.sh` (bloco do Caddy, valida antes de recarregar). O Google precisa de
 `/opt/xadrez/etc/google.env` (`GOTRUE_EXTERNAL_GOOGLE_*`).
 
-## Pendente
+## Painel de estatísticas do /admin (`/functions/v1/ga-stats`)
 
-- Painel de estatísticas do admin (`/functions/v1/ga-stats`): precisa da chave JSON da conta de serviço
-  `ga-stats-reader` (projeto "Xadrez" no Google Cloud); hoje responde 503.
+Porte da Edge Function do Supabase, dentro do `server.js` (mesma resposta, mesmos 7 relatórios do GA4; resultado
+guardado 5 min). Só responde a quem está em `public.admin_users`. Chave da conta de serviço `ga-stats-reader`
+(projeto "Xadrez" no Google Cloud) em `/opt/xadrez/etc/ga-sa.json`; propriedade em `/opt/xadrez/etc/ga.env`
+(`GA_PROPERTY_ID=`). A organização bloqueia criar chave de conta de serviço por padrão
+(`iam.disableServiceAccountKeyCreation`): para gerar outra, liberar a política só no projeto e reativar depois.

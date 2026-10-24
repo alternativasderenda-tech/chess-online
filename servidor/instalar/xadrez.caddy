@@ -11,8 +11,11 @@ xadrezonline.app, novo.xadrezonline.app {
 	handle /xrt* {
 		reverse_proxy 127.0.0.1:3202
 	}
+	handle /functions/v1/ga-stats {
+		reverse_proxy 127.0.0.1:3202
+	}
 	handle /functions/v1/* {
-		respond "Indisponivel" 503
+		respond 404
 	}
 	handle {
 		root * /opt/xadrez/site

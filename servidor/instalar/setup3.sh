@@ -55,8 +55,8 @@ exec /opt/xadrez/bin/postgrest
 SH
 cat > $X/bin/realtime-run.sh <<'SH'
 #!/bin/bash
-set -a; . /opt/xadrez/etc/segredos.env; set +a
-export PORT=3202
+set -a; . /opt/xadrez/etc/segredos.env; [ -f /opt/xadrez/etc/ga.env ] && . /opt/xadrez/etc/ga.env; set +a
+export PORT=3202 GA_SA_FILE=/opt/xadrez/etc/ga-sa.json
 unset PG_AUTHENTICATOR PG_AUTH_ADMIN SERVICE_KEY ANON_KEY
 cd /opt/xadrez/realtime && exec /usr/bin/node server.js
 SH
