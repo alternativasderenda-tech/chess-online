@@ -24,7 +24,7 @@
     --accent: #e2b96f;
     --accent2: #c9956b;
     --text-light: #e8e8e8;
-    --text-muted: #8899aa;
+    --text-muted: #97a6b5;      /* ≥ 4,5:1 sobre os cartões (UX-15) */
     --danger: #ff6b6b;
     --success: #9be09b;
     --info: #6fa8e2;
@@ -133,6 +133,8 @@
     cursor: pointer; display: flex; flex-direction: column; gap: 8px; transition: border-color .15s, transform .15s; min-width: 0;
   }
   .cartao:hover, .cartao:focus-visible { border-color: rgba(226,185,111,0.5); outline: none; transform: translateY(-1px); }
+  .cartao:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+  .btn:focus-visible, .chip:focus-visible, .aba:focus-visible, .fechar:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
   .cartao.destaque { border-color: rgba(226,185,111,0.55); box-shadow: 0 0 0 1px rgba(226,185,111,0.18); }
   .cartao-topo { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
   .cartao h3 { font-family: 'Playfair Display', serif; font-size: 18px; line-height: 1.2; color: var(--text-light); overflow-wrap: anywhere; }
@@ -151,10 +153,10 @@
     display: inline-flex; align-items: center; gap: 4px; background: rgba(255,255,255,0.06); border-radius: 999px;
     padding: 2px 9px; font-size: 11px; font-weight: 600; letter-spacing: 0.2px; white-space: nowrap; color: var(--text-muted);
   }
-  .selo.ai { background: rgba(111,168,226,0.15); color: var(--info); }
+  .selo.ai { background: rgba(111,168,226,0.15); color: #8fc0f0; }
   .selo.chave { background: rgba(226,185,111,0.15); color: var(--accent); }
   .selo.aberto { background: rgba(155,224,155,0.14); color: var(--success); }
-  .selo.andamento { background: rgba(111,168,226,0.15); color: var(--info); }
+  .selo.andamento { background: rgba(111,168,226,0.15); color: #8fc0f0; }
   .selo.fim { background: rgba(136,153,170,0.18); color: #b8c4d0; }
   .selo.cancelado { background: rgba(255,107,107,0.14); color: var(--danger); }
   .selo.pagar { background: rgba(255,216,107,0.16); color: var(--warn); }
@@ -173,6 +175,22 @@
   .t-cabeca .selos { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 8px; }
   .t-cabeca h1 { font-family: 'Playfair Display', serif; font-size: 28px; line-height: 1.15; overflow-wrap: anywhere; }
   .t-cabeca .por { color: var(--text-muted); font-size: 13px; margin-top: 4px; }
+  .t-cabeca .linha-tit { display: flex; gap: 12px; align-items: flex-start; justify-content: space-between; flex-wrap: wrap; }
+  .t-cabeca .linha-tit > div { min-width: 0; flex: 1 1 260px; }
+  .btn.share { border-color: var(--accent); color: var(--accent); font-weight: 600; background: rgba(226,185,111,0.1); }
+  .btn.share:hover { background: rgba(226,185,111,0.18); }
+  .cartao .rodape .btn.share { margin-left: auto; }
+
+  /* compartilhar */
+  .redes { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-top: 4px; }
+  .redes .btn { justify-content: flex-start; min-height: 46px; font-weight: 600; }
+  .redes .btn .ic { width: 22px; text-align: center; font-size: 17px; }
+  .redes .wa { border-color: rgba(37,211,102,0.55); color: #6ee59a; }
+  .redes .tg { border-color: rgba(42,171,238,0.55); color: #7cc8f2; }
+  .redes .x { border-color: rgba(255,255,255,0.35); color: #f0f0f0; }
+  .redes .fb { border-color: rgba(66,103,178,0.7); color: #9db6ec; }
+  .share-previa { background: var(--bg-soft); border-radius: 10px; padding: 10px 12px; font-size: 13.5px; color: var(--text-light); margin-bottom: 12px; overflow-wrap: anywhere; }
+  .share-previa small { display: block; color: var(--text-muted); margin-top: 4px; font-size: 12px; }
 
   .campeao {
     position: relative; overflow: hidden; text-align: center; border-radius: 16px; padding: 22px 18px; margin-bottom: 16px;
@@ -225,6 +243,9 @@
   .estado.neutro { background: rgba(136,153,170,0.1); border-color: rgba(136,153,170,0.22); color: #c5d0db; }
 
   .copiar { display: flex; gap: 6px; margin-top: 6px; }
+  .chave-liga { display: flex; align-items: center; gap: 10px; cursor: pointer; font-size: 14px; color: var(--text-light); min-height: 44px; }
+  .chave-liga input { width: 20px; height: 20px; accent-color: var(--accent); flex: 0 0 20px; cursor: pointer; }
+  .form-row .chave-liga { display: flex; text-transform: none; letter-spacing: 0; font-weight: 500; font-size: 14px; color: var(--text-light); margin-bottom: 0; }
   .copiar input, .copiar textarea {
     flex: 1; min-width: 0; background: var(--bg-soft); border: 1px solid var(--linha); color: var(--text-light);
     padding: 8px 10px; border-radius: 8px; font-family: ui-monospace, Menlo, Consolas, monospace; font-size: 12px;
@@ -260,6 +281,10 @@
   .jogo { position: relative; width: 100%; background: var(--bg-soft); border: 1px solid rgba(255,255,255,0.07); border-radius: 9px; padding: 7px 9px; font-size: 13px; }
   .jogo.meu { border-color: rgba(226,185,111,0.6); box-shadow: 0 0 0 1px rgba(226,185,111,0.18); }
   .jogo.vazio-j { background: rgba(35,47,84,0.45); border-style: dashed; }
+  .jogo.bye-j { padding: 5px 9px; background: rgba(35,47,84,0.55); border-style: dashed; }
+  .jogo.bye-j .ld .tag { color: var(--text-muted); }
+  .byes-resumo { display: none; background: rgba(35,47,84,0.55); border: 1px dashed rgba(255,255,255,0.14); border-radius: 9px; padding: 9px 11px; font-size: 13.5px; color: var(--text-muted); margin-top: 4px; }
+  .byes-resumo b { color: var(--text-light); font-weight: 500; }
   .jogo .ld { display: flex; justify-content: space-between; align-items: center; gap: 6px; padding: 2px 0; }
   .jogo .ld + .ld { border-top: 1px solid rgba(255,255,255,0.05); }
   .jogo .ld .nm { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
@@ -385,6 +410,14 @@
     .aba { padding: 9px 9px; font-size: 13.5px; }
     .so-desk { display: none; }
     .so-mob { display: inline !important; }
+    /* alvos de toque ≥ 44 px (UX-09) */
+    .btn.small, .chip, .aba, .modal h2 .fechar { min-height: 44px; }
+    .modal h2 .fechar { min-width: 44px; }
+    footer.site a { display: inline-block; padding: 10px 4px; }
+    /* chave no celular: partidas reais primeiro, passagens diretas resumidas numa linha (UX-13) */
+    .rodada.com-byes .slot.bye { display: none; }
+    .rodada.com-byes .byes-resumo { display: block; }
+    .redes { grid-template-columns: 1fr; }
   }
   @media (max-width: 380px) {
     .opcoes { grid-template-columns: 1fr; }
@@ -449,9 +482,9 @@
 
     <section>
       <div class="abas" role="tablist">
-        <button class="aba ativa" data-acao="aba" data-aba="abertos" role="tab"><span class="so-desk">Inscrições abertas</span><span class="so-mob">Abertos</span> <span class="n" id="n-abertos"></span></button>
-        <button class="aba" data-acao="aba" data-aba="andamento" role="tab">Em andamento <span class="n" id="n-andamento"></span></button>
-        <button class="aba" data-acao="aba" data-aba="encerrados" role="tab">Encerrados <span class="n" id="n-encerrados"></span></button>
+        <button class="aba ativa" data-acao="aba" data-aba="abertos" role="tab" aria-selected="true"><span class="so-desk">Inscrições abertas</span><span class="so-mob">Abertos</span> <span class="n" id="n-abertos"></span></button>
+        <button class="aba" data-acao="aba" data-aba="andamento" role="tab" aria-selected="false">Em andamento <span class="n" id="n-andamento"></span></button>
+        <button class="aba" data-acao="aba" data-aba="encerrados" role="tab" aria-selected="false">Encerrados <span class="n" id="n-encerrados"></span></button>
       </div>
       <div class="chips" id="chips-formato">
         <button class="chip ativa" data-acao="formato" data-f="todos">Todos</button>
@@ -540,7 +573,7 @@
           </select>
         </div>
       </div>
-      <div class="dica" style="font-size:12px; color:var(--text-muted); margin:-6px 0 14px;">Prazo para começar a partida. Quem não aparecer até o fim do prazo perde por W.O.</div>
+      <div class="dica" style="font-size:12px; color:var(--text-muted); margin:-6px 0 14px;">Prazo para começar a partida. Quem não aparecer até o fim do prazo perde por não comparecer (W.O.).</div>
     </div>
 
     <!-- IA -->
@@ -596,7 +629,12 @@
     </div>
     <div class="dica" id="dica-inicio" style="font-size:12px; color:var(--text-muted); margin:-6px 0 14px;"></div>
 
-    <div class="resumo-preco">Para publicar, você paga <b class="preco-txt">R$ 1,00</b> por Pix logo depois de criar. O torneio só aparece para os outros depois do pagamento.</div>
+    <div class="form-row">
+      <label class="chave-liga"><input type="checkbox" id="f-share" checked><span>Inscritos podem compartilhar o torneio</span></label>
+      <div class="dica">Desmarcado: em torneio só para convidados, só você convida; em torneio aberto, o botão Compartilhar some (a página continua pública). Dá para mudar depois.</div>
+    </div>
+
+    <div class="resumo-preco">Para publicar, você paga <b class="preco-txt">R$ 1,00</b> por Pix (Mercado Pago) logo depois de criar; o Pix vale por 45 minutos. O torneio só aparece para os outros depois do pagamento. Se você cancelar antes de começar, o valor volta. <a href="/termos#torneios" target="_blank" rel="noopener">Regras</a></div>
 
     <div class="form-err" id="criar-erro" role="alert"></div>
     <div class="form-actions">
@@ -629,6 +667,14 @@
     <h2 id="aviso-tit">Aviso</h2>
     <p id="aviso-msg"></p>
     <div class="bts" id="aviso-bts"></div>
+  </div>
+</div>
+
+<!-- ================= Modal: compartilhar ================= -->
+<div class="modal-bg" id="modal-share" role="dialog" aria-modal="true" aria-labelledby="tit-share">
+  <div class="modal" style="max-width: 440px;">
+    <h2 id="tit-share">Compartilhar <button class="fechar" data-acao="fechar-share" aria-label="Fechar">✕</button></h2>
+    <div id="share-corpo"></div>
   </div>
 </div>
 
@@ -710,7 +756,19 @@ function traduz(err) {
   const T = [
     [/login required|authentication required/i, 'Entre com sua conta Google para continuar.'],
     [/JWT expired|invalid JWT|PGRST30/i, 'Sua sessão expirou. Saia e entre de novo.'],
-    [/tournament not found|not found/i, 'Torneio não encontrado. Se veio por convite, confira se o link está completo.'],
+    [/Failed to fetch|NetworkError|Load failed|network/i, 'Sem conexão com o servidor. Confira sua internet e tente de novo.'],
+    [/tournament not found|^not found$/i, 'Torneio não encontrado. Se for um torneio só para convidados, abra pelo link completo que o organizador mandou.'],
+    [/starts_at must be at least 30 minutes/i, 'Na eliminatória, o início precisa ser pelo menos 30 minutos depois de agora — é o tempo para pagar o Pix e receber inscrições.'],
+    [/starts_too_soon/i, 'Não dá mais para pagar este torneio: ele começa cedo demais para receber inscrições. Cancele e crie outro com mais folga.'],
+    [/only admin can cancel after start/i, 'Depois que o torneio começa, só a administração do site pode cancelar.'],
+    [/leaderboard only for ai/i, 'Este torneio não tem classificação (é uma eliminatória).'],
+    [/tournament not accepting scores/i, 'Este torneio não está aceitando vitórias agora.'],
+    [/game started before the tournament/i, 'Esta partida começou antes do início do torneio e não conta.'],
+    [/game finished after the tournament ended/i, 'Esta partida terminou depois do fim do torneio e não conta.'],
+    [/this exact game was already registered/i, 'Esta mesma partida já foi registrada.'],
+    [/aguarde a conferência/i, 'Espere a conferência das suas vitórias anteriores antes de enviar outra.'],
+    [/limite de 30 vitórias/i, 'Limite de 30 vitórias registradas por hora. Tente mais tarde.'],
+    [/could not find the function|schema cache/i, 'O servidor está sendo atualizado. Tente de novo em um minuto.'],
     [/tournament not open/i, 'As inscrições deste torneio estão fechadas.'],
     [/tournament has ended/i, 'Este torneio já terminou.'],
     [/has not started yet/i, 'O torneio ainda não começou.'],
@@ -718,6 +776,7 @@ function traduz(err) {
     [/registration was rejected/i, 'Sua inscrição foi recusada pelo organizador.'],
     [/tournament full/i, 'Não há mais vagas.'],
     [/cannot leave after start/i, 'Não dá para sair depois que o torneio começou.'],
+    [/tournament not paid/i, 'O torneio ainda não foi pago.'],
     [/already started/i, 'O torneio já começou.'],
     [/participant left/i, 'Esse jogador saiu do torneio.'],
     [/need at least 2/i, 'É preciso ter pelo menos 2 inscritos aprovados para começar.'],
@@ -726,8 +785,7 @@ function traduz(err) {
     [/tournament not active/i, 'O torneio não está em andamento.'],
     [/match already decided/i, 'Essa partida já tem resultado.'],
     [/winner must be/i, 'O vencedor tem de ser um dos dois jogadores.'],
-    [/only admin can cancel after start/i, 'Depois que o torneio começa, só a administração do site pode cancelar.'],
-    [/already closed/i, 'Este torneio já foi encerrado.'],
+    [/already closed/i, 'Este torneio já foi encerrado ou cancelado.'],
     [/still being checked/i, 'Ainda há partidas sendo conferidas. Tente de novo em um minuto.'],
     [/starts_at must be in the future/i, 'A data de início precisa ser no futuro.'],
     [/too many unpaid/i, 'Você já tem 5 torneios esperando pagamento. Pague ou cancele algum antes de criar outro.'],
@@ -737,12 +795,38 @@ function traduz(err) {
     [/name must have/i, 'O nome precisa ter de 3 a 80 caracteres.'],
     [/prize must have/i, 'Descreva o prêmio (até 200 caracteres).'],
     [/description too long/i, 'A descrição passou de 1000 caracteres.'],
-    [/only creator|only creator\/admin/i, 'Só quem organiza o torneio pode fazer isso.'],
+    [/only creator|only creator\/admin|only admin/i, 'Só quem organiza o torneio (ou a administração do site) pode fazer isso.'],
     [/somente os jogadores/i, 'Só os dois jogadores da partida podem entrar na sala.'],
-    [/Failed to fetch|NetworkError|Load failed/i, 'Sem conexão com o servidor. Confira sua internet e tente de novo.'],
   ];
   for (const [re, txt] of T) if (re.test(m)) return txt;
   return m || 'Algo deu errado. Tente de novo.';
+}
+
+const ehErroRede = e => /Failed to fetch|NetworkError|Load failed|network|timeout/i.test(String((e && (e.message || e.error)) || e || ''));
+
+// ---------------------------------------------------------------- modais (trava de foco e volta do foco — UX-16)
+const MODAIS = ['modal-criar', 'modal-pix', 'modal-resultado', 'modal-share', 'modal-aviso'];
+const voltaFoco = {};
+function abrirModal(id) {
+  const el = $(id);
+  if (!el.classList.contains('show')) voltaFoco[id] = document.activeElement;
+  el.classList.add('show');
+  setTimeout(() => { if (!el.contains(document.activeElement)) { const f = focaveis(el)[0]; if (f) f.focus(); } }, 30);
+}
+function fecharModal(id) {
+  const el = $(id); if (!el.classList.contains('show')) return;
+  el.classList.remove('show');
+  const v = voltaFoco[id]; voltaFoco[id] = null;
+  if (v && document.contains(v) && typeof v.focus === 'function') v.focus();
+}
+function focaveis(el) {
+  return Array.from(el.querySelectorAll('a[href], button:not([disabled]), input:not([disabled]):not([type=hidden]), select:not([disabled]), textarea:not([disabled]), summary, [tabindex]:not([tabindex="-1"])'))
+    .filter(x => x.offsetParent !== null || x.getClientRects().length);
+}
+function modalAberto() {
+  // o de aviso fica por cima dos outros
+  if ($('modal-aviso').classList.contains('show')) return $('modal-aviso');
+  return MODAIS.map($).find(m => m.classList.contains('show')) || null;
 }
 
 // ---------------------------------------------------------------- modais de aviso
@@ -756,10 +840,10 @@ function aviso(o) {
       const el = document.createElement('button');
       el.className = 'btn' + (b.prim ? ' primary' : '') + (b.perigo ? ' danger' : '');
       el.style.minWidth = '110px'; el.textContent = b.txt;
-      el.addEventListener('click', () => { $('modal-aviso').classList.remove('show'); res(b.v); });
+      el.addEventListener('click', () => { fecharModal('modal-aviso'); res(b.v); });
       c.appendChild(el);
     });
-    $('modal-aviso').classList.add('show');
+    abrirModal('modal-aviso');
   });
 }
 const erro = e => aviso({ icone: '⚠️', titulo: 'Não deu certo', msg: traduz(e) });
@@ -855,8 +939,10 @@ function agendar() {
   clearTimeout(E.timer);
   let espera = 30000;
   if (E.tid) espera = precisaRapido() ? 4000 : 15000;
+  // esperando o adversário na sala: continua conferindo mesmo com a aba em segundo plano (UX-11)
+  if (E.esperandoSala && document.hidden) espera = 8000;
   E.timer = setTimeout(async () => {
-    if (!document.hidden) { try { await atualizarAgora(true); } catch (e) { console.error(e); } }
+    if (!document.hidden || E.esperandoSala) { try { await atualizarAgora(true); } catch (e) { console.error(e); } }
     agendar();
   }, espera);
 }
@@ -874,7 +960,8 @@ function tique() {
       if (el.dataset.recarregar) setTimeout(() => atualizarAgora(true), 2500);
     }
   });
-  if (E.pix && E.pix.estado === 'pendente' && E.pix.dados && ms(E.pix.dados.expira_em) < agora()) { E.pix.estado = 'expirado'; renderPix(); }
+  // TRN-PIX-08: o contador zerou, mas um pagamento de última hora ainda é reconhecido (D-PAG-03) — continua conferindo
+  if (E.pix && E.pix.estado === 'pendente' && E.pix.dados && ms(E.pix.dados.expira_em) < agora()) entrarConferindo(E.pix);
 }
 
 // ============================================================ LISTA
@@ -906,11 +993,17 @@ async function carregarLista() {
     logado ? supa.from('tournaments').select(campos).in('status', ['open', 'active', 'finished'])
       .order('starts_at', { ascending: false }).limit(80) : Promise.resolve({ data: [] }),
   ]);
-  if (ab.error) { $('grade-lista').innerHTML = `<div class="vazio">Não consegui carregar os torneios. ${esc(traduz(ab.error))}</div>`; agendar(); return; }
+  if (ab.error) {
+    $('grade-lista').innerHTML = `<div class="vazio" style="grid-column:1/-1">${ehErroRede(ab.error) ? 'Sem conexão com o servidor. Confira sua internet.' : 'Não consegui carregar os torneios. ' + esc(traduz(ab.error))}<br><button class="btn primary" data-acao="tentar-de-novo">Tentar de novo</button></div>`;
+    agendar(); return;
+  }
   const porId = {};
   (tab.data || []).forEach(t => { porId[t.id] = t; });
   E.abertos = (ab.data || []).map(t => normaliza({ ...(porId[t.id] || {}), ...t }));
   E.andamento = (tab.data || []).filter(t => t.paid && t.status === 'active').map(normaliza);
+  // ranking contra a IA em andamento ainda aceita inscrição até o fim (D-TRN-22): aparece também em "Inscrições abertas"
+  const jaAbertos = new Set(E.abertos.map(t => t.id));
+  E.andamento.filter(t => t.format === 'ai' && t.visibility !== 'link' && agora() < ms(t.ends_at) && !jaAbertos.has(t.id)).forEach(t => E.abertos.push(t));
   E.encerrados = (tab.data || []).filter(t => t.paid && t.status === 'finished')
     .sort((a, b) => ms(b.finished_at || b.starts_at) - ms(a.finished_at || a.starts_at)).slice(0, 30).map(normaliza);
   E.meus = (meus.data || []).map(t => normaliza({ ...(porId[t.id] || {}), ...t }));
@@ -921,10 +1014,23 @@ async function carregarLista() {
       .in('tournament_id', comCampeao.map(t => t.id)).in('user_id', comCampeao.map(t => t.winner_id));
     (data || []).forEach(p => { const t = comCampeao.find(x => x.id === p.tournament_id && x.winner_id === p.user_id); if (t) E.nomesCampeoes[t.id] = p.user_name; });
   }
-  await conferirMinhasPartidas();
+  await Promise.all([conferirMinhasPartidas(), conferirCompartilhar()]);
   renderLista();
   if (E.admin) carregarPendentesAdmin();
   agendar();
+}
+
+// cartões de "Meus torneios": quem organiza sempre compartilha; inscrito só se o organizador permitir (pergunta ao servidor)
+async function conferirCompartilhar() {
+  if (!E.user) return;
+  const cand = E.meus.filter(t => t.paid !== false && t.status !== 'cancelled');
+  await Promise.all(cand.map(async t => {
+    if (t.role === 'creator') { t.can_share = true; return; }
+    const { data } = await supa.rpc('get_tournament', { p_tournament_id: t.id, p_token: null });
+    const g = Array.isArray(data) ? data[0] : data;
+    t.can_share = !!(g && g.can_share);
+    t.share_token = g ? g.share_token : null;     // o código só vale se o organizador permitir
+  }));
 }
 
 // para os torneios em andamento em que eu jogo: tenho partida esperando?
@@ -933,7 +1039,7 @@ async function conferirMinhasPartidas() {
   if (!E.user) return;
   const ativos = E.meus.filter(t => t.format === 'pvp_bracket' && t.status === 'active' && t.role !== 'creator').slice(0, 6);
   await Promise.all(ativos.map(async t => {
-    const { data } = await supa.rpc('get_tournament_matches', { p_tournament_id: t.id });
+    const { data } = await supa.rpc('get_tournament_matches', { p_tournament_id: t.id, p_token: t.share_token || null });
     const minhas = (data || []).filter(m => m.player1_id === E.user.id || m.player2_id === E.user.id);
     const aberta = minhas.find(m => m.status === 'pending' || m.status === 'in_progress');
     if (aberta) E.alertas[t.id] = aberta.status === 'in_progress' ? 'Sua partida está em andamento' : 'Sua partida está esperando';
@@ -969,7 +1075,10 @@ function cartao(t, meu) {
   if (meu) {
     const alerta = E.alertas[t.id];
     if (t.paid === false && t.status === 'open') rodape = `<span class="alerta">Só aparece para os outros depois do Pix</span><button class="btn small primary" data-acao="pagar" data-id="${t.id}" data-nome="${esc(t.name)}">Pagar</button>`;
-    else if (alerta) rodape = `<span class="alerta">${alerta === 'Você foi eliminado' ? '' : '⚔ '}${esc(alerta)}</span>`;
+    else {
+      if (alerta) rodape = `<span class="alerta">${alerta === 'Você foi eliminado' ? '' : '⚔ '}${esc(alerta)}</span>`;
+      if (podeCompartilhar(t)) rodape += `<button class="btn small share" data-acao="compartilhar" data-id="${t.id}" aria-label="Compartilhar ${esc(t.name)}">📤 Compartilhar</button>`;
+    }
   }
   const destaque = meu && ((t.paid === false && t.status === 'open') || (E.alertas[t.id] && E.alertas[t.id] !== 'Você foi eliminado'));
   return `<article class="cartao${destaque ? ' destaque' : ''}" data-acao="abrir" data-id="${t.id}" tabindex="0" role="link" aria-label="${esc(t.name)}">
@@ -987,7 +1096,8 @@ function renderLista() {
   const ordem = t => (t.paid === false && t.status === 'open') ? 0 : E.alertas[t.id] && E.alertas[t.id] !== 'Você foi eliminado' ? 1
     : t.status === 'active' ? 2 : t.status === 'open' ? 3 : t.status === 'finished' ? 4 : 5;
   const meus = E.meus.slice().sort((a, b) => ordem(a) - ordem(b) || ms(b.starts_at) - ms(a.starts_at));
-  const visiveis = E.verTodosMeus ? meus : meus.filter(t => t.status !== 'cancelled').slice(0, 6);
+  // cancelado continua aparecendo (por último) para o inscrito ver que foi cancelado (UX-18)
+  const visiveis = E.verTodosMeus ? meus : meus.slice(0, 6);
   $('secao-meus').style.display = meus.length ? '' : 'none';
   $('grade-meus').innerHTML = visiveis.map(t => cartao(t, true)).join('');
   $('btn-mais-meus').style.display = (!E.verTodosMeus && meus.length > visiveis.length) ? '' : 'none';
@@ -997,7 +1107,7 @@ function renderLista() {
   $('n-abertos').textContent = filtra(E.abertos).length;
   $('n-andamento').textContent = filtra(E.andamento).length;
   $('n-encerrados').textContent = filtra(E.encerrados).length;
-  document.querySelectorAll('.aba').forEach(a => a.classList.toggle('ativa', a.dataset.aba === E.aba));
+  document.querySelectorAll('.aba').forEach(a => { a.classList.toggle('ativa', a.dataset.aba === E.aba); a.setAttribute('aria-selected', a.dataset.aba === E.aba ? 'true' : 'false'); });
   // sem login, o banco só mostra os abertos: as outras abas ficariam sempre vazias
   document.querySelectorAll('.aba').forEach(a => { if (a.dataset.aba !== 'abertos') a.style.display = E.user ? '' : 'none'; });
   document.querySelectorAll('#chips-formato .chip').forEach(c => c.classList.toggle('ativa', c.dataset.f === E.formato));
@@ -1023,21 +1133,39 @@ async function carregarPendentesAdmin() {
 }
 
 // ============================================================ TORNEIO
+// TRN-UX-02 / D-TRN-27: a página do torneio vem da RPC pública get_tournament(id, código) — funciona sem login para
+// torneio listado; o privado (por link) só com o código ou para quem participa/organiza/admin.
+async function buscarTorneio() {
+  let id = E.tid, erroT = null;
+  if (E.token && !id) {
+    const r = await supa.rpc('get_tournament_by_token', { p_token: E.token });
+    if (r.error) erroT = r.error; else if (r.data && r.data.id) id = r.data.id;
+  }
+  if (!id) return { t: null, erroT };
+  const r = await supa.rpc('get_tournament', { p_tournament_id: id, p_token: E.token || null });
+  if (r.error) return { t: null, erroT: r.error };
+  const t = Array.isArray(r.data) ? r.data[0] : r.data;
+  return { t: t && t.id ? t : null, erroT };
+}
 async function carregarTorneio(silencioso) {
   let t = null, erroT = null;
-  if (E.token) {
-    const r = await supa.rpc('get_tournament_by_token', { p_token: E.token });
-    erroT = r.error; t = r.data && r.data.id ? r.data : null;
-  }
-  if (!t && E.tid) {
-    const r = await supa.from('tournaments').select('*').eq('id', E.tid).maybeSingle();
-    erroT = erroT || r.error; t = r.data;
-    if (!t) { const l = E.abertos.find(x => x.id === E.tid); if (l) t = l; }
-  }
+  try { ({ t, erroT } = await buscarTorneio()); } catch (e) { erroT = e; }
   if (!t) {
+    if (erroT && ehErroRede(erroT)) {
+      // UX-17: sem rede não é "não encontrado"
+      if (!silencioso || !E.det) $('vista-torneio').innerHTML = `<div class="voltar"><button class="btn small ghost" data-acao="ir-lista">← Todos os torneios</button></div>
+        <div class="vazio">Sem conexão com o servidor. Confira sua internet.<br><button class="btn primary" data-acao="tentar-de-novo">Tentar de novo</button></div>`;
+      else toast('Sem conexão — tentando de novo…');
+      agendar(); return;
+    }
     if (!silencioso || !E.det) {
+      const convite = !!E.token;
       $('vista-torneio').innerHTML = `<div class="voltar"><button class="btn small ghost" data-acao="ir-lista">← Todos os torneios</button></div>
-        <div class="vazio">${E.user ? 'Torneio não encontrado. Se você veio por um convite, confira se o link está completo.' : 'Entre com sua conta Google para ver este torneio.<br><button class="btn primary" data-acao="entrar">Entrar com Google</button>'}${erroT ? `<br><small>${esc(traduz(erroT))}</small>` : ''}</div>`;
+        <div class="vazio"><b style="color:var(--text-light)">Torneio não encontrado.</b><br>${convite
+          ? 'O link do convite pode estar incompleto ou o torneio foi removido. Peça o link de novo a quem organizou.'
+          : 'Se for um torneio só para convidados, abra pelo link completo que o organizador mandou.'}
+          ${!E.user ? '<br>Se você já participa dele, entre com sua conta para ver.<br><button class="btn primary" data-acao="entrar">Entrar com Google</button>' : ''}
+          ${erroT ? `<br><small>${esc(traduz(erroT))}</small>` : ''}</div>`;
     }
     return;
   }
@@ -1046,9 +1174,10 @@ async function carregarTorneio(silencioso) {
   const eu = E.user?.id;
   const souOrg = !!eu && (t.creator_id === eu);
   const [pr, mr, lr, sr, pg] = await Promise.all([
-    supa.rpc('get_tournament_participants', { p_tournament_id: t.id }),
-    t.format === 'pvp_bracket' && t.status !== 'open' ? supa.rpc('get_tournament_matches', { p_tournament_id: t.id }) : Promise.resolve({ data: [] }),
-    t.format === 'ai' ? supa.rpc('tournament_leaderboard', { p_tournament_id: t.id }) : Promise.resolve({ data: [] }),
+    // o código pode não vir no get_tournament (organizador desligou o compartilhamento): vale o da URL
+    supa.rpc('get_tournament_participants', { p_tournament_id: t.id, p_token: t.share_token || E.token || null }),
+    t.format === 'pvp_bracket' && t.status !== 'open' ? supa.rpc('get_tournament_matches', { p_tournament_id: t.id, p_token: t.share_token || E.token || null }) : Promise.resolve({ data: [] }),
+    t.format === 'ai' ? supa.rpc('tournament_leaderboard', { p_tournament_id: t.id, p_token: t.share_token || E.token || null }) : Promise.resolve({ data: [] }),
     t.format === 'ai' && eu ? supa.from('scores').select('id,status,reject_reason,player_seconds,timed_live,created_at')
       .eq('tournament_id', t.id).eq('user_id', eu).order('created_at', { ascending: false }).limit(50) : Promise.resolve({ data: [] }),
     (souOrg || E.admin) && t.paid === false ? supa.rpc('tournament_payment_status', { p_tournament_id: t.id }) : Promise.resolve({ data: null }),
@@ -1060,7 +1189,12 @@ async function carregarTorneio(silencioso) {
   // se estou esperando o adversário e o jogo foi criado, vou para o tabuleiro
   if (E.esperandoSala) {
     const m = det.matches.find(x => x.id === E.esperandoSala);
-    if (m && m.game_id && m.status === 'in_progress') { toast('Seu adversário chegou! Abrindo o jogo…'); E.esperandoSala = null; setTimeout(() => { location.href = '/?game=' + encodeURIComponent(m.game_id); }, 1200); }
+    if (m && m.game_id && m.status === 'in_progress') {
+      toast('Seu adversário chegou! Abrindo o jogo…'); E.esperandoSala = null;
+      document.title = '▶ Sua partida começou!';
+      try { if (navigator.vibrate) navigator.vibrate([200, 100, 200]); } catch { /* sem vibração */ }
+      setTimeout(() => { location.href = '/?game=' + encodeURIComponent(m.game_id); }, 1200);
+    }
     else if (!m || m.status === 'finished' || m.status === 'walkover') E.esperandoSala = null;
   }
   const assin = JSON.stringify(det) + '|' + E.esperandoSala;
@@ -1084,6 +1218,7 @@ function minhaPartidaAtual(d) {
 }
 function nomeDe(d, uid) {
   if (!uid) return null;
+  if (uid === d.t.winner_id && d.t.winner_name) return d.t.winner_name;
   const p = d.parts.find(x => x.user_id === uid); if (p) return p.user_name;
   for (const m of d.matches) { if (m.player1_id === uid) return m.player1_name; if (m.player2_id === uid) return m.player2_name; }
   const l = d.lb.find(x => x.user_id === uid); return l ? l.user_name : null;
@@ -1099,8 +1234,9 @@ function motivoPartida(m) {
   return ({
     bye: 'Passou direto (sem adversário)', xeque_mate: 'Xeque-mate', lance_ilegal: 'Lance ilegal', tempo: 'Tempo esgotado',
     desistencia: 'Desistência', afogamento: 'Afogamento', '50lances': 'Regra dos 50 lances', material: 'Material insuficiente',
-    wo_ausencia: 'W.O.: o adversário não entrou na sala', wo_sem_resposta: 'W.O.: as Pretas não responderam ao 1º lance',
-    wo_brancas_nao_jogaram: 'W.O.: as Brancas não fizeram o 1º lance', wo_sorteio: 'Ninguém apareceu: decidido por sorteio',
+    wo_ausencia: 'Ausência (W.O.): o adversário não entrou na sala', wo_sem_resposta: 'Ausência (W.O.): as Pretas não responderam ao 1º lance',
+    wo_brancas_nao_jogaram: 'Ausência (W.O.): as Brancas não fizeram o 1º lance', wo_sorteio: 'Ninguém apareceu: decidido por sorteio',
+    torneio_cancelado: 'Torneio cancelado',
     organizador: 'Decidido pelo organizador',
   })[base] || (m.status === 'walkover' ? 'W.O.' : 'Encerrada');
 }
@@ -1125,16 +1261,26 @@ function renderTorneio() {
   // scroll horizontal do chaveamento sobrevive à atualização
   const sc = document.querySelector('.chave-scroll'); const scrollX = sc ? sc.scrollLeft : null;
 
+  const share = podeCompartilhar(t);
   let h = `<div class="voltar"><button class="btn small ghost" data-acao="ir-lista">← Todos os torneios</button></div>
   <div class="t-cabeca">
     <div class="selos">${seloFormato(t)}<span class="selo ${s.cls}">${s.txt}</span>${t.visibility === 'link' ? '<span class="selo conv">🔒 Só convidados</span>' : t.visibility === 'approval' ? '<span class="selo">Com aprovação</span>' : ''}</div>
-    <h1>${esc(t.name)}</h1>
-    <div class="por">organizado por ${esc(t.creator_name)}${souOrg ? ' (você)' : ''}</div>
+    <div class="linha-tit"><div>
+      <h1>${esc(t.name)}</h1>
+      <div class="por">organizado por ${esc(t.creator_name)}${souOrg ? ' (você)' : ''}</div></div>
+      ${share ? `<button class="btn share grande" data-acao="compartilhar" data-id="${t.id}">📤 Compartilhar</button>` : ''}
+    </div>
   </div>`;
 
   h += blocoFaixas(d, souOrg, podeGerir);
-  h += `<div class="duas"><div>${blocoMinhaParte(d, minha, souOrg)}</div><div>${blocoDetalhes(d)}</div></div>`;
-  if (podeGerir && t.status !== 'cancelled' && t.status !== 'finished') h += blocoOrganizador(d, souOrg);
+  const painelOrg = podeGerir && t.status !== 'cancelled' && t.status !== 'finished';
+  if (painelOrg && souOrg) {
+    // UX-07: para quem organiza, o painel (pedidos, começar, link) fica no topo — no celular, logo abaixo do título
+    h += `<div class="duas"><div>${blocoOrganizador(d, souOrg)}</div><div>${blocoDetalhes(d)}</div></div>`;
+  } else {
+    h += `<div class="duas"><div>${blocoMinhaParte(d, minha, souOrg)}</div><div>${blocoDetalhes(d)}</div></div>`;
+    if (painelOrg) h += blocoOrganizador(d, souOrg);
+  }
   if (t.format === 'pvp_bracket') h += blocoChave(d, podeGerir);
   else h += blocoClassificacao(d);
   h += blocoInscritos(d, podeGerir);
@@ -1158,44 +1304,74 @@ function blocoFaixas(d, souOrg, podeGerir) {
       h += `<div class="faixa aviso"><strong>Torneio encerrado sem vencedor:</strong> ninguém teve vitória conferida contra a IA.</div>`;
     }
   }
-  if (t.status === 'cancelled') h += `<div class="faixa erro"><strong>${esc(motivoCancel(t.cancel_reason))}</strong>${souOrg && t.paid && !(t.current_round > 0) ? ' Se você pagou, o valor é devolvido pelo Pix automaticamente.' : ''}</div>`;
+  if (t.status === 'cancelled') h += `<div class="faixa erro"><strong>${esc(motivoCancel(t.cancel_reason))}</strong>${souOrg && t.paid ? (canceladoAntes(t) ? ' O valor pago volta sozinho pelo Pix, para a conta que pagou.' : ' Como o torneio já tinha começado, o valor pago não é devolvido automaticamente.') : ''}</div>`;
   if (t.status === 'open' && t.paid === false && podeGerir) {
     const pg = d.pag;
     h += `<div class="faixa aviso"><strong>Falta pagar.</strong> O torneio só aparece para os outros jogadores depois do Pix de <span class="preco-txt">${fmtBRL(pg?.valor ?? E.preco ?? 1)}</span>.
       ${pg && pg.status === 'pendente' && ms(pg.expira_em) > agora() ? ' Já existe um Pix gerado esperando pagamento.' : ''}
       <div class="acoes"><button class="btn primary" data-acao="pagar" data-id="${t.id}" data-nome="${esc(t.name)}">Pagar agora</button>
-      <button class="btn danger small" data-acao="cancelar">Desistir e cancelar</button></div></div>`;
+      ${criadorPodeCancelar(t) || E.admin ? '<button class="btn danger small" data-acao="cancelar">Desistir e cancelar</button>' : ''}</div></div>`;
   }
   return h;
 }
 
+// --- regras de estado usadas na tela (espelham o servidor: D-TRN-22/23)
+const iaValendo = t => t.format === 'ai' && agora() >= ms(t.starts_at) && agora() < ms(t.ends_at);
+function inscricoesAbertas(t) {
+  if (t.paid === false) return false;
+  // ranking contra a IA aceita inscrição até o fim, mesmo em andamento (D-TRN-22)
+  if (t.format === 'ai') return (t.status === 'open' || t.status === 'active') && agora() < ms(t.ends_at);
+  return t.status === 'open' && !(t.current_round > 0);
+}
+// sair só antes de começar (leave_tournament exige status 'open')
+const podeSair = t => t.status === 'open' && !(t.current_round > 0) && (t.format !== 'ai' || agora() < ms(t.starts_at));
+// D-TRN-23: o criador cancela só antes de começar; depois, só admin
+function criadorPodeCancelar(t) {
+  if (t.status !== 'open' && t.status !== 'active') return false;
+  return t.format === 'ai' ? agora() < ms(t.starts_at) : (t.status === 'open' && !(t.current_round > 0));
+}
+// cancelado antes de começar = tem estorno (cancelled_before_start no servidor)
+const canceladoAntes = t => t.format === 'ai' ? ms(t.finished_at) < ms(t.starts_at) : !(t.current_round > 0);
+
 // --- quadro "Sua partida" / inscrição
 function blocoMinhaParte(d, minha, souOrg) {
   const t = d.t, eu = E.user?.id;
+  const aprovados = t.participant_count ?? d.parts.filter(p => p.status === 'approved').length;
   if (!E.user) {
-    return `<div class="painel"><h2>Participar</h2><p>Entre com sua conta Google para se inscrever.</p>
-      <div class="acoes"><button class="btn primary" data-acao="entrar">Entrar com Google</button></div></div>`;
+    // visitante (TRN-UX-02): vê o torneio inteiro e o convite para entrar
+    let corpo;
+    if (t.status === 'cancelled') corpo = `<div class="estado neutro">Este torneio foi cancelado.</div>`;
+    else if (t.status === 'finished') corpo = `<div class="estado neutro">Este torneio já terminou. Veja o resultado abaixo.</div>
+      <p style="margin-top:10px">Quer jogar o próximo? Entre com sua conta e veja os torneios abertos.</p>
+      <div class="acoes"><button class="btn primary" data-acao="entrar">Entrar com Google</button></div>`;
+    else if (!inscricoesAbertas(t)) corpo = `<div class="estado neutro">${t.format === 'ai' && agora() >= ms(t.ends_at) ? 'O prazo do ranking acabou. Estamos fechando a classificação.' : 'As inscrições estão fechadas: o torneio já começou.'}</div>
+      <p style="margin-top:10px">Acompanhe ${t.format === 'ai' ? 'a classificação' : 'as partidas'} abaixo.</p>`;
+    else if (aprovados >= t.capacity) corpo = `<div class="estado neutro">Vagas esgotadas (${aprovados} de ${t.capacity}).</div>`;
+    else corpo = `<div class="estado ok">${iaValendo(t) ? 'O ranking já está valendo — ainda dá para entrar.' : 'Inscrições abertas.'} ${aprovados} de ${t.capacity} vagas preenchidas.</div>
+      <p style="margin-top:10px">${t.visibility === 'approval' ? 'O organizador aprova cada inscrição.' : 'A inscrição é grátis e na hora.'} Para se inscrever, entre com sua conta Google — você volta direto para esta página.</p>
+      <div class="acoes"><button class="btn primary grande" data-acao="entrar">Entrar com Google para se inscrever</button></div>`;
+    return `<div class="painel sua-partida"><h2>Participar</h2>${corpo}</div>`;
   }
   if (t.format === 'pvp_bracket' && (t.status === 'active' || t.status === 'finished') && minha && minha.status === 'approved') return blocoSuaPartida(d);
   if (t.format === 'ai' && minha && minha.status === 'approved') return blocoIaJogar(d);
 
   // inscrição
   let corpo = '', tit = 'Inscrição';
-  const aprovados = d.parts.filter(p => p.status === 'approved').length;
   const iaFechou = t.format === 'ai' && agora() > ms(t.ends_at);
-  const aberto = t.status === 'open' && t.paid !== false && !(t.format === 'pvp_bracket' && t.current_round > 0) && !iaFechou;
+  const aberto = inscricoesAbertas(t);
   if (t.status === 'cancelled') {
     corpo = `<div class="estado neutro">Este torneio foi cancelado.</div>`;
   } else if (souOrg) {
     tit = 'Você organiza';
-    corpo = `<p>Quem organiza não joga no próprio torneio. Use o painel do organizador abaixo para aprovar inscritos${t.format === 'pvp_bracket' ? ', começar e acompanhar as partidas' : ' e acompanhar a classificação'}.</p>`;
+    corpo = t.status === 'finished' ? `<p>Você organizou este torneio. A entrega do prêmio é com você.</p>`
+      : `<p>Quem organiza não joga no próprio torneio. Use o painel do organizador para aprovar inscritos${t.format === 'pvp_bracket' ? ', começar e acompanhar as partidas' : ' e acompanhar a classificação'}.</p>`;
   } else if (minha && minha.status === 'approved') {
     corpo = `<div class="estado ok">✓ Você está inscrito.</div>
       ${t.format === 'pvp_bracket' && t.status === 'open' ? `<p style="margin-top:10px">O chaveamento é sorteado ${fmtData(t.starts_at)} — faltam <span class="cd" data-ate="${t.starts_at}" data-fim="instantes" data-recarregar="1">${fmtDur(ms(t.starts_at) - agora())}</span>. Fique de olho: o prazo da 1ª rodada começa a contar no sorteio.</p>` : ''}
-      ${aberto ? `<div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Sair do torneio</button></div>` : ''}`;
+      ${podeSair(t) ? `<div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Sair do torneio</button></div>` : ''}`;
   } else if (minha && minha.status === 'pending') {
     corpo = `<div class="estado espera">⏳ Pedido enviado. Agora é esperar o organizador aprovar.</div>
-      ${aberto ? `<div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Desistir do pedido</button></div>` : ''}`;
+      ${podeSair(t) ? `<div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Desistir do pedido</button></div>` : ''}`;
   } else if (minha && minha.status === 'rejected') {
     corpo = `<div class="estado nao">Sua inscrição foi recusada pelo organizador.</div>`;
   } else if (t.status === 'finished') {
@@ -1206,7 +1382,8 @@ function blocoMinhaParte(d, minha, souOrg) {
     corpo = `<div class="estado neutro">Vagas esgotadas (${aprovados} de ${t.capacity}).</div>`;
   } else {
     const aprov = t.visibility === 'approval';
-    corpo = `<p>${aprov ? 'O organizador aprova cada inscrição.' : 'Inscrição na hora, sem custo.'} ${aprovados} de ${t.capacity} vagas preenchidas.</p>
+    corpo = `${iaValendo(t) ? `<div class="estado ok">O ranking já está valendo — dá para entrar até ${fmtData(t.ends_at)}.</div>` : ''}
+      <p${iaValendo(t) ? ' style="margin-top:10px"' : ''}>${aprov ? 'O organizador aprova cada inscrição.' : 'Inscrição na hora, sem custo.'} ${aprovados} de ${t.capacity} vagas preenchidas.</p>
       <div class="acoes"><button class="btn primary grande" data-acao="inscrever">${aprov ? 'Pedir para participar' : 'Inscrever-se'}</button></div>`;
   }
   return `<div class="painel"><h2>${tit}</h2>${corpo}</div>`;
@@ -1249,10 +1426,10 @@ function blocoSuaPartida(d) {
   } else if (euNaSala) {
     acao = `<div class="espera"><span class="girando"></span><div>Você já está na sala. Assim que ${esc(adv || 'o adversário')} entrar, o jogo abre sozinho nesta página.</div></div>
       <div class="acoes"><button class="btn small ghost" data-acao="sala" data-id="${m.id}">Conferir de novo</button></div>
-      <p class="nota">Se o prazo acabar e ${esc(adv || 'o adversário')} não aparecer, você vence por W.O.</p>`;
+      <p class="nota">Se o prazo acabar e ${esc(adv || 'o adversário')} não aparecer, você vence por ausência do adversário (W.O.).</p>`;
   } else {
     acao = `<div class="acoes"><button class="btn jogar grande block" data-acao="sala" data-id="${m.id}">Entrar na sala</button></div>
-      <p class="nota">Entrar na sala marca sua presença. O jogo começa quando os dois estiverem lá. Quem não aparecer até o fim do prazo perde por W.O.; se nenhum dos dois aparecer, o vencedor é sorteado.</p>`;
+      <p class="nota">Entrar na sala marca sua presença. O jogo começa quando os dois estiverem lá. Quem não aparecer até o fim do prazo perde por não comparecer (W.O.); se nenhum dos dois aparecer, o vencedor é sorteado.</p>`;
   }
   return `<div class="painel sua-partida"><h2>Sua partida <span class="dir">${esc(rod)}</span></h2>
     <div class="vs">
@@ -1271,11 +1448,11 @@ function blocoIaJogar(d) {
   else if (t.status === 'cancelled') corpo = `<div class="estado neutro">Torneio cancelado.</div>`;
   else if (agora() < ms(t.starts_at)) corpo = `<div class="estado ok">✓ Você está inscrito.</div>
       <p style="margin-top:10px">As partidas começam a valer ${fmtData(t.starts_at)} — faltam <span class="cd" data-ate="${t.starts_at}" data-fim="instantes" data-recarregar="1">${fmtDur(ms(t.starts_at) - agora())}</span>.</p>
-      <div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Sair do torneio</button></div>`;
+      ${podeSair(t) ? `<div class="acoes"><button class="btn small ghost" data-acao="sair-torneio">Sair do torneio</button></div>` : ''}`;
   else if (agora() < ms(t.ends_at)) corpo = `<p>Jogue quantas vezes quiser contra a IA <b>${DIFIC[t.difficulty]}</b> até ${fmtData(t.ends_at)} (faltam <span class="cd" data-ate="${t.ends_at}" data-fim="acabou" data-recarregar="1">${fmtDur(ms(t.ends_at) - agora())}</span>).</p>
       <div class="acoes"><a class="btn jogar grande block" href="/?tournament=${encodeURIComponent(t.id)}">▶ Jogar contra a IA</a></div>
       <p class="nota">Só conta vitória por xeque-mate, jogada logado e sem desfazer lance.</p>`;
-  else corpo = `<div class="estado espera">O prazo acabou. Estamos conferindo as últimas partidas e fechando a classificação.</div>`;
+  else corpo = `<div class="estado espera">O prazo acabou. Partidas terminadas até ${fmtData(t.ends_at)} ainda podem chegar por até 10 minutos; depois da última conferência, a classificação fecha sozinha.</div>`;
   return `<div class="painel sua-partida"><h2>Sua participação</h2>${corpo}</div>`;
 }
 
@@ -1286,12 +1463,17 @@ function blocoDetalhes(d) {
   if (t.format === 'ai') {
     linhas.push(`<div class="c"><div class="l">Nível da IA</div><div class="v">${DIFIC[t.difficulty] || '—'}</div></div>`);
     linhas.push(`<div class="c"><div class="l">Quem ganha</div><div class="v">${CRIT[t.criterion] || '—'}</div></div>`);
-    linhas.push(`<div class="c"><div class="l">Começa</div><div class="v">${fmtData(t.starts_at)}</div></div>`);
+    linhas.push(`<div class="c"><div class="l">${agora() >= ms(t.starts_at) ? 'Começou' : 'Começa'}</div><div class="v">${fmtData(t.starts_at)}</div></div>`);
     linhas.push(`<div class="c"><div class="l">Termina</div><div class="v">${fmtData(t.ends_at)}</div></div>`);
   } else {
     linhas.push(`<div class="c"><div class="l">Tempo por jogador</div><div class="v">${minutos(t.time_control_seconds)}</div></div>`);
     linhas.push(`<div class="c"><div class="l">Prazo por rodada</div><div class="v">${t.round_deadline_hours ? horas(t.round_deadline_hours) : '—'}</div></div>`);
-    linhas.push(`<div class="c"><div class="l">${t.status === 'open' ? 'Sorteio e início' : 'Início marcado'}</div><div class="v">${fmtData(t.starts_at)}${t.status === 'open' ? ` <small>(${rel(t.starts_at)})</small>` : ''}</div></div>`);
+    // UX-14: depois de começar, mostra quando começou de fato (o organizador pode ter antecipado)
+    const ini = t.status === 'open' || t.status === 'cancelled' && !(t.current_round > 0) ? null : inicioReal(d);
+    linhas.push(t.status === 'open'
+      ? `<div class="c"><div class="l">Sorteio e início</div><div class="v">${fmtData(t.starts_at)} <small>(${rel(t.starts_at)})</small></div></div>`
+      : !ini ? `<div class="c"><div class="l">Início previsto</div><div class="v">${fmtData(t.starts_at)}</div></div>`
+      : `<div class="c"><div class="l">Começou</div><div class="v">${fmtData(ini)}${ms(ini) < ms(t.starts_at) - 120000 ? ' <small>(antecipado pelo organizador)</small>' : ''}</div></div>`);
     linhas.push(`<div class="c"><div class="l">Rodada</div><div class="v">${!(t.current_round > 0) ? '—' : `${t.current_round} de ${t.total_rounds || '—'}`}</div></div>`);
   }
   linhas.push(`<div class="c"><div class="l">Inscritos</div><div class="v">${aprovados} de ${t.capacity}</div></div>`);
@@ -1304,8 +1486,70 @@ function blocoDetalhes(d) {
   </div>`;
 }
 
-function linkConvite(t) {
-  return t.visibility === 'link' && t.share_token ? `${location.origin}/torneios?t=${encodeURIComponent(t.share_token)}` : `${location.origin}/torneios?id=${t.id}`;
+// início real da eliminatória: prazo da 1ª rodada menos o prazo por rodada (o organizador pode ter começado antes)
+function inicioReal(d) {
+  const t = d.t, h = t.round_deadline_hours;
+  const r1 = d.matches.filter(m => m.round === 1 && m.deadline_at && m.reason !== 'bye');
+  if (!h || !r1.length) return null;
+  const min = Math.min(...r1.map(m => ms(m.deadline_at))) - h * 3600000;
+  return isNaN(min) ? null : new Date(Math.min(min, ms(t.starts_at))).toISOString();
+}
+
+// ---------------------------------------------------------------- compartilhar (pedido do dono, D-TRN-27)
+// Link curto com prévia gerada no servidor: /t/<id> para torneio listado; /t/<código> para o privado (por link).
+function linkCompartilhar(t) {
+  if (t.visibility === 'link') return t.share_token ? `${location.origin}/t/${encodeURIComponent(t.share_token)}` : null;
+  return `${location.origin}/t/${t.id}`;
+}
+// o privado só para quem tem o código (o servidor só devolve share_token para organizador/inscrito/admin/quem tem o link)
+// D-TRN-28: o botão só aparece quando o servidor diz que ESTE usuário pode compartilhar (can_share)
+const podeCompartilhar = t => t.paid !== false && t.status !== 'cancelled' && t.can_share === true && !!linkCompartilhar(t);
+const curto = (s, n) => { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s; };
+function textoCompartilhar(t, campeao) {
+  const nome = curto(t.name, 80), premio = curto(t.prize_description, 90);
+  if (t.status === 'finished') return campeao || t.winner_name ? `🏆 ${campeao || t.winner_name} venceu o torneio ${nome}!` : `O torneio ${nome} terminou. Veja o resultado:`;
+  if (inscricoesAbertas(t)) {
+    if (iaValendo(t)) return `O ranking ${nome} está valendo: jogue contra a IA até ${fmtData(t.ends_at)} — prêmio: ${premio}. Bora jogar?`;
+    return `Inscrições abertas no torneio ${nome} — prêmio: ${premio}. Bora jogar?`;
+  }
+  if (t.status === 'active' || (t.format === 'ai' && t.status === 'open')) return t.format === 'ai'
+    ? `O ranking ${nome} está fechando o resultado. Veja a classificação:`
+    : `O torneio ${nome} está em andamento — acompanhe as partidas! Prêmio: ${premio}.`;
+  return `Torneio de xadrez: ${nome}`;
+}
+function acharTorneio(id) {
+  if (E.det && E.det.t.id === id) return E.det.t;
+  return [...E.meus, ...E.abertos, ...E.andamento, ...E.encerrados].find(x => x.id === id) || null;
+}
+async function compartilhar(id) {
+  const t = acharTorneio(id); if (!t) return;
+  const url = linkCompartilhar(t); if (!url) return;
+  const texto = textoCompartilhar(t, E.nomesCampeoes[t.id]);
+  // no celular: a lista nativa (WhatsApp, Instagram, Telegram…)
+  const celular = window.matchMedia('(pointer: coarse)').matches || /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+  if (celular && navigator.share) {
+    try { await navigator.share({ title: t.name, text: texto, url }); return; }
+    catch (e) { if (e && e.name === 'AbortError') return; /* sem share nativo: cai no menu abaixo */ }
+  }
+  abrirShare(t, texto, url);
+}
+function abrirShare(t, texto, url) {
+  const u = encodeURIComponent(url), tx = encodeURIComponent(texto);
+  const redes = [
+    ['wa', '🟢', 'WhatsApp', `https://wa.me/?text=${encodeURIComponent(texto + ' ' + url)}`],
+    ['tg', '✈️', 'Telegram', `https://t.me/share/url?url=${u}&text=${tx}`],
+    ['x', '𝕏', 'X (Twitter)', `https://twitter.com/intent/tweet?text=${tx}&url=${u}`],
+    ['fb', 'f', 'Facebook', `https://www.facebook.com/sharer/sharer.php?u=${u}`],
+  ];
+  $('share-corpo').innerHTML = `<div class="share-previa">${esc(texto)}<small>${esc(url)}</small></div>
+    <div class="redes">${redes.map(([c, ic, nome, href]) => `<a class="btn ${c}" href="${esc(href)}" target="_blank" rel="noopener"><span class="ic" aria-hidden="true">${ic}</span>${nome}</a>`).join('')}</div>
+    <div style="margin-top:8px; display:flex; flex-direction:column; gap:8px">
+      <button class="btn primary block" data-acao="copiar" data-txt="${esc(url)}">🔗 Copiar link</button>
+      ${navigator.share ? `<button class="btn ghost block" data-acao="share-nativo">Mais opções…</button>` : ''}
+    </div>
+    ${t.visibility === 'link' ? '<p class="nota">Torneio só para convidados: quem receber este link consegue ver e se inscrever.</p>' : ''}`;
+  E.shareAtual = { title: t.name, text: texto, url };
+  abrirModal('modal-share');
 }
 
 function blocoOrganizador(d, souOrg) {
@@ -1314,33 +1558,61 @@ function blocoOrganizador(d, souOrg) {
   const aprov = d.parts.filter(p => p.status === 'approved');
   const recus = d.parts.filter(p => p.status === 'rejected');
   const aberto = t.status === 'open' && !(t.current_round > 0);
-  let h = `<div class="painel" style="margin-bottom:14px"><h2>Painel do organizador ${!souOrg ? '<span class="dir">você é admin</span>' : ''}</h2>`;
-  if (t.paid !== false) {
-    h += `<div class="sub-tit" style="margin-top:0">${t.visibility === 'link' ? 'Link de convite (só quem tiver o link entra)' : 'Link para divulgar'}</div>
-      <div class="copiar"><input type="text" readonly value="${esc(linkConvite(t))}" aria-label="Link do torneio"><button class="btn small" data-acao="copiar" data-txt="${esc(linkConvite(t))}">Copiar</button></div>`;
+  const recebe = aberto || (t.format === 'ai' && inscricoesAbertas(t));     // ranking aceita inscrição até o fim
+  const nJog = n => `${n} jogador${n === 1 ? '' : 'es'}`;
+  let h = `<div class="painel sua-partida" style="margin-bottom:14px"><h2>Painel do organizador <span class="dir">${!souOrg ? 'você é admin' : pend.length ? `${pend.length} pedido${pend.length > 1 ? 's' : ''} esperando` : ''}</span></h2>`;
+  // 1) pedidos (o que exige ação) primeiro
+  if (recebe && pend.length) {
+    h += `<div class="sub-tit" style="margin-top:0">Pedidos para aprovar (${pend.length})</div><div class="lista-gente">${pend.map(p => `<div class="pessoa"><span class="nm">${esc(p.user_name)}</span>
+      <span class="bts"><button class="btn small success" data-acao="aprovar" data-id="${p.id}">Aprovar</button><button class="btn small danger" data-acao="recusar" data-id="${p.id}" data-nome="${esc(p.user_name)}">Recusar</button></span></div>`).join('')}</div>`;
+  } else if (recebe && t.visibility === 'approval') {
+    h += `<p class="nota" style="margin-top:0">Nenhum pedido esperando aprovação.</p>`;
   }
-  if (aberto) {
-    if (pend.length) {
-      h += `<div class="sub-tit">Pedidos para aprovar (${pend.length})</div><div class="lista-gente">${pend.map(p => `<div class="pessoa"><span class="nm">${esc(p.user_name)}</span>
-        <span class="bts"><button class="btn small success" data-acao="aprovar" data-id="${p.id}">Aprovar</button><button class="btn small danger" data-acao="recusar" data-id="${p.id}" data-nome="${esc(p.user_name)}">Recusar</button></span></div>`).join('')}</div>`;
-    } else if (t.visibility === 'approval') {
-      h += `<p class="nota">Nenhum pedido esperando aprovação.</p>`;
-    }
-    if (aprov.length) {
-      h += `<div class="sub-tit">Inscritos (${aprov.length} de ${t.capacity})</div><div class="lista-gente">${aprov.map(p => `<div class="pessoa"><span class="nm">${esc(p.user_name)}</span>
-        <span class="bts"><button class="btn small ghost" data-acao="recusar" data-id="${p.id}" data-nome="${esc(p.user_name)}">Remover</button></span></div>`).join('')}</div>`;
-    }
-    if (recus.length) h += `<p class="nota">Recusados: ${recus.map(p => esc(p.user_name)).join(', ')} (não podem se inscrever de novo).</p>`;
-  }
+  // 2) começar / encerrar
   const bts = [];
   if (t.format === 'pvp_bracket' && aberto && t.paid !== false) {
-    bts.push(`<button class="btn success" data-acao="comecar" ${aprov.length < 2 ? 'disabled title="Precisa de pelo menos 2 inscritos"' : ''}>▶ Começar agora (${aprov.length} jogadores)</button>`);
+    bts.push(`<button class="btn success" data-acao="comecar" ${aprov.length < 2 ? 'disabled title="Precisa de pelo menos 2 inscritos"' : ''}>▶ Começar agora (${nJog(aprov.length)})</button>`);
   }
   if (t.format === 'ai' && (t.status === 'open' || t.status === 'active') && t.paid !== false) bts.push(`<button class="btn" data-acao="encerrar-ranking">🏁 Encerrar ranking agora</button>`);
-  if (aberto || (E.admin && t.status === 'active')) bts.push(`<button class="btn danger" data-acao="cancelar">Cancelar torneio${!aberto ? ' (admin)' : ''}</button>`);
   if (bts.length) h += `<div class="acoes linha">${bts.join('')}</div>`;
-  if (t.format === 'pvp_bracket' && aberto && t.paid !== false) h += `<p class="nota">Se você não começar antes, o torneio começa sozinho ${fmtData(t.starts_at)}. Com menos de 2 inscritos nessa hora, ele é cancelado.</p>`;
-  if (t.format === 'pvp_bracket' && t.status === 'active') h += `<p class="nota">Partidas, W.O. por prazo e passagem de rodada são resolvidos sozinhos pelo servidor. Se precisar (jogador combinou desistir, problema técnico), use "Definir vencedor" na partida.</p>`;
+  if (t.format === 'pvp_bracket' && aberto && t.paid !== false) h += `<p class="nota">${aprov.length < 2 ? 'Precisa de pelo menos 2 inscritos para começar. ' : ''}Se você não começar antes, o torneio começa sozinho ${fmtData(t.starts_at)}. Com menos de 2 inscritos nessa hora, ele é cancelado (e o valor pago volta pelo Pix).</p>`;
+  if (t.format === 'pvp_bracket' && t.status === 'active') h += `<p class="nota">Partidas, ausências (W.O.) e passagem de rodada são resolvidas sozinhas pelo servidor. Se precisar (jogador combinou desistir, problema técnico), use "Definir vencedor" na partida.</p>`;
+  // 3) divulgar
+  if (t.paid !== false) {
+    const link = linkCompartilhar(t);
+    if (link) h += `<div class="sub-tit">${t.visibility === 'link' ? 'Link de convite (só quem tiver o link entra)' : 'Link para divulgar'}</div>
+      <div class="copiar"><input type="text" readonly value="${esc(link)}" aria-label="Link do torneio"><button class="btn small" data-acao="copiar" data-txt="${esc(link)}">Copiar</button></div>
+      ${podeCompartilhar(t) ? `<div class="acoes" style="margin-top:8px"><button class="btn share block" data-acao="compartilhar" data-id="${t.id}">📤 Compartilhar no WhatsApp, Instagram…</button></div>` : ''}`;
+  }
+  // 3b) controle do compartilhamento (D-TRN-28)
+  const privado = t.visibility === 'link';
+  const podeInsc = t.participants_can_share !== false;
+  h += `<div class="sub-tit">Compartilhamento</div>
+    <label class="chave-liga"><input type="checkbox" data-acao="share-inscritos" ${podeInsc ? 'checked' : ''}><span>Inscritos podem compartilhar o torneio</span></label>
+    <p class="nota" style="margin-top:6px">${privado
+      ? (podeInsc ? 'Ligado: quem está inscrito vê o botão Compartilhar e pode mandar o link de convite.' : 'Desligado: só você convida. Os inscritos não veem o botão nem o link de convite.')
+      : (podeInsc ? 'Ligado: inscritos e visitantes veem o botão Compartilhar.' : 'Desligado: o botão Compartilhar some para inscritos e visitantes. Como a página é pública, qualquer um ainda pode copiar o endereço do navegador.')}</p>`;
+  if (privado && t.status !== 'finished' && t.status !== 'cancelled') {
+    h += `<div class="acoes linha" style="margin-top:8px"><button class="btn small" data-acao="novo-link">🔄 Gerar novo link de convite</button></div>
+      <p class="nota" style="margin-top:4px">Use se o link vazou para quem não devia: o antigo para de funcionar.</p>`;
+  }
+  // 4) inscritos
+  if (recebe) {
+    if (aprov.length) {
+      h += `<div class="sub-tit">Inscritos (${aprov.length} de ${t.capacity})</div><div class="lista-gente">${aprov.map(p => `<div class="pessoa"><span class="nm">${esc(p.user_name)}</span>
+        ${aberto ? `<span class="bts"><button class="btn small ghost" data-acao="recusar" data-id="${p.id}" data-nome="${esc(p.user_name)}">Remover</button></span>` : ''}</div>`).join('')}</div>`;
+    } else h += `<p class="nota">Ninguém inscrito ainda. Divulgue o link!</p>`;
+    if (recus.length) h += `<p class="nota">Recusados: ${recus.map(p => esc(p.user_name)).join(', ')} (não podem se inscrever de novo).</p>`;
+  }
+  // 5) cancelar (D-TRN-23): criador só antes de começar; depois, só admin
+  if (criadorPodeCancelar(t)) {
+    h += `<div class="acoes linha" style="margin-top:14px"><button class="btn danger small" data-acao="cancelar">Cancelar torneio</button></div>`;
+  } else if (E.admin && (t.status === 'open' || t.status === 'active')) {
+    h += `<div class="acoes linha" style="margin-top:14px"><button class="btn danger small" data-acao="cancelar">Cancelar torneio (admin)</button></div>
+      <p class="nota">Já começou: o organizador não pode mais cancelar, e cancelar agora não devolve o valor pago automaticamente.</p>`;
+  } else if (souOrg && (t.status === 'open' || t.status === 'active')) {
+    h += `<p class="nota">O torneio já começou, então não dá mais para cancelar por aqui. Se houver um problema sério, escreva para <a href="mailto:alternativasderenda@gmail.com">alternativasderenda@gmail.com</a>.</p>`;
+  }
   return h + '</div>';
 }
 
@@ -1371,16 +1643,23 @@ function jogoHtml(d, m, podeGerir) {
   const meu = eu && (m.player1_id === eu || m.player2_id === eu);
   const decidido = !!m.winner_id && !m.previa;
   const bye = m.reason === 'bye';
+  const cancelado = d.t.status === 'cancelled';
   const lado = (id, nome, presente) => {
     if (!id) return `<div class="ld nada"><span class="nm">${bye ? '— sem adversário —' : 'a definir'}</span></div>`;
     const cls = decidido ? (m.winner_id === id ? 'venceu' : 'perdeu') : '';
     let tag = '';
     if (decidido && m.winner_id === id) tag = '<span class="tag ok">✓</span>';
-    else if (!m.previa && !decidido && !m.game_id && presente) tag = '<span class="tag sala">● na sala</span>';
+    else if (!cancelado && !m.previa && !decidido && !m.game_id && presente) tag = '<span class="tag sala">● na sala</span>';
     return `<div class="ld ${cls}"><span class="nm">${esc(nome || 'Jogador')}${id === eu ? '<span class="voce">VOCÊ</span>' : ''}</span>${tag}</div>`;
   };
   let pe = '';
-  if (m.previa) pe = 'aguardando a rodada anterior';
+  if (bye && !m.previa) {
+    // passagem direta: cartão compacto (UX-13)
+    const id = m.player1_id || m.player2_id, nome = m.player1_id ? m.player1_name : m.player2_name;
+    return `<div class="jogo bye-j${meu ? ' meu' : ''}"><div class="ld venceu"><span class="nm">${esc(nome || 'Jogador')}${id === eu ? '<span class="voce">VOCÊ</span>' : ''}</span><span class="tag">passou direto</span></div></div>`;
+  }
+  if (cancelado && !decidido && !m.previa) pe = '<span>Não jogada: torneio cancelado</span>';
+  else if (m.previa) pe = cancelado ? 'torneio cancelado' : 'aguardando a rodada anterior';
   else if (decidido) pe = `<span>${esc(motivoPartida(m))}</span>${m.game_id ? `<a href="/?game=${encodeURIComponent(m.game_id)}&spectate=1">ver jogo</a>` : ''}`;
   else if (m.status === 'in_progress' && m.game_id) pe = `<span class="ao-vivo">● Em jogo${m.tiebreaks ? (m.tiebreaks >= 2 ? ' · Armageddon' : ` · desempate ${m.tiebreaks}`) : ''}</span>${!meu ? `<a href="/?game=${encodeURIComponent(m.game_id)}&spectate=1">assistir</a>` : ''}`;
   else if (m.deadline_at) pe = `<span>começar até ${fmtData(m.deadline_at).replace(/^\S+ /, '')}</span>`;
@@ -1404,12 +1683,18 @@ function blocoChave(d, podeGerir) {
   }
   const campeao = nomeDe(d, t.winner_id);
   const chips = R.map(x => `<button class="chip${x.r === E.rodadaSel ? ' ativa' : ''}" data-acao="rodada" data-r="${x.r}">${esc(x.nome)}${x.r === atual && t.status === 'active' ? ' •' : ''}</button>`).join('');
-  const cols = R.map(x => `<div class="rodada${x.r === total ? ' ultima' : ''}${x.r === E.rodadaSel ? ' sel' : ''}${x.r === atual && t.status === 'active' ? ' atual' : ''}" data-r="${x.r}">
+  const ehBye = m => m && !m.previa && m.reason === 'bye';
+  const cols = R.map(x => {
+    const byes = x.jogos.filter(ehBye);
+    // celular: com 2+ passagens diretas, mostra as partidas reais e resume quem passou direto numa linha (UX-13)
+    const resumo = byes.length >= 2 ? `<div class="byes-resumo"><b>${byes.length} jogadores passaram direto</b> (sem adversário nesta rodada): ${byes.map(m => esc(m.player1_name || m.player2_name || 'Jogador')).join(', ')}.</div>` : '';
+    return `<div class="rodada${x.r === total ? ' ultima' : ''}${x.r === E.rodadaSel ? ' sel' : ''}${x.r === atual && t.status === 'active' ? ' atual' : ''}${resumo ? ' com-byes' : ''}" data-r="${x.r}">
       <div class="rodada-tit">${esc(x.nome)}</div>
-      <div class="rodada-jogos">${x.jogos.map(m => `<div class="slot">${jogoHtml(d, m, podeGerir)}</div>`).join('')}</div></div>`).join('');
+      <div class="rodada-jogos">${x.jogos.map(m => `<div class="slot${ehBye(m) ? ' bye' : ''}">${jogoHtml(d, m, podeGerir)}</div>`).join('')}${resumo}</div></div>`;
+  }).join('');
   const colCampeao = `<div class="campeao-col"><div class="rodada-tit" style="color:var(--accent)">Campeão</div><div class="rodada-jogos"><div class="slot">
       <div class="jogo"><div class="cr">${campeao ? '👑' : '🏆'}</div><div class="nm ${campeao ? '' : 'nada'}">${campeao ? esc(campeao) : 'a definir'}</div></div></div></div></div>`;
-  return `<div class="painel"><h2>Chaveamento <span class="dir">${t.status === 'active' ? `rodada ${atual} de ${total}` : t.status === 'finished' ? 'encerrado' : ''}</span></h2>
+  return `<div class="painel"><h2>Chaveamento <span class="dir">${t.status === 'active' ? `rodada ${atual} de ${total}` : t.status === 'finished' ? 'encerrado' : t.status === 'cancelled' ? 'cancelado' : ''}</span></h2>
     <div class="rodadas-chips">${chips}</div>
     <div class="chave-scroll"><div class="chave">${cols}${colCampeao}</div></div></div>`;
 }
@@ -1444,7 +1729,7 @@ function blocoClassificacao(d) {
   return `<div class="painel"><h2>Classificação ${t.status === 'finished' ? '<span class="dir">final</span>' : ''}</h2>
     <p style="margin-bottom:10px">${CRIT_EXPL[t.criterion] || ''}</p>
     ${tabela}${meus}
-    <p class="nota">Cada vitória aparece depois que o servidor confere a partida — leva de alguns segundos a uns 2 minutos. ${t.status !== 'finished' ? 'O ranking fecha sozinho no horário final.' : ''}</p></div>`;
+    <p class="nota">Cada vitória aparece depois que o servidor confere a partida — leva de alguns segundos a uns 2 minutos. ${t.status !== 'finished' && t.status !== 'cancelled' ? 'O ranking fecha sozinho depois do horário final (partidas terminadas até lá ainda podem chegar por 10 minutos).' : ''}</p></div>`;
 }
 
 function blocoInscritos(d, podeGerir) {
@@ -1474,17 +1759,31 @@ async function sairTorneio() {
 }
 async function cancelarTorneio() {
   const t = E.det?.t; if (!t) return;
-  const msg = t.paid === false ? 'Cancelar este torneio? Ele ainda não foi pago, então nada é cobrado.'
-    : t.status === 'active' ? 'Cancelar um torneio em andamento? As partidas abertas são encerradas. Não dá para desfazer.'
-    : 'Cancelar este torneio? Os inscritos deixam de ver a partida e o valor pago volta para você pelo Pix. Não dá para desfazer.';
+  const antes = criadorPodeCancelar(t);
+  const msg = t.paid === false ? 'Cancelar este torneio? Ele ainda não foi pago, então nada é cobrado. (Se você pagou agora há pouco, o valor volta sozinho pelo Pix.)'
+    : !antes ? 'Cancelar um torneio que já começou? As partidas abertas são encerradas e o valor pago NÃO é devolvido automaticamente. Não dá para desfazer.'
+    : 'Cancelar este torneio? Os inscritos são avisados na página e o valor pago volta sozinho pelo Pix, para a conta que pagou. Não dá para desfazer.';
   if (!await confirma(msg, 'Cancelar torneio', { perigo: true, voltar: 'Não cancelar' })) return;
   if (await rpc('cancel_tournament', { p_tournament_id: t.id })) { toast('Torneio cancelado.'); await carregarTorneio(); }
 }
 async function comecar() {
   const n = E.det.parts.filter(p => p.status === 'approved').length;
   const rod = Math.ceil(Math.log2(n)); const byes = Math.pow(2, rod) - n;
-  if (!await confirma(`Começar agora com ${n} jogadores? O sorteio é feito na hora: ${rod} rodada${rod > 1 ? 's' : ''}${byes ? `, ${byes} jogador${byes > 1 ? 'es passam' : ' passa'} direto para a 2ª rodada` : ''}. Depois disso ninguém mais entra.`, 'Começar agora')) return;
+  if (!await confirma(`Começar agora com ${n} jogador${n === 1 ? '' : 'es'}? O sorteio é feito na hora: ${rod} rodada${rod > 1 ? 's' : ''}${byes ? `, ${byes} jogador${byes > 1 ? 'es passam' : ' passa'} direto para a 2ª rodada` : ''}. Depois disso ninguém mais entra.`, 'Começar agora')) return;
   if (await rpc('start_bracket_tournament', { p_tournament_id: E.tid })) { toast('Torneio começou!'); E.rodadaSel = null; await carregarTorneio(); }
+}
+async function gerarNovoLink() {
+  const t = E.det && E.det.t; if (!t) return;
+  if (!await confirma('Gerar um novo link de convite? O link antigo para de funcionar na hora (inclusive para quem ainda não se inscreveu). Quem já está inscrito continua inscrito.', 'Gerar novo link', { perigo: true, icone: '🔄' })) return;
+  const r = await rpc('rotate_tournament_link', { p_tournament_id: t.id });
+  if (!r) return;
+  const codigo = typeof r.data === 'string' ? r.data : (r.data && r.data.rotate_tournament_link) || '';
+  const url = `${location.origin}/t/${encodeURIComponent(codigo)}`;
+  if (E.token) { E.token = null; history.replaceState(null, '', '/torneios?id=' + t.id); }   // a URL com o código velho não vale mais
+  await carregarTorneio();
+  const v = await aviso({ icone: '🔗', titulo: 'Link novo gerado', msg: `O link antigo parou de funcionar. Mande este para quem você quer convidar:\n\n${url}`,
+    botoes: [{ txt: 'Fechar', v: false }, { txt: 'Copiar link novo', v: true, prim: true }] });
+  if (v) copiar(url);
 }
 async function encerrarRanking() {
   if (!await confirma('Encerrar o ranking agora? A classificação atual vira a final e o 1º colocado é o campeão.', 'Encerrar agora', { perigo: true })) return;
@@ -1510,11 +1809,11 @@ function abrirForcar(mid) {
       <button class="btn primary" data-acao="forcar-ok" data-v="${m.player1_id}">${esc(m.player1_name)} venceu</button>
       <button class="btn primary" data-acao="forcar-ok" data-v="${m.player2_id}">${esc(m.player2_name)} venceu</button>
       <button class="btn ghost" data-acao="fechar-resultado">Voltar</button></div>`;
-  $('modal-resultado').classList.add('show');
+  abrirModal('modal-resultado');
 }
 async function forcar(vid) {
   const m = E.resultadoMatch; if (!m) return;
-  $('modal-resultado').classList.remove('show');
+  fecharModal('modal-resultado');
   if (await rpc('record_match_result', { p_match_id: m.id, p_winner_id: vid, p_pgn: null })) { toast('Resultado registrado.'); await carregarTorneio(); }
 }
 
@@ -1526,11 +1825,12 @@ function abrirCriar() {
   if (!E.user) { entrar(); return; }
   $('criar-erro').textContent = '';
   const ini = new Date(Date.now() + 60 * 60 * 1000); ini.setMinutes(Math.ceil(ini.getMinutes() / 5) * 5, 0, 0);
+  $('f-inicio').min = paraLocal(new Date(Date.now() + MIN_ANTECEDENCIA_MS));
   $('f-inicio').value = paraLocal(ini);
   $('f-fim').value = paraLocal(new Date(ini.getTime() + 7 * 86400000));
   atualizarFormCriar();
   atualizarBotaoCriar();
-  $('modal-criar').classList.add('show');
+  abrirModal('modal-criar');
   setTimeout(() => $('f-nome').focus(), 50);
 }
 function atualizarFormCriar() {
@@ -1540,13 +1840,32 @@ function atualizarFormCriar() {
   $('linha-fim').style.display = ia ? '' : 'none';
   $('rot-vagas').textContent = ia ? 'Máximo de jogadores' : 'Número de vagas';
   $('dica-inicio').textContent = ia
-    ? 'As vitórias contam do início ao fim (no máximo 60 dias). O ranking fecha sozinho no horário final.'
-    : 'No horário de início o chaveamento é sorteado sozinho com quem estiver inscrito. Você pode começar antes.';
+    ? 'As vitórias contam do início ao fim (no máximo 60 dias; o fim, pelo menos 1 hora depois de agora). O ranking fecha sozinho no horário final.'
+    : 'Pelo menos 30 minutos depois de agora — é o tempo para pagar o Pix e receber inscrições. No horário de início o chaveamento é sorteado sozinho com quem estiver inscrito; você pode começar antes.';
+  validarDatas(true);
   // prazo mínimo da rodada: 2 × tempo + 30 min
   const tc = parseInt($('f-tempo').value, 10);
   const minH = Math.ceil((tc * 2 + 1800) / 3600);
   Array.from($('f-prazo').options).forEach(o => { o.disabled = parseInt(o.value, 10) < minH; });
   if (parseInt($('f-prazo').value, 10) < minH) $('f-prazo').value = String(Array.from($('f-prazo').options).find(o => !o.disabled).value);
+}
+// D-PAG-06: eliminatória começa ≥ 30 min depois da criação; ranking termina ≥ 1 h depois de agora (senão o Pix é recusado)
+const MIN_ANTECEDENCIA_MS = 30 * 60000;
+const horaMin = d => `${p2(d.getHours())}:${p2(d.getMinutes())}`;
+function validarDatas(soAviso) {
+  const ia = valorRadio('f-formato') === 'ai';
+  const ini = $('f-inicio').value ? new Date($('f-inicio').value) : null;
+  const fim = $('f-fim').value ? new Date($('f-fim').value) : null;
+  let msg = '';
+  if (ini && !isNaN(ini)) {
+    if (!ia && ini.getTime() < Date.now() + MIN_ANTECEDENCIA_MS) {
+      const cedo = new Date(Date.now() + MIN_ANTECEDENCIA_MS + 60000); cedo.setSeconds(0, 0);
+      msg = `Na eliminatória, o início precisa ser pelo menos 30 minutos depois de agora (a partir das ${horaMin(cedo)}${cedo.toDateString() !== new Date().toDateString() ? ' de amanhã' : ''}): é o tempo para pagar o Pix e receber inscrições.`;
+    } else if (ini.getTime() < Date.now() - 60000) msg = 'O início precisa ser no futuro.';
+  }
+  if (!msg && ia && fim && !isNaN(fim) && fim.getTime() < Date.now() + 3600000) msg = 'O ranking precisa terminar pelo menos 1 hora depois de agora.';
+  if (soAviso) { $('criar-erro').textContent = msg; }
+  return msg;
 }
 async function enviarCriar() {
   const err = $('criar-erro'); err.textContent = '';
@@ -1556,7 +1875,8 @@ async function enviarCriar() {
   if (nome.length < 3) return void (err.textContent = 'Dê um nome com pelo menos 3 letras.');
   if (!premio) return void (err.textContent = 'Descreva o prêmio (pode ser só "medalha virtual").');
   if (!ini || isNaN(ini)) return void (err.textContent = 'Escolha quando o torneio começa.');
-  if (ini.getTime() < Date.now() - 60000) return void (err.textContent = 'O início precisa ser no futuro.');
+  const msgData = validarDatas(false);
+  if (msgData) return void (err.textContent = msgData);
   const p = {
     p_name: nome, p_description: desc || null, p_prize: premio, p_format: fmt, p_visibility: valorRadio('f-vis'),
     p_capacity: parseInt(valorRadio('f-vagas'), 10), p_starts_at: ini.toISOString(), p_ends_at: null, p_difficulty: null,
@@ -1575,8 +1895,14 @@ async function enviarCriar() {
   const { data, error } = await supa.rpc('create_tournament', p);
   bt.disabled = false; atualizarBotaoCriar();
   if (error) { err.textContent = traduz(error); return; }
-  $('modal-criar').classList.remove('show');
+  fecharModal('modal-criar');
   ['f-nome', 'f-premio', 'f-desc'].forEach(id => { $(id).value = ''; });
+  // o create_tournament não recebe o ajuste: se a pessoa desmarcou, aplica logo depois
+  if (!$('f-share').checked) {
+    const r = await supa.rpc('set_tournament_sharing', { p_tournament_id: data.id, p_participants_can_share: false });
+    if (r.error) toast('Torneio criado, mas não consegui desligar o compartilhamento: ' + traduz(r.error) + ' Ajuste no painel do organizador.');
+  }
+  $('f-share').checked = true;
   history.pushState(null, '', '/torneios?id=' + data.id);
   rotear();
   abrirPix(data.id, data.name);
@@ -1587,13 +1913,13 @@ function abrirPix(tid, nome) {
   pararPix();
   E.pix = { tid, nome, estado: 'carregando', dados: null, msg: '' };
   renderPix();
-  $('modal-pix').classList.add('show');
+  abrirModal('modal-pix');
   gerarPix();
 }
-function pararPix() { if (E.pix && E.pix.timer) clearInterval(E.pix.timer); }
+function pararPix() { if (E.pix && E.pix.timer) { clearInterval(E.pix.timer); E.pix.timer = null; } }
 function fecharPix() {
   const pago = E.pix && E.pix.estado === 'pago';
-  pararPix(); E.pix = null; $('modal-pix').classList.remove('show');
+  pararPix(); E.pix = null; fecharModal('modal-pix');
   atualizarAgora(pago);
 }
 async function gerarPix() {
@@ -1610,7 +1936,18 @@ async function gerarPix() {
     if (E.pix !== P) return;
     if (r.status === 404) { P.estado = 'erro'; P.msg = 'Só quem criou o torneio pode pagar por ele.'; }
     else if (r.status === 429) { P.estado = 'erro'; P.msg = 'Muitas tentativas seguidas. Espere alguns minutos e tente de novo.'; }
-    else if (r.status === 409) { P.estado = 'erro'; P.msg = j.error === 'not_open' ? 'Este torneio foi cancelado ou já começou; não dá mais para pagar.' : 'Não foi possível gerar o Pix agora.'; }
+    else if (r.status === 409) {
+      P.estado = 'erro'; P.semRetentar = j.error === 'not_open' || j.error === 'starts_too_soon';
+      if (j.error === 'not_open') P.msg = 'Este torneio foi cancelado ou já começou; não dá mais para pagar.';
+      else if (j.error === 'starts_too_soon') {
+        const t = acharTorneio(P.tid);
+        P.msg = t && t.format === 'ai'
+          ? 'Não dá mais para pagar: este ranking termina em menos de 1 hora, e não sobraria tempo para os jogadores. Cancele este e crie outro com um prazo maior.'
+          : t && t.format === 'pvp_bracket'
+            ? 'Não dá mais para pagar: este torneio começa em menos de 10 minutos, e não sobraria tempo para as inscrições. Cancele este e crie outro começando daqui a pelo menos 30 minutos.'
+            : (j.mensagem || 'Não dá mais para pagar: o torneio começa (ou termina) cedo demais. Cancele e crie outro com mais folga.');
+      } else P.msg = j.mensagem || 'Não foi possível gerar o Pix agora.';
+    }
     else if (r.status === 401) { P.estado = 'erro'; P.msg = 'Sua sessão expirou. Saia e entre de novo.'; }
     else if (!r.ok) { P.estado = 'erro'; P.msg = 'O Pix está indisponível agora. Tente de novo em alguns minutos.'; }
     else if (j.status === 'pago') { P.estado = 'pago'; }
@@ -1620,15 +1957,41 @@ async function gerarPix() {
   }
   renderPix();
   if (P.estado === 'pendente') { pararPix(); P.timer = setInterval(conferirPix, 4000); }
+  else if (P.estado === 'expirado') entrarConferindo(P);
+}
+// TRN-PIX-08: depois do vencimento, ainda confere por ~2 min antes de oferecer um Pix novo
+const JANELA_POS_VENCIMENTO_MS = 2 * 60000;
+function entrarConferindo(P) {
+  if (P.estado === 'conferindo' || P.estado === 'pago') return;
+  P.estado = 'conferindo'; P.conferirAte = agora() + JANELA_POS_VENCIMENTO_MS;
+  renderPix();
+  if (!P.timer) P.timer = setInterval(conferirPix, 4000);
+  conferirPix();
+}
+async function lerStatusPix(P) {
+  const { data, error } = await supa.rpc('tournament_payment_status', { p_tournament_id: P.tid });
+  if (error) return null;
+  return Array.isArray(data) ? data[0] : data;
 }
 async function conferirPix() {
-  const P = E.pix; if (!P || P.estado !== 'pendente' || document.hidden) return;
-  const { data } = await supa.rpc('tournament_payment_status', { p_tournament_id: P.tid });
+  const P = E.pix; if (!P || (P.estado !== 'pendente' && P.estado !== 'conferindo') || document.hidden) return;
+  const st = await lerStatusPix(P);
+  if (E.pix !== P || !st) return;
+  if (st.paid) { P.estado = 'pago'; pararPix(); P.timer = null; renderPix(); atualizarAgora(true); return; }
+  const encerrado = st.status === 'expirado' || st.status === 'cancelado' || st.status === 'falhou';
+  if (P.estado === 'pendente' && encerrado) { entrarConferindo(P); return; }
+  if (P.estado === 'conferindo' && agora() > P.conferirAte) { P.estado = 'expirado'; pararPix(); P.timer = null; renderPix(); }
+}
+// antes de gerar outro Pix, confere de novo: quem acabou de pagar não deve pagar duas vezes
+async function reconferirPix(gerarSeNaoPago) {
+  const P = E.pix; if (!P) return;
+  const bt = document.querySelector('#pix-corpo [data-acao="novo-pix"], #pix-corpo [data-acao="pix-reconferir"]');
+  if (bt) { bt.disabled = true; bt.textContent = 'Conferindo…'; }
+  const st = await lerStatusPix(P);
   if (E.pix !== P) return;
-  const st = Array.isArray(data) ? data[0] : data;
-  if (!st) return;
-  if (st.paid) { P.estado = 'pago'; pararPix(); renderPix(); atualizarAgora(true); }
-  else if (st.status === 'expirado' || st.status === 'cancelado' || st.status === 'falhou') { P.estado = 'expirado'; pararPix(); renderPix(); }
+  if (st && st.paid) { P.estado = 'pago'; pararPix(); P.timer = null; renderPix(); atualizarAgora(true); return; }
+  if (gerarSeNaoPago) { P.timer = null; P.semRetentar = false; gerarPix(); return; }
+  toast('Ainda não encontramos o pagamento.'); renderPix();
 }
 async function simularPix() {
   const P = E.pix; if (!P || !P.dados || !P.dados.simulado) return;
@@ -1646,7 +2009,7 @@ function renderPix() {
   const titulo = `<p style="font-size:13.5px; color:var(--text-muted); margin-bottom:10px; text-align:left">Torneio <b style="color:var(--text-light)">${esc(P.nome || '')}</b></p>`;
   if (P.estado === 'carregando') { c.innerHTML = titulo + '<div class="status-msg"><span class="girando" style="display:inline-block; vertical-align:middle; margin-right:8px"></span>Gerando o Pix…</div>'; return; }
   if (P.estado === 'erro') {
-    c.innerHTML = titulo + `<div class="faixa erro">${esc(P.msg)}</div><div class="form-actions"><button class="btn ghost" data-acao="fechar-pix">Fechar</button><button class="btn primary" data-acao="novo-pix">Tentar de novo</button></div>`; return;
+    c.innerHTML = titulo + `<div class="faixa erro">${esc(P.msg)}</div><div class="form-actions"><button class="btn ${P.semRetentar ? 'primary' : 'ghost'}" data-acao="fechar-pix">Fechar</button>${P.semRetentar ? '' : '<button class="btn primary" data-acao="novo-pix">Tentar de novo</button>'}</div>`; return;
   }
   if (P.estado === 'pago') {
     c.innerHTML = `<div class="pix"><div class="grande-ok">✅</div><h3 style="font-family:'Playfair Display',serif; font-size:22px; margin:6px 0">Pagamento confirmado!</h3>
@@ -1655,23 +2018,36 @@ function renderPix() {
     return;
   }
   const dd = P.dados || {};
-  if (P.estado === 'expirado') {
-    c.innerHTML = titulo + `<div class="faixa aviso"><strong>Este Pix expirou.</strong> Se você já pagou, espere um minuto: a confirmação ainda pode chegar. Se não, gere um novo.</div>
-      <div class="form-actions"><button class="btn ghost" data-acao="fechar-pix">Fechar</button><button class="btn primary" data-acao="novo-pix">Gerar novo Pix</button></div>`;
+  if (P.estado === 'conferindo') {
+    c.innerHTML = titulo + `<div class="faixa aviso"><strong>O prazo deste Pix acabou.</strong> Se você pagou nos últimos minutos, o pagamento ainda é reconhecido — estamos conferindo. Não pague de novo.</div>
+      <div class="espera" style="justify-content:center"><span class="girando"></span>Conferindo o pagamento… (até uns 2 minutos)</div>
+      <div class="form-actions"><button class="btn ghost" data-acao="fechar-pix">Fechar</button></div>`;
     return;
   }
+  if (P.estado === 'expirado') {
+    c.innerHTML = titulo + `<div class="faixa aviso"><strong>Este Pix expirou e não encontramos pagamento.</strong> Se você pagou e o dinheiro saiu da sua conta, não pague de novo: o pagamento ainda é reconhecido sozinho em alguns minutos (e, se você acabar pagando duas vezes, o valor a mais é devolvido). Se não pagou, gere um novo.</div>
+      <div class="form-actions"><button class="btn ghost" data-acao="fechar-pix">Fechar</button><button class="btn" data-acao="pix-reconferir">Conferir de novo</button><button class="btn primary" data-acao="novo-pix">Gerar novo Pix</button></div>`;
+    return;
+  }
+  const celular = window.matchMedia('(max-width: 720px)').matches;
   const qr = dd.qr_code_base64
     ? `<div class="qr"><img alt="QR Code do Pix" src="data:image/png;base64,${esc(dd.qr_code_base64)}"></div>`
     : `<div class="qr sem">${dd.simulado ? 'Sem QR Code no ambiente de teste.' : 'QR Code indisponível. Use o código copia e cola abaixo.'}</div>`;
+  const copia = `<div class="copiar"><textarea readonly aria-label="Pix copia e cola">${esc(dd.qr_code || '')}</textarea></div>
+      <div style="margin-top:8px"><button class="btn block${celular ? ' primary grande' : ''}" data-acao="copiar" data-txt="${esc(dd.qr_code || '')}">Copiar código Pix</button></div>`;
+  // UX-12: no celular a pessoa paga no mesmo aparelho — copia e cola primeiro; o QR fica recolhido
+  const passos = celular
+    ? `<ol class="passos"><li>Toque em <b>Copiar código Pix</b>.</li><li>No app do seu banco, abra <b>Pix › Pix Copia e Cola</b> e cole.</li><li>Pronto: esta tela confirma sozinha em segundos. Não precisa mandar comprovante.</li></ol>`
+    : `<ol class="passos"><li>Abra o app do seu banco e escolha pagar com Pix.</li><li>Leia o QR Code ou cole o código abaixo.</li><li>Pronto: esta tela confirma sozinha em segundos. Não precisa mandar comprovante.</li></ol>`;
+  const meio = celular
+    ? `${passos}${copia}${dd.qr_code_base64 ? `<details style="margin-top:10px"><summary style="cursor:pointer; font-size:13px; color:var(--text-muted); min-height:44px; display:flex; align-items:center; justify-content:center">Mostrar QR Code (para pagar com outro aparelho)</summary>${qr}</details>` : ''}`
+    : `${qr}${passos}${copia}`;
   c.innerHTML = `${dd.simulado ? `<div class="faixa teste"><strong>Ambiente de teste — Pix simulado.</strong> Nenhum dinheiro de verdade é cobrado.</div>` : ''}
     ${titulo}
     <div class="pix">
       <div class="valor">${fmtBRL(dd.valor)}</div>
-      ${qr}
-      <ol class="passos"><li>Abra o app do seu banco e escolha pagar com Pix.</li><li>Leia o QR Code ou cole o código abaixo.</li><li>Pronto: esta tela confirma sozinha em segundos. Não precisa mandar comprovante.</li></ol>
-      <div class="copiar"><textarea readonly aria-label="Pix copia e cola">${esc(dd.qr_code || '')}</textarea></div>
-      <div style="margin-top:8px"><button class="btn block" data-acao="copiar" data-txt="${esc(dd.qr_code || '')}">Copiar código Pix</button></div>
-      <div class="expira">Válido por <span class="cd" data-ate="${esc(dd.expira_em)}" data-fim="0:00">${fmtDur(ms(dd.expira_em) - agora())}</span></div>
+      ${meio}
+      <div class="expira">Válido por <span class="cd" data-ate="${esc(dd.expira_em)}" data-fim="0:00">${fmtDur(ms(dd.expira_em) - agora())}</span> · pagamento processado pelo Mercado Pago</div>
       <div class="espera" style="justify-content:center"><span class="girando"></span>Esperando o pagamento…</div>
       ${dd.simulado ? `<div style="margin-top:10px"><button class="btn block" style="border-color:rgba(200,140,255,0.5); color:#d9b3ff" data-acao="simular-pix">Simular pagamento (teste)</button></div>` : ''}
       <p class="nota">Pode fechar esta janela: o pagamento continua valendo e o botão "Pagar" fica em "Meus torneios".</p>
@@ -1691,11 +2067,11 @@ document.addEventListener('click', e => {
     'formato': () => { E.formato = el.dataset.f; renderLista(); },
     'mais-meus': () => { E.verTodosMeus = true; renderLista(); },
     'criar': abrirCriar,
-    'fechar-criar': () => $('modal-criar').classList.remove('show'),
+    'fechar-criar': () => fecharModal('modal-criar'),
     'enviar-criar': enviarCriar,
     'pagar': () => abrirPix(el.dataset.id, el.dataset.nome),
     'fechar-pix': fecharPix,
-    'novo-pix': gerarPix,
+    'novo-pix': () => (E.pix && E.pix.estado === 'expirado' ? reconferirPix(true) : gerarPix()),
     'simular-pix': simularPix,
     'pix-ver': () => { const id = E.pix && E.pix.tid; fecharPix(); if (id) irPara('id=' + id); },
     'copiar': () => copiar(el.dataset.txt),
@@ -1709,7 +2085,13 @@ document.addEventListener('click', e => {
     'sala': () => entrarSala(el.dataset.id),
     'forcar': () => abrirForcar(el.dataset.id),
     'forcar-ok': () => forcar(el.dataset.v),
-    'fechar-resultado': () => $('modal-resultado').classList.remove('show'),
+    'fechar-resultado': () => fecharModal('modal-resultado'),
+    'compartilhar': () => compartilhar(el.dataset.id),
+    'novo-link': gerarNovoLink,
+    'fechar-share': () => fecharModal('modal-share'),
+    'share-nativo': async () => { try { await navigator.share(E.shareAtual); fecharModal('modal-share'); } catch { /* cancelado */ } },
+    'tentar-de-novo': () => { if (E.tid || E.token) $('vista-torneio').innerHTML = '<div class="status-msg">Carregando torneio…</div>'; else $('grade-lista').innerHTML = '<div class="status-msg" style="grid-column:1/-1">Carregando…</div>'; atualizarAgora(); },
+    'pix-reconferir': () => reconferirPix(),
     'rodada': () => {
       E.rodadaSel = parseInt(el.dataset.r, 10); E.rodadaManual = true;
       document.querySelectorAll('.rodadas-chips .chip').forEach(c => c.classList.toggle('ativa', c === el));
@@ -1727,11 +2109,31 @@ document.addEventListener('keydown', e => {
   if (e.key === 'Escape') {
     if ($('modal-aviso').classList.contains('show')) return;
     if ($('modal-pix').classList.contains('show')) fecharPix();
-    $('modal-criar').classList.remove('show'); $('modal-resultado').classList.remove('show');
+    fecharModal('modal-criar'); fecharModal('modal-resultado'); fecharModal('modal-share');
+  }
+  // trava de foco: Tab não sai do modal aberto (UX-16)
+  if (e.key === 'Tab') {
+    const m = modalAberto(); if (!m) return;
+    const f = focaveis(m); if (!f.length) return;
+    const i = f.indexOf(document.activeElement);
+    if (e.shiftKey && (i <= 0)) { e.preventDefault(); f[f.length - 1].focus(); }
+    else if (!e.shiftKey && (i === -1 || i === f.length - 1)) { e.preventDefault(); f[0].focus(); }
   }
 });
 document.querySelectorAll('input[name="f-formato"]').forEach(r => r.addEventListener('change', atualizarFormCriar));
+// chave "Inscritos podem compartilhar" do painel do organizador
+document.addEventListener('change', async e => {
+  const el = e.target; if (!el.matches || !el.matches('input[data-acao="share-inscritos"]')) return;
+  const t = E.det && E.det.t; if (!t) return;
+  const quer = el.checked; el.disabled = true;
+  const r = await supa.rpc('set_tournament_sharing', { p_tournament_id: t.id, p_participants_can_share: quer });
+  el.disabled = false;
+  if (r.error) { el.checked = !quer; await erro(r.error); return; }
+  toast(quer ? 'Inscritos podem compartilhar.' : 'Só você compartilha agora.');
+  await carregarTorneio();
+});
 $('f-tempo').addEventListener('change', atualizarFormCriar);
+['f-inicio', 'f-fim'].forEach(id => $(id).addEventListener('change', () => validarDatas(true)));
 
 init().catch(e => {
   console.error(e);

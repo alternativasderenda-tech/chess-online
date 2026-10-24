@@ -253,6 +253,19 @@
   <div id="dashboard" style="display:none;">
     <div class="cards-grid" id="cards-overview"></div>
 
+    <!-- TRN-PIX-04 / D-PAG-05: dinheiro e rotina com problema, sem precisar de psql -->
+    <div class="section" id="pag-section" style="border-color: rgba(255,216,107,0.35);">
+      <h2 style="color:#ffd86b;">💳 Pagamentos e rotina com problema</h2>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+        Torneios pagos por Pix (Mercado Pago) e a rotina automática que roda a cada minuto. Aparece aqui só o que precisa de atenção.
+      </p>
+      <div id="pag-problemas">Carregando...</div>
+      <details style="margin-top:12px; font-size:12.5px; color:var(--text-muted);">
+        <summary style="cursor:pointer; color:var(--text-light);">O que significa cada tipo e o que fazer</summary>
+        <div id="pag-legenda" style="margin-top:8px;"></div>
+      </details>
+    </div>
+
     <div class="section" id="fraud-section" style="border-color: rgba(255,107,107,0.3);">
       <h2 style="color: var(--danger);">🚨 Scores Sem Jogo (Possível Fraude)</h2>
       <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
@@ -391,6 +404,7 @@ async function init() {
                               // org policy). Ver supabase/functions/ga-stats/
                               // pra reativar no futuro.
     loadOverview(),
+    loadPaymentProblems(),
     loadOrphanScores(),
     loadByDifficulty(),
     loadDaily(),
@@ -526,6 +540,68 @@ function renderLineChart(container, points) {
       ${xLabelsHtml}
     </svg>
     ${totalHtml}`;
+}
+
+// ====== Pagamentos e rotina com problema (admin_payment_problems) ======
+const PAG_TIPOS = {
+  estorno_pendente: { nome: 'Estorno pendente', cor: '#ffd86b',
+    oque: 'Pagamento que precisa voltar ao pagador: torneio cancelado antes de começar, ou Pix pago duas vezes.',
+    fazer: 'A rotina pede o estorno ao Mercado Pago sozinha, a cada minuto (até 5 tentativas). Se sumir daqui em alguns minutos, está resolvido. Se as tentativas subirem, leia o erro no detalhe.' },
+  estorno_falhou: { nome: 'Estorno falhou', cor: 'var(--danger)',
+    oque: 'O estorno automático falhou 5 vezes. O dinheiro está parado na conta do Mercado Pago.',
+    fazer: 'Devolva manualmente no painel do Mercado Pago (Atividade › o pagamento › Devolver dinheiro) e avise o organizador por e-mail.' },
+  pago_sem_liberar: { nome: 'Pago sem liberar', cor: 'var(--danger)',
+    oque: 'O Pix foi pago, mas o torneio não foi liberado (por exemplo, já estava cancelado ou outro Pix já tinha liberado).',
+    fazer: 'Normalmente vira "estorno pendente" sozinho. Se o torneio está aberto e deveria estar no ar, use "Confirmar pagamento" em Torneios › Pagamentos pendentes.' },
+  pix_valor_divergente: { nome: 'Valor diferente', cor: 'var(--danger)',
+    oque: 'Chegou um pagamento com valor diferente do cobrado. O torneio não foi liberado.',
+    fazer: 'Confira o pagamento no Mercado Pago. Se o valor estiver certo, libere com "Confirmar pagamento"; se não, devolva pelo painel do Mercado Pago.' },
+  pix_orfao: { nome: 'Pix sem cobrança', cor: '#ffd86b',
+    oque: 'Chegou um aviso de pagamento que não bate com nenhuma cobrança do site.',
+    fazer: 'Procure o ID do detalhe no painel do Mercado Pago. Se for de um torneio, libere com "Confirmar pagamento"; se não, devolva.' },
+  pix_contestado: { nome: 'Contestação', cor: 'var(--danger)',
+    oque: 'O pagador contestou o Pix (chargeback) ou o valor foi devolvido por fora do site, depois de o torneio ser liberado.',
+    fazer: 'Veja o caso no Mercado Pago e decida se o torneio continua no ar (cancelar fica na página do torneio, como admin).' },
+  erro_rotina: { nome: 'Erro da rotina', cor: '#ffd86b',
+    oque: 'A rotina automática (ausências/W.O., troca de rodada, fim de ranking, Pix) deu erro numa etapa. O mesmo erro é registrado no máximo 1 vez por hora.',
+    fazer: 'Se aparecer uma vez só, pode ser passageiro. Se repetir, mande o detalhe para quem cuida do servidor.' },
+};
+async function loadPaymentProblems() {
+  const container = document.getElementById('pag-problemas');
+  document.getElementById('pag-legenda').innerHTML = Object.values(PAG_TIPOS).map(t =>
+    `<p style="margin-bottom:8px;"><b style="color:${t.cor}">${esc(t.nome)}:</b> ${esc(t.oque)} <br><span style="color:var(--text-light)">O que fazer:</span> ${esc(t.fazer)}</p>`).join('');
+  const { data, error } = await supa.rpc('admin_payment_problems');
+  if (error) {
+    container.innerHTML = '<div class="status-msg error">Não consegui carregar: ' + esc(error.message) + '</div>';
+    return;
+  }
+  if (!data || data.length === 0) {
+    container.innerHTML = '<div class="status-msg" style="color:var(--success);">✓ Nada com problema.</div>';
+    return;
+  }
+  const brl = v => v === null || v === undefined ? '—' : Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  container.innerHTML = `
+    <div style="overflow-x:auto;">
+    <table>
+      <thead><tr>
+        <th>Tipo</th><th>Torneio</th><th class="num">Valor</th><th>Situação</th><th>Detalhe</th><th>Desde</th>
+      </tr></thead>
+      <tbody>
+        ${data.map(p => {
+          const t = PAG_TIPOS[p.tipo] || { nome: p.tipo, cor: 'var(--text-light)', fazer: '' };
+          return `<tr>
+            <td><span class="pill" style="color:${t.cor}; background:rgba(255,255,255,0.06)" title="${esc(t.fazer)}">${esc(t.nome)}</span></td>
+            <td>${p.tournament_id ? `<a href="/torneios?id=${encodeURIComponent(p.tournament_id)}" style="color:var(--accent)">${esc(p.tournament_name || p.tournament_id.slice(0, 8))}</a>` : '—'}</td>
+            <td class="num">${brl(p.valor)}</td>
+            <td>${esc(p.status || '—')}</td>
+            <td style="max-width:320px; overflow-wrap:anywhere; font-size:12px;">${esc(p.detalhe || '')}<div style="color:var(--text-muted); margin-top:3px;">${esc(t.fazer)}</div></td>
+            <td>${p.desde ? fmtDateTime(p.desde) : '—'}</td>
+          </tr>`;
+        }).join('')}
+      </tbody>
+    </table>
+    </div>
+    <p style="font-size:12px; color:var(--text-muted); margin-top:10px;">${data.length} item(ns). Erros de rotina somem depois de 2 dias; avisos de Pix, depois de 30 dias.</p>`;
 }
 
 async function loadOrphanScores() {

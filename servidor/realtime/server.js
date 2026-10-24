@@ -229,6 +229,7 @@ async function compartilhar(req, res) {
   if (t) {
     const fmt = t.formato === 'ai' ? 'Ranking contra o computador' : 'Eliminatória entre jogadores';
     if (t.status === 'finished' && t.campeao) { titulo = `🏆 ${t.campeao} venceu o torneio ${t.nome}`; desc = `${fmt} · prêmio: ${t.premio}`; }
+    else if (t.status === 'active' && t.formato === 'ai') { titulo = `Ranking valendo: ${t.nome}`; desc = `${fmt} · inscrições até ${dataBr(t.fim)} · ${t.inscritos} jogadores · prêmio: ${t.premio}`; }
     else if (t.status === 'active') { titulo = `Torneio ${t.nome} — em andamento`; desc = `${fmt} · ${t.inscritos} jogadores · prêmio: ${t.premio}`; }
     else if (t.status === 'cancelled') { titulo = `Torneio ${t.nome} (cancelado)`; }
     else { titulo = `Inscrições abertas: ${t.nome}`; desc = `${fmt} · começa ${dataBr(t.inicio)} · ${t.inscritos}/${t.vagas} vagas · prêmio: ${t.premio}`; }

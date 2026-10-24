@@ -100,7 +100,7 @@
 
 <div class="container">
   <h1>Política de Privacidade</h1>
-  <p class="updated">Última atualização: 1 de maio de 2026</p>
+  <p class="updated">Última atualização: 24 de outubro de 2026</p>
 
   <div class="highlight-box">
     <p>Esta Política descreve como o <strong>Xadrez Online</strong> ("o serviço", "nós") coleta, usa e protege seus dados pessoais em conformidade com a <strong>Lei Geral de Proteção de Dados (LGPD — Lei nº 13.709/2018)</strong>.</p>
@@ -126,7 +126,15 @@
     <li><strong>Dados de jogo:</strong> nível de dificuldade vencido, tempo da partida, data</li>
   </ul>
 
-  <h3>2.3 Dados técnicos automáticos</h3>
+  <h3 id="torneios">2.3 Quando você cria um torneio pago (Pix)</h3>
+  <ul>
+    <li>Para emitir a cobrança, enviamos ao <strong>Mercado Pago</strong> o <strong>email da sua conta</strong>, o valor e o nome do torneio. Sem isso o Pix não pode ser gerado.</li>
+    <li>O pagamento acontece no app do seu banco: <strong>não recebemos</strong> dados da sua conta bancária. Do Mercado Pago guardamos só a situação do pagamento (pago, vencido, devolvido), a data e o valor.</li>
+    <li>Guardamos esse registro enquanto o torneio existir e pelo tempo necessário para devoluções, contestações e obrigações legais.</li>
+    <li>Quem se inscreve num torneio não paga nada e não tem dado enviado ao Mercado Pago. O nome de exibição de quem organiza e de quem joga aparece na página do torneio.</li>
+  </ul>
+
+  <h3>2.4 Dados técnicos automáticos</h3>
   <ul>
     <li>Endereço IP (anonimizado pelo Google Analytics)</li>
     <li>Tipo de navegador, sistema operacional, idioma</li>
@@ -144,10 +152,10 @@
 
   <h2>4. Onde seus dados ficam armazenados</h2>
   <ul>
-    <li><strong>Supabase</strong> (banco de dados e autenticação) — servidores podem estar fora do Brasil. <a href="https://supabase.com/privacy" target="_blank" rel="noopener">Política do Supabase</a></li>
+    <li><strong>Servidor próprio na Amazon Web Services (AWS)</strong>, região de São Paulo (Brasil) — site, banco de dados e login. <a href="https://aws.amazon.com/privacy/" target="_blank" rel="noopener">Política da AWS</a></li>
     <li><strong>Google</strong> (OAuth e Analytics) — <a href="https://policies.google.com/privacy" target="_blank" rel="noopener">Política do Google</a></li>
+    <li><strong>Mercado Pago</strong> (cobrança Pix dos torneios pagos; recebe o email de quem cria o torneio) — <a href="https://www.mercadopago.com.br/privacidade" target="_blank" rel="noopener">Política do Mercado Pago</a></li>
     <li><strong>Monetag</strong> (anúncios) — <a href="https://monetag.com/privacy-policy/" target="_blank" rel="noopener">Política da Monetag</a></li>
-    <li><strong>Vercel</strong> (hospedagem) — <a href="https://vercel.com/legal/privacy-policy" target="_blank" rel="noopener">Política da Vercel</a></li>
   </ul>
 
   <h2>5. Compartilhamento de dados</h2>
@@ -175,7 +183,7 @@
   <h2>8. Cookies</h2>
   <p>Usamos:</p>
   <ul>
-    <li><strong>Essenciais</strong> (login Supabase): obrigatórios pro login funcionar</li>
+    <li><strong>Essenciais</strong> (login): obrigatórios pro login funcionar</li>
     <li><strong>Análise</strong> (Google Analytics): você pode desativar instalando a <a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener">extensão de opt-out do Google</a></li>
     <li><strong>Publicidade</strong> (Monetag): você pode desativar via configurações de privacidade do navegador ou usando AdBlock</li>
   </ul>
