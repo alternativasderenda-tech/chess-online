@@ -1521,7 +1521,7 @@ function linkCompartilhar(t) {
 const podeCompartilhar = t => t.paid !== false && t.status !== 'cancelled' && t.can_share === true && !!linkCompartilhar(t);
 const curto = (s, n) => { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s; };
 // R2-UX-06: "o ranking Ranking IA…" — se o nome já começa com Ranking/Torneio, não repete a palavra
-const comTipo = (tipo, nome) => (/^(ranking|torneio|campeonato|copa|desafio)/i.test(nome) ? nome : `${tipo} ${nome}`);
+const comTipo = (tipo, nome) => (/^(ranking|torneio|campeonato|copa|desafio)\b/i.test(nome) ? nome : `${tipo} ${nome}`);
 function textoCompartilhar(t, campeao) {
   const nome = curto(t.name, 80), premio = curto(t.prize_description, 90);
   if (t.status === 'finished') return campeao || t.winner_name ? `🏆 ${campeao || t.winner_name} venceu ${comTipo('o torneio', nome)}!` : `${comTipo('O torneio', nome)} terminou. Veja o resultado:`;
@@ -2071,7 +2071,7 @@ function renderPix() {
     ? `<ol class="passos"><li>Toque em <b>Copiar código Pix</b>.</li><li>No app do seu banco, abra <b>Pix › Pix Copia e Cola</b> e cole.</li><li>Pronto: esta tela confirma sozinha em segundos. Não precisa mandar comprovante.</li></ol>`
     : `<ol class="passos"><li>Abra o app do seu banco e escolha pagar com Pix.</li><li>Leia o QR Code ou cole o código abaixo.</li><li>Pronto: esta tela confirma sozinha em segundos. Não precisa mandar comprovante.</li></ol>`;
   const meio = celular
-    ? `${passos}${copia}${dd.qr_code_base64 ? `<details style="margin-top:10px"><summary style="cursor:pointer; font-size:13px; color:var(--text-muted); min-height:44px; display:flex; align-items:center; justify-content:center">Mostrar QR Code (para pagar com outro aparelho)</summary>${qr}</details>` : ''}`
+    ? `${passos}${copia}${dd.qr_code_base64 ? `<details style="margin-top:10px"><summary class="btn ghost block" style="cursor:pointer; font-size:13px; min-height:44px; display:flex; align-items:center; justify-content:center; list-style:none">▸ Mostrar QR Code (para pagar com outro aparelho)</summary>${qr}</details>` : ''}`
     : `${qr}${passos}${copia}`;
   c.innerHTML = `${dd.simulado ? `<div class="faixa teste"><strong>Ambiente de teste — Pix simulado.</strong> Nenhum dinheiro de verdade é cobrado.</div>` : ''}
     ${titulo}

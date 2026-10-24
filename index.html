@@ -378,6 +378,8 @@
       'spect.title': 'Partida encerrada',
       'spect.won': 'Vitória de {name} ({color}) — {reason}.',
       'spect.draw': 'Empate — {reason}.',
+      'spect.waitTiebreak': 'Partida de torneio empatada: o desempate (cores invertidas) começa quando os dois jogadores entrarem. Você vai assistir automaticamente.',
+      'spect.goTiebreak': 'Desempate começou — indo assistir…',
       'spect.mate': 'xeque-mate',
       'react.notSent': 'não enviada',
       'undo.confirm': 'Desfazer tira esta partida do ranking e do torneio. Continuar?',
@@ -764,6 +766,8 @@
       'spect.title': 'Game over',
       'spect.won': '{name} ({color}) won — {reason}.',
       'spect.draw': 'Draw — {reason}.',
+      'spect.waitTiebreak': 'Tournament game drawn: the tiebreak (colors swapped) starts when both players join. You will watch it automatically.',
+      'spect.goTiebreak': 'Tiebreak started — taking you there…',
       'spect.mate': 'checkmate',
       'react.notSent': 'not sent',
       'undo.confirm': 'Undoing removes this game from the leaderboard and the tournament. Continue?',
@@ -3431,7 +3435,7 @@ async function registerCurrentScore() {
         if (state === 'ok' && dado && dado.timed_live && dado.player_seconds && token === scoreFbToken) {
           const info = document.getElementById('go-score-info');
           if (info) info.textContent = (trn ? '⚔ ' + trn.name + ' · ' : '')
-            + tr('gameover.scoreInfo', { time: fmtSeconds(dado.player_seconds), level: win.difficulty });
+            + tr('gameover.scoreInfo', { time: fmtSeconds(dado.player_seconds), level: tr('settings.diff.' + win.difficulty) });
         }
         if (state === 'ok' && trn) t += ' ' + tr('score.trnCounted', { name: trn.name });
         const shown = setScoreFeedback(token, state, t, (trn && state !== 'rejected') ? trnLink : null);
@@ -4189,11 +4193,37 @@ function showSpectatorResult(result, reason) {
     result === 'white_wins' ? tr('color.white') : (result === 'black_wins' ? tr('color.black') : null), null, null);
   const text = document.getElementById('go-text');
   if (!text) return;
-  if (result === 'draw') text.textContent = tr('spect.draw', { reason: reason });
-  else {
+  if (result === 'draw') {
+    text.textContent = tr('spect.draw', { reason: reason });
+    if (spectMatchId) spectatorFollowTiebreak(spectMatchId, onlineGameId);   // R3-UX-02
+  } else {
     const cor = result === 'white_wins' ? tr('color.white') : tr('color.black');
     const nome = spectNames ? (result === 'white_wins' ? spectNames.w : spectNames.b) : cor;
     text.textContent = tr('spect.won', { name: nome || cor, color: cor, reason: String(reason || '').toLowerCase() });
+  }
+}
+
+// R3-UX-02: empate em partida de torneio vira desempate (novo jogo na mesma partida) — quem assiste vai junto
+var spectMatchId = null;   // var: lido em showSpectatorResult, que pode rodar antes desta linha
+async function spectatorFollowTiebreak(matchId, oldId) {
+  const info = document.getElementById('go-score-info');
+  if (info) { info.textContent = tr('spect.waitTiebreak'); info.style.display = 'block'; }
+  const ate = Date.now() + 25 * 60000;   // o desempate tem 20 min para começar (D-TRN-21)
+  while (Date.now() < ate) {
+    await new Promise(r => setTimeout(r, 3000));
+    if (!isSpectator || onlineGameId !== oldId) return;   // saiu ou já trocou de jogo
+    try {
+      const { data: m } = await supa.from('tournament_matches').select('game_id,status').eq('id', matchId).maybeSingle();
+      if (!m || m.status === 'finished' || m.status === 'walkover') return;
+      if (m.game_id && m.game_id !== oldId) {
+        if (info) info.textContent = tr('spect.goTiebreak');
+        await new Promise(r => setTimeout(r, 1500));
+        if (!isSpectator || onlineGameId !== oldId) return;
+        closeGameOverPopup();
+        setupSpectateGame(m.game_id);
+        return;
+      }
+    } catch (e) { console.warn('spect tiebreak err:', e); }
   }
 }
 
@@ -5362,6 +5392,7 @@ async function setupSpectateGame(gameId) {
   updateTimerDisplay();
   opponentName = game.black_username; // mostra na barra superior
   spectTournamentId = null;
+  spectMatchId = game.tournament_match_id || null;
   if (game.tournament_match_id && game.time_control > 0) startSpectatorClock(gameId);
   if (game.tournament_match_id) {
     supa.from('tournament_matches').select('tournament_id').eq('id', game.tournament_match_id).maybeSingle()
