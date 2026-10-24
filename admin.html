@@ -127,6 +127,11 @@
     gap: 8px;
   }
 
+  .pag-cartoes { display: none; }
+  .pag-cartao { border: 1px solid var(--border, rgba(255,255,255,0.12)); border-radius: 10px; padding: 10px 12px; margin-bottom: 10px; font-size: 13px; overflow-wrap: anywhere; }
+  .pag-cartao .lin { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; margin-bottom: 4px; }
+  .pag-cartao small { color: var(--text-muted); }
+
   /* Tables */
   table {
     width: 100%;
@@ -231,6 +236,10 @@
     .cards-grid { grid-template-columns: repeat(2, 1fr); }
     .card .value { font-size: 22px; }
     table { font-size: 12px; }
+    /* R2-UX-03: tabela larga rola dentro dela mesma, nunca a página inteira */
+    table { display: block; max-width: 100%; overflow-x: auto; }
+    .pag-tabela { display: none; }
+    .pag-cartoes { display: block; }
     .bar-row { grid-template-columns: 70px 1fr 50px; }
   }
 </style>
@@ -573,7 +582,7 @@ async function loadPaymentProblems() {
   const container = document.getElementById('pag-problemas');
   document.getElementById('pag-legenda').innerHTML = Object.values(PAG_TIPOS).map(t =>
     `<p style="margin-bottom:8px;"><b style="color:${t.cor}">${esc(t.nome)}:</b> ${esc(t.oque)} <br><span style="color:var(--text-light)">O que fazer:</span> ${esc(t.fazer)}</p>`).join('');
-  const { data, error } = await supa.rpc('admin_payment_problems');
+  let { data, error } = await supa.rpc('admin_payment_problems');
   if (error) {
     container.innerHTML = '<div class="status-msg error">Não consegui carregar: ' + esc(error.message) + '</div>';
     return;
@@ -583,8 +592,28 @@ async function loadPaymentProblems() {
     return;
   }
   const brl = v => v === null || v === undefined ? '—' : Number(v).toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });
+  // o mesmo problema repetido (ex.: erro de rotina a cada hora) vira uma linha só, com "×N" e o horário mais recente
+  const grupos = new Map();
+  data.forEach(p => {
+    const k = [p.tipo, p.tournament_id, p.status, p.detalhe].join('|');
+    const g = grupos.get(k);
+    if (g) g.vezes++; else grupos.set(k, { ...p, vezes: 1 });
+  });
+  data = [...grupos.values()];
+  const vezes = p => p.vezes > 1 ? ` <small style="color:var(--text-muted)">×${p.vezes}, último</small>` : '';
+  const linkT = p => p.tournament_id ? `<a href="/torneios?id=${encodeURIComponent(p.tournament_id)}" style="color:var(--accent)">${esc(p.tournament_name || p.tournament_id.slice(0, 8))}</a>` : '—';
   container.innerHTML = `
-    <div style="overflow-x:auto;">
+    <div class="pag-cartoes">${data.map(p => {
+      const t = PAG_TIPOS[p.tipo] || { nome: p.tipo, cor: 'var(--text-light)', fazer: '' };
+      return `<div class="pag-cartao">
+        <div class="lin"><span class="pill" style="color:${t.cor}; background:rgba(255,255,255,0.06)">${esc(t.nome)}</span><b>${brl(p.valor)}</b></div>
+        <div class="lin"><span>${linkT(p)}</span><small>${p.desde ? fmtDateTime(p.desde) : '—'}${vezes(p)}</small></div>
+        ${p.status ? `<div><small>Situação:</small> ${esc(p.status)}</div>` : ''}
+        <div style="margin-top:4px; font-size:12px;">${esc(p.detalhe || '')}</div>
+        <div style="color:var(--text-muted); margin-top:4px; font-size:12px;">${esc(t.fazer)}</div>
+      </div>`;
+    }).join('')}</div>
+    <div class="pag-tabela" style="overflow-x:auto;">
     <table>
       <thead><tr>
         <th>Tipo</th><th>Torneio</th><th class="num">Valor</th><th>Situação</th><th>Detalhe</th><th>Desde</th>
@@ -594,11 +623,11 @@ async function loadPaymentProblems() {
           const t = PAG_TIPOS[p.tipo] || { nome: p.tipo, cor: 'var(--text-light)', fazer: '' };
           return `<tr>
             <td><span class="pill" style="color:${t.cor}; background:rgba(255,255,255,0.06)" title="${esc(t.fazer)}">${esc(t.nome)}</span></td>
-            <td>${p.tournament_id ? `<a href="/torneios?id=${encodeURIComponent(p.tournament_id)}" style="color:var(--accent)">${esc(p.tournament_name || p.tournament_id.slice(0, 8))}</a>` : '—'}</td>
+            <td>${linkT(p)}</td>
             <td class="num">${brl(p.valor)}</td>
             <td>${esc(p.status || '—')}</td>
             <td style="max-width:320px; overflow-wrap:anywhere; font-size:12px;">${esc(p.detalhe || '')}<div style="color:var(--text-muted); margin-top:3px;">${esc(t.fazer)}</div></td>
-            <td>${p.desde ? fmtDateTime(p.desde) : '—'}</td>
+            <td>${p.desde ? fmtDateTime(p.desde) : '—'}${vezes(p)}</td>
           </tr>`;
         }).join('')}
       </tbody>

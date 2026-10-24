@@ -927,7 +927,7 @@ async function rotear() {
     if (!E.det) $('vista-torneio').innerHTML = '<div class="status-msg">Carregando torneio…</div>';
     await carregarTorneio();
   } else {
-    E.tid = null; E.token = null; E.det = null; E.esperandoSala = null;
+    E.tid = null; E.token = null; E.det = null; E.esperandoSala = null; E.conviteTrocado = false;
     document.title = 'Torneios — Xadrez Online';
     $('vista-torneio').style.display = 'none';
     $('vista-lista').style.display = '';
@@ -1143,7 +1143,15 @@ async function buscarTorneio() {
   let id = E.tid, erroT = null;
   if (E.token && !id) {
     const r = await supa.rpc('get_tournament_by_token', { p_token: E.token });
-    if (r.error) erroT = r.error; else if (r.data && r.data.id) id = r.data.id;
+    if (r.error) erroT = r.error;
+    else if (r.data && r.data.id) {
+      id = r.data.id;
+      // R2-UX-02: convite antigo (o organizador gerou outro) — quem já participa continua; segue pelo id
+      if (r.data.share_token !== E.token) {
+        E.token = null; E.tid = id; E.conviteTrocado = true;
+        try { history.replaceState(null, '', '/torneios?id=' + id); } catch (e) { /* sem histórico */ }
+      }
+    }
   }
   if (!id) return { t: null, erroT };
   const r = await supa.rpc('get_tournament', { p_tournament_id: id, p_token: E.token || null });
@@ -1296,6 +1304,7 @@ function renderTorneio() {
 
 function blocoFaixas(d, souOrg, podeGerir) {
   const t = d.t; let h = '';
+  if (E.conviteTrocado) h += `<div class="faixa info"><strong>O link do convite mudou</strong> (o organizador gerou um novo), mas você continua neste torneio. Para voltar aqui, use "Meus torneios".</div>`;
   if (t.status === 'finished') {
     const nome = nomeDe(d, t.winner_id);
     if (t.winner_id) {
@@ -1509,16 +1518,18 @@ function linkCompartilhar(t) {
 // D-TRN-28: o botão só aparece quando o servidor diz que ESTE usuário pode compartilhar (can_share)
 const podeCompartilhar = t => t.paid !== false && t.status !== 'cancelled' && t.can_share === true && !!linkCompartilhar(t);
 const curto = (s, n) => { s = String(s || '').replace(/\s+/g, ' ').trim(); return s.length > n ? s.slice(0, n - 1).trimEnd() + '…' : s; };
+// R2-UX-06: "o ranking Ranking IA…" — se o nome já começa com Ranking/Torneio, não repete a palavra
+const comTipo = (tipo, nome) => (/^(ranking|torneio|campeonato|copa|desafio)/i.test(nome) ? nome : `${tipo} ${nome}`);
 function textoCompartilhar(t, campeao) {
   const nome = curto(t.name, 80), premio = curto(t.prize_description, 90);
-  if (t.status === 'finished') return campeao || t.winner_name ? `🏆 ${campeao || t.winner_name} venceu o torneio ${nome}!` : `O torneio ${nome} terminou. Veja o resultado:`;
+  if (t.status === 'finished') return campeao || t.winner_name ? `🏆 ${campeao || t.winner_name} venceu ${comTipo('o torneio', nome)}!` : `${comTipo('O torneio', nome)} terminou. Veja o resultado:`;
   if (inscricoesAbertas(t)) {
-    if (iaValendo(t)) return `O ranking ${nome} está valendo: jogue contra a IA até ${fmtData(t.ends_at)} — prêmio: ${premio}. Bora jogar?`;
-    return `Inscrições abertas no torneio ${nome} — prêmio: ${premio}. Bora jogar?`;
+    if (iaValendo(t)) return `${comTipo('O ranking', nome)} está valendo: jogue contra a IA até ${fmtData(t.ends_at)} — prêmio: ${premio}. Bora jogar?`;
+    return `Inscrições abertas: ${nome} — prêmio: ${premio}. Bora jogar?`;
   }
   if (t.status === 'active' || (t.format === 'ai' && t.status === 'open')) return t.format === 'ai'
-    ? `O ranking ${nome} está fechando o resultado. Veja a classificação:`
-    : `O torneio ${nome} está em andamento — acompanhe as partidas! Prêmio: ${premio}.`;
+    ? `${comTipo('O ranking', nome)} está fechando o resultado. Veja a classificação:`
+    : `${comTipo('O torneio', nome)} está em andamento — acompanhe as partidas! Prêmio: ${premio}.`;
   return `Torneio de xadrez: ${nome}`;
 }
 function acharTorneio(id) {
@@ -1586,7 +1597,7 @@ function blocoOrganizador(d, souOrg) {
     const link = linkCompartilhar(t);
     if (link) h += `<div class="sub-tit">${t.visibility === 'link' ? 'Link de convite (só quem tiver o link entra)' : 'Link para divulgar'}</div>
       <div class="copiar"><input type="text" readonly value="${esc(link)}" aria-label="Link do torneio"><button class="btn small" data-acao="copiar" data-txt="${esc(link)}">Copiar</button></div>
-      ${podeCompartilhar(t) ? `<div class="acoes" style="margin-top:8px"><button class="btn share block" data-acao="compartilhar" data-id="${t.id}">📤 Compartilhar no WhatsApp, Instagram…</button></div>` : ''}`;
+`;
   }
   // 3b) controle do compartilhamento (D-TRN-28)
   const privado = t.visibility === 'link';

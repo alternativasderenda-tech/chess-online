@@ -224,7 +224,8 @@ async function compartilhar(req, res) {
   const r = await pool.query('select xadrez_rt.torneio_para_compartilhar($1) j', [codigo]);
   const t = r.rows[0]?.j;
   const host = process.env.PUBLIC_URL || 'https://xadrezonline.app';   // nunca do cabeçalho Host (manipulável)
-  const destino = !t ? host + '/torneios' : t.token ? `${host}/torneios?t=${encodeURIComponent(t.token)}` : `${host}/torneios?id=${t.id}`;
+  // código desconhecido (inválido, ou trocado por "Gerar novo link"): a página do torneio explica — e reconhece o inscrito
+  const destino = !t ? `${host}/torneios?t=${encodeURIComponent(codigo)}` : t.token ? `${host}/torneios?t=${encodeURIComponent(t.token)}` : `${host}/torneios?id=${t.id}`;
   let titulo = 'Torneios de xadrez online', desc = 'Crie ou entre num torneio de xadrez e jogue com a galera.';
   if (t) {
     const fmt = t.formato === 'ai' ? 'Ranking contra o computador' : 'Eliminatória entre jogadores';

@@ -3425,8 +3425,14 @@ async function registerCurrentScore() {
     if (lastWinData === win) lastWinData = null;
     // D-TRN-02/12: o placar nasce PENDENTE; o servidor reproduz a partida e decide
     if (ok.score_id) {
-      followScoreVerdict(ok, (state, text) => {
+      followScoreVerdict(ok, (state, text, dado) => {
         let t = state === 'pending' ? prefixo + text : text;
+        // R2-UX-04: com o veredito, a linha "Seu tempo" de cima passa a mostrar o tempo oficial (o do servidor)
+        if (state === 'ok' && dado && dado.timed_live && dado.player_seconds && token === scoreFbToken) {
+          const info = document.getElementById('go-score-info');
+          if (info) info.textContent = (trn ? '⚔ ' + trn.name + ' · ' : '')
+            + tr('gameover.scoreInfo', { time: fmtSeconds(dado.player_seconds), level: win.difficulty });
+        }
         if (state === 'ok' && trn) t += ' ' + tr('score.trnCounted', { name: trn.name });
         const shown = setScoreFeedback(token, state, t, (trn && state !== 'rejected') ? trnLink : null);
         // o popup ja foi fechado (nova partida): recusa ainda precisa chegar a pessoa
@@ -3619,7 +3625,7 @@ async function followScoreVerdict(rpcRes, onUpdate, difficulty) {
         .select('status,reject_reason,player_seconds,timed_live').eq('id', scoreId).maybeSingle();
       if (!error && data && data.status !== 'pendente') {
         const v = scoreVerdict(data);
-        onUpdate(v.state, v.text);
+        onUpdate(v.state, v.text, data);
         return v;
       }
     } catch (e) { console.warn('scores poll err:', e); }
@@ -4134,6 +4140,7 @@ function handleIncomingMove(move) {
   if (move.game_id !== onlineGameId) return;
   if (move.move_number <= onlineLastSeenMove) return;
   onlineLastSeenMove = move.move_number;
+  spectatorClockMoved();
   // Ignora ECO do nosso proprio move (quem assiste aplica os lances dos DOIS lados)
   if (!isSpectator && move.player_color === myOnlineColor) return;
 
@@ -4630,6 +4637,38 @@ function tournamentClockLeft() {
   }
   return { w: Math.max(0, w), b: Math.max(0, b) };
 }
+
+// R2-UX-07: quem assiste uma partida de torneio ve o relogio OFICIAL (so leitura; nunca reclama tempo esgotado)
+var spectClock = null, spectClockTimer = null;   // var: updateTimerDisplay pode rodar antes desta linha
+function startSpectatorClock(gid) {
+  if (spectClockTimer) clearInterval(spectClockTimer);
+  spectClock = null;
+  let n = 0;
+  const refresh = async () => {
+    const t0 = Date.now();
+    const { data, error } = await supa.rpc('tournament_game_clock', { p_game_id: gid });
+    const r = !error && (Array.isArray(data) ? data[0] : data);
+    if (!r || !isSpectator || onlineGameId !== gid) return;
+    const sn = Date.parse(r.server_now);
+    spectClock = { w: Number(r.white_left), b: Number(r.black_left), turn: r.turn, moves: Number(r.moves) || 0,
+      last: r.last_move_at ? Date.parse(r.last_move_at) : null, offset: isNaN(sn) ? 0 : sn - (t0 + Date.now()) / 2 };
+  };
+  refresh();
+  spectClockTimer = setInterval(() => {
+    if (!isSpectator || onlineGameId !== gid) { clearInterval(spectClockTimer); spectClockTimer = null; spectClock = null; return; }
+    if (++n % 10 === 0) refresh();
+    if (!spectClock) return;
+    let w = spectClock.w, b = spectClock.b;
+    if (!gameOver && spectClock.moves >= 2 && spectClock.last) {
+      const gasto = (Date.now() + spectClock.offset - spectClock.last) / 1000;
+      if (spectClock.turn === 'w') w -= gasto; else b -= gasto;
+    }
+    timerWhite = Math.max(0, w); timerBlack = Math.max(0, b);
+    updateTimerDisplay();
+  }, 1000);
+}
+// lance novo no canal: o relogio do espectador se acerta pelo servidor
+function spectatorClockMoved() { if (isSpectator && spectClockTimer && onlineGameId) startSpectatorClock(onlineGameId); }
 
 function renderTournamentClock() {
   if (!isTournamentGame() || !trnClock || !timerEnabled) return;
@@ -5323,6 +5362,7 @@ async function setupSpectateGame(gameId) {
   updateTimerDisplay();
   opponentName = game.black_username; // mostra na barra superior
   spectTournamentId = null;
+  if (game.tournament_match_id && game.time_control > 0) startSpectatorClock(gameId);
   if (game.tournament_match_id) {
     supa.from('tournament_matches').select('tournament_id').eq('id', game.tournament_match_id).maybeSingle()
       .then(({ data }) => { if (data && isSpectator && onlineGameId === gameId) spectTournamentId = data.tournament_id; })
@@ -6220,7 +6260,8 @@ function stopTimer() {
 
 function updateTimerDisplay() {
   const fmt = s => {
-    if (isSpectator) return '—';   // quem assiste nao tem o relogio oficial
+    if (isSpectator && !spectClock) return '—';   // quem assiste so ve o relogio oficial (partida de torneio)
+    if (isSpectator) { const t = Math.max(0, Math.ceil(s)); return `${Math.floor(t / 60)}:${String(t % 60).padStart(2, '0')}`; }
     if (!timerEnabled) return '∞';
     const m = Math.max(0, Math.floor(s / 60));
     const sec = Math.max(0, s % 60);

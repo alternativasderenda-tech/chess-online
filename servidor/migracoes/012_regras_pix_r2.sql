@@ -292,6 +292,57 @@ LANGUAGE sql STABLE SECURITY DEFINER SET search_path = public AS $f$
    WHERE t.id = p_tournament_id AND (t.creator_id = auth.uid() OR is_admin());
 $f$;
 
+-- R2-UX-02: "Gerar novo link" guarda o código antigo — quem JÁ participa (ou organiza) e volta pelo convite velho ainda
+-- acha o torneio (sem receber o código novo); para os demais o convite antigo continua morto (D-TRN-28)
+CREATE TABLE IF NOT EXISTS xadrez_rt.convites_trocados (
+  token text PRIMARY KEY, tournament_id uuid NOT NULL REFERENCES public.tournaments(id) ON DELETE CASCADE,
+  trocado_em timestamptz NOT NULL DEFAULT now());
+
+CREATE OR REPLACE FUNCTION public.rotate_tournament_link(p_tournament_id uuid) RETURNS text
+LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $f$
+DECLARE t tournaments; novo text;
+BEGIN
+  IF auth.uid() IS NULL THEN RAISE EXCEPTION 'login required'; END IF;
+  SELECT * INTO t FROM tournaments WHERE id = p_tournament_id FOR UPDATE;
+  IF t.id IS NULL OR (t.creator_id <> auth.uid() AND NOT is_admin()) THEN RAISE EXCEPTION 'only creator/admin'; END IF;
+  IF t.status IN ('finished','cancelled') THEN RAISE EXCEPTION 'tournament already closed'; END IF;
+  novo := substr(translate(gen_random_uuid()::text, '-', ''), 1, 16);
+  IF t.share_token IS NOT NULL THEN
+    INSERT INTO xadrez_rt.convites_trocados (token, tournament_id) VALUES (t.share_token, t.id) ON CONFLICT (token) DO NOTHING;
+  END IF;
+  UPDATE tournaments SET share_token = novo WHERE id = t.id;
+  PERFORM xadrez_rt.evento('link_trocado', t.id, NULL, NULL, NULL);
+  RETURN novo;
+END $f$;
+
+CREATE OR REPLACE FUNCTION public.get_tournament_by_token(p_token text) RETURNS tournaments
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = public AS $f$
+DECLARE t tournaments;
+BEGIN
+  IF length(coalesce(p_token, '')) < 12 THEN RETURN NULL; END IF;
+  SELECT * INTO t FROM tournaments WHERE share_token = p_token AND paid LIMIT 1;
+  IF t.id IS NOT NULL THEN RETURN t; END IF;
+  SELECT x.* INTO t FROM xadrez_rt.convites_trocados c JOIN tournaments x ON x.id = c.tournament_id
+   WHERE c.token = p_token AND x.paid AND auth.uid() IS NOT NULL
+     AND (x.creator_id = auth.uid() OR is_admin()
+          OR EXISTS (SELECT 1 FROM tournament_participants p WHERE p.tournament_id = x.id AND p.user_id = auth.uid()));
+  IF t.id IS NULL THEN RETURN NULL; END IF;
+  t.share_token := NULL;                -- o código novo vem (ou não) pelo get_tournament, conforme o organizador permitir
+  RETURN t;
+END $f$;
+
+-- R2-UX-07: o relógio oficial também para quem assiste sem login (só tempos; o jogo já é visível ao espectador)
+CREATE OR REPLACE FUNCTION public.tournament_game_clock(p_game_id text)
+RETURNS TABLE(white_left numeric, black_left numeric, turn text, last_move_at timestamptz, moves int, server_now timestamptz)
+LANGUAGE plpgsql STABLE SECURITY DEFINER SET search_path = public AS $f$
+DECLARE g games; tg record;
+BEGIN
+  SELECT * INTO g FROM games WHERE id = p_game_id;
+  IF g.id IS NULL OR g.tournament_match_id IS NULL THEN RETURN; END IF;
+  SELECT * INTO tg FROM xadrez_rt.tempo_gasto(g.id);
+  RETURN QUERY SELECT greatest(0, g.time_control - tg.brancas), greatest(0, g.time_control - tg.pretas), tg.vez, tg.ultimo, tg.lances, now();
+END $f$;
+
 -- TRN-REG-11: o ranking espera a fila de conferência acabar (a conferência tem 2 tentativas de 15 min, D-TRN-26); se
 -- algo travar, fecha 3 h depois do fim e registra — o que for conferido depois não entra (tournament_leaderboard)
 CREATE OR REPLACE FUNCTION xadrez_rt.tick() RETURNS jsonb LANGUAGE plpgsql SECURITY DEFINER SET search_path = public AS $f$
