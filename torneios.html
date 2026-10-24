@@ -763,6 +763,8 @@ function traduz(err) {
     [/tournament not found|^not found$/i, 'Torneio não encontrado. Se for um torneio só para convidados, abra pelo link completo que o organizador mandou.'],
     [/starts_at must be at least \d+ minutes/i, 'Na eliminatória, o início precisa ser pelo menos 1 hora depois de agora — é o tempo para pagar o Pix e receber inscrições.'],
     [/after the start only pending requests/i, 'Depois que o ranking começa, só dá para aprovar ou recusar pedidos pendentes — quem já foi aprovado continua.'],
+    [/only admin can end a ranking early/i, 'O ranking fecha sozinho no horário final — encerrar antes só a administração do site.'],
+    [/ranking has not started; cancel it instead/i, 'O ranking ainda não começou: para desistir dele, use "Cancelar torneio".'],
     [/starts_too_soon/i, 'Não dá mais para pagar este torneio: ele começa cedo demais para receber inscrições. Cancele e crie outro com mais folga.'],
     [/only admin can cancel after start/i, 'Depois que o torneio começa, só a administração do site pode cancelar.'],
     [/leaderboard only for ai/i, 'Este torneio não tem classificação (é uma eliminatória).'],
@@ -1588,7 +1590,8 @@ function blocoOrganizador(d, souOrg) {
   if (t.format === 'pvp_bracket' && aberto && t.paid !== false) {
     bts.push(`<button class="btn success" data-acao="comecar" ${aprov.length < 2 ? 'disabled title="Precisa de pelo menos 2 inscritos"' : ''}>▶ Começar agora (${nJog(aprov.length)})</button>`);
   }
-  if (t.format === 'ai' && (t.status === 'open' || t.status === 'active') && t.paid !== false) bts.push(`<button class="btn" data-acao="encerrar-ranking">🏁 Encerrar ranking agora</button>`);
+  // TRN-REG-12: o ranking fecha sozinho no horário final; encerrar antes é só da administração (depois do início)
+  if (E.admin && t.format === 'ai' && t.status === 'active' && t.paid !== false) bts.push(`<button class="btn" data-acao="encerrar-ranking">🏁 Encerrar ranking agora (admin)</button>`);
   if (bts.length) h += `<div class="acoes linha">${bts.join('')}</div>`;
   if (t.format === 'pvp_bracket' && aberto && t.paid !== false) h += `<p class="nota">${aprov.length < 2 ? 'Precisa de pelo menos 2 inscritos para começar. ' : ''}Se você não começar antes, o torneio começa sozinho ${fmtData(t.starts_at)}. Com menos de 2 inscritos nessa hora, ele é cancelado (e o valor pago volta pelo Pix).</p>`;
   if (t.format === 'pvp_bracket' && t.status === 'active') h += `<p class="nota">Partidas, ausências (W.O.) e passagem de rodada são resolvidas sozinhas pelo servidor. Se precisar (jogador combinou desistir, problema técnico), use "Definir vencedor" na partida.</p>`;
@@ -1801,7 +1804,7 @@ async function gerarNovoLink() {
   if (v) copiar(url);
 }
 async function encerrarRanking() {
-  if (!await confirma('Encerrar o ranking agora? A classificação atual vira a final e o 1º colocado é o campeão.', 'Encerrar agora', { perigo: true })) return;
+  if (!await confirma('Encerrar o ranking antes do horário final? A classificação atual vira a final e o 1º colocado é o campeão. Fica registrado que foi a administração.', 'Encerrar agora', { perigo: true })) return;
   if (await rpc('finalize_ranking_tournament', { p_tournament_id: E.tid })) { toast('Ranking encerrado.'); await carregarTorneio(); }
 }
 async function definirStatus(pid, status, nome) {

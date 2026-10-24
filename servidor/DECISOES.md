@@ -60,6 +60,7 @@ em cada dimensão, zero achado crítico/alto aberto. Foco: torneio; o resto do a
 | D-TRN-31 | Ranking de IA andando: o organizador só decide pedido **pendente**; aprovado não pode mais ser recusado (012) | TRN-REG-02: recusar o líder depois do início escolhia o campeão |
 | D-TRN-32 | Ranking fecha quando a fila de conferência dele acaba (no máximo 3 h depois do fim, com evento `ranking_fechado_com_fila`); ranking encerrado conta só placar conferido até o `finished_at` | TRN-REG-11: veredito tardio mudava a tabela depois do campeão gravado |
 | D-TRN-33 | "Não conta duas vezes" é garantido por índice único parcial (`user_id, difficulty, fingerprint` com status normal/pendente) | TRN-REG-07: 3 envios simultâneos da mesma partida passavam pelo EXISTS |
+| D-TRN-34 | Ranking de IA não é encerrado pelo organizador: fecha sozinho no fim (D-TRN-32); encerrar antes é só do admin, depois do início, com evento `ranking_encerrado_pelo_admin` (013); antes do início, é cancelar | TRN-REG-12: "Encerrar ranking agora" deixava o organizador escolher o campeão a qualquer momento |
 
 ### Pagamento
 
