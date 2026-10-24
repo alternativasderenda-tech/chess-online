@@ -302,6 +302,43 @@ const quem = (m, id) => [m.player1_id, m.player2_id].includes(id);
     assert.equal(sql(`select status || '|' || (winner_id = '${J[0].id}') from tournaments where id = '${TA.id}'`), 'finished|true');
   });
 
+  // ---------- Pix (modo simulado do ambiente de teste) e assinatura do webhook
+  const RT = 'http://127.0.0.1:3212';
+  const post = async (u, caminho, corpo) => {
+    const r = await fetch(RT + caminho, { method: 'POST', headers: { 'Content-Type': 'application/json', ...(u ? { Authorization: 'Bearer ' + u.token } : {}) }, body: JSON.stringify(corpo) });
+    return { status: r.status, j: await r.json().catch(() => null) };
+  };
+  await caso('Pix: só o criador gera a cobrança; a mesma é reaproveitada; o pagamento libera o torneio', async () => {
+    const r = await rpc(org, 'create_tournament', { p_name: 'Pix ' + PREFIXO, p_description: null, p_prize: 'troféu', p_format: 'pvp_bracket',
+      p_visibility: 'public', p_capacity: 4, p_starts_at: new Date(Date.now() + 3600_000).toISOString(), p_ends_at: null, p_difficulty: null,
+      p_criterion: null, p_round_deadline_hours: 2, p_time_control_seconds: 300 });
+    assert.ok(r.ok, r.erro);
+    assert.equal((await post(intruso, '/functions/v1/pix-cobranca', { tournament_id: r.j.id })).status, 404, 'intruso gerou cobrança');
+    assert.equal((await post(null, '/functions/v1/pix-cobranca', { tournament_id: r.j.id })).status, 401);
+    const c1 = await post(org, '/functions/v1/pix-cobranca', { tournament_id: r.j.id });
+    assert.equal(c1.status, 200, JSON.stringify(c1.j));
+    assert.equal(c1.j.status, 'pendente');
+    assert.ok(c1.j.qr_code && c1.j.simulado);
+    const c2 = await post(org, '/functions/v1/pix-cobranca', { tournament_id: r.j.id });
+    assert.equal(c2.j.qr_code, c1.j.qr_code, 'gerou outra cobrança em vez de reaproveitar');
+    const st = (await rpc(org, 'tournament_payment_status', { p_tournament_id: r.j.id })).j[0];
+    assert.deepEqual([st.paid, st.status], [false, 'pendente']);
+    assert.equal((await rpc(intruso, 'tournament_payment_status', { p_tournament_id: r.j.id })).j.length, 0, 'intruso viu o pagamento');
+    const s = await post(org, '/functions/v1/pix-simular', { tournament_id: r.j.id });
+    assert.equal(s.j.resultado, 'liberado');
+    assert.equal(sql(`select paid from tournaments where id = '${r.j.id}'`), 't');
+    assert.equal((await post(org, '/functions/v1/pix-cobranca', { tournament_id: r.j.id })).j.status, 'pago');
+  });
+  await caso('webhook do Mercado Pago: sem assinatura ou com assinatura falsa é recusado', async () => {
+    const semAss = await fetch(RT + '/pagamentos/mp?data.id=123&type=payment', { method: 'POST', body: '{}' });
+    assert.equal(semAss.status, 401);
+    const falsa = await fetch(RT + '/pagamentos/mp?data.id=123&type=payment', { method: 'POST', body: '{}',
+      headers: { 'x-signature': 'ts=1,v1=' + 'a'.repeat(64), 'x-request-id': 'r1' } });
+    assert.equal(falsa.status, 401);
+    const { assinaturaValida } = require('../pix');
+    assert.equal(typeof assinaturaValida, 'function');
+  });
+
   // ---------- limpeza: some tudo que o teste criou (partida ↔ jogo se referenciam: desfazer o vínculo antes)
   const DOS = `(select id from auth.users where email like '${PREFIXO}-%')`;
   sql(`update tournament_matches set game_id = null where tournament_id in (select id from tournaments where creator_id in ${DOS})`);

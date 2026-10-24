@@ -17,7 +17,7 @@ timeout 30 aws sts get-caller-identity --profile $PERFIL --region $REGIAO >/dev/
 REV=$(git rev-parse --short HEAD)
 TMP=$(mktemp -d)
 mkdir -p "$TMP/p/realtime/motor" "$TMP/p/migracoes"
-cp servidor/realtime/server.js servidor/realtime/conferidor.js servidor/realtime/package.json "$TMP/p/realtime/"
+cp servidor/realtime/server.js servidor/realtime/conferidor.js servidor/realtime/pix.js servidor/realtime/package.json "$TMP/p/realtime/"
 cp servidor/motor/xadrez.js servidor/motor/motor-gerado.js "$TMP/p/realtime/motor/"
 cp servidor/migracoes/*.sql "$TMP/p/migracoes/"
 tar czf "$TMP/s.tgz" -C "$TMP/p" .
@@ -31,7 +31,7 @@ for f in \$(ls \$T/migracoes/*.sql | sort); do n=\$(basename \$f);
     sudo -u postgres psql -X -q -v ON_ERROR_STOP=1 -d $DB -f \$f 2>&1 | grep -v NOTICE || true;
     sudo -u postgres psql -X -q -v ON_ERROR_STOP=1 -d $DB -c \"insert into xadrez_rt.migracoes (nome) values ('\$n')\"; echo migracao \$n aplicada; fi; done;
 sudo -u postgres psql -X -q -d $DB -c \"NOTIFY pgrst, 'reload schema'\";
-mkdir -p $DIR/motor; install -m 644 \$T/realtime/server.js \$T/realtime/conferidor.js \$T/realtime/package.json $DIR/;
+mkdir -p $DIR/motor; install -m 644 \$T/realtime/server.js \$T/realtime/conferidor.js \$T/realtime/pix.js \$T/realtime/package.json $DIR/;
 install -m 644 \$T/realtime/motor/*.js $DIR/motor/;
 cd $DIR && npm install --omit=dev --no-audit --no-fund --loglevel=error >/dev/null;
 systemctl restart $SVC; sleep 3; systemctl is-active $SVC; curl -s -m 5 http://127.0.0.1:$PORTA/xrt/saude; echo; rm -rf \$T; echo publicado $REV em $AMB"

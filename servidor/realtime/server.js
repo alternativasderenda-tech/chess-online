@@ -194,7 +194,9 @@ async function gaStats(req, res) {
   } catch (e) { console.error('[ga-stats]', e.message); return json(500, { error: e.message }); }
 }
 
-const servidor = http.createServer((req, res) => {
+let pix = null;   // criado depois do pool e do verificar (abaixo)
+const servidor = http.createServer(async (req, res) => {
+  if (pix && await pix.rota(req, res)) return;
   if (req.url === '/xrt/saude') { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ ok: true, conexoes: wss.clients.size })); return; }
   if (req.url.split('?')[0] === '/functions/v1/ga-stats' && req.method === 'POST') { gaStats(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
   res.writeHead(404); res.end();
@@ -337,6 +339,10 @@ async function rotina() {
 }
 setInterval(rotina, 60_000).unref();
 setTimeout(rotina, 5_000).unref();
+
+pix = require('./pix')({ pool, verificar });
+console.log('Pix:', pix.modo);
+setInterval(() => pix.rotina().catch(e => console.error('[pix] rotina', e.message)), 60_000).unref();
 
 escutar();
 servidor.listen(PORTA, '127.0.0.1', () => console.log(`tempo real do xadrez em 127.0.0.1:${PORTA}`));

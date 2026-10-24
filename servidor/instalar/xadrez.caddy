@@ -11,11 +11,11 @@ xadrezonline.app {
 	handle /xrt* {
 		reverse_proxy 127.0.0.1:3202
 	}
-	handle /functions/v1/ga-stats {
+	handle /functions/v1/* {
 		reverse_proxy 127.0.0.1:3202
 	}
-	handle /functions/v1/* {
-		respond 404
+	handle /pagamentos/* {
+		reverse_proxy 127.0.0.1:3202
 	}
 	handle {
 		root * /opt/xadrez/site
@@ -44,11 +44,11 @@ novo.xadrezonline.app {
 	handle /xrt* {
 		reverse_proxy 127.0.0.1:3212
 	}
-	handle /functions/v1/ga-stats {
+	handle /functions/v1/* {
 		reverse_proxy 127.0.0.1:3212
 	}
-	handle /functions/v1/* {
-		respond 404
+	handle /pagamentos/* {
+		reverse_proxy 127.0.0.1:3212
 	}
 	handle {
 		root * /opt/xadrez/site-teste

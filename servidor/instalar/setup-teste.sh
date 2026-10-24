@@ -62,7 +62,8 @@ cat > $X/bin/teste-rt-run.sh <<'SH'
 #!/bin/bash
 set -a; . /opt/xadrez/etc/segredos.env; [ -f /opt/xadrez/etc/ga.env ] && . /opt/xadrez/etc/ga.env
 . /opt/xadrez/etc/teste.env; set +a
-export PORT=3212 PG_DB=xadrez_teste GA_SA_FILE=/opt/xadrez/etc/ga-sa.json AMBIENTE=teste
+[ -f /opt/xadrez/etc/mp-teste.env ] && { set -a; . /opt/xadrez/etc/mp-teste.env; set +a; }
+export PORT=3212 PG_DB=xadrez_teste GA_SA_FILE=/opt/xadrez/etc/ga-sa.json AMBIENTE=teste PUBLIC_URL=https://novo.xadrezonline.app
 unset PG_AUTHENTICATOR PG_AUTH_ADMIN SERVICE_KEY ANON_KEY
 cd /opt/xadrez/realtime-teste && exec /usr/bin/node server.js
 SH
