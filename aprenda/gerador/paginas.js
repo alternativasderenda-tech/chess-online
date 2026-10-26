@@ -3,7 +3,8 @@
 const { T, SITE, NIVEIS, dataPorExtenso } = require('./textos');
 const { esc } = require('./markdown');
 
-const ORG = { '@type': 'Organization', name: 'Xadrez Online', url: SITE + '/', logo: { '@type': 'ImageObject', url: SITE + '/icon-512.png' } };
+// alternateName: o mesmo site se chama "Chess Online" em inglês (og:site_name e migalhas do EN) — uma entidade só
+const ORG = { '@type': 'Organization', name: 'Xadrez Online', alternateName: 'Chess Online', url: SITE + '/', logo: { '@type': 'ImageObject', url: SITE + '/icon-512.png' } };
 const jsonLd = obj => '<script type="application/ld+json">\n' + JSON.stringify(obj, null, 2).replace(/</g, '\\u003c') + '\n</script>';
 
 const FONTES = '<link rel="preconnect" href="https://fonts.googleapis.com">\n'
@@ -116,7 +117,7 @@ ${(fm.tags || []).map(g => `<meta property="article:tag" content="${esc(g)}">`).
       datePublished: fm.publicado,
       dateModified: fm.atualizado,
       inLanguage: t.lang,
-      author: { '@type': 'Organization', name: 'Xadrez Online', url: SITE + '/' },
+      author: { '@type': 'Organization', name: 'Xadrez Online', alternateName: 'Chess Online', url: SITE + '/' },
       publisher: ORG,
       educationalLevel: nivelNome,
       teaches: fm.ensina && fm.ensina.length ? fm.ensina : (fm.tags || []),
@@ -139,6 +140,17 @@ ${(fm.tags || []).map(g => `<meta property="article:tag" content="${esc(g)}">`).
   ];
   // a outra língua do mesmo artigo
   ld[0][a.idioma === 'pt' ? 'workTranslation' : 'translationOfWork'] = { '@id': SITE + a.traducao.url + '#artigo' };
+  // FAQPage com o mesmo texto da seção "Perguntas frequentes" visível (sem resultado enriquecido no Google desde 2023;
+  // serve a outros buscadores e às IAs que leem JSON-LD)
+  if (a.faq && a.faq.length) {
+    ld.push({
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      '@id': url + '#faq',
+      inLanguage: t.lang,
+      mainEntity: a.faq.map(f => ({ '@type': 'Question', name: f.q, acceptedAnswer: { '@type': 'Answer', text: f.r } })),
+    });
+  }
 
   const head = cabecaComum({
     idioma: a.idioma, titulo: tituloSeo, descricao: fm.descricao, canonical: url, pt: urlPt, en: urlEn,
@@ -175,9 +187,9 @@ ${a.titulos.map(h => `    <li><a href="#${h.id}">${h.rotulo}</a></li>`).join('\n
     ? `<section class="proximo" aria-labelledby="proximo-titulo">
   <h2 id="proximo-titulo" class="fim-h">${t.proximo}</h2>
   <a class="card" href="${prox.url}">
-    <span class="card-num" aria-hidden="true">${prox.posicao}</span>
+    <span class="card-num" aria-hidden="true">${prox.posicaoNivel}</span>
     <span class="card-corpo">
-      <span class="card-meta">${selo(a.idioma, prox.fm.nivel)} · ${t.minLeitura(prox.minutos)}</span>
+      <span class="card-meta">${selo(a.idioma, prox.fm.nivel)} · ${t.indice.licao} ${prox.posicaoNivel} · ${t.minLeitura(prox.minutos)}</span>
       <span class="card-titulo">${esc(prox.fm.titulo)}</span>
       <span class="card-desc">${esc(prox.fm.descricao)}</span>
     </span>
@@ -186,6 +198,7 @@ ${a.titulos.map(h => `    <li><a href="#${h.id}">${h.rotulo}</a></li>`).join('\n
     : `<section class="proximo" aria-labelledby="proximo-titulo">
   <h2 id="proximo-titulo" class="fim-h">${t.proximo}</h2>
   <p>${t.proximoFim} <a href="${t.base}">${t.verTodos}</a></p>
+  <p>${t.fimTorneio(t.torneios)}</p>
 </section>`;
 
   const blocoRel = a.relacionados.length
@@ -211,7 +224,7 @@ ${topo(a.idioma, a.traducao.url)}
   <article>
     <header class="art-cab">
       <h1>${esc(fm.titulo)}</h1>
-      <p class="meta">${selo(a.idioma, fm.nivel)}<span class="meta-item">⏱ ${t.minLeitura(a.minutos)}</span><span class="meta-item"><time datetime="${fm.atualizado}">${t.atualizado(dataPorExtenso(fm.atualizado, a.idioma))}</time></span></p>
+      <p class="meta">${a.posicaoNivel ? `<span class="meta-item meta-licao">${t.licaoDe(a.posicaoNivel, a.totalNivel)}</span>` : ''}${selo(a.idioma, fm.nivel)}<span class="meta-item">⏱ ${t.minLeitura(a.minutos)}</span><span class="meta-item"><time datetime="${fm.atualizado}">${t.atualizado(dataPorExtenso(fm.atualizado, a.idioma))}</time></span></p>
     </header>
 ${corpo}
   </article>
@@ -275,7 +288,7 @@ function indice(idioma, lista, ativos, imagem, lastmod) {
   const card = a => `      <li><a class="card" href="${a.url}">
         <span class="card-num" aria-hidden="true">${a.posicaoNivel}</span>
         <span class="card-corpo">
-          <span class="card-meta">${selo(idioma, a.fm.nivel)} · ${I.licao} ${a.posicaoNivel} · ${t.minLeitura(a.minutos)}</span>
+          <span class="card-meta">${I.licao} ${a.posicaoNivel} · ${t.minLeitura(a.minutos)}</span>
           <h3 class="card-titulo">${esc(a.fm.titulo)}</h3>
           <span class="card-desc">${esc(a.fm.descricao)}</span>
         </span>
@@ -283,7 +296,7 @@ function indice(idioma, lista, ativos, imagem, lastmod) {
   const secoes = NIVEIS.map(n => {
     const doNivel = lista.filter(a => a.fm.nivel === n);
     return `  <section class="nivel" id="${n}" aria-labelledby="nivel-${n}">
-    <h2 id="nivel-${n}">${selo(idioma, n)} <span>${t.nivel[n]}</span></h2>
+    <h2 id="nivel-${n}" class="nivel-h nivel-cor-${n}">${t.nivel[n]}</h2>
     <p class="nivel-desc">${t.nivelDesc[n]}</p>
 ${doNivel.length ? `    <ol class="cards">\n${doNivel.map(card).join('\n')}\n    </ol>` : `    <p class="em-breve">${t.nivelEmBreve}</p>`}
   </section>`;
@@ -294,8 +307,8 @@ ${topo(idioma, outro)}
 <main class="container largo" id="conteudo">
   <header class="indice-cab">
     <h1>${I.h1}</h1>
-    <p class="lead">${I.lead}</p>
-    <a href="${t.inicio}" class="cta-btn">${I.jogar}</a>
+    <p class="lead">${typeof I.lead === 'function' ? I.lead(lista.length) : I.lead}</p>
+    <p class="comece">${lista.length ? `<a href="${lista[0].url}" class="cta-btn">${I.comece}</a>` : ''}<a href="${t.inicio}" class="secundario">${I.jogar}</a></p>
   </header>
   <nav class="niveis" aria-label="${idioma === 'pt' ? 'Níveis' : 'Levels'}">
 ${NIVEIS.map(n => `    <a href="#${n}">${t.nivel[n]}</a>`).join('\n')}
@@ -305,6 +318,7 @@ ${NIVEIS.map(n => `    <a href="#${n}">${t.nivel[n]}</a>`).join('\n')}
     <input type="search" id="busca-campo" placeholder="${I.buscaPlaceholder}" autocomplete="off" spellcheck="false">
     <p class="busca-status" id="busca-status" role="status" aria-live="polite"
        data-nada="${esc(I.buscaNada)}" data-um="${esc(I.buscaUm)}" data-n="${esc(I.buscaN('{n}'))}"></p>
+    <button type="button" class="btn busca-limpar" id="busca-limpar" hidden>${I.buscaLimpar}</button>
     <ol class="cards" id="busca-res" hidden></ol>
   </div>
   <div id="trilha">

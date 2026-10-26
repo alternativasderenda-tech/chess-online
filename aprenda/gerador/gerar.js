@@ -157,7 +157,10 @@ for (const idioma of IDIOMAS) {
     if (vistos[k]) erro(a.arq, 0, `ordem ${a.fm.ordem} repetida no nível ${a.fm.nivel} (também em ${vistos[k].arq})`);
     vistos[k] = a;
   }
-  lista.forEach((a, k) => { a.posicao = k + 1; a.posicaoNivel = lista.filter(b => b.fm.nivel === a.fm.nivel).indexOf(a) + 1; });
+  lista.forEach((a, k) => {   // posicaoNivel/totalNivel: a numeração que o leitor vê em todo lugar (índice, artigo, próximo passo)
+    const doNivel = lista.filter(b => b.fm.nivel === a.fm.nivel);
+    a.posicao = k + 1; a.posicaoNivel = doNivel.indexOf(a) + 1; a.totalNivel = doNivel.length;
+  });
   trilha[idioma] = lista;
 }
 
@@ -205,6 +208,9 @@ function marcacoes(a, n, setasTxt, casasTxt) {
   return { setas, casas };
 }
 
+/** texto puro de HTML inline: "<strong>mate em 1</strong>." vira "mate em 1 ." — tira o espaço antes da pontuação */
+const semEspacoAntesDePonto = s => String(s).replace(/\s+([.,;:!?…])/g, '$1').replace(/\s+/g, ' ').trim();
+
 function blocoTabuleiro(a, corpo, n, ctx) {
   const k = lerChaves(corpo, a, n, ['fen', 'setas', 'casas', 'virar', 'legenda'], 'tabuleiro');
   if (!k.fen) { erro(a.arq, n, 'bloco tabuleiro sem "fen:"'); return ''; }
@@ -215,7 +221,9 @@ function blocoTabuleiro(a, corpo, n, ctx) {
   a.fens.push('t:' + k.fen.split(/\s+/)[0]);
   if (!a.capa) a.capa = { estado: r.estado, setas, casas, virar };
   const legendaHtml = k.legenda ? MD.inline(k.legenda, ctx, k._legenda) : '';
-  const rotulo = (k.legenda ? MD.textoPuro(legendaHtml) + '. ' : '') + TB.descrever(r.estado, a.idioma, { setas, casas });
+  // legenda + descrição sem ".." (legenda que já termina em ponto) e sem repetir "Posição inicial" (LAY-diagrama-12)
+  const leg = k.legenda ? semEspacoAntesDePonto(MD.textoPuro(legendaHtml)) : '';
+  const rotulo = (leg ? (/[.!?…]$/.test(leg) ? leg : leg + '.') + ' ' : '') + TB.descrever(r.estado, a.idioma, { setas, casas, legenda: leg });
   return `<figure class="diagrama">${TB.svg(r.estado, { setas, casas, virar, idioma: a.idioma, rotulo })}${k.legenda ? `<figcaption>${legendaHtml}</figcaption>` : ''}</figure>`;
 }
 
@@ -279,8 +287,13 @@ function blocoExercicio(a, corpo, n, ctx) {
   const rot = t.ex.exercicio + ' ' + num;
   const virar = k.virar ? simNao(k.virar) : e0.turn === 'b';
   const enunciadoHtml = MD.inline(k.enunciado || '', ctx, k._enunciado);
-  const dados = { fen: k.fen, sol: tokens.map(x => x.split('|')), tipo, virar };
-  const rotulo = rot + ': ' + MD.textoPuro(enunciadoHtml) + ' ' + TB.descrever(e0, a.idioma);
+  // san: cada lance da linha principal na notação do artigo ("1...Txd8"), para o widget narrar a resposta do adversário (LAY-widget-14)
+  const sans = [];
+  let eSan = e0;
+  for (const m of principais) { sans.push(eSan.full + (eSan.turn === 'w' ? '.' : '...') + P.san(eSan, m, a.idioma)); eSan = X.jogar(eSan, m); }
+  const dados = { fen: k.fen, sol: tokens.map(x => x.split('|')), san: sans, tipo, virar };
+  const enun = semEspacoAntesDePonto(MD.textoPuro(enunciadoHtml));
+  const rotulo = rot + ': ' + (/[.!?…:]$/.test(enun) ? enun : enun + '.') + ' ' + TB.descrever(e0, a.idioma);
   return `<figure class="exercicio" id="exercicio-${num}" data-exercicio>
 <figcaption><span class="ex-rotulo">${rot}</span> <span class="ex-enunciado">${enunciadoHtml}</span></figcaption>
 <div class="ex-tab">${TB.svg(e0, { idioma: a.idioma, virar, rotulo })}</div>
@@ -325,6 +338,10 @@ for (const a of artigos) {
   const r = MD.renderizar(a.corpo, ctx, a.linhaCorpo);
   for (const l of locais) if (!ctx.ids.has(l.anc)) erro(a.arq, l.n, `âncora "#${l.anc}" não existe neste artigo`);
   a.html = r.html; a.titulos = r.titulos; a.pratique = r.pratique; a.ids = ctx.ids;
+  // perguntas frequentes (h2#faq, cada h3 + a resposta até o próximo h3) para o JSON-LD FAQPage: o mesmo texto da página
+  const secFaq = (r.html.match(/<h2 id="faq"[^>]*>[\s\S]*?(?=<h2 |$)/) || [''])[0];
+  a.faq = [...secFaq.matchAll(/<h3[^>]*>([\s\S]*?)<\/h3>([\s\S]*?)(?=<h3|$)/g)]
+    .map(([, q, resp]) => ({ q: semEspacoAntesDePonto(MD.textoPuro(q)), r: semEspacoAntesDePonto(MD.textoPuro(resp)) })).filter(x => x.q && x.r);
   const texto = MD.textoPuro(r.html);
   a.texto = texto;
   a.palavras = texto.split(/\s+/).filter(Boolean).length;
@@ -355,7 +372,7 @@ for (const idioma of IDIOMAS) {
       const r = porId[idioma][id];
       if (!r) erro(a.arq, 0, `relacionados: artigo "${id}" não existe em ${idioma}`);
       else if (r === a) erro(a.arq, 0, 'relacionados: o artigo aponta para si mesmo');
-      else if (!r.rascunho) a.relacionados.push(r);
+      else if (!r.rascunho && r !== a.proximo) a.relacionados.push(r);   // o próximo passo já aparece logo acima (LAY-fim-16)
     }
     if (!ids.length) {   // automático: vizinhos de trilha do mesmo nível, depois os demais
       a.relacionados = lista.filter(b => b !== a && b !== a.proximo)
@@ -387,7 +404,7 @@ function motorNavegador() {
     'window.XadrezMotor = { legais, jogar, fim, igual, lerFen, inCheck: M.inCheck };',
     '})();',
     '',
-  ].join('\n');
+  ].join('\n').replace(/\r\n/g, '\n');   // toString() copia o fim de linha da fonte (CRLF num checkout com autocrlf): sem isto o --conferir nunca bate
 }
 
 /** o motor gerado roda e concorda com o do servidor (perft 2 da inicial e todas as posições dos exercícios) */
@@ -437,7 +454,7 @@ if (!erros.length) {
     const html = PG.artigo({
       idioma: a.idioma, url: a.url, fm: a.fm, corpo: a.html, titulos: a.titulos, pratique: a.pratique, minutos: a.minutos,
       palavras: a.palavras, temExercicio: a.temExercicio, imagem: a.imagem, proximo: a.proximo, relacionados: a.relacionados,
-      traducao: a.traducao,
+      traducao: a.traducao, posicaoNivel: a.posicaoNivel, totalNivel: a.totalNivel, faq: a.faq,
     }, ativos);
     saidas.set(a.saida, html);
     const t = T[a.idioma];

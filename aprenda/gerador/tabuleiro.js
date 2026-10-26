@@ -9,6 +9,8 @@ const { nomeCasa, indiceCasa } = require('./posicao');
 const LADO = 60;              // casa, em unidades do viewBox (8 × 60 = 480)
 const CLARA = '#f0d9b5';
 const ESCURA = '#b58863';
+const COORD_CLARA = '#6b4a2b';    // coordenada na casa clara: 5,8:1 (e sobre o contorno claro, em casa destacada)
+const COORD_ESCURA = '#1a1a2e';   // coordenada na casa escura: 5,4:1 sobre a casa, 12,4:1 sobre o contorno
 const GLIFO = { k: '♚', q: '♛', r: '♜', b: '♝', n: '♞', p: '♟' };
 const VS15 = '︎';
 const FONTE_PECAS = "'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans','Apple Symbols',sans-serif";
@@ -25,7 +27,7 @@ const corDe = nome => CORES[SINONIMOS[nome] || nome] ? (SINONIMOS[nome] || nome)
 
 const NOMES = {
   pt: { k: 'Rei', q: 'Dama', r: 'Torre', b: 'Bispo', n: 'Cavalo', p: 'peão', w: 'Brancas', b_: 'Pretas',
-    vezW: 'jogam as Brancas', vezB: 'jogam as Pretas', inicial: 'Posição inicial', destaque: 'casas destacadas', setas: 'setas',
+    vezW: 'Jogam as Brancas', vezB: 'Jogam as Pretas', inicial: 'Posição inicial', destaque: 'casas destacadas', setas: 'setas',
     diagrama: 'Diagrama' },
   en: { k: 'King', q: 'Queen', r: 'Rook', b: 'Bishop', n: 'Knight', p: 'pawn', w: 'White', b_: 'Black',
     vezW: 'White to move', vezB: 'Black to move', inicial: 'Starting position', destaque: 'highlighted squares', setas: 'arrows',
@@ -49,12 +51,17 @@ const colocacao = board => {
   return s;
 };
 
-/** texto para leitor de tela: "Brancas: Rei g1, Dama h5, peões a2, b2. Pretas: …; jogam as Brancas." */
+/**
+ * texto para leitor de tela: "Brancas: Rei g1, Dama h5, peões a2, b2. Pretas: …. Jogam as Brancas."
+ * extras.legenda: texto da legenda que vem antes — se ela já diz "posição inicial", não repete (LAY-diagrama-12)
+ */
 function descrever(estado, idioma, extras = {}) {
   const N = NOMES[idioma] || NOMES.pt;
-  let txt;
-  if (colocacao(estado.board) === INICIAL) txt = N.inicial;
-  else {
+  const frases = [];
+  if (colocacao(estado.board) === INICIAL) {
+    const sem = t => String(t || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase();
+    if (!sem(extras.legenda).includes(sem(N.inicial))) frases.push(N.inicial + '.');
+  } else {
     const lados = [];
     for (const cor of ['w', 'b']) {
       const grupos = [];
@@ -66,14 +73,14 @@ function descrever(estado, idioma, extras = {}) {
         if (t === 'p') grupos.push((casas.length > 1 ? (idioma === 'en' ? 'pawns ' : 'peões ') : N.p + ' ') + casas.join(', '));
         else grupos.push(N[t] + ' ' + casas.join(', '));
       }
-      lados.push((cor === 'w' ? N.w : N.b_) + ': ' + grupos.join(', '));
+      lados.push((cor === 'w' ? N.w : N.b_) + ': ' + grupos.join(', ') + '.');
     }
-    txt = lados.join('. ');
+    frases.push(...lados);
   }
-  txt += '. ' + (estado.turn === 'w' ? N.vezW : N.vezB) + '.';
-  if (extras.casas && extras.casas.length) txt += ' ' + cap(N.destaque) + ': ' + extras.casas.map(c => c.casa).join(', ') + '.';
-  if (extras.setas && extras.setas.length) txt += ' ' + cap(N.setas) + ': ' + extras.setas.map(s => s.de + '→' + s.para).join(', ') + '.';
-  return txt;
+  frases.push((estado.turn === 'w' ? N.vezW : N.vezB) + '.');
+  if (extras.casas && extras.casas.length) frases.push(cap(N.destaque) + ': ' + extras.casas.map(c => c.casa).join(', ') + '.');
+  if (extras.setas && extras.setas.length) frases.push(cap(N.setas) + ': ' + extras.setas.map(s => s.de + '→' + s.para).join(', ') + '.');
+  return frases.join(' ');
 }
 const cap = s => s.charAt(0).toUpperCase() + s.slice(1);
 
@@ -109,7 +116,7 @@ function seta(de, para, cor, virar) {
 function svg(estado, opcoes = {}) {
   const virar = !!opcoes.virar;
   const idioma = opcoes.idioma || 'pt';
-  const partes = [], pecas = [], setas = [];
+  const partes = [], coords = [], pecas = [], setas = [];
   for (let i = 0; i < 64; i++) {
     const { x, y } = naTela(i, virar);
     const clara = ((i >> 3) + (i & 7)) % 2 === 0;
@@ -119,14 +126,15 @@ function svg(estado, opcoes = {}) {
     const { x, y } = naTela(indiceCasa(c.casa), virar);
     partes.push(`<rect x="${x}" y="${y}" width="${LADO}" height="${LADO}" fill="${CORES[c.cor][1]}"/>`);
   }
-  // coordenadas, como no Lichess: fileiras na coluna da esquerda, colunas na fileira de baixo
+  // coordenadas, como no Lichess: fileiras na coluna da esquerda, colunas na fileira de baixo. Depois dos destaques
+  // e com contorno claro: legíveis sobre verde/vermelho/azul/amarelo. 15/480 = 11 px num diagrama de 358 px (D-APR-17)
   for (let k = 0; k < 8; k++) {
     const fileira = virar ? k + 1 : 8 - k;           // de cima para baixo
     const coluna = virar ? 'hgfedcba'[k] : 'abcdefgh'[k];
-    const corFileira = k % 2 === 0 ? ESCURA : CLARA;   // casa da esquerda na linha k: clara quando k é par
-    const corColuna = k % 2 === 0 ? CLARA : ESCURA;    // casa de baixo na coluna k: escura quando k é par
-    partes.push(`<text x="3" y="${k * LADO + 13}" font-size="12" font-weight="600" fill="${corFileira}">${fileira}</text>`);
-    partes.push(`<text x="${(k + 1) * LADO - 3}" y="${8 * LADO - 4}" font-size="12" font-weight="600" text-anchor="end" fill="${corColuna}">${coluna}</text>`);
+    const corFileira = k % 2 === 0 ? COORD_CLARA : COORD_ESCURA;   // casa da esquerda na linha k: clara quando k é par
+    const corColuna = k % 2 === 0 ? COORD_ESCURA : COORD_CLARA;    // casa de baixo na coluna k: escura quando k é par
+    coords.push(`<text x="3" y="${k * LADO + 15}" fill="${corFileira}">${fileira}</text>`);
+    coords.push(`<text x="${(k + 1) * LADO - 3}" y="${8 * LADO - 4}" text-anchor="end" fill="${corColuna}">${coluna}</text>`);
   }
   for (let i = 0; i < 64; i++) {
     const p = estado.board[i];
@@ -141,7 +149,8 @@ function svg(estado, opcoes = {}) {
   for (const s of opcoes.setas || []) setas.push(seta(s.de, s.para, s.cor, virar));
   const rotulo = opcoes.rotulo || descrever(estado, idioma, opcoes);
   return `<svg class="${opcoes.classe || 'tab'}" viewBox="0 0 ${8 * LADO} ${8 * LADO}" role="img" aria-label="${esc(rotulo)}" xmlns="http://www.w3.org/2000/svg">`
-    + `<g font-family="Inter,system-ui,sans-serif">${partes.join('')}</g>`
+    + `<g>${partes.join('')}</g>`
+    + `<g font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700" stroke="${CLARA}" stroke-width="3" stroke-linejoin="round" paint-order="stroke">${coords.join('')}</g>`
     + `<g font-family="${FONTE_PECAS}" font-size="48" text-anchor="middle" dominant-baseline="central">${pecas.join('')}</g>`
     + setas.join('')
     + '</svg>';

@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap">
-<link rel="stylesheet" href="/aprenda/post.css?v=3bff02f431">
+<link rel="stylesheet" href="/aprenda/post.css?v=6ebcac4a2d">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Aprenda Xadrez: Curso Gratuito do Zero ao Avançado">
 <meta property="og:description" content="Curso de xadrez gratuito em português: regras, movimentos, táticas, aberturas, finais e estratégia, em uma trilha do iniciante ao avançado.">
@@ -44,6 +44,7 @@
   "provider": {
     "@type": "Organization",
     "name": "Xadrez Online",
+    "alternateName": "Chess Online",
     "url": "https://xadrezonline.app/",
     "logo": {
       "@type": "ImageObject",
@@ -717,8 +718,8 @@
 <main class="container largo" id="conteudo">
   <header class="indice-cab">
     <h1>Aprenda Xadrez</h1>
-    <p class="lead">Uma trilha completa, do primeiro lance ao jogo avançado: guias curtos, diagramas e exercícios interativos. Gratuito, em português brasileiro.</p>
-    <a href="/" class="cta-btn">▶ Jogar agora</a>
+    <p class="lead">Curso de xadrez gratuito com 38 lições em português, em 4 níveis — Iniciante, Intermediário, Avançado e Dicas —, do primeiro lance ao jogo avançado, com diagramas e exercícios interativos. Nunca jogou? Comece pela lição 1 e siga a ordem.</p>
+    <p class="comece"><a href="/aprenda/como-jogar-xadrez-do-zero" class="cta-btn">Comece aqui: lição 1 →</a><a href="/" class="secundario">ou jogue uma partida</a></p>
   </header>
   <nav class="niveis" aria-label="Níveis">
     <a href="#iniciante">Iniciante</a>
@@ -730,18 +731,19 @@
     <label for="busca-campo">Buscar nos guias</label>
     <input type="search" id="busca-campo" placeholder="Buscar: garfo, roque, mate…" autocomplete="off" spellcheck="false">
     <p class="busca-status" id="busca-status" role="status" aria-live="polite"
-       data-nada="Nenhum guia encontrado para essa busca." data-um="1 guia encontrado" data-n="{n} guias encontrados"></p>
+       data-nada="Nenhum guia encontrado. Tente &quot;mate&quot;, &quot;abertura&quot; ou veja a trilha abaixo." data-um="1 guia encontrado" data-n="{n} guias encontrados"></p>
+    <button type="button" class="btn busca-limpar" id="busca-limpar" hidden>Limpar busca</button>
     <ol class="cards" id="busca-res" hidden></ol>
   </div>
   <div id="trilha">
   <section class="nivel" id="iniciante" aria-labelledby="nivel-iniciante">
-    <h2 id="nivel-iniciante"><span class="selo nivel-iniciante">Iniciante</span> <span>Iniciante</span></h2>
+    <h2 id="nivel-iniciante" class="nivel-h nivel-cor-iniciante">Iniciante</h2>
     <p class="nivel-desc">Do zero: as peças, as regras e as primeiras ideias para jogar sua primeira partida.</p>
     <ol class="cards">
       <li><a class="card" href="/aprenda/como-jogar-xadrez-do-zero">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 1 · 7 min de leitura</span>
+          <span class="card-meta">Lição 1 · 7 min de leitura</span>
           <h3 class="card-titulo">Como Jogar Xadrez do Zero: Guia Completo para Iniciantes</h3>
           <span class="card-desc">Aprenda a jogar xadrez do zero em 5 passos: o tabuleiro, o movimento de cada peça, jogadas especiais, xeque-mate e como praticar. Guia gratuito em português.</span>
         </span>
@@ -749,7 +751,7 @@
       <li><a class="card" href="/aprenda/tabuleiro-de-xadrez-e-notacao">
         <span class="card-num" aria-hidden="true">2</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 2 · 6 min de leitura</span>
+          <span class="card-meta">Lição 2 · 6 min de leitura</span>
           <h3 class="card-titulo">Tabuleiro de Xadrez e Notação: Como Ler os Lances</h3>
           <span class="card-desc">Como montar o tabuleiro de xadrez, o que são colunas, fileiras e casas, e como ler e escrever lances na notação algébrica, com exemplos e exercícios.</span>
         </span>
@@ -757,7 +759,7 @@
       <li><a class="card" href="/aprenda/como-as-pecas-de-xadrez-se-movem">
         <span class="card-num" aria-hidden="true">3</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 3 · 6 min de leitura</span>
+          <span class="card-meta">Lição 3 · 6 min de leitura</span>
           <h3 class="card-titulo">Como as Peças de Xadrez se Movem</h3>
           <span class="card-desc">Como se move cada peça do xadrez — rei, dama, torre, bispo, cavalo e peão — e como cada uma captura, com diagramas e exercícios para iniciantes.</span>
         </span>
@@ -765,7 +767,7 @@
       <li><a class="card" href="/aprenda/regras-do-xadrez">
         <span class="card-num" aria-hidden="true">4</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 4 · 5 min de leitura</span>
+          <span class="card-meta">Lição 4 · 5 min de leitura</span>
           <h3 class="card-titulo">As Regras Oficiais do Xadrez (FIDE) Explicadas</h3>
           <span class="card-desc">Todas as regras oficiais do xadrez segundo a FIDE, explicadas em português brasileiro: como cada peça se move, regras especiais, fim de partida, empates e mais.</span>
         </span>
@@ -773,7 +775,7 @@
       <li><a class="card" href="/aprenda/como-o-cavalo-se-move">
         <span class="card-num" aria-hidden="true">5</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 5 · 6 min de leitura</span>
+          <span class="card-meta">Lição 5 · 6 min de leitura</span>
           <h3 class="card-titulo">Como o Cavalo se Move no Xadrez: o Guia Definitivo</h3>
           <span class="card-desc">Tudo sobre o movimento do cavalo no xadrez: o L, por que ele pula peças, garfos, padrões táticos e como dominar a peça mais imprevisível do tabuleiro.</span>
         </span>
@@ -781,7 +783,7 @@
       <li><a class="card" href="/aprenda/valor-das-pecas-de-xadrez">
         <span class="card-num" aria-hidden="true">6</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 6 · 6 min de leitura</span>
+          <span class="card-meta">Lição 6 · 6 min de leitura</span>
           <h3 class="card-titulo">Valor das Peças de Xadrez: Quanto Vale Cada Uma</h3>
           <span class="card-desc">Quanto vale cada peça do xadrez — peão 1, cavalo 3, bispo 3, torre 5 e dama 9 — e como usar esses pontos para decidir trocas e capturas.</span>
         </span>
@@ -789,7 +791,7 @@
       <li><a class="card" href="/aprenda/xeque-xeque-mate-e-afogamento">
         <span class="card-num" aria-hidden="true">7</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 7 · 6 min de leitura</span>
+          <span class="card-meta">Lição 7 · 6 min de leitura</span>
           <h3 class="card-titulo">Xeque, Xeque-Mate e Afogamento: a Diferença</h3>
           <span class="card-desc">O que é xeque, o que é xeque-mate e o que é afogamento no xadrez, as três formas de sair do xeque e por que o afogamento é empate, com exercícios.</span>
         </span>
@@ -797,7 +799,7 @@
       <li><a class="card" href="/aprenda/roque-en-passant-e-promocao">
         <span class="card-num" aria-hidden="true">8</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 8 · 6 min de leitura</span>
+          <span class="card-meta">Lição 8 · 6 min de leitura</span>
           <h3 class="card-titulo">Roque, En Passant e Promoção: os Lances Especiais</h3>
           <span class="card-desc">Como funcionam os três lances especiais do xadrez — roque, captura en passant e promoção do peão — com as condições da FIDE, diagramas e exercícios.</span>
         </span>
@@ -805,7 +807,7 @@
       <li><a class="card" href="/aprenda/xeque-mate-em-4-lances">
         <span class="card-num" aria-hidden="true">9</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 9 · 5 min de leitura</span>
+          <span class="card-meta">Lição 9 · 5 min de leitura</span>
           <h3 class="card-titulo">Xeque-mate em 4 Lances: o Mate do Pastor</h3>
           <span class="card-desc">Aprenda o Mate do Pastor: o xeque-mate em 4 lances mais famoso do xadrez. Como dar, como defender e por que ele só funciona contra iniciantes.</span>
         </span>
@@ -813,7 +815,7 @@
       <li><a class="card" href="/aprenda/principios-de-abertura-no-xadrez">
         <span class="card-num" aria-hidden="true">10</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 10 · 6 min de leitura</span>
+          <span class="card-meta">Lição 10 · 6 min de leitura</span>
           <h3 class="card-titulo">Princípios de Abertura no Xadrez</h3>
           <span class="card-desc">Os princípios de abertura no xadrez para iniciantes — controlar o centro, desenvolver as peças, rocar cedo e não tirar a dama cedo — com exemplos e exercícios.</span>
         </span>
@@ -821,7 +823,7 @@
       <li><a class="card" href="/aprenda/aberturas-de-xadrez-para-iniciantes">
         <span class="card-num" aria-hidden="true">11</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 11 · 5 min de leitura</span>
+          <span class="card-meta">Lição 11 · 5 min de leitura</span>
           <h3 class="card-titulo">10 Aberturas de Xadrez para Iniciantes</h3>
           <span class="card-desc">As 10 melhores aberturas de xadrez para iniciantes, com os primeiros lances explicados, os princípios essenciais e qual escolher para o seu estilo de jogo.</span>
         </span>
@@ -829,7 +831,7 @@
       <li><a class="card" href="/aprenda/mates-basicos-dama-e-torre">
         <span class="card-num" aria-hidden="true">12</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 12 · 6 min de leitura</span>
+          <span class="card-meta">Lição 12 · 6 min de leitura</span>
           <h3 class="card-titulo">Mates Básicos: Dama e Torre Contra o Rei</h3>
           <span class="card-desc">Como dar xeque-mate com rei e dama, com rei e torre e com duas torres contra o rei sozinho, passo a passo, sem cair no afogamento. Com exercícios.</span>
         </span>
@@ -837,7 +839,7 @@
       <li><a class="card" href="/aprenda/empate-no-xadrez">
         <span class="card-num" aria-hidden="true">13</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 13 · 6 min de leitura</span>
+          <span class="card-meta">Lição 13 · 6 min de leitura</span>
           <h3 class="card-titulo">Empate no Xadrez: Todas as Formas de Empatar</h3>
           <span class="card-desc">Todas as formas de empate no xadrez pela FIDE — acordo, afogamento, repetição tripla, regra dos 50 lances e material insuficiente — com exercícios.</span>
         </span>
@@ -845,7 +847,7 @@
       <li><a class="card" href="/aprenda/erros-comuns-de-iniciantes">
         <span class="card-num" aria-hidden="true">14</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Iniciante</span> · Lição 14 · 6 min de leitura</span>
+          <span class="card-meta">Lição 14 · 6 min de leitura</span>
           <h3 class="card-titulo">Erros Comuns de Iniciantes no Xadrez</h3>
           <span class="card-desc">Os erros mais comuns de quem está começando no xadrez — peças sem defesa, ameaças ignoradas, dama cedo, rei no centro — e como evitar cada um, com exercícios.</span>
         </span>
@@ -853,13 +855,13 @@
     </ol>
   </section>
   <section class="nivel" id="intermediario" aria-labelledby="nivel-intermediario">
-    <h2 id="nivel-intermediario"><span class="selo nivel-intermediario">Intermediário</span> <span>Intermediário</span></h2>
+    <h2 id="nivel-intermediario" class="nivel-h nivel-cor-intermediario">Intermediário</h2>
     <p class="nivel-desc">Táticas, planos e finais básicos para começar a ganhar com consistência.</p>
     <ol class="cards">
       <li><a class="card" href="/aprenda/taticas-de-xadrez">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 1 · 6 min de leitura</span>
+          <span class="card-meta">Lição 1 · 6 min de leitura</span>
           <h3 class="card-titulo">Táticas de Xadrez: o Guia dos Padrões que Ganham Partidas</h3>
           <span class="card-desc">O que são táticas de xadrez, os padrões que todo jogador precisa conhecer (garfo, cravada, espeto, ataque descoberto, mate do corredor) e como treinar.</span>
         </span>
@@ -867,7 +869,7 @@
       <li><a class="card" href="/aprenda/garfo-no-xadrez">
         <span class="card-num" aria-hidden="true">2</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 2 · 6 min de leitura</span>
+          <span class="card-meta">Lição 2 · 6 min de leitura</span>
           <h3 class="card-titulo">Garfo no Xadrez: o Ataque Duplo que Ganha Material</h3>
           <span class="card-desc">O que é o garfo no xadrez, por que o cavalo é o rei dos garfos, garfos de peão e de dama, e 4 exercícios interativos para treinar o ataque duplo.</span>
         </span>
@@ -875,7 +877,7 @@
       <li><a class="card" href="/aprenda/cravada-no-xadrez">
         <span class="card-num" aria-hidden="true">3</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 3 · 6 min de leitura</span>
+          <span class="card-meta">Lição 3 · 6 min de leitura</span>
           <h3 class="card-titulo">Cravada no Xadrez: Absoluta, Relativa e Como Explorar</h3>
           <span class="card-desc">O que é a cravada no xadrez, a diferença entre cravada absoluta e relativa, como atacar a peça cravada e como se soltar. Com 3 exercícios interativos.</span>
         </span>
@@ -883,7 +885,7 @@
       <li><a class="card" href="/aprenda/espeto-no-xadrez">
         <span class="card-num" aria-hidden="true">4</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 4 · 6 min de leitura</span>
+          <span class="card-meta">Lição 4 · 6 min de leitura</span>
           <h3 class="card-titulo">Espeto no Xadrez: a Tática que Atravessa a Peça</h3>
           <span class="card-desc">O que é o espeto no xadrez, a diferença entre espeto e cravada, o espeto com xeque e o truque da torre nos finais. Com 3 exercícios interativos.</span>
         </span>
@@ -891,7 +893,7 @@
       <li><a class="card" href="/aprenda/ataque-descoberto-e-xeque-duplo">
         <span class="card-num" aria-hidden="true">5</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 5 · 6 min de leitura</span>
+          <span class="card-meta">Lição 5 · 6 min de leitura</span>
           <h3 class="card-titulo">Ataque Descoberto e Xeque Duplo no Xadrez</h3>
           <span class="card-desc">O que é ataque descoberto, xeque descoberto e xeque duplo no xadrez, por que o xeque duplo é a tática mais forçante e 4 exercícios interativos.</span>
         </span>
@@ -899,7 +901,7 @@
       <li><a class="card" href="/aprenda/desvio-atracao-e-sobrecarga">
         <span class="card-num" aria-hidden="true">6</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 6 · 6 min de leitura</span>
+          <span class="card-meta">Lição 6 · 6 min de leitura</span>
           <h3 class="card-titulo">Desvio, Atração e Sobrecarga no Xadrez</h3>
           <span class="card-desc">Desvio, atração e sobrecarga no xadrez: como tirar um defensor do lugar, puxar o rei para uma casa ruim e explorar uma peça com tarefas demais.</span>
         </span>
@@ -907,7 +909,7 @@
       <li><a class="card" href="/aprenda/mate-do-corredor">
         <span class="card-num" aria-hidden="true">7</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 7 · 6 min de leitura</span>
+          <span class="card-meta">Lição 7 · 6 min de leitura</span>
           <h3 class="card-titulo">Mate do Corredor: o Xeque-mate na Última Fileira</h3>
           <span class="card-desc">O que é o mate do corredor, por que o rei preso atrás dos peões é tão vulnerável, como dar esse mate, como evitá-lo e 4 exercícios interativos.</span>
         </span>
@@ -915,7 +917,7 @@
       <li><a class="card" href="/aprenda/abertura-italiana">
         <span class="card-num" aria-hidden="true">8</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 8 · 7 min de leitura</span>
+          <span class="card-meta">Lição 8 · 7 min de leitura</span>
           <h3 class="card-titulo">Abertura Italiana: Linhas, Planos e Armadilhas</h3>
           <span class="card-desc">A Abertura Italiana a fundo: Giuoco Piano, Pianissimo, Gambito Evans e Dois Cavalos, com os planos de cada lado e as armadilhas que decidem partidas.</span>
         </span>
@@ -923,7 +925,7 @@
       <li><a class="card" href="/aprenda/defesa-siciliana">
         <span class="card-num" aria-hidden="true">9</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 9 · 6 min de leitura</span>
+          <span class="card-meta">Lição 9 · 6 min de leitura</span>
           <h3 class="card-titulo">Defesa Siciliana: Najdorf, Dragão e Variantes</h3>
           <span class="card-desc">A Defesa Siciliana explicada: a Siciliana Aberta, Najdorf, Dragão, Sveshnikov e as anti-sicilianas, com os planos dos dois lados e armadilhas típicas.</span>
         </span>
@@ -931,7 +933,7 @@
       <li><a class="card" href="/aprenda/defesa-francesa-e-caro-kann">
         <span class="card-num" aria-hidden="true">10</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 10 · 6 min de leitura</span>
+          <span class="card-meta">Lição 10 · 6 min de leitura</span>
           <h3 class="card-titulo">Defesa Francesa e Caro-Kann: Planos e Variantes</h3>
           <span class="card-desc">Defesa Francesa e Caro-Kann lado a lado: Avanço, Winawer, Clássica, Trocas e Panov, os planos de cada lado e qual das duas escolher contra 1.e4.</span>
         </span>
@@ -939,7 +941,7 @@
       <li><a class="card" href="/aprenda/gambito-da-dama-e-sistema-london">
         <span class="card-num" aria-hidden="true">11</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 11 · 6 min de leitura</span>
+          <span class="card-meta">Lição 11 · 6 min de leitura</span>
           <h3 class="card-titulo">Gambito da Dama e Sistema London: Guia do 1.d4</h3>
           <span class="card-desc">Gambito da Dama (Aceito, Recusado, Eslava) e Sistema London: lances principais, planos, variantes e as armadilhas clássicas para jogar 1.d4 com confiança.</span>
         </span>
@@ -947,7 +949,7 @@
       <li><a class="card" href="/aprenda/finais-de-rei-e-peao">
         <span class="card-num" aria-hidden="true">12</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 12 · 7 min de leitura</span>
+          <span class="card-meta">Lição 12 · 7 min de leitura</span>
           <h3 class="card-titulo">Finais de Rei e Peão: Oposição, Quadrado e Rei Ativo</h3>
           <span class="card-desc">Como jogar finais de rei e peão: oposição, casas-chave, regra do quadrado, peão da torre, peão passado e rei ativo, com exercícios conferidos.</span>
         </span>
@@ -955,7 +957,7 @@
       <li><a class="card" href="/aprenda/como-analisar-suas-partidas">
         <span class="card-num" aria-hidden="true">13</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediário</span> · Lição 13 · 7 min de leitura</span>
+          <span class="card-meta">Lição 13 · 7 min de leitura</span>
           <h3 class="card-titulo">Como Analisar Suas Partidas de Xadrez</h3>
           <span class="card-desc">Um método em 6 passos para revisar suas partidas de xadrez, achar o erro decisivo, entender por que ele aconteceu e transformar derrotas em evolução.</span>
         </span>
@@ -963,13 +965,13 @@
     </ol>
   </section>
   <section class="nivel" id="avancado" aria-labelledby="nivel-avancado">
-    <h2 id="nivel-avancado"><span class="selo nivel-avancado">Avançado</span> <span>Avançado</span></h2>
+    <h2 id="nivel-avancado" class="nivel-h nivel-cor-avancado">Avançado</h2>
     <p class="nivel-desc">Estratégia, cálculo e técnica para quem já domina o básico.</p>
     <ol class="cards">
       <li><a class="card" href="/aprenda/estrategia-posicional-no-xadrez">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 1 · 6 min de leitura</span>
+          <span class="card-meta">Lição 1 · 6 min de leitura</span>
           <h3 class="card-titulo">Estratégia Posicional no Xadrez: Como Avaliar a Posição</h3>
           <span class="card-desc">O que é estratégia posicional, quais elementos avaliar (peões, casas fracas, peças, rei, espaço, colunas) e como transformar pequenas vantagens em vitória.</span>
         </span>
@@ -977,7 +979,7 @@
       <li><a class="card" href="/aprenda/estrutura-de-peoes">
         <span class="card-num" aria-hidden="true">2</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 2 · 6 min de leitura</span>
+          <span class="card-meta">Lição 2 · 6 min de leitura</span>
           <h3 class="card-titulo">Estrutura de Peões: Isolado, Dobrado, Atrasado e Mais</h3>
           <span class="card-desc">Entenda a estrutura de peões no xadrez — peão isolado, dobrado e atrasado, cadeias de peões e maiorias — e que plano seguir em cada caso, com exercícios.</span>
         </span>
@@ -985,7 +987,7 @@
       <li><a class="card" href="/aprenda/bispo-bom-bispo-ruim-e-par-de-bispos">
         <span class="card-num" aria-hidden="true">3</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 3 · 6 min de leitura</span>
+          <span class="card-meta">Lição 3 · 6 min de leitura</span>
           <h3 class="card-titulo">Bispo Bom, Bispo Ruim e o Par de Bispos</h3>
           <span class="card-desc">O que é bispo bom e bispo ruim, por que o par de bispos é uma vantagem, quando o bispo vale mais que o cavalo e o que fazer com bispos de cores opostas.</span>
         </span>
@@ -993,7 +995,7 @@
       <li><a class="card" href="/aprenda/planos-no-meio-jogo">
         <span class="card-num" aria-hidden="true">4</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 4 · 6 min de leitura</span>
+          <span class="card-meta">Lição 4 · 6 min de leitura</span>
           <h3 class="card-titulo">Planos no Meio-Jogo: Como Montar um Plano no Xadrez</h3>
           <span class="card-desc">Como montar um plano no meio-jogo: avaliar a posição, atacar na ala em que tem vantagem, dominar colunas abertas, usar postos avançados e o ataque de minoria.</span>
         </span>
@@ -1001,7 +1003,7 @@
       <li><a class="card" href="/aprenda/finais-de-torre-lucena-e-philidor">
         <span class="card-num" aria-hidden="true">5</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 5 · 7 min de leitura</span>
+          <span class="card-meta">Lição 5 · 7 min de leitura</span>
           <h3 class="card-titulo">Finais de Torre: as Posições de Lucena e Philidor</h3>
           <span class="card-desc">Aprenda as duas posições que todo jogador precisa saber nos finais de torre — Lucena (construir a ponte) e Philidor (torre na 3ª fileira) — com exercícios.</span>
         </span>
@@ -1009,7 +1011,7 @@
       <li><a class="card" href="/aprenda/sacrificios-classicos-no-xadrez">
         <span class="card-num" aria-hidden="true">6</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 6 · 7 min de leitura</span>
+          <span class="card-meta">Lição 6 · 7 min de leitura</span>
           <h3 class="card-titulo">Sacrifícios Clássicos no Xadrez: Bxh7+ e Qualidade</h3>
           <span class="card-desc">Como funcionam os sacrifícios clássicos de ataque — o Bxh7+ (sacrifício grego), o mate abafado e o sacrifício de qualidade — e como saber se um deles funciona.</span>
         </span>
@@ -1017,7 +1019,7 @@
       <li><a class="card" href="/aprenda/calculo-e-visualizacao">
         <span class="card-num" aria-hidden="true">7</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 7 · 6 min de leitura</span>
+          <span class="card-meta">Lição 7 · 6 min de leitura</span>
           <h3 class="card-titulo">Cálculo no Xadrez: Lances Candidatos e Visualização</h3>
           <span class="card-desc">Como calcular variantes no xadrez: escolher lances candidatos, começar por xeques, capturas e ameaças, avaliar a posição final e treinar a visualização.</span>
         </span>
@@ -1025,7 +1027,7 @@
       <li><a class="card" href="/aprenda/preparacao-de-aberturas">
         <span class="card-num" aria-hidden="true">8</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 8 · 6 min de leitura</span>
+          <span class="card-meta">Lição 8 · 6 min de leitura</span>
           <h3 class="card-titulo">Preparação de Aberturas: Como Montar um Repertório</h3>
           <span class="card-desc">Como montar e estudar um repertório de aberturas: escolher as linhas, aprender ideias antes de lances, organizar anotações e revisar com as suas partidas.</span>
         </span>
@@ -1033,7 +1035,7 @@
       <li><a class="card" href="/aprenda/relogio-e-psicologia-no-torneio">
         <span class="card-num" aria-hidden="true">9</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 9 · 6 min de leitura</span>
+          <span class="card-meta">Lição 9 · 6 min de leitura</span>
           <h3 class="card-titulo">Relógio e Psicologia no Xadrez: Tempo e Nervosismo</h3>
           <span class="card-desc">Como administrar o tempo no relógio, evitar o zeitnot, controlar o nervosismo e como jogar quando está em vantagem ou em desvantagem numa partida de xadrez.</span>
         </span>
@@ -1041,7 +1043,7 @@
       <li><a class="card" href="/aprenda/como-treinar-xadrez">
         <span class="card-num" aria-hidden="true">10</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Avançado</span> · Lição 10 · 6 min de leitura</span>
+          <span class="card-meta">Lição 10 · 6 min de leitura</span>
           <h3 class="card-titulo">Como Treinar Xadrez: Plano de Estudo Semanal</h3>
           <span class="card-desc">Um plano de estudo semanal para evoluir no xadrez: táticas, finais, aberturas, partidas contra a IA, torneios e análise, com quanto tempo dedicar a cada parte.</span>
         </span>
@@ -1049,13 +1051,13 @@
     </ol>
   </section>
   <section class="nivel" id="dicas" aria-labelledby="nivel-dicas">
-    <h2 id="nivel-dicas"><span class="selo nivel-dicas">Dicas</span> <span>Dicas</span></h2>
+    <h2 id="nivel-dicas" class="nivel-h nivel-cor-dicas">Dicas</h2>
     <p class="nivel-desc">Formatos, hábitos e conselhos práticos para evoluir mais rápido.</p>
     <ol class="cards">
       <li><a class="card" href="/aprenda/xadrez-classico-blitz-bullet">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-dicas">Dicas</span> · Lição 1 · 4 min de leitura</span>
+          <span class="card-meta">Lição 1 · 4 min de leitura</span>
           <h3 class="card-titulo">Xadrez Clássico, Rápido, Blitz e Bullet: as Diferenças</h3>
           <span class="card-desc">Entenda os formatos de xadrez por tempo: clássico, rápido, blitz e bullet. As diferenças, regras de cada um e qual escolher de acordo com seu nível.</span>
         </span>
@@ -1072,6 +1074,6 @@
   <a href="/termos">Termos de Uso</a> •
   <a href="mailto:alternativasderenda@gmail.com">Contato</a>
 </footer>
-<script src="/aprenda/aprenda.js?v=e4740bb5a7" defer></script>
+<script src="/aprenda/aprenda.js?v=8d8101862d" defer></script>
 </body>
 </html>

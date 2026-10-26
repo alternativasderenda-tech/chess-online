@@ -15,7 +15,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600;700&display=swap">
-<link rel="stylesheet" href="/aprenda/post.css?v=3bff02f431">
+<link rel="stylesheet" href="/aprenda/post.css?v=6ebcac4a2d">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Learn Chess: a Free Course from Beginner to Advanced">
 <meta property="og:description" content="A free chess course: rules, piece moves, tactics, openings, endgames and strategy, in one path from beginner to advanced.">
@@ -44,6 +44,7 @@
   "provider": {
     "@type": "Organization",
     "name": "Xadrez Online",
+    "alternateName": "Chess Online",
     "url": "https://xadrezonline.app/",
     "logo": {
       "@type": "ImageObject",
@@ -716,8 +717,8 @@
 <main class="container largo" id="conteudo">
   <header class="indice-cab">
     <h1>Learn Chess</h1>
-    <p class="lead">A complete path from your first move to advanced play: short guides, diagrams and interactive exercises. Free.</p>
-    <a href="/en" class="cta-btn">▶ Play now</a>
+    <p class="lead">A free chess course with 38 lessons in 4 levels — Beginner, Intermediate, Advanced and Tips — from your first move to advanced play, with diagrams and interactive exercises. Never played? Start with lesson 1 and follow the order.</p>
+    <p class="comece"><a href="/en/learn/how-to-play-chess-for-beginners" class="cta-btn">Start here: lesson 1 →</a><a href="/en" class="secundario">or play a game</a></p>
   </header>
   <nav class="niveis" aria-label="Levels">
     <a href="#iniciante">Beginner</a>
@@ -729,18 +730,19 @@
     <label for="busca-campo">Search the guides</label>
     <input type="search" id="busca-campo" placeholder="Search: fork, castling, mate…" autocomplete="off" spellcheck="false">
     <p class="busca-status" id="busca-status" role="status" aria-live="polite"
-       data-nada="No guide found for this search." data-um="1 guide found" data-n="{n} guides found"></p>
+       data-nada="No guide found. Try &quot;checkmate&quot;, &quot;opening&quot; or browse the path below." data-um="1 guide found" data-n="{n} guides found"></p>
+    <button type="button" class="btn busca-limpar" id="busca-limpar" hidden>Clear search</button>
     <ol class="cards" id="busca-res" hidden></ol>
   </div>
   <div id="trilha">
   <section class="nivel" id="iniciante" aria-labelledby="nivel-iniciante">
-    <h2 id="nivel-iniciante"><span class="selo nivel-iniciante">Beginner</span> <span>Beginner</span></h2>
+    <h2 id="nivel-iniciante" class="nivel-h nivel-cor-iniciante">Beginner</h2>
     <p class="nivel-desc">From scratch: the pieces, the rules and the first ideas to play your first game.</p>
     <ol class="cards">
       <li><a class="card" href="/en/learn/how-to-play-chess-for-beginners">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 1 · 7 min read</span>
+          <span class="card-meta">Lesson 1 · 7 min read</span>
           <h3 class="card-titulo">How to Play Chess for Beginners: Complete Guide</h3>
           <span class="card-desc">Learn how to play chess from scratch in 5 steps: the board, how each piece moves, special moves, checkmate, and how to practice. A free beginner's guide.</span>
         </span>
@@ -748,7 +750,7 @@
       <li><a class="card" href="/en/learn/chessboard-and-chess-notation">
         <span class="card-num" aria-hidden="true">2</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 2 · 6 min read</span>
+          <span class="card-meta">Lesson 2 · 6 min read</span>
           <h3 class="card-titulo">The Chessboard and Chess Notation Explained</h3>
           <span class="card-desc">How to set up a chessboard, what files, ranks and squares are, and how to read and write moves in algebraic notation, with examples and exercises.</span>
         </span>
@@ -756,7 +758,7 @@
       <li><a class="card" href="/en/learn/how-chess-pieces-move">
         <span class="card-num" aria-hidden="true">3</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 3 · 6 min read</span>
+          <span class="card-meta">Lesson 3 · 6 min read</span>
           <h3 class="card-titulo">How Chess Pieces Move</h3>
           <span class="card-desc">How each chess piece moves — king, queen, rook, bishop, knight and pawn — and how each one captures, with diagrams and exercises for beginners.</span>
         </span>
@@ -764,7 +766,7 @@
       <li><a class="card" href="/en/learn/chess-rules">
         <span class="card-num" aria-hidden="true">4</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 4 · 6 min read</span>
+          <span class="card-meta">Lesson 4 · 6 min read</span>
           <h3 class="card-titulo">The Official Rules of Chess (FIDE) Explained</h3>
           <span class="card-desc">All the official rules of chess according to FIDE, explained in plain English: how each piece moves, special moves, how games end, draws and more.</span>
         </span>
@@ -772,7 +774,7 @@
       <li><a class="card" href="/en/learn/how-the-knight-moves">
         <span class="card-num" aria-hidden="true">5</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 5 · 6 min read</span>
+          <span class="card-meta">Lesson 5 · 6 min read</span>
           <h3 class="card-titulo">How the Knight Moves in Chess: The Definitive Guide</h3>
           <span class="card-desc">How the knight moves in chess: the L-shape, why it jumps over pieces, forks, tactical patterns and how to master the board's most unpredictable piece.</span>
         </span>
@@ -780,7 +782,7 @@
       <li><a class="card" href="/en/learn/chess-piece-values">
         <span class="card-num" aria-hidden="true">6</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 6 · 6 min read</span>
+          <span class="card-meta">Lesson 6 · 6 min read</span>
           <h3 class="card-titulo">Chess Piece Values: How Much Each Piece Is Worth</h3>
           <span class="card-desc">How much each chess piece is worth — pawn 1, knight 3, bishop 3, rook 5, queen 9 — and how to use those points to judge trades and captures.</span>
         </span>
@@ -788,7 +790,7 @@
       <li><a class="card" href="/en/learn/check-checkmate-and-stalemate">
         <span class="card-num" aria-hidden="true">7</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 7 · 6 min read</span>
+          <span class="card-meta">Lesson 7 · 6 min read</span>
           <h3 class="card-titulo">Check, Checkmate and Stalemate: the Difference</h3>
           <span class="card-desc">What check, checkmate and stalemate mean in chess, the three ways to get out of check, and why stalemate is a draw, with exercises for beginners.</span>
         </span>
@@ -796,7 +798,7 @@
       <li><a class="card" href="/en/learn/castling-en-passant-and-promotion">
         <span class="card-num" aria-hidden="true">8</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 8 · 6 min read</span>
+          <span class="card-meta">Lesson 8 · 6 min read</span>
           <h3 class="card-titulo">Castling, En Passant and Promotion Explained</h3>
           <span class="card-desc">How the three special moves in chess work — castling, en passant and pawn promotion — with the FIDE conditions, diagrams and exercises for beginners.</span>
         </span>
@@ -804,7 +806,7 @@
       <li><a class="card" href="/en/learn/four-move-checkmate-scholars-mate">
         <span class="card-num" aria-hidden="true">9</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 9 · 5 min read</span>
+          <span class="card-meta">Lesson 9 · 5 min read</span>
           <h3 class="card-titulo">Four-Move Checkmate: the Scholar's Mate</h3>
           <span class="card-desc">Learn the Scholar's Mate: the most famous four-move checkmate in chess. How to deliver it, how to defend against it, and why it only works against beginners.</span>
         </span>
@@ -812,7 +814,7 @@
       <li><a class="card" href="/en/learn/chess-opening-principles">
         <span class="card-num" aria-hidden="true">10</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 10 · 6 min read</span>
+          <span class="card-meta">Lesson 10 · 6 min read</span>
           <h3 class="card-titulo">Chess Opening Principles for Beginners</h3>
           <span class="card-desc">The opening principles every chess beginner should know — control the center, develop your pieces, castle early, keep the queen home — with exercises.</span>
         </span>
@@ -820,7 +822,7 @@
       <li><a class="card" href="/en/learn/chess-openings-for-beginners">
         <span class="card-num" aria-hidden="true">11</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 11 · 5 min read</span>
+          <span class="card-meta">Lesson 11 · 5 min read</span>
           <h3 class="card-titulo">10 Chess Openings for Beginners</h3>
           <span class="card-desc">The 10 best chess openings for beginners, with the first moves explained, the core principles, and how to pick the right one for your playing style.</span>
         </span>
@@ -828,7 +830,7 @@
       <li><a class="card" href="/en/learn/basic-checkmates-queen-and-rook">
         <span class="card-num" aria-hidden="true">12</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 12 · 6 min read</span>
+          <span class="card-meta">Lesson 12 · 6 min read</span>
           <h3 class="card-titulo">Basic Checkmates with Queen and Rook</h3>
           <span class="card-desc">How to checkmate a lone king with king and queen, king and rook, or two rooks, step by step and without stalemating. With exercises for beginners.</span>
         </span>
@@ -836,7 +838,7 @@
       <li><a class="card" href="/en/learn/draws-in-chess">
         <span class="card-num" aria-hidden="true">13</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 13 · 6 min read</span>
+          <span class="card-meta">Lesson 13 · 6 min read</span>
           <h3 class="card-titulo">Draws in Chess: Every Way a Game Can Be Drawn</h3>
           <span class="card-desc">Every way a chess game can be drawn under FIDE rules — agreement, stalemate, threefold repetition, the 50-move rule and insufficient material.</span>
         </span>
@@ -844,7 +846,7 @@
       <li><a class="card" href="/en/learn/common-beginner-mistakes">
         <span class="card-num" aria-hidden="true">14</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 14 · 6 min read</span>
+          <span class="card-meta">Lesson 14 · 6 min read</span>
           <h3 class="card-titulo">Common Chess Mistakes Beginners Make</h3>
           <span class="card-desc">The most common chess mistakes beginners make — hanging pieces, missed threats, early queen moves, an uncastled king — and how to avoid them.</span>
         </span>
@@ -852,13 +854,13 @@
     </ol>
   </section>
   <section class="nivel" id="intermediario" aria-labelledby="nivel-intermediario">
-    <h2 id="nivel-intermediario"><span class="selo nivel-intermediario">Intermediate</span> <span>Intermediate</span></h2>
+    <h2 id="nivel-intermediario" class="nivel-h nivel-cor-intermediario">Intermediate</h2>
     <p class="nivel-desc">Tactics, plans and basic endgames to start winning consistently.</p>
     <ol class="cards">
       <li><a class="card" href="/en/learn/chess-tactics-explained">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 1 · 6 min read</span>
+          <span class="card-meta">Lesson 1 · 6 min read</span>
           <h3 class="card-titulo">Chess Tactics Explained: the Patterns That Win Games</h3>
           <span class="card-desc">What chess tactics are, the patterns every player needs to know (fork, pin, skewer, discovered attack, back-rank mate) and how to practise them.</span>
         </span>
@@ -866,7 +868,7 @@
       <li><a class="card" href="/en/learn/fork-in-chess">
         <span class="card-num" aria-hidden="true">2</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 2 · 6 min read</span>
+          <span class="card-meta">Lesson 2 · 6 min read</span>
           <h3 class="card-titulo">Fork in Chess: the Double Attack That Wins Material</h3>
           <span class="card-desc">What a fork is in chess, why the knight is the king of forks, pawn and queen forks, plus 4 interactive puzzles to practise the double attack.</span>
         </span>
@@ -874,7 +876,7 @@
       <li><a class="card" href="/en/learn/pin-in-chess">
         <span class="card-num" aria-hidden="true">3</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 3 · 6 min read</span>
+          <span class="card-meta">Lesson 3 · 6 min read</span>
           <h3 class="card-titulo">Pin in Chess: Absolute, Relative and How to Exploit It</h3>
           <span class="card-desc">What a pin is in chess, the difference between absolute and relative pins, how to attack a pinned piece and how to break free. With 3 interactive puzzles.</span>
         </span>
@@ -882,7 +884,7 @@
       <li><a class="card" href="/en/learn/skewer-in-chess">
         <span class="card-num" aria-hidden="true">4</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 4 · 6 min read</span>
+          <span class="card-meta">Lesson 4 · 6 min read</span>
           <h3 class="card-titulo">Skewer in Chess: the Tactic That Goes Through a Piece</h3>
           <span class="card-desc">What a skewer is in chess, skewer vs pin, the skewer with check and the classic rook-endgame trick. With 3 interactive puzzles to practise.</span>
         </span>
@@ -890,7 +892,7 @@
       <li><a class="card" href="/en/learn/discovered-attack-and-double-check">
         <span class="card-num" aria-hidden="true">5</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 5 · 6 min read</span>
+          <span class="card-meta">Lesson 5 · 6 min read</span>
           <h3 class="card-titulo">Discovered Attack and Double Check in Chess</h3>
           <span class="card-desc">What a discovered attack, a discovered check and a double check are in chess, why double check is the most forcing tactic, plus 4 interactive puzzles.</span>
         </span>
@@ -898,7 +900,7 @@
       <li><a class="card" href="/en/learn/deflection-decoy-and-overloading">
         <span class="card-num" aria-hidden="true">6</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 6 · 6 min read</span>
+          <span class="card-meta">Lesson 6 · 6 min read</span>
           <h3 class="card-titulo">Deflection, Decoy and Overloading in Chess</h3>
           <span class="card-desc">Deflection, decoy and overloading in chess: how to drive a defender away, lure the king onto a bad square and exploit a piece with too many jobs.</span>
         </span>
@@ -906,7 +908,7 @@
       <li><a class="card" href="/en/learn/back-rank-mate">
         <span class="card-num" aria-hidden="true">7</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 7 · 6 min read</span>
+          <span class="card-meta">Lesson 7 · 6 min read</span>
           <h3 class="card-titulo">Back-Rank Mate: Checkmate on the Last Rank</h3>
           <span class="card-desc">What a back-rank mate is, why a king trapped behind its pawns is so vulnerable, how to deliver this mate, how to avoid it, plus 4 interactive puzzles.</span>
         </span>
@@ -914,7 +916,7 @@
       <li><a class="card" href="/en/learn/italian-game">
         <span class="card-num" aria-hidden="true">8</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 8 · 7 min read</span>
+          <span class="card-meta">Lesson 8 · 7 min read</span>
           <h3 class="card-titulo">Italian Game: Main Lines, Plans and Traps</h3>
           <span class="card-desc">The Italian Game in depth: Giuoco Piano, Pianissimo, Evans Gambit and Two Knights, with each side's plans and the traps that decide games.</span>
         </span>
@@ -922,7 +924,7 @@
       <li><a class="card" href="/en/learn/sicilian-defense">
         <span class="card-num" aria-hidden="true">9</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 9 · 6 min read</span>
+          <span class="card-meta">Lesson 9 · 6 min read</span>
           <h3 class="card-titulo">Sicilian Defense: Najdorf, Dragon and More</h3>
           <span class="card-desc">The Sicilian Defense explained: the Open Sicilian, Najdorf, Dragon, Sveshnikov and the Anti-Sicilians, with both sides' plans and typical traps.</span>
         </span>
@@ -930,7 +932,7 @@
       <li><a class="card" href="/en/learn/french-and-caro-kann-defense">
         <span class="card-num" aria-hidden="true">10</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 10 · 6 min read</span>
+          <span class="card-meta">Lesson 10 · 6 min read</span>
           <h3 class="card-titulo">French and Caro-Kann Defense: Plans and Lines</h3>
           <span class="card-desc">The French and Caro-Kann side by side: Advance, Winawer, Classical, Exchange and Panov, each side's plans and which of the two to choose against 1.e4.</span>
         </span>
@@ -938,7 +940,7 @@
       <li><a class="card" href="/en/learn/queens-gambit-and-london-system">
         <span class="card-num" aria-hidden="true">11</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 11 · 6 min read</span>
+          <span class="card-meta">Lesson 11 · 6 min read</span>
           <h3 class="card-titulo">Queen's Gambit and London System: 1.d4 Guide</h3>
           <span class="card-desc">The Queen's Gambit (Accepted, Declined, Slav) and the London System: main lines, plans, variations and the classic traps for playing 1.d4 with confidence.</span>
         </span>
@@ -946,7 +948,7 @@
       <li><a class="card" href="/en/learn/king-and-pawn-endgames">
         <span class="card-num" aria-hidden="true">12</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 12 · 7 min read</span>
+          <span class="card-meta">Lesson 12 · 7 min read</span>
           <h3 class="card-titulo">King and Pawn Endgames: Opposition, Square, Active King</h3>
           <span class="card-desc">How to play king and pawn endgames: opposition, key squares, the rule of the square, rook pawns, passed pawns and the active king, with checked exercises.</span>
         </span>
@@ -954,7 +956,7 @@
       <li><a class="card" href="/en/learn/how-to-analyze-your-chess-games">
         <span class="card-num" aria-hidden="true">13</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-intermediario">Intermediate</span> · Lesson 13 · 7 min read</span>
+          <span class="card-meta">Lesson 13 · 7 min read</span>
           <h3 class="card-titulo">How to Analyze Your Chess Games</h3>
           <span class="card-desc">A 6-step method for reviewing your chess games, finding the decisive mistake, understanding why it happened and turning losses into progress.</span>
         </span>
@@ -962,13 +964,13 @@
     </ol>
   </section>
   <section class="nivel" id="avancado" aria-labelledby="nivel-avancado">
-    <h2 id="nivel-avancado"><span class="selo nivel-avancado">Advanced</span> <span>Advanced</span></h2>
+    <h2 id="nivel-avancado" class="nivel-h nivel-cor-avancado">Advanced</h2>
     <p class="nivel-desc">Strategy, calculation and technique for players who know the basics.</p>
     <ol class="cards">
       <li><a class="card" href="/en/learn/positional-chess-strategy">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 1 · 6 min read</span>
+          <span class="card-meta">Lesson 1 · 6 min read</span>
           <h3 class="card-titulo">Positional Chess Strategy: How to Evaluate a Position</h3>
           <span class="card-desc">What positional strategy is in chess, which elements to evaluate (pawns, weak squares, pieces, king, space, files) and how to turn small advantages into a win.</span>
         </span>
@@ -976,7 +978,7 @@
       <li><a class="card" href="/en/learn/pawn-structure">
         <span class="card-num" aria-hidden="true">2</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 2 · 6 min read</span>
+          <span class="card-meta">Lesson 2 · 6 min read</span>
           <h3 class="card-titulo">Pawn Structure: Isolated, Doubled, Backward and More</h3>
           <span class="card-desc">Understand pawn structure in chess — isolated, doubled and backward pawns, pawn chains and majorities — and which plan to follow in each case, with exercises.</span>
         </span>
@@ -984,7 +986,7 @@
       <li><a class="card" href="/en/learn/good-bishop-bad-bishop-bishop-pair">
         <span class="card-num" aria-hidden="true">3</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 3 · 6 min read</span>
+          <span class="card-meta">Lesson 3 · 6 min read</span>
           <h3 class="card-titulo">Good Bishop, Bad Bishop and the Bishop Pair</h3>
           <span class="card-desc">What good and bad bishops are, why the bishop pair is an advantage, when a bishop is worth more than a knight, and how to handle opposite-colored bishops.</span>
         </span>
@@ -992,7 +994,7 @@
       <li><a class="card" href="/en/learn/middlegame-plans">
         <span class="card-num" aria-hidden="true">4</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 4 · 6 min read</span>
+          <span class="card-meta">Lesson 4 · 6 min read</span>
           <h3 class="card-titulo">Middlegame Plans: How to Make a Plan in Chess</h3>
           <span class="card-desc">How to make a middlegame plan: evaluate the position, attack on the wing where you're stronger, control open files, use outposts and the minority attack.</span>
         </span>
@@ -1000,7 +1002,7 @@
       <li><a class="card" href="/en/learn/rook-endgames-lucena-and-philidor">
         <span class="card-num" aria-hidden="true">5</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 5 · 7 min read</span>
+          <span class="card-meta">Lesson 5 · 7 min read</span>
           <h3 class="card-titulo">Rook Endgames: the Lucena and Philidor Positions</h3>
           <span class="card-desc">Learn the two positions every player must know in rook endgames — Lucena (building a bridge) and Philidor (rook on the third rank) — with exercises.</span>
         </span>
@@ -1008,7 +1010,7 @@
       <li><a class="card" href="/en/learn/classic-chess-sacrifices">
         <span class="card-num" aria-hidden="true">6</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 6 · 7 min read</span>
+          <span class="card-meta">Lesson 6 · 7 min read</span>
           <h3 class="card-titulo">Classic Chess Sacrifices: Bxh7+ and the Exchange</h3>
           <span class="card-desc">How the classic attacking sacrifices work — Bxh7+ (the Greek gift), the smothered mate and the exchange sacrifice — and how to tell whether one of them works.</span>
         </span>
@@ -1016,7 +1018,7 @@
       <li><a class="card" href="/en/learn/calculation-and-visualization">
         <span class="card-num" aria-hidden="true">7</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 7 · 6 min read</span>
+          <span class="card-meta">Lesson 7 · 6 min read</span>
           <h3 class="card-titulo">Calculation in Chess: Candidate Moves and Visualization</h3>
           <span class="card-desc">How to calculate variations in chess: pick candidate moves, start with checks, captures and threats, evaluate the final position and train your visualization.</span>
         </span>
@@ -1024,7 +1026,7 @@
       <li><a class="card" href="/en/learn/opening-preparation">
         <span class="card-num" aria-hidden="true">8</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 8 · 6 min read</span>
+          <span class="card-meta">Lesson 8 · 6 min read</span>
           <h3 class="card-titulo">Opening Preparation: How to Build a Repertoire</h3>
           <span class="card-desc">How to build and study a chess opening repertoire: choose your lines, learn ideas before moves, organize your notes and review them with your own games.</span>
         </span>
@@ -1032,7 +1034,7 @@
       <li><a class="card" href="/en/learn/time-management-and-tournament-psychology">
         <span class="card-num" aria-hidden="true">9</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 9 · 6 min read</span>
+          <span class="card-meta">Lesson 9 · 6 min read</span>
           <h3 class="card-titulo">Chess Clock and Psychology: Time and Nerves</h3>
           <span class="card-desc">How to manage your time on the chess clock, avoid time trouble, control your nerves and how to play when you're winning or losing a chess game.</span>
         </span>
@@ -1040,7 +1042,7 @@
       <li><a class="card" href="/en/learn/how-to-train-chess">
         <span class="card-num" aria-hidden="true">10</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-avancado">Advanced</span> · Lesson 10 · 6 min read</span>
+          <span class="card-meta">Lesson 10 · 6 min read</span>
           <h3 class="card-titulo">How to Train Chess: a Weekly Study Plan</h3>
           <span class="card-desc">A weekly study plan to improve at chess: tactics, endgames, openings, games against the AI, tournaments and analysis, with how much time to give each part.</span>
         </span>
@@ -1048,13 +1050,13 @@
     </ol>
   </section>
   <section class="nivel" id="dicas" aria-labelledby="nivel-dicas">
-    <h2 id="nivel-dicas"><span class="selo nivel-dicas">Tips</span> <span>Tips</span></h2>
+    <h2 id="nivel-dicas" class="nivel-h nivel-cor-dicas">Tips</h2>
     <p class="nivel-desc">Formats, habits and practical advice to improve faster.</p>
     <ol class="cards">
       <li><a class="card" href="/en/learn/classical-rapid-blitz-bullet-chess">
         <span class="card-num" aria-hidden="true">1</span>
         <span class="card-corpo">
-          <span class="card-meta"><span class="selo nivel-dicas">Tips</span> · Lesson 1 · 4 min read</span>
+          <span class="card-meta">Lesson 1 · 4 min read</span>
           <h3 class="card-titulo">Classical, Rapid, Blitz and Bullet Chess: the Differences</h3>
           <span class="card-desc">Understand chess time controls: classical, rapid, blitz and bullet. The differences, the rules of each one and which to choose based on your level.</span>
         </span>
@@ -1071,6 +1073,6 @@
   <a href="/en/terms">Terms of Use</a> •
   <a href="mailto:alternativasderenda@gmail.com">Contact</a>
 </footer>
-<script src="/aprenda/aprenda.js?v=e4740bb5a7" defer></script>
+<script src="/aprenda/aprenda.js?v=8d8101862d" defer></script>
 </body>
 </html>

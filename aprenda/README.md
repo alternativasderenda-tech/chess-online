@@ -1,7 +1,7 @@
 # Aprenda — como escrever e publicar
 
 As páginas de `aprenda/` e `en/learn/` são **geradas**. Não edite o HTML: edite a fonte em Markdown e rode o gerador.
-Decisões em `servidor/DECISOES.md` (D-APR-01…12).
+Decisões em `servidor/DECISOES.md` (D-APR-01…18).
 
 ```
 aprenda/fonte/pt/<slug>.md      ← artigo em português  → /aprenda/<slug>
@@ -135,8 +135,10 @@ explicacao: 4.Dxf7# — a dama captura com a proteção do bispo de c4.
   outro lance que dê mate no último passo. Para N ≤ 2 o gerador prova se o mate é forçado (aviso se não for, ou se
   houver mate mais curto). `tipo: tatica` (padrão) aceita só os lances da solução.
 - Quem resolve é o lado da vez no FEN; com as Pretas o tabuleiro vira sozinho (`virar:` força).
-- Sem JS: diagrama estático + dica e solução em `<details>`. Com JS: tabuleiro de toque/clique, "Mostrar dica",
-  "Ver solução", "Recomeçar"; lance legal fora da solução = "tente de novo"; ilegal = recusado.
+- Sem JS: diagrama estático + dica e solução em `<details>`. Com JS: tabuleiro de toque/clique/arrasto e teclado
+  (uma parada de Tab, setas, Enter), "Mostrar dica", "Ver solução", "Recomeçar"; lance legal fora da solução = "tente
+  de novo"; ilegal = recusado. Na promoção o aluno escolhe a peça (Dama, Torre, Bispo, Cavalo): só a da solução vale
+  (ou outra que também dê mate, em `tipo: mate`), e a peça errada na casa certa ganha uma mensagem própria (D-APR-13).
 
 ## O que o gerador valida
 

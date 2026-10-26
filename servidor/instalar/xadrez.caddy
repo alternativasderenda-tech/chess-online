@@ -25,6 +25,19 @@ xadrezonline.app {
 	}
 	handle {
 		root * /opt/xadrez/site
+		# URL única (D-APR-14; o Vercel fazia isso com cleanUrls): /x.html, /pasta/index.html, /pasta/index e /pasta/ dão
+		# 301 para a URL limpa, mantendo a query. Na ordem do Caddy, redir roda antes de rewrite e try_files, então não há
+		# laço. Os handle de cima (/rest, /auth, /xrt, /functions, /pagamentos, /t/, /en/t/) nem passam por aqui. Ficam de
+		# fora /index.html (o sw.js o pré-carrega) e /404.html.
+		@html {
+			path_regexp html ^(/.+?)(?:/index)?\.html$
+			not path /index.html /404.html
+		}
+		redir @html {re.html.1}{?query} permanent
+		@indice path_regexp indice ^(/.+)/index$
+		redir @indice {re.indice.1}{?query} permanent
+		@barra path_regexp barra ^(/.+)/$
+		redir @barra {re.barra.1}{?query} permanent
 		# /en/tournaments = a página de torneios em inglês (mesmo arquivo; o idioma sai da URL)
 		rewrite /en/tournaments /torneios.html
 		rewrite /en /
@@ -35,6 +48,9 @@ xadrezonline.app {
 		header @img Cache-Control "public, max-age=86400, immutable"
 		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
 		header @semcache Cache-Control "public, max-age=0, must-revalidate"
+		# CSS/JS do Aprenda com ?v=<hash do conteúdo> (D-APR-08): o endereço muda quando o arquivo muda (LAY-desempenho-18)
+		@versionado query v=*
+		header @versionado Cache-Control "public, max-age=31536000, immutable"
 		file_server
 	}
 	# 404 (D-APR-09): página bilíngue com links para o jogo, o Aprenda e os torneios, com status 404 de verdade
@@ -79,6 +95,19 @@ novo.xadrezonline.app {
 	}
 	handle {
 		root * /opt/xadrez/site-teste
+		# URL única (D-APR-14; o Vercel fazia isso com cleanUrls): /x.html, /pasta/index.html, /pasta/index e /pasta/ dão
+		# 301 para a URL limpa, mantendo a query. Na ordem do Caddy, redir roda antes de rewrite e try_files, então não há
+		# laço. Os handle de cima (/rest, /auth, /xrt, /functions, /pagamentos, /t/, /en/t/) nem passam por aqui. Ficam de
+		# fora /index.html (o sw.js o pré-carrega) e /404.html.
+		@html {
+			path_regexp html ^(/.+?)(?:/index)?\.html$
+			not path /index.html /404.html
+		}
+		redir @html {re.html.1}{?query} permanent
+		@indice path_regexp indice ^(/.+)/index$
+		redir @indice {re.indice.1}{?query} permanent
+		@barra path_regexp barra ^(/.+)/$
+		redir @barra {re.barra.1}{?query} permanent
 		# /en/tournaments = a página de torneios em inglês (mesmo arquivo; o idioma sai da URL)
 		rewrite /en/tournaments /torneios.html
 		rewrite /en /
@@ -89,6 +118,9 @@ novo.xadrezonline.app {
 		header @img Cache-Control "public, max-age=86400, immutable"
 		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
 		header @semcache Cache-Control "public, max-age=0, must-revalidate"
+		# CSS/JS do Aprenda com ?v=<hash do conteúdo> (D-APR-08): o endereço muda quando o arquivo muda (LAY-desempenho-18)
+		@versionado query v=*
+		header @versionado Cache-Control "public, max-age=31536000, immutable"
 		file_server
 	}
 	# 404 (D-APR-09): página bilíngue com links para o jogo, o Aprenda e os torneios, com status 404 de verdade
