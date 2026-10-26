@@ -781,9 +781,10 @@ async function ctEnviar(id, b) {
   if (st !== 200) {
     const motivo = { sem_smtp: 'o servidor está sem e-mail configurado', limite: 'limite de 60 respostas por hora', admin: 'sua conta não é admin',
       sessao: 'sessão vencida — recarregue a página', nao_encontrada: 'mensagem não encontrada', envio: 'o Gmail recusou: ' + (j.detalhe || '') }[j.erro];
-    msg.style.color = 'var(--danger)';
-    msg.textContent = '✗ Não enviada' + (motivo ? ': ' + motivo : st ? ` (HTTP ${st})` : ' (sem conexão)') + '.';
-    if (j.erro === 'envio') loadContatos();   // a tentativa que falhou entra no histórico
+    const texto = '✗ Não enviada' + (motivo ? ': ' + motivo : st ? ` (HTTP ${st})` : ' (sem conexão)') + '.';
+    if (j.erro === 'envio') await loadContatos();   // a tentativa que falhou entra no histórico (o redesenho troca o cartão)
+    const m = document.getElementById('ct-resp-' + id)?.closest('.ct-caixa')?.querySelector('.ct-envio') || msg;
+    m.style.color = 'var(--danger)'; m.textContent = texto;
     return;
   }
   delete ctRascunho[id]; ctAberta.delete(id);
