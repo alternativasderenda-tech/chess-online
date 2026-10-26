@@ -77,8 +77,8 @@ Many popular openings revolve around a pin, and knowing them helps you avoid tra
 
 - **Bb5 against the c6 knight** (Ruy Lopez): it becomes an absolute pin once the d7 pawn moves out of the way; before that, the bishop simply attacks the knight.
 - **Bg5 against the f6 knight**: a relative pin, with the queen on d8 behind. It shows up in many 1.d4 openings.
-- **Bb4 against the c3 knight**: Black's version, for example in the Nimzo-Indian Defence (1.d4 Nf6 2.c4 e6 3.Nc3 Bb4).
-- **...Bg4 against the f3 knight**: a relative pin against the queen on d1, common in many defences.
+- **Bb4 against the c3 knight**: Black's version, for example in the Nimzo-Indian Defense (1.d4 Nf6 2.c4 e6 3.Nc3 Bb4).
+- **...Bg4 against the f3 knight**: a relative pin against the queen on d1, common in many defenses.
 
 None of these pins wins material on its own. They create pressure: the pinned piece becomes less useful, and any slip (a pawn advance, another piece joining the attack) can decide the game. A common mistake by the side being pinned is to break the pin at any cost with ...h6 and ...g5 (or h3 and g4): sometimes it works, but the advanced pawns weaken their own king.
 
@@ -93,7 +93,7 @@ None of these pins wins material on its own. They create pressure: the pinned pi
 **💡 Tip:** the pin is a close relative of the [skewer](artigo:espeto). In a pin, the front piece is worth less; in a skewer, the front piece is worth more. Learning one helps you see the other.
 :::
 
-:::pratique Practise pins now
+:::pratique Practice pins now
 Play against the computer and look for enemy pieces lined up with the king or queen. At Medium level these pins appear often, right from the opening.
 :::
 
@@ -139,6 +139,6 @@ Only the bishop, rook and queen, because only they attack along lines. Knights, 
 
 Yes. A pinned piece still controls the squares it attacks: the enemy king cannot step onto them, and it can even give check. What it cannot do is leave the line of the pin if that would expose its own king.
 
-### How do I practise pins?
+### How do I practice pins?
 
 Solve puzzles and, in your games, look for enemy pieces lined up with the king or queen. See also the overview of [chess tactics](artigo:taticas).

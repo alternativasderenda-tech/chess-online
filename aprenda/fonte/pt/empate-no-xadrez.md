@@ -12,7 +12,7 @@ jogar: 2
 relacionados: [xeque-mate-e-afogamento, mates-basicos, finais-de-peao, regras, ritmos-de-jogo]
 ensina: [Afogamento, Repetição tripla, Regra dos 50 lances, Material insuficiente, Xeque perpétuo]
 ---
-Um **empate** no xadrez é o resultado em que nenhum jogador vence: cada um recebe meio ponto. Pelas regras da FIDE, a partida empata por **acordo entre os jogadores**, por **afogamento**, por **repetição tripla** da mesma posição, pela **regra dos 50 lances** ou quando nenhum lado consegue mais dar xeque-mate, como no caso de **material insuficiente**. Conhecer essas regras ajuda quem está ganhando a não deixar a vitória escapar, e quem está perdendo a encontrar uma salvação.
+Um **empate** no xadrez é o resultado em que nenhum jogador vence: cada um recebe meio ponto. Pelas [regras da FIDE](artigo:regras#empates), a partida empata por **acordo entre os jogadores**, por **afogamento**, por **repetição tripla** da mesma posição, pela **regra dos 50 lances** ou quando nenhum lado consegue mais dar xeque-mate, como no caso de **material insuficiente**. Conhecer essas regras ajuda quem está ganhando a não deixar a vitória escapar, e quem está perdendo a encontrar uma salvação.
 
 ## 1. Empate por acordo {#acordo "1. Acordo"}
 
@@ -27,14 +27,14 @@ Se o jogador da vez **não está em xeque** e **não tem nenhum lance legal**, a
 ```tabuleiro
 fen: k7/P7/K7/8/8/8/8/8 b - - 0 1
 casas: a8:amarela b8:vermelha b7:vermelha
-legenda: As Pretas jogam e não têm lance: b8 é atacada pelo peão de a7, b7 pelo rei branco, e o rei preto não está em xeque. Afogamento.
+legenda: As Pretas jogam e não têm lance: b8 é atacada pelo peão de a7, b7 pelo rei branco, o peão de a7 está protegido pelo rei branco, e o rei preto não está em xeque. Afogamento.
 ```
 
 Este exemplo é clássico: com [rei e peão da coluna a (ou h) contra rei](artigo:finais-de-peao), quando o rei adversário chega ao canto, muitas vezes não há como vencer. Veja mais em [xeque, xeque-mate e afogamento](artigo:xeque-mate-e-afogamento).
 
 ## 3. Material insuficiente {#material "3. Material insuficiente"}
 
-Pelas regras da FIDE, a partida termina empatada quando a posição fica **morta**: nenhuma sequência de lances legais permitiria a qualquer um dos lados dar xeque-mate. Os casos mais comuns:
+Pelas [Leis do Xadrez da FIDE](https://handbook.fide.com/chapter/E012023), a partida termina empatada quando a posição fica **morta**: nenhuma sequência de lances legais permitiria a qualquer um dos lados dar xeque-mate. Os casos mais comuns:
 
 - **Rei contra rei.**
 - **Rei e bispo contra rei.**
@@ -79,7 +79,7 @@ Em partidas com relógio, quem deixa o tempo acabar perde. Mas há uma exceção
 Empatar não é o mesmo que desistir. Num torneio, meio ponto numa partida perdida é meio ponto a mais na tabela. Por isso vale guardar duas atitudes opostas:
 
 - **Quem está ganhando** precisa evitar o empate: cuidado com o afogamento, não deixe a dama adversária dar xeque perpétuo no seu rei e converta a vantagem antes que a regra dos 50 lances apareça.
-- **Quem está perdendo** deve procurar o empate antes de abandonar: um xeque perpétuo, um afogamento forçado, a troca da última peça que dá mate ao adversário. Muitas partidas "perdidas" terminam empatadas porque o defensor continuou procurando.
+- **Quem está perdendo** deve procurar o empate antes de abandonar: um xeque perpétuo, um afogamento forçado, trocar a última peça com que o adversário poderia dar mate. Muitas partidas "perdidas" terminam empatadas porque o defensor continuou procurando.
 
 Os exercícios a seguir treinam os dois lados.
 

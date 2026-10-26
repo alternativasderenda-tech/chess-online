@@ -6,9 +6,10 @@ nivel: intermediario
 ordem: 50
 publicado: 2026-10-26
 atualizado: 2026-10-26
-tags: [sicilian defense, najdorf sicilian, dragon sicilian, sveshnikov, alapin, smith-morra gambit, chess openings]
+tags: [sicilian defense, sicilian defence, najdorf sicilian, dragon sicilian, sveshnikov, alapin, smith-morra gambit, chess openings]
 jogar: 3
 relacionados: [francesa-e-caro-kann, abertura-italiana, cravada, sacrificios, preparacao-de-aberturas]
+ensina: [Sicilian Defense, Najdorf, Dragon, Sveshnikov, Anti-Sicilians]
 ---
 The Sicilian Defense is the reply **1...c5** to 1.e4: instead of occupying the center with a pawn, Black attacks the d4 square from the side. The result is an unbalanced position where White usually attacks on the kingside and Black counterattacks along the c-file and on the queenside. It is one of the most played defenses against 1.e4 at every level, and the choice of players who want to win with Black, not just hold a draw.
 
@@ -96,14 +97,14 @@ If you play the Sicilian as Black, you need a ready answer to each of these. It 
 
 ### Dragon: the premature ...Ng4
 
-If Black plays ...Ng4 before ...Bg7, the move seems to win the bishop pair, since the knight hits e3. But the g4 knight is defended only by the c8 bishop, and one check changes everything.
+If Black plays ...Ng4 before ...Bg7, the move seems to win the **bishop pair** (keeping both bishops against bishop and knight), since the knight hits e3. But the g4 knight is defended only by the c8 bishop, and one check changes everything.
 
 ```exercicio
 fen: rnbqkb1r/pp2pp1p/3p2p1/8/3NP1n1/2N1B3/PPP2PPP/R2QKB1R w KQkq - 2 7
 enunciado: After 5...g6 6.Be3 Ng4?, White wins material. What's the move?
-solucao: f1b5 c8d7 d1g4
+solucao: f1b5
 dica: The g4 knight is only defended by the c8 bishop. A check forces Black to block on the b5-e8 diagonal.
-explicacao: 7.Bb5+! Bd7 8.Qxg4 — the d7 bishop is pinned by the b5 bishop and can't recapture on g4. If 7...Nd7, the knight closes the c8-g4 diagonal and 8.Qxg4 wins the piece anyway; if 7...Qd7, then 8.Bxd7+ wins the queen.
+explicacao: 7.Bb5+! Bd7 8.Qxg4 — the d7 bishop is pinned by the b5 bishop and can't recapture on g4. If 7...Nd7, the knight closes the c8-g4 diagonal and 8.Qxg4 wins the piece anyway; if 7...Qd7, then 8.Bxd7+ wins the queen. The toughest defense is 7...Nc6, which blocks the check without taking the c8 bishop off g4: 8.Nxc6 bxc6 9.Bxc6+ Bd7 10.Bxa8 Qxa8, and White wins the exchange and a pawn.
 ```
 
 ### Smith-Morra: the Siberian Trap
@@ -113,9 +114,9 @@ In the Smith-Morra Gambit, the best-known trap works for Black. White plays natu
 ```exercicio
 fen: r1b1kb1r/ppqp1ppp/2n1p3/8/2B1P1n1/2N2N1P/PP2QPP1/R1B2RK1 b kq - 0 9
 enunciado: After 2.d4 cxd4 3.c3 dxc3 4.Nxc3 Nc6 5.Nf3 e6 6.Bc4 Qc7 7.O-O Nf6 8.Qe2 Ng4 9.h3?, Black wins. Find the move.
-solucao: c6d4 f3d4 c7h2
+solucao: c6d4
 dica: Only the f3 knight defends h2. Attack the queen in a way that makes taking your piece cost White the king.
-explicacao: 9...Nd4! hits the queen on e2. If 10.Nxd4, then 10...Qh2#, because h2 has lost its only defender. Anything else costs the queen or runs into mate: if the queen moves, 10...Nxf3+ removes the defender of h2.
+explicacao: 9...Nd4! hits the queen on e2. If 10.Nxd4??, then 10...Qh2#, because h2 has lost its only defender. If the queen moves (10.Qd1, 10.Qd3, 10.Qe3), 10...Nxf3+ removes that defender and 11...Qh2# follows. The best defense is 10.hxg4 Nxe2+ 11.Nxe2, but White is left with two knights for the queen.
 ```
 
 :::aviso
@@ -126,7 +127,7 @@ explicacao: 9...Nd4! hits the queen on e2. If 10.Nxd4, then 10...Qh2#, because h
 
 - **It's for you** if you enjoy unbalanced positions, don't mind studying theory and want to play for a win with Black.
 - **Think twice** if you prefer calm positions or don't have time to study: the [French or the Caro-Kann](artigo:francesa-e-caro-kann) give you solid positions with less forcing theory.
-- **Start simple:** pick one line (Najdorf, Dragon or Sveshnikov) and prepare an answer to the Alapin, the Closed and the Smith-Morra. Don't try to learn everything at once.
+- **Start simple:** pick just one line (the Dragon has plans that are easier to grasp; the Najdorf and the Sveshnikov need more theory) and prepare an answer to the Alapin, the Closed and the Smith-Morra. Don't try to learn everything at once.
 
 If you play White and would rather skip this fight, keep in mind that the [Italian Game](artigo:abertura-italiana) only happens when Black answers 1...e5. Against the Sicilian you'll need a plan of your own.
 

@@ -1,25 +1,26 @@
 ---
 id: jogar-do-zero
 titulo: How to Play Chess for Beginners: Complete Guide
-titulo_seo: How to Play Chess for Beginners: Complete Guide (2026) | Chess Online
+titulo_seo: How to Play Chess for Beginners: Complete Guide
 descricao: Learn how to play chess from scratch in 5 steps: the board, how each piece moves, special moves, checkmate, and how to practice. A free beginner's guide.
 nivel: iniciante
 ordem: 10
 publicado: 2026-05-11
 atualizado: 2026-10-26
-tags: [how to play chess, chess for beginners, learn chess, chess rules, chess from scratch, chess tutorial]
+tags: [how to play chess, chess for beginners, learn chess, chess from scratch, chess tutorial]
+ensina: [Setting up the board, How the pieces move, Special moves, Checkmate, Draws]
 jogar: 1
 relacionados: [tabuleiro-e-notacao, como-as-pecas-se-movem, lances-especiais, principios-de-abertura]
 ---
-If you've never played chess before, this guide is the perfect place to start. In 5 steps, you'll get to know the board, learn how each piece moves, discover the special moves, understand what checkmate is, and walk away with a practical path to start playing today — right in your browser, with nothing to download.
+To play chess, you need to know five things: how to set up the 64-square board, how each of the six pieces moves, the three special moves (castling, en passant and promotion), what checkmate is — the goal of the game — and how a game can end in a draw. White always moves first, and the players take turns, one move each. This guide walks through the five steps with diagrams so you can play your first game today, right in your browser.
 
 ## 1. The board: 64 light and dark squares {#tabuleiro}
 
-Chess is played on a square board of **8 by 8 squares**, making 64 squares in total that alternate between light and dark. Each player starts with 16 pieces: 8 pawns on the second rank and, behind them on the first rank, a rook in each corner, then a knight, a bishop, the queen, and the king (in that order).
+Chess is played on a square board of **8 by 8 squares**, making 64 squares in total that alternate between light and dark. Each player starts with 16 pieces: 8 pawns on the front rank (White's 2nd, Black's 7th) and, behind them, a rook in each corner, then a knight, a bishop, the queen, and the king (in that order).
 
-A simple rule for setting up the board: the **square in each player's right-hand corner must be white** (light). And the queen always starts on a **square of her own color** — white queen on a white square, black queen on a black square.
+A simple rule for setting up the board: the **square in each player's right-hand corner must be light**. And the queen always starts on a **square of her own color** — White's queen on a light square, Black's queen on a dark square.
 
-The horizontal lines are called **ranks** (numbered 1 to 8) and the vertical lines are called **files** (letters A to H). This system lets you [describe any move precisely](artigo:tabuleiro-e-notacao): "pawn to E4" means moving the pawn to file E, rank 4.
+The horizontal lines are called **ranks** (numbered 1 to 8) and the vertical lines are called **files** (letters **a** to **h**). This system lets you [describe any move precisely](artigo:tabuleiro-e-notacao): "pawn to e4" means moving the pawn to the e-file, 4th rank.
 
 The player with the white pieces **always moves first**. After that, the players alternate, one move at a time.
 
@@ -36,7 +37,7 @@ This is the heart of chess. Don't skip this part — [understanding how each pie
 :::peca ♟ Pawn
 Moves **one square forward**. On its first move, it can advance two squares (your choice). It captures **diagonally, one square forward**. The pawn is the only piece that moves differently from how it captures.
 
-<small>Fun fact: if a pawn reaches the last rank of the board, it is promoted to any other piece (almost always a queen).</small>
+<small>Fun fact: if a pawn reaches the last rank of the board, it is promoted to a queen, rook, bishop or knight (almost always a queen).</small>
 :::
 
 :::peca ♜ Rook
@@ -64,7 +65,7 @@ Moves in an **"L" shape**: two squares in one direction and one more at a right 
 :::
 
 :::peca ♚ King
-Moves **one square in any direction**. It cannot move to a square attacked by an enemy piece. The king is the most important piece — if it falls, you lose.
+Moves **one square in any direction**. It cannot move to a square attacked by an enemy piece. The king is the most important piece — if it's checkmated, you lose (the king is never actually captured).
 
 <small>Protect the king with castling (see the next section). In the endgame, the king becomes an active piece.</small>
 :::
@@ -73,13 +74,14 @@ Moves **one square in any direction**. It cannot move to a square attacked by an
 
 ### Castling
 
-[Castling](artigo:lances-especiais) is a move that shifts the king and one of the rooks at the same time. It serves to bring the king to safety and activate the rook. There are two types: **kingside castling** (the king's side) and **queenside castling** (the queen's side).
+[Castling](artigo:lances-especiais) is a move that shifts the king and one of the rooks at the same time. It serves to bring the king to safety and activate the rook. There are two types: **kingside castling** (also called short castling) and **queenside castling** (long castling).
 
-To castle, three conditions must all be true:
+To castle, four conditions must all be true:
 
 - Neither the king nor the rook involved may have moved before.
 - There can be no pieces between the king and the rook.
-- The king cannot be in check and cannot pass through an attacked square.
+- The king cannot be in check.
+- The king cannot pass through or land on an attacked square.
 
 ```tabuleiro
 fen: r3k2r/pppq1ppp/2npbn2/4p3/4P3/2NPBN2/PPPQ1PPP/R3K2R w KQkq - 0 1
@@ -89,7 +91,7 @@ legenda: White castles kingside: the king goes from e1 to g1 and the rook jumps 
 
 ### En passant ("in passing" capture)
 
-If an enemy pawn advances two squares on its first move and ends up next to your pawn, you can capture it **on the very next move**, as if it had advanced only one square. It's a rule a lot of people never learn.
+If an enemy pawn advances two squares from its starting square and lands next to your pawn, you can capture it **on the very next move**, as if it had advanced only one square. It's a rule a lot of people never learn.
 
 ```tabuleiro
 fen: rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3
@@ -124,7 +126,7 @@ enunciado: Your move, as White: deliver **checkmate in 1**.
 tipo: mate
 solucao: a1a8
 dica: The black king is trapped behind its own pawns. Which of your pieces can reach the back rank?
-explicacao: 1.Ra8# — the rook gives check on the 8th rank and the king has no escape: f7, g7 and h7 are blocked by its own pawns, and f8 and h8 are still covered by the rook. This is the "back-rank mate".
+explicacao: 1.Ra8# (the rook goes to a8; "#" means mate) — the rook gives check on the 8th rank and the king has no escape: f7, g7 and h7 are blocked by its own pawns, and f8 and h8 are still covered by the rook. This is the [back-rank mate](artigo:mate-do-corredor).
 ```
 
 ### Draws (stalemate and others)
@@ -133,7 +135,7 @@ Not every game ends with a winner. There are [several ways to draw](artigo:empat
 
 - **Stalemate**: the player to move is not in check but has no legal move available.
 - **Agreement between the players**: both agree to a draw.
-- **The 50-move rule**: no pawn has moved and no capture has been made for 50 consecutive moves.
+- **The 50-move rule**: no pawn has moved and no capture has been made in the last 50 moves by each player.
 - **Threefold repetition**: the same position occurs three times.
 - **Insufficient material**: neither side has enough pieces to deliver mate (for example, king versus king).
 
@@ -141,7 +143,7 @@ Not every game ends with a winner. There are [several ways to draw](artigo:empat
 
 Learning the rules is just the beginning. Chess is a game you get better at through practice. Here are a few suggestions for your first few months:
 
-- **Play every day, even if just a little**. Ten minutes a day are worth more than two hours once a week.
+- **Play every day, even if just a little**. Ten minutes a day is worth more than two hours once a week.
 - **Start against the computer**. You can pause, think, and replay moves without pressure. Once you feel more comfortable, move on to games against other people.
 - **[Review the games you lose](artigo:analisar-partidas)**. Most of the learning comes from your mistakes.
 - **Learn [a few basic openings](artigo:aberturas-para-iniciantes)**. You don't need to memorize long variations. Knowing how to control the center and develop your pieces is already enough for the first 10 moves.
@@ -152,16 +154,30 @@ Learning the rules is just the beginning. Chess is a game you get better at thro
 :::
 
 :::pratique Ready for your first game?
-Use our **Apprentice mode**, with 12 interactive lessons that teach every piece and every concept hands-on. No sign-up. No installation. Right in your browser.
+Open the game, pick **🎓 Beginner** in the difficulty menu and work through the 12 interactive lessons, which teach every piece and every concept hands-on. No sign-up, right in your browser.
 :::
 
-## Next steps
+## Frequently asked questions {#faq "FAQ"}
 
-Once you're comfortable with the rules, it's worth getting to know:
+### Who moves first in chess?
 
-- The most common openings (the [Italian Game](artigo:abertura-italiana), the [Sicilian Defense](artigo:defesa-siciliana), the [Queen's Gambit](artigo:gambito-da-dama-e-london)).
-- Mating patterns ([back-rank mate](artigo:mate-do-corredor), [Scholar's Mate](artigo:mate-do-pastor), ladder mate).
-- Basic endgames ([king and queen versus king, king and rook versus king](artigo:mates-basicos), [the passed pawn](artigo:finais-de-peao)).
-- Middlegame principles ([active pieces, weaknesses in the opponent's camp, favorable exchanges](artigo:estrategia-posicional)).
+White. White always makes the first move, and then the players alternate, one move at a time. In a tournament, colors are decided by a draw of lots or by the pairing system.
 
-Each of these topics has its own guide right here in [/en/learn](/en/learn), on a path from beginner to advanced. Bookmark the site and come back often.
+### How do you set up a chessboard?
+
+Each player has a light square in the right-hand corner. On each side's back rank, the rooks go in the corners, the knights next to them, then the bishops, with the queen and king in the middle; the queen goes on her own color (White's on d1, a light square; Black's on d8, a dark square). The eight pawns fill the rank in front. [See it step by step](artigo:tabuleiro-e-notacao#posicao).
+
+### Can you learn chess on your own?
+
+Yes. You can learn the rules by reading and practicing; after that, playing the computer on an easy level and reviewing your own games is a good way to improve without a coach. The [Learn](/en/learn) path follows that order, from beginner to advanced.
+
+## Where to go next {#proximos}
+
+This guide is lesson 1 of the path. The next lessons go deeper into each part, in this order:
+
+1. [The board and notation](artigo:tabuleiro-e-notacao): how to read moves like `e4` and `Nf3`.
+2. [How the pieces move](artigo:como-as-pecas-se-movem), with exercises for each piece.
+3. [Check, checkmate and stalemate](artigo:xeque-mate-e-afogamento) and [the special moves](artigo:lances-especiais).
+4. [The opening principles](artigo:principios-de-abertura), to play your first moves well.
+
+Once you finish the Beginner level, the path moves on to [tactics](artigo:taticas) (fork, pin, discovered attack) and then to strategy and endgames.

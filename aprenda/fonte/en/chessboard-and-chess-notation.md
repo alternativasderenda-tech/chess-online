@@ -80,13 +80,13 @@ Pawns get no letter: `e4` means "a pawn moves to e4". The knight is **N** becaus
 - **x** — capture: `Bxf7` (the bishop captures on f7). For pawn captures you write the file the pawn came from: `exd5`.
 - **+** — check: `Qh5+`.
 - **#** — checkmate: `Qxf7#`.
-- **O-O** — kingside castling; **O-O-O** — queenside castling.
+- **O-O** — kingside (short) castling; **O-O-O** — queenside (long) castling.
 - **=Q** — promotion: `e8=Q` (the pawn reaches e8 and becomes a queen).
 - **e.p.** — an *en passant* capture (optional).
 
 ### Move numbers
 
-When counting, one "move" is White's turn plus Black's reply. That's why we write `1.e4 e5 2.Nf3 Nc6`: on move 1, White played e4 and Black played e5. When a text shows only Black's move, it uses an ellipsis: `2...Nc6`.
+Moves are numbered in pairs: each number covers one White move and Black's reply. That's why we write `1.e4 e5 2.Nf3 Nc6`: on move 1, White played e4 and Black played e5. When a text shows only Black's move, it uses an ellipsis: `2...Nc6`. When a puzzle says "mate in 1" or "mate in 2", it counts only the moves of the side delivering mate.
 
 ```tabuleiro
 fen: r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3

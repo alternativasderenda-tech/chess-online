@@ -1,7 +1,7 @@
 ---
 id: sacrificios
 titulo: "Classic Chess Sacrifices: Bxh7+ and the Exchange"
-titulo_seo: Classic Chess Sacrifices Explained | Chess Online
+titulo_seo: "Chess Sacrifices: Greek Gift and Exchange | Chess Online"
 descricao: How the classic attacking sacrifices work — Bxh7+ (the Greek gift), the smothered mate and the exchange sacrifice — and how to tell whether one of them works.
 nivel: avancado
 ordem: 35
@@ -38,20 +38,20 @@ Before you sacrifice, check the **conditions**. In this model position all of th
 
 1. **The bishop on d3 aims at h7**, and the h7 pawn is defended only by the king.
 2. **There is no black knight on f6.** White's e5 pawn takes that square away; a knight on f6 would guard h7 and h5.
-3. **The knight reaches g5 safely.** Black has no dark-squared bishop to take it, and the h4 pawn supports it.
+3. **The knight reaches g5 safely.** Black's dark-squared bishop is far away on a5 and can't reach g5, and the h4 pawn supports the knight.
 4. **The queen arrives fast** on the h-file: d1 to h5 in one move.
 5. **The escape squares are covered:** the c1 bishop sits behind the knight on the diagonal to h6, ready for a [discovered check](artigo:ataque-descoberto), and the h4 pawn can advance with check.
 
 The main line is 1.Bxh7+! Kxh7 2.Ng5+, and now the black king has four squares. None of them saves it:
 
-- **2...Kg8 3.Qh5** — mate on h7 can't be stopped. We checked it with the engine: every black reply allows 4.Qh7#, because the f8 rook has no square (e8 is occupied) and the g5 knight covers f7.
+- **2...Kg8** — mate in two; solve it in the first exercise below.
 - **2...Kh8 3.Qh5+ Kg8 4.Qh7#.**
-- **2...Kg6 3.h5+!** — if 3...Kf5, then 4.g4#. If 3...Kh6, 4.Qg4 threatens a discovered check with the knight, and mate follows within a few moves.
+- **2...Kg6 3.h5+!** — if 3...Kf5, then 4.g4#. If 3...Kh6, 4.Nxe6+ is a discovered check from the c1 bishop and, as in the next line, 5.Nxc7 wins the queen.
 - **2...Kh6 3.Nxe6+** — a discovered check from the c1 bishop. The knight on e6 also hits the queen on c7, and 4.Nxc7 wins it.
 
 ```tabuleiro
 fen: 4rr2/ppqb1ppk/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 b - - 1 2
-setas: d1h5:azul c1h6:amarela
+setas: c1h6:amarela
 casas: g8 h8 g6 h6
 legenda: After 1.Bxh7+ Kxh7 2.Ng5+: the black king has four squares and all of them lose.
 ```
@@ -66,7 +66,7 @@ What if Black declines the bishop with 1...Kh8? Then White can simply retreat wi
 
 The most spectacular sacrifices give up the queen, and they almost always follow known mating patterns:
 
-- **Smothered mate:** the queen offers itself on g8 (or next to the king), a rook is forced to capture and plugs the last flight square, and the knight mates a king boxed in by its own pieces.
+- **Smothered mate**, which you saw in [deflection and decoy](artigo:desvio-e-sobrecarga#atracao): the queen offers itself on g8 (or next to the king), a rook is forced to capture and plugs the last flight square, and the knight mates a king boxed in by its own pieces.
 - **Anastasia's mate:** with a knight on e7 covering g8 and g6, the queen takes on h7, the king recaptures and a rook mates along the h-file.
 - **Back-rank [deflection](artigo:desvio-e-sobrecarga):** the queen is given up to remove the only defender of the [eighth rank](artigo:mate-do-corredor), and the rook comes in with mate.
 
@@ -102,24 +102,30 @@ Before giving up material, ask these questions in this order:
 **💡 Tip:** when you can't calculate to the end, compare the worst case of the sacrifice with the best case of the quiet move. If the quiet move leads to a position with no prospects, the risk may be worth it.
 :::
 
+:::pratique Look for Bxh7+
+Play White against the computer with a pawn on e5 and check the five Greek-gift conditions before giving up the bishop.
+:::
+
 ## Exercises
 
 ```exercicio
-fen: 4rrk1/ppqb1ppp/2n1p3/b2pP3/3P3P/2PB1N2/1P3PP1/R1BQ1RK1 w - - 0 1
-enunciado: The model position. Which move starts the decisive attack?
-solucao: d3h7
-dica: The h7 pawn is defended only by the king, and the knight can reach g5 with check.
-explicacao: 1.Bxh7+! Kxh7 2.Ng5+ and Black loses in every line: 2...Kg8 3.Qh5 and 4.Qh7#; 2...Kh8 3.Qh5+ Kg8 4.Qh7#; 2...Kg6 3.h5+ with mate; 2...Kh6 3.Nxe6+ wins the queen. Declining with 1...Kh8 leaves White a pawn up after 2.Bd3.
+fen: 4rrk1/ppqb1pp1/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 w - - 2 3
+enunciado: After 1.Bxh7+ Kxh7 2.Ng5+ Kg8, White mates in 2 — and the first move is not a check.
+tipo: mate
+lances: 2
+solucao: d1h5 f7f5 h5h7
+dica: The g5 knight already covers h7 and f7. Bring the queen to the h-file.
+explicacao: 3.Qh5! threatens 4.Qh7#, and there's no defense: the f8 rook has no square (e8 is occupied), f7 is covered by the knight and no black piece reaches h7 in time. For example, 3...f5 4.Qh7#. The engine confirms that every black move allows mate.
 ```
 
 ```exercicio
-fen: r3r2k/pp1b2pp/2pq3N/8/2Q5/2P5/PP3PPP/R4RK1 w - - 0 1
-enunciado: White to play and **mate in 2** with a queen sacrifice.
+fen: r3r2k/pp1b2pp/2pq4/6N1/2Q5/2P5/PP4PP/5RK1 w - - 0 1
+enunciado: White to play and **mate in 4**. Every move is a check. You already know how this [decoy](artigo:desvio-e-sobrecarga#atracao) ends; now find how it starts.
 tipo: mate
-lances: 2
-solucao: c4g8 e8g8 h6f7
-dica: The knight on h6 guards g8. Who is forced to capture there?
-explicacao: 1.Qg8+! Rxg8 (the king can't capture, because the h6 knight guards g8) 2.Nf7#. That's the smothered mate: the king is boxed in by its own pieces.
+lances: 4
+solucao: g5f7 h8g8 f7h6 g8h8 c4g8 e8g8 h6f7
+dica: Start with the knight. The double check comes next, and the queen is given up at the end.
+explicacao: 1.Nf7+ Kg8 2.Nh6+ (double check: knight and queen) Kh8 (f8 is covered by the f1 rook) 3.Qg8+! Rxg8 (the king can't take, because the h6 knight guards g8) 4.Nf7#. The full smothered mate, known as Philidor's Legacy: the king ends up hemmed in by its own pieces.
 ```
 
 ```exercicio

@@ -20,7 +20,7 @@ Tactics deal with the short term: checks, captures, threats, sequences you can c
 
 The two don't compete. [Tactics](artigo:taticas) decide most games, but good tactics almost always appear in strategically good positions. Players who put their pieces on the right squares create chances; players without a plan wait for chances to show up.
 
-The first to organize these ideas systematically was Wilhelm Steinitz, the first official world champion. Among the principles associated with him are the accumulation of small advantages and the idea that the right to attack belongs to the side with the advantage. Decades later, Aron Nimzowitsch, in his book *My System*, popularized concepts such as the outpost, the blockade and prophylaxis.
+The first to organize these ideas systematically was Wilhelm Steinitz, the first official world champion. Among the principles associated with him are the accumulation of small advantages and the idea that the side with the advantage has the right — and the duty — to attack. Decades later, Aron Nimzowitsch, in his book *My System*, popularized concepts such as the outpost, the blockade and prophylaxis.
 
 ## The elements of a position {#elementos}
 
@@ -47,7 +47,7 @@ casas: d5:verde d6:vermelha
 legenda: The white knight on d5 sits on an outpost: no black pawn can attack it. The black bishop on e7 is stuck behind the pawns on d6 and e5.
 ```
 
-In this diagram the d5 knight dominates the board: it hits e7, c7, f6 and b6, and no black pawn can drive it away, because the c- and e-pawns are gone or have already passed. The black bishop on e7, on the other hand, is **bad**: it's hemmed in by its own pawns on dark squares (d6 and e5). A strong knight against a bad bishop is one of the clearest positional advantages there is.
+In this diagram the d5 knight dominates the board: it hits e7, c7, f6 and b6, and no black pawn can drive it away, because Black has no c-pawn left and the e-pawn has already gone past, to e5. The black bishop on e7, on the other hand, is **bad**: it's hemmed in by its own pawns on dark squares (d6 and e5). A strong knight against a bad bishop is one of the clearest positional advantages there is.
 
 ## Space {#espaco}
 
@@ -84,6 +84,10 @@ When you don't know what to play, take a quick four-step inventory:
 
 :::dica
 **💡 Tip:** before each move, also ask "what does my opponent want to do?". Stopping their plan before it happens — **prophylaxis** — is one of the hallmarks of strong players.
+:::
+
+:::pratique Evaluate before you move
+Play the computer and, every 5 moves, stop and take inventory: weaknesses, worst piece, where the action is. Only then choose your move.
 :::
 
 ## Exercises

@@ -69,7 +69,7 @@ The rook needs the king too, and the process takes a little longer:
 1. **[Cut the king off](artigo:finais-de-torre) with the rook**: put it on a file or rank the king can't cross.
 2. **Bring your king** in front of the enemy king, with one square between them. This standoff, where the kings face each other and neither can step forward, is called **[opposition](artigo:finais-de-peao)**.
 3. **When the kings are in opposition, check with the rook**: the enemy king is pushed back one rank (or file).
-4. When there's no opposition, make a **waiting move** with the rook (staying on the line that cuts the king off) and let your opponent move.
+4. **If the kings aren't face to face yet, bring your king closer.** When it's one step from the opposition, make a **waiting move** with the rook, staying on the cut-off line. The enemy king either steps into the opposition and gets checked, or backs away and you follow it with your king.
 5. Repeat until you reach the edge. The final check comes with the kings face to face.
 
 ```tabuleiro

@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [ritmos-de-jogo, empates, finais-de-peao, calculo, rotina-de-treino]
 ensina: [Administração do tempo, Como evitar o zeitnot, Controle do nervosismo, Jogar em vantagem e em desvantagem]
 ---
-Administrar o relógio e a cabeça é parte do xadrez tanto quanto calcular. Na prática, isso significa **dividir o tempo** entre as fases da partida e gastar mais nos momentos críticos, **evitar o zeitnot** (a falta de tempo no fim da partida), **controlar o nervosismo** com uma rotina fixa de pensamento e **mudar de atitude conforme o placar do tabuleiro**: em vantagem, simplificar e cortar o contra-jogo; em desvantagem, complicar e procurar recursos como o afogamento. Muitas partidas não são decididas pelo melhor lance, e sim pelo primeiro erro sob pressão.
+Administrar o tempo no xadrez é dividir o relógio entre as fases da partida, guardando minutos para os momentos críticos, e controlar o nervosismo para não errar sob pressão. Na prática, isso significa **dividir o tempo** entre as fases da partida e gastar mais nos momentos críticos, **evitar o zeitnot** (a falta de tempo no fim da partida), **controlar o nervosismo** com uma rotina fixa de pensamento e **mudar de atitude conforme o placar do tabuleiro**: em vantagem, simplificar e cortar o contra-jogo; em desvantagem, complicar e procurar recursos como o afogamento. Muitas partidas não são decididas pelo melhor lance, e sim pelo primeiro erro sob pressão.
 
 ## Como dividir o tempo {#tempo}
 
@@ -47,7 +47,7 @@ Para **sobreviver** quando ele chegar:
 ```tabuleiro
 fen: 8/8/3k4/8/3K4/3P4/8/8 b - - 0 1
 casas: d4 d6
-legenda: Oposição: com os reis frente a frente e as Pretas a jogar, o rei preto tem de ceder passagem, e as Brancas ganham. Esse tipo de posição precisa sair "de cabeça" no zeitnot.
+legenda: Oposição: com os reis frente a frente e a vez das Pretas, o rei preto tem de ceder passagem, e as Brancas ganham. Esse tipo de posição precisa sair "de cabeça" no zeitnot.
 ```
 
 ## Nervosismo e erros {#nervosismo}
@@ -64,9 +64,9 @@ Todo jogador fica nervoso. O que diferencia os experientes é ter uma **rotina**
 Com vantagem, o objetivo é **reduzir o risco**, não ganhar da forma mais bonita.
 
 ```tabuleiro
-fen: 5rk1/5ppp/8/3q4/3Q4/8/5PPP/R2R2K1 w - - 0 1
-setas: d4d5
-legenda: Com uma torre a mais, trocar as damas (Dxd5) elimina quase todo o contra-jogo das Pretas.
+fen: 5rk1/5qpp/8/8/8/8/5QPP/R4RK1 w - - 0 1
+setas: f2f7
+legenda: Com uma torre a mais, trocar as damas (Dxf7+) elimina quase todo o contra-jogo das Pretas.
 ```
 
 - **Troque peças, não peões.** Cada troca de peças diminui o contra-jogo do adversário; os peões são necessários para ganhar o final.
@@ -99,6 +99,10 @@ A [oferta de empate](artigo:empates#acordo) também é uma decisão psicológica
 - **Ao receber uma oferta, avalie a posição, não o adversário.** Pergunte se você tem chances reais de ganhar sem riscos sérios de perder.
 - **Considere a situação do torneio**, mas sem deixar que ela substitua a avaliação do tabuleiro.
 
+:::pratique Jogue com relógio
+Jogue contra o computador com um tempo fixo e anote quanto gastou na abertura, no meio-jogo e no final. O objetivo é chegar ao final com reserva.
+:::
+
 ## Exercícios
 
 ```exercicio
@@ -106,15 +110,15 @@ fen: 6r1/Q7/8/8/8/5K2/7p/7k b - - 0 1
 enunciado: As Pretas estão com uma torre contra uma dama, e o rei preto não tem lances. Pretas jogam e empatam.
 solucao: g8g3|g8f8
 dica: Se a torre desaparecer, as Pretas ficam sem lances legais.
-explicacao: 1...Tg3+! Se 2.Rxg3, é afogamento. Se o rei foge, a torre continua dando xeques, e capturá-la em qualquer momento também afoga o rei preto. 1...Tf8+ funciona pela mesma ideia. Segundo a base de finais, esses são os únicos lances que empatam.
+explicacao: 1...Tg3+! Se 2.Rxg3, é afogamento. Se o rei foge, a torre continua dando xeques, oferecendo-se sempre em casas onde capturá-la afoga o rei preto. 1...Tf8+ funciona pela mesma ideia. Segundo a base de finais, esses são os únicos lances que empatam.
 ```
 
 ```exercicio
-fen: 8/8/4k3/8/3K4/4P3/8/8 w - - 0 1
-enunciado: Final de rei e peão, no zeitnot. Brancas jogam e ganham — só um lance funciona.
-solucao: d4e4
-dica: Coloque o seu rei de frente para o rei preto, com uma casa entre eles.
-explicacao: 1.Re4! toma a oposição: agora as Pretas têm de mover o rei e ceder passagem. Segundo a base de finais, qualquer outro lance empata.
+fen: 4k3/8/8/8/8/8/4P3/4K3 w - - 0 1
+enunciado: Zeitnot, e sobrou um final de rei e peão. Brancas jogam e ganham.
+solucao: e1d2|e1f2
+dica: Antes de empurrar o peão, o rei vai na frente dele.
+explicacao: 1.Rd2! (ou 1.Rf2) leva o rei à frente do peão, rumo às casas-chave d4, e4 e f4. Depois de 1...Rd7 2.Rd3 (ou 2.Re3), o rei branco chega a uma delas antes do rei preto. Empurrar o peão primeiro (1.e3? ou 1.e4?) deixa o rei preto se instalar na frente dele, e é empate; 1.Rd1? e 1.Rf1? também empatam. Segundo a base de finais, só os dois lances de rei para a frente ganham.
 ```
 
 ## Perguntas frequentes {#faq}

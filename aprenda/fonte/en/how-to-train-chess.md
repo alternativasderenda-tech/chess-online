@@ -1,7 +1,7 @@
 ---
 id: rotina-de-treino
-titulo: "How to Train Chess: a Weekly Study Plan"
-titulo_seo: "How to Train Chess: a Weekly Plan | Chess Online"
+titulo: "How to Improve at Chess: a Weekly Study Plan"
+titulo_seo: "How to Improve at Chess: a Weekly Plan | Chess Online"
 descricao: A weekly study plan to improve at chess: tactics, endgames, openings, games against the AI, tournaments and analysis, with how much time to give each part.
 nivel: avancado
 ordem: 55
@@ -12,12 +12,12 @@ jogar: 4
 relacionados: [taticas, analisar-partidas, calculo, finais-de-peao, espeto]
 ensina: [Weekly study plan, Tactics training, Endgame training, Analyzing your own games]
 ---
-Training chess to improve means combining five activities every week in balanced proportions: **tactics** (the biggest share, because they decide most games), **endgames**, **openings**, **games played** with time to think, and **analysis of your own games**. What makes the difference is not the number of hours but regularity and feedback: play, find out where you went wrong, and train exactly that. A plan of 30 to 60 minutes a day, followed for months, beats occasional marathons.
+To improve at chess, combine five activities every week in balanced proportions: **tactics** (the biggest share, because they decide most games), **endgames**, **openings**, **games played** with time to think, and **analysis of your own games**. What makes the difference is not the number of hours but regularity and feedback: play, find out where you went wrong, and train exactly that. A plan of 30 to 60 minutes a day, followed for months, beats occasional marathons.
 
 ## The five pillars of training {#pilares}
 
 1. **Tactics.** Solving exercises every day trains [pattern recognition](artigo:taticas#padroes): forks, pins, typical mates, sacrifices. The more patterns you know, the less you have to calculate from scratch.
-2. **Endgames.** A handful of theoretical endgames covers a huge part of practical play: opposition, Lucena, Philidor, the wrong-colored bishop. Studying endgames also sharpens your technique and your feel for piece activity.
+2. **Endgames.** A handful of theoretical endgames covers a huge part of practical play: opposition, Lucena, Philidor, the [wrong-colored bishop](artigo:bispos#faq). Studying endgames also sharpens your technique and your feel for piece activity.
 3. **Openings.** Just enough to reach a middlegame you understand — ideas and structures before moves.
 4. **Games played.** Training without playing never turns into practice. Prefer time controls that give you time to think.
 5. **Analysis.** This is where learning happens: every game shows exactly what you need to train.
@@ -28,7 +28,7 @@ This plan assumes about 45 minutes a day. Adjust the proportions to your schedul
 
 | Day | Main activity | Details |
 | --- | --- | --- |
-| Monday | Tactics | Learn exercises, solved without moving the pieces |
+| Monday | Tactics | Exercises from the Learn section, solved without moving the pieces |
 | Tuesday | Endgames | One theoretical position a week, played until it's automatic |
 | Wednesday | Game against the AI + analysis | One game with time to think, then a move-by-move review |
 | Thursday | Openings | Review your repertoire file and the week's games |
@@ -48,7 +48,7 @@ The wrong way to train tactics is to click the first move that looks good. The r
 - **Start with forcing moves:** checks, captures and threats.
 - **When you get one wrong, understand the pattern**, not just the answer. The same pattern will come back in another position.
 
-The exercises in each Learn article are built for this: they're organized by theme, and every solution has been checked with the game's engine.
+The exercises in each Learn article are built for this: they're organized by theme, and every solution has been checked — with the game's engine and, for endgames, with the endgame tablebase.
 
 ```tabuleiro
 fen: r5rk/pp1b1Npp/2pq4/8/8/2P5/PP3PPP/R4RK1 b - - 1 2
@@ -91,10 +91,7 @@ To choose your openings, see [chess openings for beginners](artigo:aberturas-par
 
 ## How to analyze your own games {#analise}
 
-1. **First, on your own.** Before turning on the computer, write down what you were thinking at the critical moments and where you think you went wrong.
-2. **Then, with the engine.** Compare. The biggest gaps between your assessment and the engine's are the lessons of the game.
-3. **Classify the mistake** in your log: tactical, calculation, plan, opening, endgame, clock.
-4. **Turn it into training.** Lots of endgame mistakes? More endgames on Tuesday. Lots of moves made in time trouble? Work on [time management](artigo:relogio-e-psicologia).
+Use the [6-step method](artigo:analisar-partidas#metodo) and, at the end, turn the mistake into training: lots of endgame mistakes? More endgames on Tuesday. Lots of moves made in time trouble? Work on [time management](artigo:relogio-e-psicologia). Write every mistake in your log, with its type.
 
 ## How to measure progress {#progresso}
 
@@ -106,6 +103,10 @@ Ratings go up and down for many reasons, and bad weeks happen to everyone. To kn
 - **AI level.** Moving up a difficulty level and keeping good results is a concrete measure of progress.
 
 Review the plan every month, with your mistake log in hand, and change the proportions of your training according to what it shows.
+
+:::pratique Start the week today
+Start the plan's first game: play the computer with time to think and review it with the 6 steps.
+:::
 
 ## Exercises
 
@@ -137,4 +138,4 @@ Tactics, because they decide most games. Then basic endgames, and openings only 
 It builds practice, but without analysis you learn little. Prefer fewer, longer games, and analyze all of them.
 
 ### How do I use Chess Online to train?
-Solve the Learn exercises, play the AI while gradually raising the difficulty, and join the site's tournaments.
+Solve the exercises in the Learn section, play the AI while gradually raising the difficulty, and join the site's tournaments.

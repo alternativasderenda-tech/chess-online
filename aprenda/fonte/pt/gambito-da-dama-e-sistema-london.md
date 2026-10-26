@@ -9,8 +9,9 @@ atualizado: 2026-10-26
 tags: [gambito da dama, gambito da rainha, gambito da dama aceito, gambito da dama recusado, defesa eslava, sistema london, sistema de londres, armadilha do elefante]
 jogar: 2
 relacionados: [francesa-e-caro-kann, estrutura-de-peoes, cravada, preparacao-de-aberturas, aberturas-para-iniciantes]
+ensina: [Gambito da Dama, Gambito da Dama Aceito, Gambito da Dama Recusado, Defesa Eslava, Sistema London]
 ---
-O Gambito da Dama (**1.d4 d5 2.c4**) e o Sistema London (**1.d4** com o bispo em f4 logo cedo) são as duas formas mais populares de jogar 1.d4. No Gambito da Dama, as Brancas oferecem o peão c4 para desviar o peão d5 do centro. No London, montam quase sempre a mesma estrutura (d4, Bf4, e3, c3, Cf3, Cbd2 e Bd3), com pouca dependência do que as Pretas fazem. O primeiro é uma luta pelo centro com muita teoria; o segundo, um sistema que troca teoria por planos.
+O Gambito da Dama (**1.d4 d5 2.c4**, também chamado de Gambito da Rainha) e o Sistema London (**1.d4** com o bispo em f4 logo cedo) são as duas formas mais populares de jogar 1.d4. No Gambito da Dama, as Brancas oferecem o peão c4 para desviar o peão d5 do centro. No London, montam quase sempre a mesma estrutura (d4, Bf4, e3, c3, Cf3, Cbd2 e Bd3), com pouca dependência do que as Pretas fazem. O primeiro é uma luta pelo centro com muita teoria; o segundo, um sistema que troca teoria por planos.
 
 ## Gambito da Dama: 1.d4 d5 2.c4 {#gambito-da-dama "Gambito da Dama"}
 
@@ -28,10 +29,10 @@ As Pretas têm três respostas principais, e cada uma tem o seu nome consagrado.
 
 As Pretas aceitam o peão sem tentar mantê-lo. Em troca, ganham desenvolvimento livre. A linha principal segue **3.Cf3 Cf6 4.e3 e6 5.Bxc4 c5 6.O-O a6**.
 
-- **Brancas:** recuperam o peão, desenvolvem rápido e jogam pelo centro (De2, Td1, às vezes e4). Muitas vezes ficam com um peão isolado em d4, que dá jogo ativo de peças.
+- **Brancas:** recuperam o peão, desenvolvem rápido e jogam pelo centro (De2, Td1, às vezes e4). Muitas vezes ficam com um [peão isolado](artigo:estrutura-de-peoes#isolado) em d4 (sem peões vizinhos nas colunas c e e), que dá jogo ativo de peças.
 - **Pretas:** ...b5 e ...Bb7, pressão em d4 com ...cxd4 e um final sólido se as peças forem trocadas.
 
-Outra forma de enfrentá-lo é **3.e4**, que ocupa o centro na hora.
+Em vez de 3.Cf3, as Brancas também podem jogar **3.e4**, ocupando o centro na hora.
 
 O que as Pretas **não** devem fazer é tentar segurar o peão de c4 com ...b5. A armadilha mais conhecida da abertura mostra por quê (veja o exercício abaixo).
 
@@ -52,7 +53,7 @@ A linha clássica é **3.Cc3 Cf6 4.Bg5 Be7 5.e3 O-O 6.Cf3**, a base da **Defesa 
 
 ### Variante das Trocas: 4.cxd5 exd5
 
-As Brancas trocam em d5 logo cedo: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. O plano típico é o **[ataque das minorias](artigo:estrutura-de-peoes)**: os peões b (b4–b5) avançam contra a maioria preta no flanco da dama para criar um peão fraco em c6. Em troca, o bispo de c8 das Pretas fica livre.
+As Brancas trocam em d5 logo cedo: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. O plano típico é o **[ataque de minoria](artigo:planos-meio-jogo#minoria)**: os peões a e b das Brancas avançam (b4–b5, apoiado por a4) contra a maioria preta no flanco da dama para criar um peão fraco em c6. Em troca, o bispo de c8 das Pretas fica livre.
 
 ## Defesa Eslava: 2...c6 {#eslava "Defesa Eslava"}
 
@@ -91,7 +92,7 @@ A vantagem do London é a economia: você aprende uma estrutura e planos típico
 fen: rnbqkbnr/p3pppp/8/1p6/2pP4/4P3/1P3PPP/RNBQKBNR w KQkq - 0 6
 enunciado: Depois de 2...dxc4 3.e3 b5? 4.a4 c6 5.axb5 cxb5, as Brancas ganham material com um lance de dama. Qual?
 solucao: d1f3
-dica: Os peões b e c pretos saíram da grande diagonal. O que está no fim dela, em a8?
+dica: Os peões b e c pretos saíram da diagonal longa. O que está no fim dela, em a8?
 explicacao: 6.Df3! ataca a torre de a8 pela diagonal f3–a8. Se as Pretas interpõem uma peça, ela cai: 6...Cc6 7.Dxc6+ ou 6...Bb7 7.Dxb7. Tentar manter o peão de gambito custou uma peça.
 ```
 
@@ -101,8 +102,8 @@ Na posição do Gambito Recusado, o cavalo de f6 parece [cravado](artigo:cravada
 
 ```exercicio
 fen: r1bqkb1r/pppn1ppp/5n2/3N2B1/3P4/8/PP2PPPP/R2QKBNR b KQkq - 0 6
-enunciado: Depois de 3.Cc3 Cf6 4.Bg5 Cbd7 5.cxd5 exd5 6.Cxd5??, as Pretas ganham uma peça. Encontre o lance que começa tudo.
-solucao: f6d5 g5d8 f8b4 d1d2 b4d2 e1d2 e8d8
+enunciado: Depois de 3.Cc3 Cf6 4.Bg5 Cbd7 5.cxd5 exd5 6.Cxd5?, as Pretas ganham uma peça. Encontre o lance que começa tudo.
+solucao: f6d5 g5d8 f8b4
 dica: A cravada é falsa. Se o bispo capturar a sua dama, um xeque recupera a dama branca.
 explicacao: 6...Cxd5! 7.Bxd8 Bb4+ 8.Dd2 Bxd2+ 9.Rxd2 Rxd8 — as Pretas devolvem a dama, mas ficam com uma peça a mais por um peão. Essa é a Armadilha do Elefante.
 ```

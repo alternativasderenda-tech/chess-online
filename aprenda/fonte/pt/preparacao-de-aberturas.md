@@ -45,7 +45,7 @@ Neste exemplo da [Caro-Kann](artigo:francesa-e-caro-kann), entender que o bispo 
 
 A profundidade certa depende do seu nível e do tipo de abertura:
 
-- **Aberturas de posição** (sistemas como o [London](artigo:gambito-da-dama-e-london#london), estruturas fechadas): poucos lances concretos, muitas ideias. Pode-se ir pouco fundo.
+- **Aberturas posicionais** (sistemas como o [London](artigo:gambito-da-dama-e-london#london), estruturas fechadas): poucos lances concretos, muitas ideias. Não é preciso ir muito fundo.
 - **Aberturas táticas** (gambitos, linhas afiadas da [Siciliana](artigo:defesa-siciliana)): um erro nos primeiros lances pode perder a partida. Aqui é preciso conhecer as linhas críticas com precisão.
 - **Prioridade:** estude primeiro as linhas que você mais encontra nas suas partidas, e não as que aparecem nos livros.
 
@@ -71,7 +71,7 @@ Conhecer as transposições permite:
 
 ## Armadilhas: conhecer para não cair e para punir {#armadilhas}
 
-Toda abertura tem armadilhas, e o repertório deve incluir as da sua linha — tanto para não cair quanto para aproveitar quando o adversário cair. Um exemplo clássico é o **mate de Légal**: depois de 1.e4 e5 2.Cf3 d6 3.Bc4 Bg4 4.Cc3 g6?, as Brancas jogam 5.Cxe5!, entregando aparentemente a dama. Se 5...Bxd1??, vem mate em dois (é o primeiro exercício abaixo). Em vez disso, as Pretas deveriam se conformar com a perda de um peão — por exemplo, 5...dxe5 6.Dxg4.
+Toda abertura tem armadilhas, e o repertório deve incluir as da sua linha — tanto para não cair quanto para aproveitar quando o adversário cair. Um exemplo clássico é o **mate de Légal**: depois de 1.e4 e5 2.Cf3 d6 3.Bc4 Bg4 4.Cc3 g6?, as Brancas jogam 5.Cxe5!, entregando aparentemente a dama. Se 5...Bxd1??, vem mate em dois (você o resolveu em [princípios de abertura](artigo:principios-de-abertura)). Em vez disso, as Pretas deveriam se conformar com a perda de um peão — por exemplo, 5...dxe5 6.Dxg4.
 
 ```tabuleiro
 fen: rn1qkbnr/ppp2p1p/3p2p1/4p3/2B1P1b1/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 5
@@ -96,26 +96,29 @@ Motores e bases de partidas são ferramentas excelentes para preparar aberturas,
 - **Use as partidas de mestres** para ver como os planos funcionam na prática: onde vão as peças, quais rupturas acontecem, que finais surgem.
 - **Confira as suas próprias partidas.** Elas mostram as linhas que você realmente enfrenta, no seu nível, e não as que estão na moda entre os profissionais.
 
+:::pratique Teste o seu repertório
+Jogue 5 partidas contra o computador com a mesma abertura e compare cada uma com a sua ficha: onde a partida saiu do que você estudou?
+:::
+
 ## Exercícios
 
+Os dois exercícios são armadilhas que ainda não apareceram na trilha. Repare que as duas dependem da ordem de lances: um único lance fora de hora (4.e3? no Albin, 5.Cxe5? na Espanhola) basta.
+
 ```exercicio
-fen: rn1qkbnr/ppp2p1p/3p2p1/4N3/2B1P3/2N5/PPPP1PPP/R1BbK2R w KQkq - 0 6
-enunciado: Depois de 1.e4 e5 2.Cf3 d6 3.Bc4 Bg4 4.Cc3 g6? 5.Cxe5! Bxd1??, as Brancas dão **mate em 2**.
-tipo: mate
-lances: 2
-solucao: c4f7 e8e7 c3d5
-dica: O ponto fraco das Pretas é f7, e a casa d5 está livre para o cavalo.
-explicacao: 6.Bxf7+ Re7 (o único lance) 7.Cd5#. O rei preto fica preso pelas próprias peças e pelos cavalos brancos: é o mate de Légal.
+fen: rnbqk1nr/ppp2ppp/8/4P3/1BP5/4p3/PP3PPP/RN1QKBNR b KQkq - 0 6
+enunciado: Contragambito Albin: 1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3! 6.Bxb4??. As Pretas jogam e ganham material decisivo.
+tipo: tatica
+solucao: e3f2 e1e2 f2g1n
+dica: Comece com um xeque do peão. Na promoção, a dama não é a melhor escolha.
+explicacao: 6...exf2+ 7.Re2 (7.Rxf2? Dxd1) fxg1=C+! — a promoção a cavalo dá xeque. Se 8.Txg1, 8...Bg4+ ganha a dama; se 8.Re1, 8...Dh4+ e as Pretas, com peça a mais, atacam o rei. Promover a dama (7...fxg1=D?) permitiria 8.Dxd8+. É a armadilha de Lasker, que todo jogador do Albin precisa conhecer.
 ```
 
 ```exercicio
-fen: r1bqkb1r/pp1npppp/2p2n2/8/3PN3/8/PPP1QPPP/R1B1KBNR w KQkq - 3 6
-enunciado: Caro-Kann: 1.e4 c6 2.d4 d5 3.Cc3 dxe4 4.Cxe4 Cd7 5.De2 Cgf6??. Brancas jogam e dão **mate em 1**.
-tipo: mate
-lances: 1
-solucao: e4d6
-dica: O peão de e7 está cravado pela dama de e2.
-explicacao: 6.Cd6#. O peão de e7 não pode capturar o cavalo, porque está cravado pela dama de e2 contra o rei. É um mate sufocado em plena abertura, e um bom motivo para conhecer as armadilhas da sua defesa.
+fen: r1bqkb1r/pp1pnppp/2p2n2/4N3/2B1P3/3P4/PPP2PPP/RNBQK2R b KQkq - 1 6
+enunciado: Abertura Espanhola, Armadilha de Mortimer: 1.e4 e5 2.Cf3 Cc6 3.Bb5 Cf6 4.d3 Ce7 5.Cxe5? c6 6.Bc4?. Pretas jogam e **ganham uma peça**.
+solucao: d8a5
+dica: O cavalo de e5 ficou sem defesa. Um xeque pode atacá-lo ao mesmo tempo.
+explicacao: 6...Da5+! dá xeque pela diagonal a5–e1 e ataca o cavalo de e5 pela quinta fileira. Qualquer defesa do xeque (c3, b4, Cc3, Cd2, Bd2, Dd2 ou um lance de rei) deixa o cavalo cair: 7...Dxe5. Quem joga a Espanhola de Brancas precisa saber que 5.Cxe5 é um erro nesta ordem de lances.
 ```
 
 ## Perguntas frequentes {#faq}

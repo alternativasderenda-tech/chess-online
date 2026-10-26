@@ -9,6 +9,7 @@ atualizado: 2026-10-26
 tags: [italian game, giuoco piano, giuoco pianissimo, evans gambit, two knights defense, fried liver attack, chess openings]
 jogar: 2
 relacionados: [principios-de-abertura, aberturas-para-iniciantes, defesa-siciliana, garfo, mate-do-pastor]
+ensina: [Italian Game, Giuoco Piano, Evans Gambit, Two Knights Defense]
 ---
 The Italian Game is the chess opening that starts with **1.e4 e5 2.Nf3 Nc6 3.Bc4**: White develops the bishop to c4, where it eyes f7, the weakest square in Black's camp early in the game. It splits into two families: the direct approach, where White opens the center with d4 (the Giuoco Piano and the Evans Gambit), and the slow maneuvering approach with c3 and d3 (the Giuoco Pianissimo). If Black answers 3...Nf6, the game becomes the Two Knights Defense.
 
@@ -36,7 +37,7 @@ setas: c3d4 d4c5:vermelha
 legenda: Giuoco Piano after 1.e4 e5 2.Nf3 Nc6 3.Bc4 Bc5 4.c3 Nf6 5.d4: the c3 pawn supports d4, which attacks the bishop on c5.
 ```
 
-The main line goes **5...exd4 6.cxd4 Bb4+ 7.Bd2 Bxd2+ 8.Nbxd2 d5!**. That 8...d5 is the standard reply: Black hits the center before White can consolidate e4 and d4. After 9.exd5 Nxd5 the position is considered balanced. White has an **isolated pawn on d4** and active pieces, while Black tries to blockade and target that pawn.
+The main line goes **5...exd4 6.cxd4 Bb4+ 7.Bd2 Bxd2+ 8.Nbxd2 d5!**. That 8...d5 is the standard reply: Black hits the center before White can consolidate e4 and d4. After 9.exd5 Nxd5 the position is considered balanced. White has an **isolated pawn on d4** (no friendly pawns on the c- or e-files; see [pawn structure](artigo:estrutura-de-peoes#isolado)) and active pieces, while Black tries to blockade and target that pawn.
 
 What each side wants:
 
@@ -60,7 +61,7 @@ Typical plans:
 - **White:** the **Nbd2-f1-g3** maneuver brings the knight to the kingside. Then h3 (against ...Bg4 and ...Ng4) and sometimes a4, and only when everything is in place, **d4**.
 - **Black:** **...a6 and ...Ba7** keep the bishop safe from d4 or b4; ...h6 takes g5 away from White's pieces; ...Be6 offers to trade off White's b3 bishop.
 
-Move order matters more than memory here. Once you understand why the knight heads for g3 and why Black's bishop drops back to a7, you can play these positions without memorizing lines.
+Here understanding the plan matters more than memorizing moves. Once you understand why the knight heads for g3 and why Black's bishop drops back to a7, you can play these positions without memorizing lines.
 
 ## Evans Gambit: 4.b4 {#evans "Evans Gambit"}
 
@@ -90,7 +91,7 @@ The main defense is **4...d5 5.exd5 Na5!**. The knight hits the bishop and Black
 There are other paths:
 
 - **4...Bc5**, the **Traxler Counterattack**, ignores the threat and goes after f2. It is risky for both sides.
-- For White, **4.d3** or **4.d4** sidestep the sharp theory. After 4.d3 the game drifts back toward Pianissimo-style maneuvering.
+- For White, **4.d3** sidesteps the sharp theory and leads to Pianissimo-style maneuvering. **4.d4**, on the other hand, opens the center and leads to equally theoretical lines such as the Max Lange Attack.
 
 ## Typical Italian Game traps {#armadilhas "Typical traps"}
 
@@ -103,7 +104,7 @@ fen: r1bqkb1r/ppp2ppp/2n5/3np1N1/2B5/8/PPPP1PPP/RNBQK2R w KQkq - 0 6
 enunciado: After 4.Ng5 d5 5.exd5 Nxd5?!, White sacrifices a piece on f7. Find the sacrifice and the check that follows.
 solucao: g5f7 e8f7 d1f3
 dica: The g5 knight takes on f7; then the queen gives check from f3 and hits the d5 knight as well.
-explicacao: 6.Nxf7! Kxf7 7.Qf3+. The king has to go to e6 to keep the d5 knight protected, or abandon it. After 8.Nc3 White piles up on d5 and the black king is stuck in the center.
+explicacao: 6.Nxf7! Kxf7 7.Qf3+. The king has to go to e6 to keep the d5 knight protected, or abandon it. After 8.Nc3 White piles up on d5 and the black king is stuck in the center. (Objectively, 6.d4 is even stronger than the sacrifice, but the Fried Liver is the blow every Italian player needs to know.)
 ```
 
 ### The Blackburne Shilling Gambit: when White falls for it

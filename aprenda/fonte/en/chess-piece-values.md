@@ -73,7 +73,7 @@ Before capturing a defended piece, count:
 2. How many of your opponent's pieces defend it?
 3. If all the captures happen, who ends up with more points?
 
-If you capture with a cheap piece and your opponent recaptures with a cheap piece, the balance is what matters. Taking a defended pawn with your queen, for example, is almost always a mistake: you win 1 and lose 9.
+What matters is the balance: knight for knight is even; taking a defended pawn with your queen, on the other hand, is almost always a mistake: you win 1, lose 9 and end up 8 points down.
 
 :::dica
 **💡 Tip:** capture with your **least valuable** piece first. If a recapture comes, you lose as little as possible.
@@ -111,7 +111,7 @@ enunciado: The e4-pawn can take the knight or the rook. Which capture is worth m
 tipo: tatica
 solucao: e4f5
 dica: A knight is worth 3, a rook 5. Is either of them defended?
-explicacao: 1.exf5 — neither piece is defended, so take the more valuable one: the rook (5 points) instead of the knight (3).
+explicacao: 1.exf5 — the rook is worth more (5) and is undefended (the d5 knight can't reach f5). The knight, on the other hand, is defended by the rook: 1.exd5? Rxd5 would win 3 points and give back the pawn.
 ```
 
 ```exercicio
@@ -155,5 +155,5 @@ No. You win by checkmate (or when your opponent resigns or runs out of time). Po
 Trading a knight or bishop (3 points) for a rook (5 points), gaining 2 points in the deal.
 
 :::pratique Practice counting material
-Play the computer on Easy and, after every capture, add up the points for each side. Try to finish the game further ahead in material than you started.
+Play the computer on Easy and, after every capture, add up the points for each side. Try to finish the game ahead in material.
 :::

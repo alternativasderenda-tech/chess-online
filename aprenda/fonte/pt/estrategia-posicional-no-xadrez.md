@@ -20,7 +20,7 @@ A tática trata do curto prazo: xeques, capturas, ameaças, sequências que voc�
 
 As duas não competem. A [tática](artigo:taticas) decide a maioria das partidas, mas as boas táticas aparecem quase sempre em posições estrategicamente boas. Quem coloca as peças nas casas certas cria oportunidades; quem joga sem plano espera que elas apareçam.
 
-O primeiro a organizar essas ideias de forma sistemática foi Wilhelm Steinitz, primeiro campeão mundial oficial. Entre os princípios associados a ele estão a acumulação de pequenas vantagens e a ideia de que o direito de atacar pertence a quem tem a vantagem. Décadas depois, Aron Nimzowitsch, no livro *Meu Sistema*, popularizou conceitos como o posto avançado, o bloqueio e a profilaxia.
+O primeiro a organizar essas ideias de forma sistemática foi Wilhelm Steinitz, primeiro campeão mundial oficial. Entre os princípios associados a ele estão a acumulação de pequenas vantagens e a ideia de que quem tem a vantagem tem o direito — e o dever — de atacar. Décadas depois, Aron Nimzowitsch, no livro *Meu Sistema*, popularizou conceitos como o posto avançado, o bloqueio e a profilaxia.
 
 ## Os elementos da posição {#elementos}
 
@@ -47,7 +47,7 @@ casas: d5:verde d6:vermelha
 legenda: O cavalo branco em d5 é um posto avançado: nenhum peão preto pode atacá-lo. O bispo preto de e7 está preso atrás dos peões de d6 e e5.
 ```
 
-Neste diagrama o cavalo de d5 domina o tabuleiro: ataca e7, c7, f6 e b6, e nenhum peão preto pode expulsá-lo, porque os peões de c e de e já passaram. O bispo preto de e7, por outro lado, é **ruim**: está preso atrás dos próprios peões em casas escuras (d6 e e5). Cavalo forte contra bispo ruim é uma das vantagens posicionais mais claras que existem.
+Neste diagrama o cavalo de d5 domina o tabuleiro: ataca e7, c7, f6 e b6, e nenhum peão preto pode expulsá-lo: as Pretas não têm mais o peão c, e o peão e já passou para e5. O bispo preto de e7, por outro lado, é **ruim**: está preso atrás dos próprios peões em casas escuras (d6 e e5). Cavalo forte contra bispo ruim é uma das vantagens posicionais mais claras que existem.
 
 ## Espaço {#espaco}
 
@@ -57,7 +57,7 @@ Ter mais espaço significa que seus peões estão mais avançados e suas peças 
 fen: rnbqkbnr/ppp2ppp/4p3/3pP3/3P4/8/PPP2PPP/RNBQKBNR b KQkq - 0 3
 setas: e5f6:azul e5d6:azul
 casas: f6:vermelha d6:vermelha
-legenda: A Defesa Francesa, Variante do Avanço (1.e4 e6 2.d4 d5 3.e5): o peão de e5 tira f6 e d6 das Pretas e dá espaço às Brancas na ala do rei.
+legenda: A Defesa Francesa, Variante do Avanço (1.e4 e6 2.d4 d5 3.e5): o peão de e5 tira f6 e d6 das Pretas e dá espaço às Brancas no flanco do rei (também chamado de ala do rei).
 ```
 
 Espaço não ganha sozinho. O lado com menos espaço costuma atacar a base da cadeia de peões (aqui, com ...c5 contra d4) para abrir o jogo. Quem tem mais espaço deve evitar trocas que aliviem o adversário e usar as casas extras para preparar uma ruptura.
@@ -79,11 +79,15 @@ Quando não souber o que jogar, faça um inventário rápido em quatro passos:
 
 1. **Liste as fraquezas** de cada lado: peões fracos, casas fracas, rei exposto.
 2. **Identifique a pior peça** de cada lado. Melhorar a sua pior peça é um dos planos mais confiáveis que existem.
-3. **Veja onde está a ação**: em qual ala você tem mais peças, mais espaço ou um alvo.
+3. **Veja onde está a ação**: em qual flanco você tem mais peças, mais espaço ou um alvo.
 4. **Escolha um objetivo de médio prazo** — "levar o cavalo a d5", "dobrar torres na coluna c" — e só então procure os lances. Para transformar isso em um plano completo, veja [planos no meio-jogo](artigo:planos-meio-jogo).
 
 :::dica
 **💡 Dica:** antes de cada lance, pergunte também "o que o meu adversário quer fazer?". Impedir o plano dele antes que ele aconteça — a **profilaxia** — é uma das marcas dos jogadores fortes.
+:::
+
+:::pratique Avalie antes de jogar
+Jogue contra o computador e, a cada 5 lances, pare e faça o inventário: fraquezas, pior peça, onde está a ação. Só então escolha o lance.
 :::
 
 ## Exercícios
@@ -120,4 +124,4 @@ A estática dura (uma estrutura de peões melhor, uma casa fraca do adversário)
 Uma casa no campo adversário, protegida por um peão seu, que nenhum peão inimigo pode atacar. Cavalos são as peças que mais aproveitam postos avançados.
 
 ### Como saber qual plano seguir?
-Faça um inventário: liste as fraquezas, ache a sua pior peça, veja em que ala está a ação e escolha um objetivo de médio prazo antes de procurar os lances.
+Faça um inventário: liste as fraquezas, ache a sua pior peça, veja em que flanco está a ação e escolha um objetivo de médio prazo antes de procurar os lances.

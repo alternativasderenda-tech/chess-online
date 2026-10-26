@@ -12,7 +12,7 @@ jogar: 2
 relacionados: [xeque-mate-e-afogamento, mates-basicos, finais-de-peao, regras, ritmos-de-jogo]
 ensina: [Stalemate, Threefold repetition, The 50-move rule, Insufficient material, Perpetual check]
 ---
-A **draw** in chess is a result where neither player wins: each gets half a point. Under FIDE rules, a game is drawn by **agreement between the players**, by **stalemate**, by **threefold repetition** of the same position, by the **50-move rule**, or when neither side can deliver checkmate anymore, as with **insufficient material**. Knowing these rules helps the winning side avoid letting victory slip away, and helps the losing side find a way to save the game.
+A **draw** in chess is a result where neither player wins: each gets half a point. Under [FIDE rules](artigo:regras#empates), a game is drawn by **agreement between the players**, by **stalemate**, by **threefold repetition** of the same position, by the **50-move rule**, or when neither side can deliver checkmate anymore, as with **insufficient material**. Knowing these rules helps the winning side avoid letting victory slip away, and helps the losing side find a way to save the game.
 
 ## 1. Draw by agreement {#acordo "1. Agreement"}
 
@@ -27,14 +27,14 @@ If the player to move is **not in check** and has **no legal move**, the game is
 ```tabuleiro
 fen: k7/P7/K7/8/8/8/8/8 b - - 0 1
 casas: a8:amarela b8:vermelha b7:vermelha
-legenda: Black to move, but there's no move: b8 is attacked by the a7-pawn, b7 by the white king, and the black king isn't in check. Stalemate.
+legenda: Black to move, but there's no move: b8 is attacked by the a7-pawn, b7 by the white king, the a7-pawn is protected by the white king, and the black king isn't in check. Stalemate.
 ```
 
 This is a classic: with [king and a- (or h-) pawn against a king](artigo:finais-de-peao), once the defending king reaches the corner, there's often no way to win. More in [check, checkmate and stalemate](artigo:xeque-mate-e-afogamento).
 
 ## 3. Insufficient material {#material "3. Insufficient material"}
 
-Under FIDE rules, the game ends in a draw when the position is **dead**: no sequence of legal moves could let either side deliver checkmate. The most common cases:
+Under the [FIDE Laws of Chess](https://handbook.fide.com/chapter/E012023), the game ends in a draw when the position is **dead**: no sequence of legal moves could let either side deliver checkmate. The most common cases:
 
 - **King vs. king.**
 - **King and bishop vs. king.**
@@ -79,7 +79,7 @@ In games with a clock, running out of time loses. But there's an exception: if y
 Drawing isn't the same as giving up. In a tournament, half a point from a lost position is half a point more in the standings. So it pays to keep two opposite attitudes in mind:
 
 - **When you're winning**, avoid the draw: watch out for stalemate, don't let your opponent's queen give perpetual check to your king, and convert your advantage before the 50-move rule comes into play.
-- **When you're losing**, look for a draw before resigning: a perpetual check, a forced stalemate, trading off your opponent's last piece that can deliver mate. Plenty of "lost" games end in a draw because the defender kept looking.
+- **When you're losing**, look for a draw before resigning: a perpetual check, a forced stalemate, trading off the last piece your opponent could mate with. Plenty of "lost" games end in a draw because the defender kept looking.
 
 The exercises below train both sides.
 

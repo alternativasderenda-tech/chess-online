@@ -38,10 +38,10 @@ To find overloads, count: for each enemy defender, **how many things does it pro
 In a **deflection**, you force the defender off its square with a capture, a trade or a check. The difference from an overload is subtle: in an overload the defender has two jobs; in a deflection you simply make it leave, and whatever it was protecting falls.
 
 ```tabuleiro
-fen: 5rk1/5ppp/5n2/6N1/4P3/7Q/5PPP/6K1 w - - 0 1
-setas: e4e5 f6h7:azul h3h7
+fen: 5rk1/5ppp/5n2/8/6P1/3B3Q/5P1P/6K1 w - - 0 1
+setas: g4g5 f6h7:azul h3h7 d3h7
 casas: h7:vermelha f6
-legenda: The f6 knight is the defender of h7. With 1.e5, the pawn attacks the knight: if it stops guarding h7, 2.Qxh7# follows.
+legenda: The f6 knight is h7's only defender besides the king. With 1.g5 the pawn attacks the knight: if it moves away (say 1...Nd5), 2.Qxh7# follows; if it stays, 2.gxf6. Black loses the knight.
 ```
 
 The most common deflection is a trade with check: you capture a piece protected by the defender, it has to recapture, and the square it was watching is left free.
@@ -83,7 +83,7 @@ That last step is what separates a tactic from a gamble. In the puzzles below, t
 - **Be suspicious of sacrifices with check**: before capturing, ask where the capture takes your piece.
 - **Look after your back rank.** Rooks and queens guarding it are usually the first victims of overloading; a "window" for the king (a pawn pushed in front of it) lightens that job. See the [back-rank mate](artigo:mate-do-corredor).
 
-:::pratique Practise deflection and overloading now
+:::pratique Practice deflection and overloading now
 Play against the computer at Hard level and, after each of its moves, ask which of its pieces are defending two things. It is a great tactical vision drill.
 :::
 

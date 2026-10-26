@@ -33,7 +33,7 @@ legenda: Kingside castling (green): king from e1 to g1, rook from h1 to f1. Quee
 
 ### When you're allowed to castle
 
-Under FIDE rules, you may castle only if **all** of these are true:
+Under the [official FIDE rules](artigo:regras#especiais), you may castle only if **all** of these are true:
 
 1. The king **has never moved** during the game.
 2. The rook you're castling with **has never moved**.
@@ -52,7 +52,7 @@ Once the king has moved, castling is gone for good, on both sides. If only one r
 
 ### Common castling mistakes
 
-- **Castling too late.** Waiting too long leaves the king in the center just as the files open up.
+- **Castling too late.** Waiting too long leaves the king in the center just as the files open up. That is why [castling early](artigo:principios-de-abertura#roque) is one of the opening principles.
 - **Castling into an attack.** If your opponent already has pieces and pawns aimed at one side of the board, taking your king there can be worse than waiting. Look first at where the king is going.
 - **Moving the king "just a little".** A single king step, even if it returns to e1 later, costs you the right to castle for the rest of the game.
 
@@ -144,7 +144,7 @@ No. But it can only be played on the move immediately after the enemy pawn's two
 
 ### Can I have two queens?
 
-Yes. You can promote to a queen even if your original queen is still on the board.
+Yes. You can promote a pawn to a queen even if your original queen is still on the board.
 
 ### Can a pawn promote to a king?
 

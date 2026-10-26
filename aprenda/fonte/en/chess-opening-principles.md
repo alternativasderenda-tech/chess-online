@@ -1,6 +1,6 @@
 ---
 id: principios-de-abertura
-titulo: Chess Opening Principles for Beginners
+titulo: "Chess Opening Principles: How to Play the First Moves"
 titulo_seo: Chess Opening Principles | Chess Online
 descricao: The opening principles every chess beginner should know — control the center, develop your pieces, castle early, keep the queen home — with exercises.
 nivel: iniciante
@@ -68,9 +68,9 @@ That doesn't mean the queen may never move in the opening, only that she shouldn
 ## 5. Four more tips {#conselhos "Four more tips"}
 
 - **Don't push too many pawns.** Two central pawns are usually enough early on. Edge pawns (a, h) rarely help in the opening.
-- **Be careful with the f-pawn.** Moving it early opens a diagonal to your king (the [Scholar's Mate](artigo:mate-do-pastor) targets exactly the f7 square).
+- **Be careful with the f-pawn.** Moving it early opens a diagonal to your king — that's how the [Fool's Mate](artigo:mate-do-pastor#variantes) happens: 1.f3 e5 2.g4?? Qh4#.
 - **Connect your rooks.** Once your minor pieces are out, you've castled and your queen has stepped off the back rank, your rooks see each other. That's a good sign the opening is over.
-- **Don't grab material at the cost of development.** Taking a pawn with a piece that has already moved twice can be expensive, as the exercises below show.
+- **Don't grab material at the cost of development.** Grabbing material with a piece that has already moved twice, while the rest of your army stays home, can be expensive, as the exercises below show.
 
 :::dica
 **💡 Quick checklist for the first 10 moves:** 1 or 2 center pawns · knights · bishops · castle · connected rooks. If a move doesn't help any of these or answer a threat, be suspicious.
@@ -95,12 +95,13 @@ explicacao: 6.Bxf7+ Ke7 (the only move) 7.Nd5# — this is the famous Légal's M
 ```
 
 ```exercicio
-fen: rnbqkb1r/pppp1ppp/5n2/4N3/8/8/PPPPQPPP/RNB1KB1R w KQkq - 2 5
-enunciado: After 1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nxe4 4.Qe2 Nf6??, the e-file is open all the way to Black's king. White wins the queen. How?
-tipo: tatica
-solucao: e5c6
-dica: If the knight on e5 leaves the e-file, who gives check? And where can the knight go to attack something big?
-explicacao: 5.Nc6+! — it's a discovered check: the knight steps aside and the queen on e2 checks the king on e8. At the same time, the knight attacks the queen on d8. Black must get out of check, and White takes the queen next move.
+fen: r1bBk2r/ppp2ppp/2p5/2b5/4n3/3P4/PPP2PPP/RN1QKB1R b KQkq - 0 7
+enunciado: After 1.e4 e5 2.Nf3 Nf6 3.Nxe5 Nc6 4.Nxc6 dxc6 5.d3 Bc5 6.Bg5? Nxe4! 7.Bxd8??, White grabbed the queen, but White's king is still on e1 and the f1 bishop hasn't moved. Black has **mate in 2**.
+tipo: mate
+lances: 2
+solucao: c5f2 e1e2 c8g4
+dica: Start with a check on f2. Then, which black piece hasn't moved yet?
+explicacao: 7...Bxf2+ 8.Ke2 (the only move) Bg4# — the bishop checks along the g4–e2 diagonal. The king can't go to d2 or take on f2 (the e4 knight covers both), e1 and e3 are covered by the f2 bishop, f3 is on the line of the check, and the d1 queen can't reach g4 because her own king is in the way. It's the most famous trap of the Stafford Gambit: White won the queen, but with the king in the center and the pieces at home, got mated.
 ```
 
 ## Frequently asked questions {#faq "FAQ"}

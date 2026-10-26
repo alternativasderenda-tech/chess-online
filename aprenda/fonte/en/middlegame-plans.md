@@ -30,7 +30,7 @@ A middlegame plan is a medium-term goal — attack the king, take over a file, f
 The most useful rule of middlegame strategy: **play on the wing where you are stronger**. Stronger means more space, more pieces nearby or a fixed target. When the center is closed, the rule becomes even clearer, because pieces can't cross the board quickly, and the game turns into a race between the two sides' attacks.
 
 ```tabuleiro
-fen: r1bq1rk1/pppn1pbp/3p1np1/3Pp3/2P1P3/2N2N2/PP2BPPP/R1BQ1RK1 b - - 0 9
+fen: r1bq1rk1/pppn1pbp/3p1np1/3Pp3/2P1P3/2N2N2/PP2BPPP/R1BQ1RK1 b - - 0 8
 setas: f6e8:azul f7f5:vermelha c4c5:verde
 casas: d5 e4 d6 e5
 legenda: King's Indian structure with a closed center: Black prepares ...f5 on the kingside (after moving the f6 knight), and White aims for c4-c5 on the queenside.
@@ -42,17 +42,17 @@ The same goes for [**opposite-side castling**](artigo:defesa-siciliana#dragao): 
 
 ## Open files and the seventh rank {#colunas}
 
-Rooks only come alive on open or half-open files. A classic plan has three stages:
+You've already seen in [positional strategy](artigo:estrategia-posicional#colunas) why open files matter: rooks only come alive on them. As a plan, they call for three stages:
 
 1. **Occupy the open file** with a rook.
 2. **Double the rooks** (or queen and rook) so the opponent can't contest it.
 3. **Invade** the seventh or eighth rank, where rooks attack pawns and confine the king.
 
-Two rooks on the seventh rank are so strong that they often force mate or a perpetual check on their own. The second exercise shows it.
+Two rooks on the seventh rank are so strong that they often force mate or a perpetual check on their own. Both exercises below show the invasion: first with queen and rook, then with both rooks.
 
 ## Outposts and maneuvers {#postos}
 
-An outpost is a square in the enemy camp that no enemy pawn can attack. Planting a knight there, supported by a pawn, is often worth more than a pawn. Very often the whole plan is a **maneuver**: taking a piece, in three or four moves, to its ideal square.
+An [outpost](artigo:estrategia-posicional#casas-fracas) is worth more when you plan how to get there. Very often the whole plan is a **maneuver**: taking a piece, in three or four moves, to its ideal square.
 
 ```tabuleiro
 fen: r1b2rk1/2q1bppp/p2p1n2/npp1p3/3PP3/2P2N1P/PPBN1PP1/R1BQR1K1 b - - 2 12
@@ -78,24 +78,22 @@ After b5 and the trade on c6, Black is left with a backward pawn on c6 or an iso
 
 ## Improve your worst piece and think about your opponent's plan {#pior-peca}
 
-When no big plan suggests itself, there are two paths that almost never fail.
+When no big plan suggests itself, go back to your [inventory](artigo:estrategia-posicional#inventario) and use the two tools it already points to: **improve your worst piece**, bringing it to an active square even if it takes several moves, and **prophylaxis**, stopping your opponent's plan before carrying out your own. Neither requires deep calculation, just a good reading of the position. That's why they're so useful when the clock is ticking.
 
-The first is to **improve your worst piece**. Find the piece that does the least: a bishop stuck behind its pawns, a knight on the rim, a rook still sitting in its corner. Bringing it to an active square, even if it takes several moves, improves the whole position, because the pieces start working together.
-
-The second is **prophylaxis**: before carrying out your plan, ask what your opponent's plan is and whether a single move can stop it. Sometimes a pawn advance that takes a square away from an enemy knight, or a rook that occupies the file before theirs does, is worth more than an "active" move.
-
-Both paths have something in common: they don't require deep calculation, just a good reading of the position. That's why they're so useful when the clock is ticking.
+:::pratique Play with a plan
+Against the computer, write your plan in one sentence as you leave the opening, and check after every trade whether it still holds.
+:::
 
 ## Exercises
 
 ```exercicio
-fen: 2r3k1/5ppp/p7/1p6/8/P7/1P1R1PPP/3R2K1 w - - 0 1
-enunciado: White has doubled rooks on the open d-file. White to play and **mate in 2**.
+fen: 6k1/3R1p1p/6p1/8/8/5Q2/r4PPP/6K1 w - - 0 1
+enunciado: The white rook has already broken into the seventh rank. White to play and **mate in 2**.
 tipo: mate
 lances: 2
-solucao: d2d8 c8d8 d1d8
-dica: Black's back rank is defended by a single rook.
-explicacao: 1.Rd8+! Rxd8 2.Rxd8#. The black rook is forced to capture and the second white rook comes in with mate: the black king has no flight square because its own pawns block f7, g7 and h7.
+solucao: f3f7 g8h8 f7f8
+dica: Count the attackers and defenders of the f7 pawn.
+explicacao: 1.Qxf7+! — the f7 pawn was attacked by the queen and the rook and defended only by the king. 1...Kh8 (the only move) 2.Qf8#: the rook on the seventh takes g7 away from the king. 2.Qe8#, 2.Qg7#, 2.Qxh7# and 2.Rd8# also mate.
 ```
 
 ```exercicio

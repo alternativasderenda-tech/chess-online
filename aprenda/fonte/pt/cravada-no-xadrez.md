@@ -75,7 +75,7 @@ legenda: O peão de f7 está cravado pelo bispo de c4. Ele não pode capturar o 
 
 Muitas aberturas populares giram em torno de uma cravada, e conhecê-las ajuda a não cair em armadilhas:
 
-- **Bb5 contra o cavalo de c6** (Ruy Lopez): vira cravada absoluta quando o peão de d7 sai do caminho; antes disso, o bispo apenas ataca o cavalo.
+- **Bb5 contra o cavalo de c6** (Abertura Espanhola, ou Ruy López): vira cravada absoluta quando o peão de d7 sai do caminho; antes disso, o bispo apenas ataca o cavalo.
 - **Bg5 contra o cavalo de f6**: cravada relativa, com a dama em d8 atrás. Aparece em várias aberturas de 1.d4.
 - **Bb4 contra o cavalo de c3**: a versão das Pretas, por exemplo na Defesa Nimzo-Índia (1.d4 Cf6 2.c4 e6 3.Cc3 Bb4).
 - **...Bg4 contra o cavalo de f3**: cravada relativa na dama de d1, comum em muitas defesas.

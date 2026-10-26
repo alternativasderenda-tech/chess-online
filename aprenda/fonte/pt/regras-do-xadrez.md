@@ -1,7 +1,7 @@
 ---
 id: regras
 titulo: As Regras Oficiais do Xadrez (FIDE) Explicadas
-titulo_seo: As Regras Oficiais do Xadrez (FIDE) Explicadas | Xadrez Online
+titulo_seo: Regras do Xadrez: as Regras Oficiais da FIDE Explicadas
 descricao: Todas as regras oficiais do xadrez segundo a FIDE, explicadas em português brasileiro: como cada peça se move, regras especiais, fim de partida, empates e mais.
 nivel: iniciante
 ordem: 20
@@ -10,18 +10,19 @@ atualizado: 2026-10-26
 tags: [regras do xadrez, regras oficiais xadrez, regras fide, xeque mate regras, regras xadrez para iniciantes]
 jogar: 1
 relacionados: [como-as-pecas-se-movem, lances-especiais, xeque-mate-e-afogamento, empates, ritmos-de-jogo]
+ensina: [Regras oficiais da FIDE, Fim de partida, Empates]
 ---
-Este é o resumo completo das regras oficiais do xadrez segundo a FIDE (Federação Internacional de Xadrez), traduzido para uma linguagem acessível. Tudo o que você precisa saber para jogar conforme o padrão internacional, sem precisar ler o regulamento original de 60 páginas.
+As regras do xadrez são as [Leis do Xadrez da FIDE](https://handbook.fide.com/chapter/E012023), a Federação Internacional de Xadrez. Em resumo: cada jogador começa com 16 peças num tabuleiro de 64 casas, as Brancas fazem o primeiro lance, os dois se alternam, um lance de cada vez, e vence quem der xeque-mate no rei adversário. A partida também pode terminar por desistência, por tempo esgotado ou empatada — por acordo, afogamento, repetição tripla, regra dos 50 lances ou material insuficiente. Este guia resume todas as regras oficiais em linguagem simples.
 
 ## 1. O tabuleiro e a posição inicial {#tabuleiro}
 
-O xadrez é jogado em um [tabuleiro de 64 casas](artigo:tabuleiro-e-notacao) (8x8), com cores alternadas. **A casa do canto direito de cada jogador deve ser branca**. As peças começam nas duas primeiras fileiras de cada lado.
+O xadrez é jogado em um [tabuleiro de 64 casas](artigo:tabuleiro-e-notacao) (8x8), com cores alternadas. **A casa do canto direito de cada jogador deve ser clara**. As peças começam nas duas primeiras fileiras de cada lado.
 
-Ordem das peças na primeira fileira (de A para H):
+Ordem das peças na primeira fileira (da coluna a para a coluna h):
 
 - Torre — Cavalo — Bispo — Dama — Rei — Bispo — Cavalo — Torre
 
-**A dama sempre começa na casa da sua própria cor**: dama branca em casa branca, dama preta em casa preta. Os peões ocupam toda a segunda fileira. O jogador das peças brancas joga primeiro.
+**A dama sempre começa na casa da sua própria cor**: a dama branca numa casa clara, a dama preta numa casa escura. Os peões ocupam a fileira da frente (a 2ª das Brancas, a 7ª das Pretas). O jogador das peças brancas joga primeiro.
 
 ```tabuleiro
 fen: rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1
@@ -31,37 +32,24 @@ legenda: Posição inicial: o rei e a dama ocupam o centro da primeira fileira, 
 
 ## 2. Movimentos das peças {#movimentos}
 
-Cada peça tem um [movimento próprio](artigo:como-as-pecas-se-movem). Veja o resumo:
+O movimento de cada peça, com diagramas e exercícios, está em [como as peças se movem](artigo:como-as-pecas-se-movem). Para consulta rápida:
 
-:::peca ♟ Peão
-Anda uma casa para frente. No primeiro lance, pode avançar duas casas. Captura na diagonal, uma casa para frente. Não anda para trás.
-:::
+| Peça | Como anda | Como captura |
+|---|---|---|
+| Rei | 1 casa em qualquer direção, nunca para casa atacada | Igual |
+| Dama | Linha reta ou diagonal, quantas casas quiser | Igual |
+| Torre | Linha reta (coluna ou fileira), quantas casas quiser | Igual |
+| Bispo | Diagonal, quantas casas quiser; fica sempre na mesma cor | Igual |
+| Cavalo | Em "L" (2 + 1); é a única peça que salta | Igual |
+| Peão | 1 casa para a frente (2 na primeira vez); nunca recua | 1 casa na diagonal, para a frente |
 
-:::peca ♜ Torre
-Anda em linha reta (horizontal ou vertical), quantas casas quiser. Captura na casa de destino. Não pula peças.
-:::
+Só o cavalo pula outras peças. Nenhuma peça captura peça da própria cor.
 
-:::peca ♝ Bispo
-Anda em diagonal, quantas casas quiser. Cada bispo sempre fica preso à cor inicial.
-:::
-
-:::peca ♛ Dama
-Combina os movimentos da torre e do bispo. Move em qualquer direção, em linha reta ou diagonal, quantas casas quiser.
-:::
-
-:::peca ♞ Cavalo
-Move em "L": duas casas em uma direção e mais uma na perpendicular. É a única peça que pula sobre outras peças.
-:::
-
-:::peca ♚ Rei
-Move uma casa em qualquer direção. Não pode mover-se para uma casa atacada por uma peça adversária.
-:::
-
-## 3. Jogadas especiais {#especiais}
+## 3. Lances especiais {#especiais}
 
 ### Roque
 
-O rei e uma torre se movem juntos: o rei avança duas casas em direção à torre e a torre pula para o outro lado do rei. Existe roque curto (lado do rei, mais comum) e roque longo (lado da dama).
+O rei e uma torre se movem juntos: o rei avança duas casas em direção à torre e a torre pula para o outro lado do rei. Existe o **roque pequeno** (ou curto, do lado do rei, o mais comum) e o **roque grande** (ou longo, do lado da dama).
 
 [Condições para fazer o roque](artigo:lances-especiais):
 
@@ -73,12 +61,12 @@ O rei e uma torre se movem juntos: o rei avança duas casas em direção à torr
 ```tabuleiro
 fen: r3k2r/pppq1ppp/2npbn2/4p3/4P3/2NPBN2/PPPQ1PPP/R3K2R b KQkq - 0 1
 setas: e8c8 a8d8
-legenda: Roque longo das Pretas: o rei vai de e8 para c8 e a torre de a8 para d8.
+legenda: Roque grande das Pretas: o rei vai de e8 para c8 e a torre de a8 para d8.
 ```
 
 ### En passant (captura "de passagem")
 
-Se um peão adversário avança duas casas no primeiro lance e fica ao lado do seu peão, você pode capturá-lo na jogada seguinte, como se ele tivesse avançado apenas uma casa. **Só vale no lance imediatamente seguinte** — se você não capturar, perde o direito.
+Se um peão adversário sai da casa inicial avançando duas casas e para ao lado do seu peão, você pode capturá-lo no lance seguinte, como se ele tivesse avançado apenas uma casa. **Só vale no lance imediatamente seguinte** — se você não capturar, perde o direito.
 
 ```tabuleiro
 fen: rnbqkbnr/ppp1p1pp/8/3pPp2/8/8/PPPP1PPP/RNBQKBNR w KQkq f6 0 3
@@ -95,15 +83,11 @@ Quando seu peão chega à última fileira do tabuleiro (8ª para Brancas, 1ª pa
 
 ### Xeque
 
-O rei está sob ataque direto. Você é obrigado a sair do xeque imediatamente, de uma das três formas:
-
-1. Mover o rei para uma casa segura.
-2. Bloquear o ataque com outra peça (não funciona contra cavalo, que pula).
-3. Capturar a peça que está dando xeque.
+O rei está sob ataque direto. Você é obrigado a sair do xeque: fugindo com o rei, capturando a peça que dá xeque ou bloqueando (detalhes em [xeque, xeque-mate e afogamento](artigo:xeque-mate-e-afogamento)).
 
 ### Xeque-mate
 
-O rei está em xeque e **nenhuma das três opções acima é possível**. A partida acaba. Quem deu o xeque-mate venceu.
+O rei está em xeque e **nenhuma das três saídas é possível**. A partida acaba. Quem deu o xeque-mate venceu.
 
 ### Desistência
 
@@ -113,7 +97,7 @@ Um jogador pode desistir a qualquer momento. Geralmente isso acontece quando o j
 
 ### Afogamento (stalemate)
 
-O jogador da vez não está em xeque, mas não tem nenhuma jogada legal possível. A partida termina em empate. Essa é uma das regras mais importantes do final de jogo — você pode ter dama de vantagem mas, se [afogar o rei adversário](artigo:xeque-mate-e-afogamento), o jogo termina empate.
+O jogador da vez não está em xeque, mas não tem nenhum lance legal possível. A partida termina em empate. Essa é uma das regras mais importantes do final de jogo — você pode ter dama de vantagem mas, se [afogar o rei adversário](artigo:xeque-mate-e-afogamento), o jogo termina empate.
 
 ```tabuleiro
 fen: 7k/5Q2/6K1/8/8/8/8/8 b - - 0 1
@@ -127,11 +111,11 @@ Os dois jogadores podem concordar em empatar a qualquer momento. Em torneios ofi
 
 ### Regra dos 50 lances
 
-Se passam 50 lances consecutivos sem captura nem movimento de peão, [qualquer jogador pode pedir empate](artigo:empates). A regra existe para impedir partidas infinitas em finais sem progresso.
+Se cada jogador fizer 50 lances sem captura nem movimento de peão, [o jogador da vez pode pedir o empate](artigo:empates); com 75 lances, o empate é automático. A regra existe para impedir partidas infinitas em finais sem progresso.
 
 ### Repetição tripla
 
-Se a mesma posição se repete três vezes na partida (com o mesmo jogador na vez de jogar), pode-se pedir empate. Não precisam ser repetições consecutivas.
+Se a mesma posição se repete três vezes na partida (com o mesmo jogador na vez de jogar), pode-se pedir empate. Não precisam ser repetições consecutivas. Se a mesma posição aparecer cinco vezes, o empate é automático.
 
 ### Material insuficiente
 
@@ -144,12 +128,13 @@ Quando nenhum dos lados tem peças suficientes para dar xeque-mate, a partida te
 
 ## 6. Regras de tempo e relógio {#relogio}
 
-Em partidas com relógio, cada jogador tem um tempo total. Quando o tempo acaba, o jogador perde — a não ser que o adversário não tenha peças suficientes para dar mate (caso em que é empate). Os principais formatos são:
+Em partidas com relógio, cada jogador tem um tempo total. Quando o tempo acaba, o jogador perde — a não ser que o adversário não consiga dar mate por nenhuma sequência de lances legais (por exemplo, se só lhe restar o rei); nesse caso, é empate. Os ritmos da FIDE são:
 
-- **Clássico:** 60 minutos ou mais para cada lado.
-- **Rápido:** 10 a 60 minutos.
-- **Blitz:** 3 a 10 minutos.
-- **Bullet:** menos de 3 minutos.
+- **Clássico:** 60 minutos ou mais para cada jogador.
+- **Rápido:** mais de 10 e menos de 60 minutos.
+- **Blitz:** 10 minutos ou menos.
+
+Na conta da FIDE, o incremento entra multiplicado por 60: 10+5 vale 15 minutos e é rápido. O **bullet** (menos de 3 minutos) não é uma categoria da FIDE; é um ritmo dos sites.
 
 Veja o artigo dedicado em [Xadrez Clássico, Rápido, Blitz e Bullet](artigo:ritmos-de-jogo).
 
@@ -163,9 +148,27 @@ Algumas regras menos conhecidas mas igualmente válidas:
 - **Não pode falar com o adversário** além do necessário (saudação, oferecer empate, abandonar).
 
 :::dica
-**💡 Aviso para jogos online:** as regras de "peça tocada, peça jogada" não se aplicam em partidas pela internet — o lance só conta quando você confirma. Mas as regras de tempo e de movimentos especiais valem da mesma forma.
+**💡 Em jogos online:** a regra "peça tocada, peça jogada" não se aplica: o lance só conta quando você o completa. Mas as regras de tempo e dos lances especiais valem da mesma forma.
 :::
 
+## Perguntas frequentes {#faq "Perguntas frequentes"}
+
+### Quantas peças cada jogador tem?
+
+Dezesseis: oito peões, duas torres, dois cavalos, dois bispos, uma dama e um rei.
+
+### O que acontece quando o tempo acaba?
+
+Perde quem deixou o tempo acabar — a menos que o adversário não tenha como dar xeque-mate com nenhuma sequência de lances legais; nesse caso, a partida é empate (Leis da FIDE, artigo 6.9).
+
+### "Peça tocada, peça jogada" é regra oficial?
+
+É. Pelo artigo 4.3 das Leis da FIDE, quem tem a vez e toca de propósito numa peça sua precisa movê-la, se ela tiver lance legal; se tocar numa peça adversária, precisa capturá-la, se puder. Para só ajeitar uma peça na casa, é preciso avisar antes, dizendo "ajusto".
+
+### Posso ter duas damas?
+
+Pode. Pela promoção, um peão que chega à última fileira pode virar dama mesmo que a dama original ainda esteja no tabuleiro. [Veja como funciona a promoção](artigo:lances-especiais#promocao).
+
 :::pratique Coloque as regras em prática
-Pratique no Xadrez Online com o modo Aprendiz: 12 lições interativas que ensinam cada regra na prática.
+Abra o jogo e escolha **🎓 Aprendiz** no menu de dificuldade: são 12 lições interativas que ensinam cada regra na prática.
 :::

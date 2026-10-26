@@ -69,7 +69,7 @@ A torre também precisa do rei, e o processo é um pouco mais longo:
 1. **[Corte o rei](artigo:finais-de-torre) com a torre**: coloque-a numa coluna ou fileira que ele não possa atravessar.
 2. **Traga o seu rei** para ficar de frente para o rei adversário, com uma casa entre os dois. Essa posição, em que os reis se encaram e nenhum pode avançar, chama-se **[oposição](artigo:finais-de-peao)**.
 3. **Quando os reis estiverem em oposição, dê xeque com a torre**: o rei adversário é empurrado uma fileira (ou coluna) para trás.
-4. Quando não houver oposição, faça um **lance de espera** com a torre (sem sair da linha que corta o rei) e deixe o adversário se mover.
+4. **Se os reis ainda não estão frente a frente, aproxime o seu rei.** Quando ele estiver a um passo da oposição, faça um **lance de espera** com a torre, sem sair da linha que corta o rei. Aí o rei adversário ou entra na oposição e leva o xeque, ou se afasta, e você o acompanha com o rei.
 5. Repita até a borda. O xeque final é dado com os reis frente a frente.
 
 ```tabuleiro

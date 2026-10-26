@@ -38,7 +38,7 @@ A ordem da tabela é a ordem sugerida de estudo: cada padrão usa ideias do ante
 O garfo é o ataque duplo: uma peça atinge duas peças adversárias e só uma pode ser salva. O cavalo é o especialista, mas peões, damas e até o rei dão garfos.
 
 ```tabuleiro
-fen: 3qk2r/5Npp/8/8/2B5/8/5PPP/6K1 b k - 0 1
+fen: 3qk2r/5Npp/8/8/2B5/8/2Q2PPP/6K1 b k - 0 1
 setas: f7d8 f7h8
 casas: d8 h8
 legenda: O cavalo de f7, protegido pelo bispo de c4, ataca a dama de d8 e a torre de h8 ao mesmo tempo.
@@ -71,15 +71,22 @@ legenda: A torre de a6 dá xeque no rei de d6. Quando o rei sair da sexta fileir
 Uma peça sai da frente de outra e revela um ataque. Se o ataque revelado for ao rei, é xeque descoberto; se a peça que saiu também dá xeque, é xeque duplo, a tática mais forçante que existe.
 
 ```tabuleiro
-fen: 3q2k1/5ppp/8/8/3N4/8/5PPP/3R2K1 w - - 0 1
-setas: d1d8:vermelha
+fen: 3q4/5pkp/6p1/8/3N4/8/5PPP/3R2K1 w - - 0 1
+setas: d4f5 d1d8:vermelha
 casas: d4 d8
-legenda: O cavalo de d4 está na frente da torre de d1. Quando ele sair, a torre passa a atacar a dama de d8.
+legenda: O cavalo de d4 está na frente da torre de d1. Com 1.Cf5+ (ou 1.Ce6+), ele sai dando xeque e a torre passa a atacar a dama de d8: as Pretas cuidam do rei e perdem a dama.
 ```
 
 ### Desvio, atração e sobrecarga
 
 Quando o alvo está bem defendido, ataque o defensor: desvie-o com uma troca ou um xeque, atraia o rei para uma casa ruim ou explore uma peça que defende duas coisas ao mesmo tempo.
+
+```tabuleiro
+fen: 6k1/3q1ppp/8/1b3n2/8/5Q2/5PPP/1R4K1 w - - 0 1
+setas: b1b5 f3f5 d7b5:azul d7f5:azul
+casas: d7:vermelha
+legenda: A dama de d7 defende o bispo de b5 e o cavalo de f5. Depois de 1.Txb5 Dxb5 2.Dxf5, as Brancas ganham material.
+```
 
 ### Mate do corredor
 
@@ -113,8 +120,9 @@ Antes de cada lance, faça a varredura **xeques, capturas e ameaças**: olhe pri
 2. **Estude um padrão de cada vez**, na ordem da tabela acima, e só avance quando os exercícios do padrão ficarem fáceis.
 3. **Calcule antes de mexer.** No exercício, só toque na peça quando tiver [a linha inteira na cabeça](artigo:calculo), inclusive a melhor resposta do adversário.
 4. **Jogue partidas** e, depois de cada uma, [procure as táticas que você e o adversário perderam](artigo:analisar-partidas).
+5. **Siga um plano.** Para encaixar as táticas numa rotina semanal com finais, aberturas e análise, veja [como treinar xadrez](artigo:rotina-de-treino).
 
-Se ainda está aprendendo as regras, comece por [como jogar xadrez do zero](artigo:jogar-do-zero).
+Se ainda perde peças por descuido, revise antes os [erros comuns de iniciantes](artigo:erros-de-iniciante).
 
 :::pratique Treine táticas agora
 Jogue contra o computador no nível Médio. Ele erra o suficiente para deixar táticas no tabuleiro, e a cada partida você vai reconhecê-las mais rápido.
@@ -122,7 +130,7 @@ Jogue contra o computador no nível Médio. Ele erra o suficiente para deixar t�
 
 ## Exercícios para começar {#exercicios "Exercícios"}
 
-Um exercício de cada padrão básico. Toque (ou clique) na peça e depois na casa de destino.
+Um exercício de quatro dos seis padrões; os outros estão nos artigos de [ataque descoberto](artigo:ataque-descoberto#exercicios) e [desvio e sobrecarga](artigo:desvio-e-sobrecarga#exercicios). Toque (ou clique) na peça e depois na casa de destino.
 
 ```exercicio
 fen: 6k1/p2r1p1p/1p4p1/8/4N3/8/PP3PPP/6K1 w - - 0 1

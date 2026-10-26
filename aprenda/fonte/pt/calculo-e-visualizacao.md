@@ -1,7 +1,7 @@
 ---
 id: calculo
 titulo: "Cálculo no Xadrez: Lances Candidatos e Visualização"
-titulo_seo: Cálculo e Visualização no Xadrez | Xadrez Online
+titulo_seo: "Como Calcular no Xadrez: Lances Candidatos e Visualização"
 descricao: Como calcular variantes no xadrez: escolher lances candidatos, começar por xeques, capturas e ameaças, avaliar a posição final e treinar a visualização.
 nivel: avancado
 ordem: 40
@@ -58,7 +58,7 @@ casas: d5:vermelha e6 f6 d8
 legenda: O peão de d5 é atacado quatro vezes (Cc3, Bf3, Dd2 e Td1, em bateria) e defendido três vezes (peão de e6, Cf6 e Dd8).
 ```
 
-Quatro atacantes contra três defensores parece vantagem. Mas o primeiro defensor é um peão: depois de 1.Cxd5 exd5 2.Bxd5 Cxd5 3.Dxd5 Dxd5 4.Txd5, as Brancas ficam com uma peça a menos por dois peões. Quem defende com peças baratas e ataca com peças caras perde na troca.
+Quatro atacantes contra três defensores parece vantagem. Mas o primeiro defensor é um peão: depois de 1.Cxd5 exd5 2.Bxd5 Cxd5 3.Dxd5 Dxd5 4.Txd5, as Brancas ficam com uma peça a menos por dois peões. Quando o defensor recaptura com peças baratas e o atacante captura com peças caras, quem sai perdendo é o atacante.
 
 ## Visualização: ver o que ainda não está no tabuleiro {#visualizacao}
 
@@ -68,15 +68,17 @@ O cálculo depende de você "ver" onde estão as peças três ou quatro lances d
 - **Linhas que se abrem:** quando uma peça sai do caminho, uma torre, um bispo ou uma dama de trás passam a atacar. É o mecanismo do [xeque descoberto](artigo:ataque-descoberto).
 - **Lances para trás:** recuos e lances laterais são os mais fáceis de esquecer, tanto os seus quanto os do adversário.
 
-```tabuleiro
-fen: 4rr2/ppqb1ppk/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 b - - 1 2
-setas: c1h6:amarela d1h5:azul
-legenda: Treino de visualização: esta é a posição depois de 1.Bxh7+ Rxh7 2.Cg5+, a partir do primeiro diagrama. Tente reconstruí-la de cabeça antes de olhar.
-```
-
 :::dica
 **💡 Dica:** para treinar a visualização, resolva os exercícios deste site **sem mexer nas peças** até ter a linha inteira na cabeça. Só então execute a solução no tabuleiro interativo.
 :::
+
+Treino de visualização: antes de rolar até o próximo diagrama, volte ao primeiro, jogue 1.Bxh7+ Rxh7 2.Cg5+ de cabeça e diga onde está cada peça. Depois confira aqui.
+
+```tabuleiro
+fen: 4rr2/ppqb1ppk/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 b - - 1 2
+setas: c1h6:amarela d1h5:azul
+legenda: A posição depois de 1.Bxh7+ Rxh7 2.Cg5+, a partir do primeiro diagrama.
+```
 
 ## Cálculo na prática: quanto tempo gastar {#pratica}
 
@@ -94,6 +96,10 @@ Quase todo erro de cálculo cai numa destas categorias:
 - **Parar cedo demais.** A linha termina com você "ganhando uma peça", mas ainda há uma captura ou um xeque pendente.
 - **Calcular só o que você quer.** Examinar a defesa mais cômoda para você, e não a mais forte. Inverta o tabuleiro mentalmente e procure o melhor lance dele.
 - **Confiar em linhas longas demais.** Quanto mais longa a linha, maior a chance de um erro de visualização no meio. Quando a linha passa de cinco ou seis lances, confira de novo os primeiros.
+
+:::pratique Calcule antes de tocar
+Jogue contra o computador e, nos lances críticos, escreva (ou diga em voz alta) a linha inteira antes de mover a peça.
+:::
 
 ## Exercícios
 

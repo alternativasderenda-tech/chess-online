@@ -33,7 +33,7 @@ legenda: A torre de e1 dá xeque no rei de e5. Quando o rei sair da coluna, a to
 
 ## Espeto absoluto: o rei na frente {#absoluto "Espeto absoluto"}
 
-Quando a peça da frente é o **rei**, o espeto vem com xeque. O adversário não tem escolha: precisa tirar o rei da linha, e a peça de trás cai. É a forma mais forte do espeto, porque não existe defesa por contra-ataque, a não ser que haja como bloquear o xeque com uma peça protegida.
+Quando a peça da frente é o **rei**, o espeto vem com xeque. O adversário não tem escolha: precisa tirar o rei da linha, e a peça de trás cai. É a forma mais forte do espeto: o adversário não tem tempo para contra-atacar, e a única saída, quando existe, é bloquear o xeque com uma peça protegida.
 
 ```tabuleiro
 fen: 7r/8/5k2/8/3B4/8/5PPP/6K1 b - - 0 1
@@ -47,10 +47,10 @@ legenda: O bispo de d4 dá xeque em f6. Atrás do rei, na mesma diagonal, está 
 Quando a peça da frente é a dama ou uma torre, não há xeque, e o adversário pode tentar outra coisa: proteger a peça de trás, contra-atacar ou trocar. Mesmo assim, o espeto relativo costuma ganhar material, principalmente quando a peça que espeta está protegida.
 
 ```tabuleiro
-fen: 6rk/8/8/3q4/8/1B6/P4PPP/6K1 b - - 0 1
+fen: 6rk/8/8/3q4/8/1B4P1/P4P1P/6K1 b - - 0 1
 setas: b3d5:vermelha d5g8
 casas: d5:vermelha g8
-legenda: O bispo de b3, protegido pelo peão de a2, ataca a dama de d5. Se ela sair da diagonal, o bispo captura a torre de g8.
+legenda: O bispo de b3, protegido pelo peão de a2, ataca a dama de d5. Se ela sair da diagonal, o bispo captura a torre de g8, defendida só pelo rei: as Brancas ganham a qualidade.
 ```
 
 ## Espeto x cravada {#espeto-x-cravada "Espeto x cravada"}
@@ -78,7 +78,7 @@ Com o rei preto em g7 ou h7, o truque não funciona, porque o rei controla h7 (o
 
 Os espetos aparecem em situações bem reconhecíveis. Vale a pena conferir cada uma delas sempre que surgirem:
 
-- **Reis no centro nos finais.** Quando as damas saem, o rei vira uma peça ativa e anda pelo tabuleiro. É ótimo para o final, mas expõe o rei a xeques em linha com uma torre ou um peão passado atrás dele.
+- **Reis no centro nos finais.** Quando as damas saem, o rei vira uma peça ativa e anda pelo tabuleiro. É ótimo para o final, mas expõe o rei a xeques de torre e de bispo que atravessam a linha e pegam a peça que estiver atrás dele.
 - **Diagonais longas abertas.** Um bispo em b2 ou g2 (ou b7 e g7) enxerga o tabuleiro inteiro. Rei e dama na mesma diagonal longa são um convite.
 - **Peças nas pontas da mesma fileira.** Torres e reis na mesma fileira, sem peões no meio, são alvos clássicos de espetos de torre ou de dama.
 - **Peões prestes a promover.** O espeto também ganha a dama recém-promovida: se o adversário [promover](artigo:lances-especiais) numa casa alinhada com o rei dele, uma torre ou um bispo pode dar xeque e capturar a dama nova por trás.
@@ -116,9 +116,9 @@ explicacao: 1.Ta5+ dá xeque pela quinta fileira. O rei sai, e 2.Txh5 captura a 
 ```exercicio
 fen: R7/P4k2/8/8/8/1P3K2/8/r7 w - - 0 1
 enunciado: Final de torre. Brancas jogam e **ganham a torre** das Pretas.
-solucao: a8h8 a1a7 h8h7 f7e6 h7a7
+solucao: a8h8
 dica: A torre branca está atrapalhando o próprio peão. Se ela sair de a8 para uma casa de onde possa dar xeque na sétima fileira...
-explicacao: 1.Th8! ameaça promover. Se 1...Txa7, 2.Th7+ é um espeto: o rei sai da sétima fileira e 3.Txa7 ganha a torre. Se as Pretas não capturarem o peão, 2.a8=D ganha do mesmo jeito.
+explicacao: 1.Th8! ameaça 2.a8=D. Se 1...Txa7, 2.Th7+ é um espeto: o rei sai da sétima fileira e 3.Txa7 ganha a torre. Se as Pretas não capturarem, o peão promove (depois de um xeque como 1...Tf1+, basta tirar o rei do xeque) e a torre preta terá de se entregar por ele.
 ```
 
 ## Perguntas frequentes {#faq "Perguntas frequentes"}

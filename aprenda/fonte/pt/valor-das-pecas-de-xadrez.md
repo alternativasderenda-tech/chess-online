@@ -73,7 +73,7 @@ Antes de capturar uma peça defendida, conte:
 2. Quantas peças do adversário a defendem?
 3. Se as capturas forem até o fim, quem fica com mais pontos?
 
-Se você captura com uma peça barata e o adversário recaptura com uma barata, o saldo é o que importa. Capturar um peão defendido com a dama, por exemplo, quase sempre é um erro: você ganha 1 e perde 9.
+O que importa é o saldo: trocar um cavalo por um cavalo é empate em pontos; já capturar um peão defendido com a dama quase sempre é um erro: você ganha 1, perde 9 e fica 8 pontos atrás.
 
 :::dica
 **💡 Dica:** capture primeiro com a peça **de menor valor**. Se a recaptura vier, você perde o mínimo possível.
@@ -111,7 +111,7 @@ enunciado: O peão de e4 pode capturar o cavalo ou a torre. Qual captura vale ma
 tipo: tatica
 solucao: e4f5
 dica: Cavalo vale 3, torre vale 5. Alguma das duas está defendida?
-explicacao: 1.exf5 — nenhuma das duas peças está defendida, então leve a mais valiosa: a torre (5 pontos) em vez do cavalo (3).
+explicacao: 1.exf5 — a torre vale mais (5) e não está defendida (o cavalo de d5 não alcança f5). O cavalo, ao contrário, está defendido pela torre: 1.exd5? Txd5 ganharia 3 pontos e entregaria o peão.
 ```
 
 ```exercicio
@@ -155,5 +155,5 @@ Não. Ganha quem dá xeque-mate (ou quando o adversário abandona ou perde no te
 É trocar um cavalo ou um bispo (3 pontos) por uma torre (5 pontos), ganhando 2 pontos na troca.
 
 :::pratique Pratique contando material
-Jogue contra o computador no nível Fácil e, a cada captura, some os pontos de cada lado. Tente terminar a partida com mais material do que começou à frente.
+Jogue contra o computador no nível Fácil e, a cada captura, some os pontos de cada lado. Tente terminar a partida com mais material que o adversário.
 :::

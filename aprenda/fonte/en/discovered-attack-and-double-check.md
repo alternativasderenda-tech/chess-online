@@ -16,7 +16,7 @@ A **discovered attack** happens when a piece moves and, by stepping out of the w
 
 ## How a discovered attack works {#como-funciona "How it works"}
 
-A discovered attack needs two pieces of the same colour lined up with a target:
+A discovered attack needs two pieces of the same color lined up with a target:
 
 1. a long-range **back piece**, aimed at the target;
 2. a **front piece**, which blocks that line and is about to move.
@@ -47,7 +47,7 @@ In a double check, the piece that moves **also** gives check. The king is attack
 
 - you cannot **capture** both attackers with one move;
 - you cannot **block** two lines with one piece;
-- the only defence is to **move the king**.
+- the only defense is to **move the king**.
 
 That is why double check is so dangerous: if the king has no free square, it is mate, even when the checking pieces are hanging.
 
@@ -60,7 +60,7 @@ legenda: After Nf6+, the king on e8 is in check from the rook and the knight at 
 
 ## Batteries: setting up the blow {#baterias "Batteries"}
 
-When two pieces of the same colour are lined up on the same line, they form a **battery**. A battery with one of your own pieces in front is a discovered attack waiting to happen. In practice:
+When two pieces of the same color are lined up on the same line, they form a **battery**. A battery with one of your own pieces in front is a discovered attack waiting to happen. In practice:
 
 - **A rook or queen behind a knight or bishop**, aimed at the enemy king or queen, is the most common setup.
 - **A bishop behind a knight** on a long diagonal (for example, bishop on b2 and knight on e5, aimed at h8) produces very strong discovered and double checks.
@@ -81,6 +81,13 @@ The most spectacular use of discovered check is the **windmill**. It happens whe
 
 On every turn of the windmill the rook eats a piece, and the defender can do nothing but shuffle the king back and forth. The typical picture is Black's king between g8 and h8, a white bishop on the long diagonal and a white rook on the seventh rank. When you see it, [count how many pieces the rook can collect](artigo:calculo) before it stops.
 
+```tabuleiro
+fen: 5n1k/pp1q2R1/8/8/8/8/1B3PPP/6K1 w - - 0 1
+setas: g7d7 b2h8:vermelha
+casas: h8:vermelha d7 b7 a7
+legenda: The windmill. The g7 rook, protected by the b2 bishop, moves off with a discovered check: 1.Rxd7+ Kg8 2.Rg7+ Kh8 3.Rxb7+ Kg8 4.Rg7+ Kh8 5.Rxa7+. Every black reply is forced.
+```
+
 ## Common mistakes {#erros "Common mistakes"}
 
 - **Cashing in the discovered check too early.** The front piece only gets one chance to move with check. If it wins nothing, your opponent gets out of check and the battery is gone.
@@ -91,9 +98,9 @@ On every turn of the windmill the rook eats a piece, and the defender can do not
 
 - **Watch the lines aimed at your king and queen**, even when an enemy piece is in the way: that piece can step aside on any move.
 - **Break the battery** by attacking or trading the front piece before it moves.
-- **Give your king escape squares.** Against a double check, having somewhere to go is the only defence.
+- **Give your king escape squares.** Against a double check, having somewhere to go is the only defense.
 
-:::pratique Practise discovered attacks now
+:::pratique Practice discovered attacks now
 Play against the computer and try to build batteries with rook and bishop. At Medium level it does not always notice the piece about to step aside.
 :::
 
@@ -129,7 +136,7 @@ explicacao: 1.Nf7+ is a double check (the b2 bishop and the f7 knight): the king
 
 ```exercicio
 fen: rnb1kb1r/pp3ppp/2p5/4q3/4n3/3Q4/PPPB1PPP/2KR1BNR w kq - 0 9
-enunciado: One of the most famous miniatures in history (Réti vs Tartakower, Vienna, 1910). White to move gives **mate in 3**.
+enunciado: One of the most famous miniatures (short games of about 25 moves or fewer) in history (Réti vs Tartakower, Vienna, 1910). White to move gives **mate in 3**.
 tipo: mate
 lances: 3
 solucao: d3d8 e8d8 d2g5 d8c7 g5d8
@@ -145,12 +152,12 @@ A discovered attack is any attack revealed when a piece steps out from in front 
 
 ### Why is double check so strong?
 
-Because the only defence is to move the king. You cannot capture or block two attackers with one move, so a double check works even when the checking pieces are undefended.
+Because the only defense is to move the king. You cannot capture or block two attackers with one move, so a double check works even when the checking pieces are undefended.
 
 ### Which pieces can make a discovered attack?
 
 The back piece must be a long-range one: bishop, rook or queen. The front piece can be anything, even a pawn or the king.
 
-### How do I practise?
+### How do I practice?
 
 Solve puzzles and, in your games, look for lines aimed at the enemy king or queen with one of your own pieces in the way. The big picture is in [chess tactics explained](artigo:taticas).

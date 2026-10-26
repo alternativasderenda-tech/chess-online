@@ -2,7 +2,7 @@
 id: espeto
 titulo: Skewer in Chess: the Tactic That Goes Through a Piece
 titulo_seo: Skewer in Chess: What It Is and How to Use It | Chess Online
-descricao: What a skewer is in chess, skewer vs pin, the skewer with check and the classic rook-endgame trick. With 3 interactive puzzles to practise.
+descricao: What a skewer is in chess, skewer vs pin, the skewer with check and the classic rook-endgame trick. With 3 interactive puzzles to practice.
 nivel: intermediario
 ordem: 25
 publicado: 2026-10-26
@@ -33,7 +33,7 @@ legenda: The e1 rook checks the king on e5. Once the king leaves the file, the r
 
 ## Absolute skewer: the king in front {#absoluto "Absolute skewer"}
 
-When the front piece is the **king**, the skewer comes with check. Your opponent has no choice: the king must leave the line, and the piece behind falls. This is the strongest form of skewer, because there is no counter-attacking defence, unless the check can be blocked by a protected piece.
+When the front piece is the **king**, the skewer comes with check. Your opponent has no choice: the king must leave the line, and the piece behind falls. This is the strongest form of skewer: there is no time to counter-attack, and the only way out, when there is one, is to block the check with a protected piece.
 
 ```tabuleiro
 fen: 7r/8/5k2/8/3B4/8/5PPP/6K1 b - - 0 1
@@ -47,10 +47,10 @@ legenda: The d4 bishop checks the king on f6. Behind the king, on the same diago
 When the front piece is the queen or a rook, there is no check, and your opponent can try something else: protect the back piece, counter-attack or trade. Even so, a relative skewer usually wins material, especially when the skewering piece is protected.
 
 ```tabuleiro
-fen: 6rk/8/8/3q4/8/1B6/P4PPP/6K1 b - - 0 1
+fen: 6rk/8/8/3q4/8/1B4P1/P4P1P/6K1 b - - 0 1
 setas: b3d5:vermelha d5g8
 casas: d5:vermelha g8
-legenda: The b3 bishop, protected by the a2 pawn, attacks the queen on d5. If she leaves the diagonal, the bishop takes the g8 rook.
+legenda: The b3 bishop, protected by the a2 pawn, attacks the queen on d5. If she leaves the diagonal, the bishop takes the g8 rook, defended only by the king: White wins the exchange.
 ```
 
 ## Skewer vs pin {#espeto-x-cravada "Skewer vs pin"}
@@ -76,9 +76,9 @@ With Black's king on g7 or h7 the trick fails, because the king covers h7 (or is
 
 ## Where to look for skewers {#onde-procurar "Where to look"}
 
-Skewers appear in very recognisable situations. It is worth checking each of them whenever they come up:
+Skewers appear in very recognizable situations. It is worth checking each of them whenever they come up:
 
-- **Kings in the centre in the endgame.** Once the queens are off, the king becomes an active piece and walks around the board. That is great for the endgame, but it exposes the king to checks along a line with a rook or a passed pawn behind it.
+- **Kings in the center in the endgame.** Once the queens are off, the king becomes an active piece and walks around the board. That is great for the endgame, but it exposes the king to rook and bishop checks that run through it and hit whatever stands behind.
 - **Open long diagonals.** A bishop on b2 or g2 (or b7 and g7) sees across the whole board. King and queen on the same long diagonal are an invitation.
 - **Pieces at both ends of the same rank.** Rooks and kings on the same rank with no pawns in between are classic targets for rook or queen skewers.
 - **Pawns about to promote.** A skewer can also win a freshly promoted queen: if your opponent [promotes](artigo:lances-especiais) on a square lined up with their own king, a rook or bishop can give check and take the new queen from behind.
@@ -87,11 +87,11 @@ A good way to train your eye is, after each of your opponent's moves, to trace t
 
 ## How to avoid skewers {#defesa "How to avoid"}
 
-- **Do not line up your king and valuable pieces** on open diagonals, files or ranks, especially in the endgame, when the king walks around the centre.
+- **Do not line up your king and valuable pieces** on open diagonals, files or ranks, especially in the endgame, when the king walks around the center.
 - **Protect the back piece** when the alignment cannot be avoided: a skewer gains little if the back piece is defended.
 - **Keep a block ready:** a piece that can interpose on the check defuses an absolute skewer.
 
-:::pratique Practise skewers now
+:::pratique Practice skewers now
 Play an endgame against the computer and watch the open lines. At Medium level the enemy king often ends up lined up with pieces in the endgame.
 :::
 
@@ -116,9 +116,9 @@ explicacao: 1.Ra5+ checks along the fifth rank. The king moves away, and 2.Rxh5 
 ```exercicio
 fen: R7/P4k2/8/8/8/1P3K2/8/r7 w - - 0 1
 enunciado: Rook endgame. White to move **wins Black's rook**.
-solucao: a8h8 a1a7 h8h7 f7e6 h7a7
+solucao: a8h8
 dica: White's rook is in the way of its own pawn. What if it leaves a8 for a square from which it can check along the seventh rank?
-explicacao: 1.Rh8! threatens to promote. If 1...Rxa7, 2.Rh7+ is a skewer: the king leaves the seventh rank and 3.Rxa7 wins the rook. If Black does not take the pawn, 2.a8=Q wins just the same.
+explicacao: 1.Rh8! threatens 2.a8=Q. If 1...Rxa7, 2.Rh7+ is a skewer: the king leaves the seventh rank and 3.Rxa7 wins the rook. If Black does not take the pawn, it promotes (after a check such as 1...Rf1+, just step out of check) and Black's rook will have to give itself up for it.
 ```
 
 ## Frequently asked questions {#faq "FAQ"}
@@ -137,4 +137,4 @@ Many players use the words interchangeably. Strictly speaking, "X-ray" describes
 
 ### Where do skewers show up most?
 
-In endgames, when the kings come out to the centre and get lined up with rooks and queens. See also the overview of [chess tactics](artigo:taticas).
+In endgames, when the kings come out to the center and get lined up with rooks and queens. See also the overview of [chess tactics](artigo:taticas).

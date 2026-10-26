@@ -120,7 +120,7 @@ fen: 8/ppp3k1/8/PPP5/8/8/8/6K1 w - - 0 1
 enunciado: Brancas jogam e ganham. Os reis estão longe e só um lance de peão funciona.
 solucao: b5b6 c7b6 a5a6 b7a6 c5c6
 dica: Sacrifique o peão do meio. Depois de cada captura, empurre o peão que ficou sem bloqueio.
-explicacao: 1.b6! cxb6 2.a6! bxa6 3.c6 e o peão c promove: o rei preto não alcança. Se 1...axb6, 2.c6! bxc6 3.a6, e agora é o peão a que corre. Qualquer outro primeiro lance dá tempo ao rei preto (1...Rf6), e a ruptura deixa de funcionar.
+explicacao: 1.b6! cxb6 2.a6! bxa6 3.c6 e o peão c promove: o rei preto não alcança. Se 1...axb6, 2.c6! bxc6 3.a6, e agora é o peão a que corre. Em geral, um primeiro lance mais lento dá tempo ao rei preto de se aproximar (1...Rf6), e a ruptura pode deixar de funcionar.
 ```
 
 ## Como pensar num final de peões {#metodo "Como pensar"}
@@ -133,7 +133,7 @@ explicacao: 1.b6! cxb6 2.a6! bxa6 3.c6 e o peão c promove: o rei preto não alc
 Ao revisar suas partidas, os finais de peão são um ótimo lugar para achar o erro decisivo, porque quase sempre há um único lance certo. Veja o método em [como analisar suas partidas](artigo:analisar-partidas).
 
 :::pratique Treine finais contra o computador
-Jogue uma partida e tente trocar peças até chegar a um final de peões. No nível Difícil, cada tempo errado é punido, o melhor jeito de fixar a oposição e o quadrado.
+Jogue uma partida e tente trocar peças até chegar a um final de peões. No nível Difícil, cada tempo errado é punido: é o melhor jeito de fixar a oposição e o quadrado.
 :::
 
 ## Perguntas frequentes {#faq "Perguntas frequentes"}
