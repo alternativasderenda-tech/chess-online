@@ -11,6 +11,7 @@
 | D-INF-01 | Sair do Supabase/Vercel para o EC2 do EnergiaWATT, com GoTrue v2.197.0 + PostgREST v16.5 + tempo real próprio | Supabase gratuito pausava; dono não quer custo extra. Ver `servidor/README.md` |
 | D-INF-02 | Ambiente de TESTE em `novo.xadrezonline.app`: banco `xadrez_teste`, segredo de JWT próprio, serviços próprios (portas 9909/3211/3212), `noindex` | Testar torneio com jogadores fictícios sem sujar o oficial. Medido: token do teste → PGRST301 no oficial e vice-versa |
 | D-INF-03 | A chave anon sai do HTML: `/config.js` gerado no servidor por ambiente (`publicar-site.sh teste|oficial`) | O mesmo HTML serve os dois ambientes |
+| D-INF-04 | Papel `xadrez_rt` com CONNECTION LIMIT 10 (era 5): os dois tempos reais (oficial e teste) usam o mesmo papel e abrem até 4 conexões cada (pool `max: 3` + o cliente do LISTEN) | Na estreia do oficial (26/10/2026) a rotina dos torneios e a do Pix falharam a cada minuto com "too many connections for role xadrez_rt" |
 
 ## 2. Torneios — gauntlet "faça a magia" (24/10/2026, meta 9)
 

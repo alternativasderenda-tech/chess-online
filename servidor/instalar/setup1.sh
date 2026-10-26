@@ -49,7 +49,7 @@ DO \$\$ BEGIN
 END \$\$;
 ALTER ROLE authenticator PASSWORD '$PG_AUTHENTICATOR' CONNECTION LIMIT 15;
 ALTER ROLE supabase_auth_admin PASSWORD '$PG_AUTH_ADMIN' CONNECTION LIMIT 10;
-ALTER ROLE xadrez_rt PASSWORD '$PG_RT' CONNECTION LIMIT 5;
+ALTER ROLE xadrez_rt PASSWORD '$PG_RT' CONNECTION LIMIT 10;   # oficial + teste: até 4 cada (pool 3 + LISTEN)
 GRANT anon, authenticated, service_role TO authenticator;
 GRANT anon, authenticated TO xadrez_rt;
 ALTER ROLE supabase_auth_admin SET search_path = auth;
