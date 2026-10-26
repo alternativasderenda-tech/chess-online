@@ -86,8 +86,11 @@
     }
     tabDiv.appendChild(grade);
     tabDiv.appendChild(instr);
-    // LAY-widget-25: em tela de toque o arrasto vertical rola a página; a dica visível ensina o toque-toque
-    tabDiv.appendChild(el('p', 'ex-instr-toque', T.toque));
+    // LAY-widget-25: em tela de toque o arrasto vertical rola a página; a dica visível ensina o toque-toque. Fica FORA
+    // de .ex-tab (LAY-widget-28: dentro, mudava a altura de que o seletor de promoção depende) e não se repete ao remontar
+    var velhaDica = fig.querySelector('.ex-instr-toque');
+    if (velhaDica) velhaDica.remove();
+    tabDiv.insertAdjacentElement('afterend', el('p', 'ex-instr-toque', T.toque));
     var status = el('p', 'ex-status');
     status.setAttribute('role', 'status');
     status.setAttribute('aria-live', 'polite');

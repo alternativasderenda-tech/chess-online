@@ -1976,6 +1976,8 @@
     .sidebar { width: 100%; max-width: 520px; max-height: none; order: -1; }
     /* LAY-jogo-24: no celular, quem chega pelo "Pratique" (/?ia=tutorial) vê a lição no topo, não escondida abaixo das configurações */
     .sidebar .tutorial-panel.active { order: -1; }
+    /* LAY-jogo-27: o "Próximo →" da lição fica preso na base da caixa, à vista sem rolar por dentro */
+    .tutorial-panel .tutorial-nav { position: sticky; bottom: 0; background: var(--bg-card, #1e1e32); padding-top: 8px; z-index: 1; }
     .board-area { order: 0; }
     /* TRN-UX-10: 92vw + rótulos das linhas (24 px) + 2×16 px de margem passava da tela (rolagem de 12 px) */
     .game-container { padding-left: 2px; padding-right: 2px; max-width: 100%; box-sizing: border-box; }
