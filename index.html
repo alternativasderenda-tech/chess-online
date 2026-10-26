@@ -1974,6 +1974,8 @@
   @media (max-width: 900px) {
     .game-container { flex-direction: column; align-items: center; padding-top: 52px; }
     .sidebar { width: 100%; max-width: 520px; max-height: none; order: -1; }
+    /* LAY-jogo-24: no celular, quem chega pelo "Pratique" (/?ia=tutorial) vê a lição no topo, não escondida abaixo das configurações */
+    .sidebar .tutorial-panel.active { order: -1; }
     .board-area { order: 0; }
     /* TRN-UX-10: 92vw + rótulos das linhas (24 px) + 2×16 px de margem passava da tela (rolagem de 12 px) */
     .game-container { padding-left: 2px; padding-right: 2px; max-width: 100%; box-sizing: border-box; }

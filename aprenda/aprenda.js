@@ -10,6 +10,7 @@
     respondeu: function (l) { return 'Opponent played ' + l + '. Your move.'; },
     mostrando: 'Solution:', dica: 'Show hint', solucao: 'Show solution', recomecar: 'Restart', tabuleiro: 'Exercise board',
     instrucao: 'Use the arrow keys to move and Enter to select. You can also click, tap or drag the pieces.',
+    toque: 'Tap a piece, then a square (or drag it).',
     vazia: 'empty', pecas: { K: 'white king', Q: 'white queen', R: 'white rook', B: 'white bishop', N: 'white knight', P: 'white pawn',
       k: 'black king', q: 'black queen', r: 'black rook', b: 'black bishop', n: 'black knight', p: 'black pawn' },
     nomes: { k: 'King', q: 'Queen', r: 'Rook', b: 'Bishop', n: 'Knight', p: 'Pawn' },
@@ -24,6 +25,7 @@
     respondeu: function (l) { return 'O adversário jogou ' + l + '. Sua vez.'; },
     mostrando: 'Solução:', dica: 'Mostrar dica', solucao: 'Ver solução', recomecar: 'Recomeçar', tabuleiro: 'Tabuleiro do exercício',
     instrucao: 'Use as setas para escolher a casa e Enter para selecionar. Também dá para clicar, tocar ou arrastar as peças.',
+    toque: 'Toque na peça e depois na casa (ou arraste).',
     vazia: 'vazia', pecas: { K: 'rei branco', Q: 'dama branca', R: 'torre branca', B: 'bispo branco', N: 'cavalo branco', P: 'peão branco',
       k: 'rei preto', q: 'dama preta', r: 'torre preta', b: 'bispo preto', n: 'cavalo preto', p: 'peão preto' },
     nomes: { k: 'Rei', q: 'Dama', r: 'Torre', b: 'Bispo', n: 'Cavalo', p: 'Peão' },
@@ -84,6 +86,8 @@
     }
     tabDiv.appendChild(grade);
     tabDiv.appendChild(instr);
+    // LAY-widget-25: em tela de toque o arrasto vertical rola a página; a dica visível ensina o toque-toque
+    tabDiv.appendChild(el('p', 'ex-instr-toque', T.toque));
     var status = el('p', 'ex-status');
     status.setAttribute('role', 'status');
     status.setAttribute('aria-live', 'polite');
