@@ -12,7 +12,7 @@ jogar: 1
 relacionados: [regras, mates-basicos, empates, ataque-descoberto, como-as-pecas-se-movem]
 ensina: [Xeque, Xeque-mate, Afogamento]
 ---
-**Xeque** é quando o rei está sendo atacado por uma peça adversária; o jogador é obrigado a tirar o rei do ataque no lance seguinte. **Xeque-mate** é um xeque do qual não há saída: a partida acaba e quem deu o mate vence. **Afogamento** é quando o jogador da vez **não está em xeque**, mas não tem nenhum lance legal: a partida acaba empatada. A diferença entre mate e afogamento decide muitas partidas de iniciantes, então vale a pena entender bem.
+**Xeque** é quando o rei está sendo atacado por uma peça adversária; o jogador é obrigado a livrar o rei do ataque já no lance seguinte. **Xeque-mate** é um xeque do qual não há saída: a partida acaba e quem deu o mate vence. **Afogamento** é quando o jogador da vez **não está em xeque**, mas não tem nenhum lance legal: a partida acaba empatada. A diferença entre mate e afogamento decide muitas partidas de iniciantes, então vale a pena entender bem.
 
 ## O que é xeque {#xeque "O que é xeque"}
 
@@ -45,7 +45,7 @@ Se nenhuma das três for possível, é xeque-mate.
 
 ### Preciso dizer "xeque"?
 
-Não. Nas regras oficiais da FIDE (a Federação Internacional de Xadrez), anunciar o xeque não é obrigatório. Entre amigos é costume, mas não faz parte da regra.
+Não. Nas [regras oficiais da FIDE](artigo:regras) (a Federação Internacional de Xadrez), anunciar o xeque não é obrigatório. Entre amigos é costume, mas não faz parte da regra.
 
 ## O que é xeque-mate {#xeque-mate "O que é xeque-mate"}
 
@@ -141,7 +141,7 @@ No xeque-mate o rei está atacado e não tem saída: quem deu o mate vence. No a
 
 ### Afogamento é vitória ou empate?
 
-Empate, pelas regras oficiais da FIDE.
+Empate, pelas [Leis do Xadrez da FIDE](https://handbook.fide.com/chapter/E012023).
 
 ### Quais são as formas de sair do xeque?
 

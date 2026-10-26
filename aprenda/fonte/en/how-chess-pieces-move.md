@@ -16,6 +16,8 @@ In chess, each of the six pieces moves in its own way: the **rook** moves in str
 
 ## Rules that apply to every piece {#geral "Rules for every piece"}
 
+If you've never played, the [beginner's guide to playing chess](artigo:jogar-do-zero) walks through a whole game in five steps; here the focus is on how each piece moves.
+
 Before going piece by piece, three general rules:
 
 - **Capturing means taking the square.** A piece captures an enemy piece by moving onto its square; the captured piece leaves the board. Nobody jumps over a piece to capture it, as in checkers.
@@ -97,7 +99,7 @@ When a pawn reaches the last rank it's **promoted**: it becomes a queen, rook, b
 
 Two words come up all the time in chess:
 
-- A piece **attacks** a square (or an enemy piece) when it could move there on its next turn. The rook on d4 in the first diagram attacks every square on the d-file and the 4th rank.
+- A piece **attacks** a square (or an enemy piece) when it could move there on its next turn (the pawn is the exception: it attacks the two diagonal squares ahead but only moves straight forward). The rook on d4 in the first diagram attacks every square on the d-file and the 4th rank.
 - A piece is **defended** (or *protected*) when another piece of the same color could capture whatever takes it. If your opponent captures a defended piece, they lose their own piece right after.
 
 A piece that's attacked and not defended is **hanging**: your opponent can take it for free. Once you know how each piece moves, start looking at the board this way: what's attacked, what's defended and what's hanging. It's the first step toward not losing pieces — and toward [winning your opponent's](artigo:garfo).
@@ -115,21 +117,21 @@ A piece that's attacked and not defended is **hanging**: your opponent can take 
 
 ## Exercises {#exercicios "Exercises"}
 
-Put it into practice. Tap (or click) the piece, then the destination square.
+Put it into practice: one bishop exercise, one queen exercise and one pawn exercise. Tap (or click) the piece, then the destination square.
 
 ```exercicio
-fen: 6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1
-enunciado: White's rook can deliver **mate in 1**. Find the move.
+fen: 6bk/7p/8/8/8/B7/8/6K1 w - - 0 1
+enunciado: White's bishop can deliver **mate in 1**. Find the move.
 tipo: mate
 lances: 1
-solucao: a1a8
-dica: The rook can run all the way up the a-file. Can the black king escape to the 7th rank?
-explicacao: 1.Ra8# — the rook goes up the a-file and attacks the king along the 8th rank. Black's own pawns on f7, g7 and h7 take away the king's escape squares, and nothing can block.
+solucao: a3b2
+dica: The a3 bishop travels on dark squares. Which diagonal leads straight to the black king?
+explicacao: 1.Bb2# — the bishop steps onto the long a1–h8 diagonal and checks the king on h8. The king has no escape: g8 and h7 are occupied by Black's own pieces, and g7 is on the bishop's diagonal too. Black's bishop moves on light squares, so it can't block.
 ```
 
 ```exercicio
 fen: k7/8/1K6/8/8/8/4Q3/8 w - - 0 1
-enunciado: Now it's the queen's turn. Deliver **mate in 1**.
+enunciado: Now the queen. Deliver **mate in 1**.
 tipo: mate
 lances: 1
 solucao: e2e8

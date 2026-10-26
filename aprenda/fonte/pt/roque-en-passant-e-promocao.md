@@ -20,8 +20,8 @@ O **roque** é o único lance em que um jogador move duas peças de uma vez: o r
 
 Existem dois roques:
 
-- **Roque pequeno** (do lado do rei), anotado **O-O**: o rei anda duas casas em direção à torre de h1 (de e1 para g1) e a torre passa por cima dele, para f1.
-- **Roque grande** (do lado da dama), anotado **O-O-O**: o rei anda duas casas em direção à torre de a1 (de e1 para c1) e a torre vai para d1.
+- **Roque pequeno** (ou curto, do lado do rei), anotado **O-O**: o rei anda duas casas em direção à torre de h1 (de e1 para g1) e a torre passa por cima dele, para f1.
+- **Roque grande** (ou longo, do lado da dama), anotado **O-O-O**: o rei anda duas casas em direção à torre de a1 (de e1 para c1) e a torre vai para d1.
 
 Para as Pretas é igual, na 8ª fileira: e8–g8 com a torre em f8, ou e8–c8 com a torre em d8.
 
@@ -33,7 +33,7 @@ legenda: Roque pequeno (verde): rei de e1 para g1 e torre de h1 para f1. Roque g
 
 ### Quando o roque é permitido
 
-Pelas regras da FIDE, você só pode rocar se **todas** as condições abaixo forem verdadeiras:
+Pelas [regras oficiais da FIDE](artigo:regras#especiais), você só pode rocar se **todas** as condições abaixo forem verdadeiras:
 
 1. O rei **nunca se moveu** na partida.
 2. A torre do roque **nunca se moveu**.
@@ -52,7 +52,7 @@ Se o rei já se moveu, o direito de rocar se perde para sempre, dos dois lados. 
 
 ### Erros comuns com o roque
 
-- **Rocar tarde demais.** Esperar muito deixa o rei no centro justamente quando as colunas se abrem.
+- **Rocar tarde demais.** Esperar muito deixa o rei no centro justamente quando as colunas se abrem. Por isso [rocar cedo](artigo:principios-de-abertura#roque) é um dos princípios de abertura.
 - **Rocar para dentro do ataque.** Se o adversário já tem peças e peões apontados para um lado do tabuleiro, levar o rei para lá pode ser pior do que esperar. Olhe antes para onde o rei vai.
 - **Mexer o rei "só um pouquinho".** Um único passo do rei, mesmo que ele volte para e1, faz você perder o direito de rocar pelo resto da partida.
 
@@ -144,7 +144,7 @@ Não. Mas ele só pode ser feito no lance imediatamente seguinte ao avanço de d
 
 ### Posso ter duas damas?
 
-Sim. Você pode promover a dama mesmo que a original ainda esteja no tabuleiro.
+Sim. Você pode promover um peão a dama mesmo que a dama original ainda esteja no tabuleiro.
 
 ### O peão pode ser promovido a rei?
 

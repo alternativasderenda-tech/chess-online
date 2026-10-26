@@ -41,7 +41,7 @@ legenda: Posição inicial. Os cantos h1 e a8, à direita de cada jogador, são 
 Para falar de uma casa, usamos três palavras:
 
 - **Coluna:** cada linha vertical. São oito, chamadas de **a** a **h**, da esquerda para a direita do ponto de vista das Brancas.
-- **Fileira** (ou *linha*): cada linha horizontal. São oito, numeradas de **1** a **8**, começando do lado das Brancas.
+- **Fileira:** cada linha horizontal. São oito, numeradas de **1** a **8**, começando do lado das Brancas.
 - **Diagonal:** uma sequência de casas da mesma cor que se tocam pelos cantos, como a1–h8.
 
 O nome de uma casa é a letra da coluna seguida do número da fileira. A casa onde a coluna **e** cruza a fileira **4** é a **e4**. Cada casa tem um nome só, e ele não muda quando você joga com as Pretas: a casa e4 continua sendo e4, mesmo que, do seu lado, ela pareça estar "de cabeça para baixo".
@@ -55,8 +55,8 @@ legenda: A coluna e (amarela) cruza a fileira 4 (azul) na casa e4 (verde).
 Algumas regiões do tabuleiro também têm nome:
 
 - **Centro:** as quatro casas d4, e4, d5 e e5. Quem controla o centro costuma ter mais espaço.
-- **Ala do rei:** as colunas e a h, onde o rei começa.
-- **Ala da dama:** as colunas a a d, onde a dama começa.
+- **Flanco do rei:** as colunas e a h, onde o rei começa.
+- **Flanco da dama:** as colunas a a d, onde a dama começa.
 
 ## A notação algébrica {#notacao "A notação algébrica"}
 
@@ -80,13 +80,13 @@ O peão não tem letra: `e4` quer dizer "um peão vai para e4". Em inglês as le
 - **x** — captura: `Bxf7` (o bispo captura em f7). Na captura de peão, escreve-se a coluna de onde ele saiu: `exd5`.
 - **+** — xeque: `Dh5+`.
 - **#** — xeque-mate: `Dxf7#`.
-- **O-O** — roque pequeno (do lado do rei); **O-O-O** — roque grande (do lado da dama).
+- **O-O** — roque pequeno (ou curto, do lado do rei); **O-O-O** — roque grande (ou longo, do lado da dama).
 - **=D** — promoção: `e8=D` (o peão chega em e8 e vira dama).
 - **e.p.** — captura *en passant* (opcional).
 
 ### Numeração dos lances
 
-Um "lance", na contagem, é a jogada das Brancas mais a resposta das Pretas. Por isso escrevemos `1.e4 e5 2.Cf3 Cc6`: no lance 1, as Brancas jogaram e4 e as Pretas, e5. Quando o texto mostra só a jogada das Pretas, usa reticências: `2...Cc6`.
+Os lances são numerados aos pares: cada número cobre um lance das Brancas e a resposta das Pretas. Por isso escrevemos `1.e4 e5 2.Cf3 Cc6`: no lance 1, as Brancas jogaram e4 e as Pretas, e5. Quando o texto mostra só o lance das Pretas, usa reticências: `2...Cc6`. Quando se fala em "mate em 1" ou "mate em 2", contam-se só os lances de quem dá o mate.
 
 ```tabuleiro
 fen: r1bqkbnr/pppp1ppp/2n5/4p3/4P3/5N2/PPPP1PPP/RNBQKB1R w KQkq - 2 3

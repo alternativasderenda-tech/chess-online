@@ -12,7 +12,7 @@ jogar: 1
 relacionados: [regras, mates-basicos, empates, ataque-descoberto, como-as-pecas-se-movem]
 ensina: [Check, Checkmate, Stalemate]
 ---
-**Check** means the king is under attack by an enemy piece; the player must get the king out of attack on their very next move. **Checkmate** is a check with no way out: the game ends and the player who delivered it wins. **Stalemate** is when the player to move is **not in check** but has no legal move at all: the game ends in a draw. The difference between checkmate and stalemate decides a lot of beginner games, so it's worth getting it right.
+**Check** means the king is under attack by an enemy piece; the player must deal with the check on their very next move. **Checkmate** is a check with no way out: the game ends and the player who delivered it wins. **Stalemate** is when the player to move is **not in check** but has no legal move at all: the game ends in a draw. The difference between checkmate and stalemate decides a lot of beginner games, so it's worth getting it right.
 
 ## What is check {#xeque "What is check"}
 
@@ -45,7 +45,7 @@ Sometimes two pieces give check at the same time. That's a **[double check](arti
 
 ### Do I have to say "check"?
 
-No. Under the official FIDE rules (FIDE is the International Chess Federation), announcing check isn't required. It's a common habit among friends, but it isn't part of the rules.
+No. Under the [official FIDE rules](artigo:regras) (FIDE is the International Chess Federation), announcing check isn't required. It's a common habit among friends, but it isn't part of the rules.
 
 ## What is checkmate {#xeque-mate "What is checkmate"}
 
@@ -141,7 +141,7 @@ In checkmate the king is attacked and can't escape: the player who mated wins. I
 
 ### Is stalemate a win or a draw?
 
-A draw, under the official FIDE rules.
+A draw, under the [FIDE Laws of Chess](https://handbook.fide.com/chapter/E012023).
 
 ### How do you get out of check?
 

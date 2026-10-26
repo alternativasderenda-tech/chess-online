@@ -12,7 +12,7 @@ jogar: 2
 relacionados: [principios-de-abertura, valor-das-pecas, taticas, mate-do-corredor, analisar-partidas]
 ensina: [Verificação de lances, Segurança do rei, Peças sem defesa]
 ---
-Os erros mais comuns de iniciantes no xadrez são **deixar peças sem defesa**, **não ver a ameaça do adversário**, **tirar a dama cedo demais**, **deixar o rei no centro** e **jogar rápido demais**. Quase todos têm a mesma causa: fazer o lance sem antes olhar o tabuleiro inteiro. A boa notícia é que existe um hábito simples que corrige a maioria deles, e ele está no fim deste artigo.
+Os erros mais comuns de iniciantes no xadrez são **deixar peças sem defesa**, **não ver a ameaça do adversário**, **tirar a dama cedo demais**, **deixar o rei no centro** e **jogar rápido demais**. Quase todos têm a mesma causa: fazer o lance sem antes olhar o tabuleiro inteiro. A maioria se corrige com um hábito: antes de cada lance, conferir xeques, capturas e ameaças — primeiro as do adversário, depois as suas.
 
 ## 1. Deixar peças sem defesa {#pecas-soltas "1. Peças sem defesa"}
 
@@ -62,7 +62,7 @@ Peões não voltam. Cada avanço cria casas que não podem mais ser defendidas p
 
 ## 6. Pegar tudo o que aparece {#ganancia "6. Ganância"}
 
-Capturar material é bom, mas nem toda captura é um presente. Antes de pegar uma peça ou um peão "de graça", pergunte: **por que o adversário deixou isso aí?** Às vezes é um descuido. Às vezes é uma armadilha, e o lance seguinte dele é um xeque que você não viu, como no terceiro exercício.
+Capturar material é bom, mas nem toda captura é um presente. Antes de pegar uma peça ou um peão "de graça", pergunte: **por que o adversário deixou isso aí?** Às vezes é um descuido. Às vezes é uma armadilha, e o lance seguinte dele é um xeque que você não viu.
 
 ## 7. Jogar rápido demais (ou devagar demais) {#tempo "7. O relógio"}
 
@@ -76,7 +76,7 @@ Antes de tocar numa peça, faça uma verificação rápida em três passos, para
 2. **Capturas:** alguma peça pode ser capturada?
 3. **Ameaças:** algum lance ameaça [ganhar material](artigo:taticas) ou dar mate?
 
-Primeiro olhe o que o **adversário** pode fazer depois do seu lance; depois, o que **você** pode fazer. Leva poucos segundos e evita a maioria dos erros deste artigo.
+Primeiro olhe o que o **adversário** pode fazer depois do seu lance; depois, o que **você** pode fazer. Leva poucos segundos e evita a maioria dos erros deste artigo. Até uma recaptura "óbvia" pode perder na hora, como mostra o terceiro exercício.
 
 :::dica
 **💡 Dica:** se você encontrou um lance bom, procure um melhor antes de jogá-lo. E se o lance parece bom demais para ser verdade, confira de novo os xeques do adversário.

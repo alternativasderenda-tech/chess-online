@@ -16,6 +16,8 @@ No xadrez, cada uma das seis peças se move de um jeito: a **torre** anda em lin
 
 ## Regras que valem para todas as peças {#geral "Regras que valem para todas"}
 
+Se você nunca jogou, o [guia para jogar xadrez do zero](artigo:jogar-do-zero) mostra a partida inteira em cinco passos; aqui o foco é o movimento de cada peça.
+
 Antes de ver peça por peça, três regras gerais:
 
 - **Capturar é ocupar.** Uma peça captura a adversária indo para a casa dela; a peça capturada sai do tabuleiro. Ninguém "pula e come", como nas damas.
@@ -74,7 +76,7 @@ O rei também participa do roque, junto com a torre (veja os [lances especiais](
 
 ## O cavalo {#cavalo "O cavalo"}
 
-O **cavalo** se move em "L": duas casas numa direção e uma para o lado. É a única peça que **salta** por cima das outras, e por isso pode sair na primeira jogada da partida. Ele tem um artigo só dele: [como o cavalo se move](artigo:movimento-do-cavalo).
+O **cavalo** se move em "L": duas casas numa direção e uma para o lado. É a única peça que **salta** por cima das outras, e por isso pode sair já no primeiro lance da partida. Ele tem um artigo só dele: [como o cavalo se move](artigo:movimento-do-cavalo).
 
 ## O peão {#peao "O peão"}
 
@@ -97,7 +99,7 @@ Quando chega à última fileira, o peão é **promovido**: vira dama, torre, bis
 
 Duas palavras aparecem o tempo todo no xadrez:
 
-- Uma peça **ataca** uma casa (ou uma peça adversária) quando poderia ir até ela no próximo lance. A torre em d4 do primeiro diagrama ataca todas as casas da coluna d e da fileira 4.
+- Uma peça **ataca** uma casa (ou uma peça adversária) quando poderia ir até ela no próximo lance (o peão é a exceção: ataca as duas casas na diagonal à frente, mas só anda para a frente). A torre em d4 do primeiro diagrama ataca todas as casas da coluna d e da fileira 4.
 - Uma peça está **defendida** (ou *protegida*) quando outra peça da mesma cor poderia capturar quem a capturasse. Se o adversário toma uma peça defendida, perde a dele em seguida.
 
 Uma peça atacada e sem defesa está **solta** (ou *pendurada*): o adversário pode levá-la de graça. Quando você aprender o movimento de cada peça, comece a olhar o tabuleiro dessa forma: o que está atacado, o que está defendido e o que está solto. É o primeiro passo para não perder peças e para [ganhar as do adversário](artigo:garfo).
@@ -115,21 +117,21 @@ Uma peça atacada e sem defesa está **solta** (ou *pendurada*): o adversário p
 
 ## Exercícios {#exercicios "Exercícios"}
 
-Use o que você aprendeu. Toque (ou clique) na peça e depois na casa de destino.
+Use o que você aprendeu: um exercício de bispo, um de dama e um de peão. Toque (ou clique) na peça e depois na casa de destino.
 
 ```exercicio
-fen: 6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1
-enunciado: A torre das Brancas pode dar **mate em 1**. Encontre o lance.
+fen: 6bk/7p/8/8/8/B7/8/6K1 w - - 0 1
+enunciado: O bispo das Brancas pode dar **mate em 1**. Encontre o lance.
 tipo: mate
 lances: 1
-solucao: a1a8
-dica: A torre anda pela coluna a até o fim. O rei preto consegue escapar para a 7ª fileira?
-explicacao: 1.Ta8# — a torre sobe a coluna a e ataca o rei pela 8ª fileira. Os peões pretos de f7, g7 e h7 tiram as casas de fuga do próprio rei, e nada pode se colocar no caminho.
+solucao: a3b2
+dica: O bispo de a3 anda pelas casas escuras. Qual diagonal leva direto ao rei preto?
+explicacao: 1.Bb2# — o bispo entra na grande diagonal a1–h8 e dá xeque em h8. O rei não tem fuga: g8 e h7 estão ocupadas pelas próprias peças pretas, e g7 também está na diagonal do bispo. O bispo preto anda nas casas claras e não consegue se colocar no caminho.
 ```
 
 ```exercicio
 fen: k7/8/1K6/8/8/8/4Q3/8 w - - 0 1
-enunciado: Agora é a dama. Dê **mate em 1**.
+enunciado: Agora a dama. Dê **mate em 1**.
 tipo: mate
 lances: 1
 solucao: e2e8

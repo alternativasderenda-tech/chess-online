@@ -18,7 +18,7 @@ Os princípios de abertura são regras práticas para os primeiros lances da par
 
 A **abertura** é a fase inicial da partida, mais ou menos os primeiros 10 a 15 lances, em que os dois lados tiram as peças da posição inicial. Existem centenas de aberturas com nome, mas decorar sequências não adianta se você não sabe *por que* cada lance é bom. Assim que o adversário sai do "roteiro", quem só decorou fica perdido.
 
-Os princípios funcionam em qualquer abertura. Eles respondem à pergunta que importa em todo lance: **essa jogada ajuda minhas peças a entrarem no jogo?**
+Os princípios funcionam em qualquer abertura. Eles respondem à pergunta que importa em todo lance: **esse lance ajuda minhas peças a entrarem no jogo?**
 
 ## 1. Controle o centro {#centro "1. Controle o centro"}
 
@@ -55,7 +55,7 @@ Uma boa meta para iniciantes: **rocar nos primeiros 10 lances**. Se tiver dúvid
 
 ## 4. Não tire a dama cedo demais {#dama "4. Não tire a dama cedo"}
 
-A dama é a peça mais valiosa (9 pontos). Se ela sai cedo, o adversário a ataca com peças menores e, a cada ataque, **desenvolve uma peça e ganha um tempo**, enquanto você gasta lances recuando a dama.
+A dama é a peça mais valiosa (9 pontos). Se ela sai cedo, o adversário a ataca com peças menores e, a cada ataque, **desenvolve uma peça e ganha um tempo** (um lance a mais de vantagem no desenvolvimento), enquanto você gasta lances recuando a dama.
 
 ```tabuleiro
 fen: r1bqkb1r/pppp1p1p/2n2np1/4p3/2B1P3/5Q2/PPPP1PPP/RNB1K1NR w KQkq - 2 5
@@ -68,9 +68,9 @@ Isso não quer dizer que a dama nunca possa se mover na abertura, mas que ela n�
 ## 5. Mais quatro conselhos {#conselhos "Mais quatro conselhos"}
 
 - **Não empurre peões demais.** Dois peões centrais costumam bastar no começo. Peões das bordas (a, h) raramente ajudam na abertura.
-- **Cuidado com o peão f.** Mover o peão f cedo abre a diagonal do seu rei (o [Mate do Pastor](artigo:mate-do-pastor) explora justamente o ponto f7).
+- **Cuidado com o peão f.** Mover o peão f cedo abre a diagonal até o seu rei: é assim que acontece o [Mate do Louco](artigo:mate-do-pastor#variantes), 1.f3 e5 2.g4?? Dh4#.
 - **Conecte as torres.** Depois de desenvolver as peças menores, rocar e mover a dama uma casa, as torres passam a se enxergar na primeira fileira. É um bom sinal de que a abertura terminou.
-- **Não pegue material à custa do desenvolvimento.** Capturar um peão com uma peça que já se moveu duas vezes pode custar caro, como mostram os exercícios abaixo.
+- **Não pegue material à custa do desenvolvimento.** Capturar material com uma peça que já se moveu duas vezes, deixando o resto do exército em casa, pode custar caro, como mostram os exercícios abaixo.
 
 :::dica
 **💡 Lista rápida para os 10 primeiros lances:** 1 ou 2 peões no centro · cavalos · bispos · roque · torres conectadas. Se um lance não ajuda nenhum desses itens nem responde a uma ameaça, desconfie.
@@ -95,12 +95,13 @@ explicacao: 6.Bxf7+ Re7 (o único lance) 7.Cd5# — é o famoso Mate de Légal. 
 ```
 
 ```exercicio
-fen: rnbqkb1r/pppp1ppp/5n2/4N3/8/8/PPPPQPPP/RNB1KB1R w KQkq - 2 5
-enunciado: Depois de 1.e4 e5 2.Cf3 Cf6 3.Cxe5 Cxe4 4.De2 Cf6??, a coluna e ficou aberta até o rei preto. As Brancas ganham a dama. Como?
-tipo: tatica
-solucao: e5c6
-dica: Se o cavalo de e5 sair da coluna e, quem dá xeque? E para onde o cavalo pode ir, atacando algo grande?
-explicacao: 5.Cc6+! — é um xeque descoberto: o cavalo sai da frente e a dama de e2 dá xeque no rei de e8. Ao mesmo tempo, o cavalo ataca a dama de d8. As Pretas precisam sair do xeque, e as Brancas capturam a dama no lance seguinte.
+fen: r1bBk2r/ppp2ppp/2p5/2b5/4n3/3P4/PPP2PPP/RN1QKB1R b KQkq - 0 7
+enunciado: Depois de 1.e4 e5 2.Cf3 Cf6 3.Cxe5 Cc6 4.Cxc6 dxc6 5.d3 Bc5 6.Bg5? Cxe4! 7.Bxd8??, as Brancas pegaram a dama, mas o rei branco ficou em e1 e o bispo de f1 nem saiu. As Pretas dão **mate em 2**.
+tipo: mate
+lances: 2
+solucao: c5f2 e1e2 c8g4
+dica: Comece com um xeque em f2. Depois, qual peça preta ainda não se mexeu?
+explicacao: 7...Bxf2+ 8.Re2 (o único lance) Bg4# — o bispo dá xeque pela diagonal g4–e2. O rei não pode ir para d2 nem capturar em f2 (as duas casas estão com o cavalo de e4), e1 e e3 estão com o bispo de f2, f3 está na linha do xeque, e a dama de d1 não alcança g4 porque o próprio rei está no caminho. É a armadilha mais famosa do Gambito Stafford: as Brancas ganharam a dama, mas com o rei no centro e as peças em casa, levaram mate.
 ```
 
 ## Perguntas frequentes {#faq "Perguntas frequentes"}

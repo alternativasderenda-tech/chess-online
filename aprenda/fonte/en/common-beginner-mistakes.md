@@ -12,7 +12,7 @@ jogar: 2
 relacionados: [principios-de-abertura, valor-das-pecas, taticas, mate-do-corredor, analisar-partidas]
 ensina: [Blunder checking, King safety, Hanging pieces]
 ---
-The most common chess mistakes beginners make are **leaving pieces undefended**, **missing the opponent's threats**, **bringing the queen out too early**, **leaving the king in the center** and **playing too fast**. Almost all of them share one cause: making a move without first looking at the whole board. The good news is that one simple habit fixes most of them, and you'll find it at the end of this lesson.
+The most common chess mistakes beginners make are **leaving pieces undefended**, **missing the opponent's threats**, **bringing the queen out too early**, **leaving the king in the center** and **playing too fast**. Almost all of them share one cause: making a move without first looking at the whole board. Most of them are fixed by one habit: before every move, check for checks, captures and threats — your opponent's first, then your own.
 
 ## 1. Leaving pieces undefended {#pecas-soltas "1. Hanging pieces"}
 
@@ -62,7 +62,7 @@ Pawns can't go back. Every advance leaves squares that pawns can never defend ag
 
 ## 6. Grabbing everything in sight {#ganancia "6. Greed"}
 
-Winning material is good, but not every capture is a gift. Before taking a "free" piece or pawn, ask: **why did my opponent leave that there?** Sometimes it's a slip. Sometimes it's a trap, and their next move is a check you didn't see — as in the third exercise.
+Winning material is good, but not every capture is a gift. Before taking a "free" piece or pawn, ask: **why did my opponent leave that there?** Sometimes it's a slip. Sometimes it's a trap, and their next move is a check you didn't see.
 
 ## 7. Playing too fast (or too slow) {#tempo "7. The clock"}
 
@@ -76,7 +76,7 @@ Before you touch a piece, run a quick three-step check, for **both sides**:
 2. **Captures:** can any piece be captured?
 3. **Threats:** does any move threaten to [win material](artigo:taticas) or deliver mate?
 
-First look at what your **opponent** can do after your move; then at what **you** can do. It takes a few seconds and prevents most of the mistakes in this lesson.
+First look at what your **opponent** can do after your move; then at what **you** can do. It takes a few seconds and prevents most of the mistakes in this lesson. Even an "obvious" recapture can lose on the spot, as the third exercise shows.
 
 :::dica
 **💡 Tip:** when you find a good move, look for a better one before you play it. And if a move seems too good to be true, check your opponent's checks one more time.
