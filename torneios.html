@@ -1830,8 +1830,8 @@ function dispensarSugestaoIdioma() {
 const CFG = window.XADREZ_CONFIG || {};
 const AMBIENTE_TESTE = CFG.ambiente === 'teste';
 // TRAVA DE LANÇAMENTO (único lugar): no site oficial, só admin e estes e-mails veem os torneios.
-// Para lançar para todo mundo, troque `paraTodos` para true. No ambiente de teste fica sempre liberado.
-const TORNEIOS_LIBERADOS = { paraTodos: false, emails: ['novacanabiodieselbr@gmail.com'] };
+// Liberado para todo mundo em 26/10/2026, depois do teste real do Pix (R$ 1 pago, liberado e estornado). `false` volta a restringir aos e-mails da lista e ao admin.
+const TORNEIOS_LIBERADOS = { paraTodos: true, emails: ['novacanabiodieselbr@gmail.com'] };
 
 const supa = window.supabase.createClient(location.origin, CFG.anon);
 
