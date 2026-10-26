@@ -1,6 +1,6 @@
 #!/bin/bash
 # Publica o site do xadrez no servidor próprio (substitui o deploy da Vercel).
-# Empacota os arquivos versionados do site (sem servidor/, supabase*, vercel.json), envia pelo bucket de cargas e troca
+# Empacota os arquivos versionados do site (sem servidor/, supabase*, vercel.json, nem a fonte/gerador do Aprenda), envia pelo bucket de cargas e troca
 # /opt/xadrez/site de uma vez (a versão anterior fica em /opt/xadrez/site.ant para voltar com um mv).
 #
 # Pré-requisitos: AWS CLI com o perfil ew-prod (aws login --profile ew-prod --region sa-east-1) e git.
@@ -14,6 +14,8 @@ AMB=${1:-}; case "$AMB" in teste) DIR=/opt/xadrez/site-teste; ENVF=/opt/xadrez/e
   *) echo "uso: publicar-site.sh teste|oficial"; exit 2 ;; esac
 PERFIL=ew-prod; REGIAO=sa-east-1; INSTANCIA=i-0ea7b1e475c5a590b; BUCKET=energiawatt-backups-801664113979
 cd "$(git rev-parse --show-toplevel)"
+# Aprenda: as páginas são GERADAS de aprenda/fonte/ (D-APR-01) — não publica nada velho em relação à fonte
+node aprenda/gerador/gerar.js --conferir
 if [ "$AMB" = oficial ]; then
   [ -z "$(git status --porcelain -- . ':!servidor')" ] || { echo "Há alterações sem commit no site: faça o commit antes."; exit 1; }
 fi
@@ -21,7 +23,7 @@ timeout 30 aws sts get-caller-identity --profile $PERFIL --region $REGIAO >/dev/
   || { echo "Sessão AWS vencida: rode  aws login --profile $PERFIL --region $REGIAO"; exit 1; }
 REV=$(git rev-parse --short HEAD)$([ -n "$(git status --porcelain)" ] && echo -sujo || true)
 TMP=$(mktemp -d)
-git ls-files --cached --others --exclude-standard | grep -v -E '^(servidor/|supabase/|supabase-.*\.sql$|vercel\.json$|\.gitignore$)' > "$TMP/lista"
+git ls-files --cached --others --exclude-standard | grep -v -E '^(servidor/|supabase/|supabase-.*\.sql$|vercel\.json$|\.gitignore$|aprenda/fonte/|aprenda/gerador/|aprenda/README\.md$)' > "$TMP/lista"
 tar czf "$TMP/site.tar.gz" -T "$TMP/lista"
 aws s3 cp "$TMP/site.tar.gz" "s3://$BUCKET/xadrez/site_$REV.tar.gz" --profile $PERFIL --region $REGIAO --only-show-errors
 rm -rf "$TMP"

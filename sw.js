@@ -1,16 +1,23 @@
 // PWA Cache
-const CACHE_NAME = 'xadrez-v15';
+// >>> gerado por aprenda/gerador/gerar.js (D-APR-08) — não editar entre as marcas
+const CACHE_NAME = 'xadrez-v16-4b80f799';
 const ASSETS = [
-  '/', '/index.html', '/manifest.json', '/icon-192.png', '/icon-512.png',
-  '/privacidade', '/termos', '/torneios', '/en/tournaments',
-  '/aprenda', '/aprenda/post.css',
-  '/aprenda/como-jogar-xadrez-do-zero',
-  '/aprenda/aberturas-de-xadrez-para-iniciantes',
-  '/aprenda/regras-do-xadrez',
-  '/aprenda/xeque-mate-em-4-lances',
-  '/aprenda/como-o-cavalo-se-move',
-  '/aprenda/xadrez-classico-blitz-bullet'
+  '/',
+  '/index.html',
+  '/manifest.json',
+  '/icon-192.png',
+  '/icon-512.png',
+  '/privacidade',
+  '/termos',
+  '/torneios',
+  '/en/tournaments',
+  '/aprenda',
+  '/en/learn',
+  '/aprenda/post.css?v=3bff02f431',
+  '/aprenda/aprenda.js?v=e4740bb5a7',
+  '/aprenda/motor.js?v=7658f30a44'
 ];
+// <<< fim do trecho gerado
 
 self.addEventListener('install', e => {
   // Cacheia cada asset individualmente: se um falhar, a instalacao do SW

@@ -8193,6 +8193,12 @@ document.getElementById('ai-depth').addEventListener('change', function() {
   }
 });
 
+// ?ia=1..4 (botão "Pratique agora" do Aprenda, D-APR-10): começa já na dificuldade sugerida — antes do 1º lance
+try {
+  const iaUrl = new URLSearchParams(location.search).get('ia');
+  if (/^[1-4]$/.test(iaUrl || '')) document.getElementById('ai-depth').value = iaUrl;
+} catch (e) {}
+
 // Initialize
 newGame();
 
