@@ -711,7 +711,7 @@ function renderContatos() {
       </details>`;
     }).join('')}</div>` : '';
     const caixa = ctAberta.has(c.id) ? `<div class="ct-caixa" style="margin-top:10px;">
-        <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:4px;" for="ct-resp-${esc(c.id)}">Resposta para ${esc(c.email)} (sai de contato@xadrezonline.app, com a mensagem dela citada no fim)</label>
+        <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:4px;" for="ct-resp-${esc(c.id)}">Resposta para ${esc(c.email)} (sai de contato@xadrezonline.app, com a mensagem original citada no fim)</label>
         <textarea id="ct-resp-${esc(c.id)}" data-resp="${esc(c.id)}" maxlength="8000" rows="9" style="width:100%; background:var(--bg-dark); color:var(--text-light); border:1px solid rgba(226,185,111,0.6); border-radius:8px; padding:10px; font:inherit; font-size:14px; line-height:1.5;">${esc(ctRascunho[c.id] ?? ctModelo(c))}</textarea>
         <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px;">
           <button class="btn primary" data-ct="${esc(c.id)}" data-acao="enviar">📨 Enviar resposta</button>
