@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [rook endgames, lucena position, philidor position, building a bridge, rook and pawn endgame, chess endgames]
 jogar: 3
-relacionados: [estrutura-de-peoes, calculo, rotina-de-treino]
+relacionados: [finais-de-peao, mates-basicos, estrutura-de-peoes, rotina-de-treino]
 ensina: [Lucena position, Philidor position, Building a bridge, Third-rank defense]
 ---
 Rook endgames are the most common endgames in chess, and nearly all of their theory rests on two rook-and-pawn-versus-rook positions. The **Lucena position** is the model win: the side with the pawn wins by "building a bridge", using its own rook as a shield against checks. The **Philidor position** is the model draw: the weaker side holds by keeping its rook on its **third rank**, so the enemy king cannot advance, and then checking from behind. Once you know both, you can tell in seconds whether to go for a trade or avoid it.
@@ -21,7 +21,7 @@ Rooks are the last pieces to leave the board. In tournament games, endgames with
 The good news is that you don't need to memorize hundreds of positions. Three ideas take you a long way:
 
 1. **Activity beats material.** An active rook that attacks pawns and gives checks often makes up for a missing pawn. A passive rook tied to defense loses.
-2. **A cut-off king is a king that can't defend.** If your rook separates the enemy king from the pawn by a whole file or rank, you are effectively playing with an extra king.
+2. **A cut-off king is a king that can't defend.** If your rook [separates the enemy king](artigo:mates-basicos#torre) from the pawn by a whole file or rank, you are effectively playing with an extra king.
 3. **Lucena and Philidor are the destinations.** Almost every rook-and-pawn-versus-rook ending ends up in one of them. Knowing which one is on the horizon guides every move.
 
 ## The Lucena position: building a bridge {#lucena}
@@ -82,7 +82,7 @@ With the pawn on e6, the white king has lost the only shelter it had: the square
 
 ## The classic mistake: passive defense {#defesa-passiva}
 
-Many players know that "the king must stay in front of the pawn" and think that is enough. It isn't. If the defending rook stays on the eighth rank and the attacking king reaches the sixth, the rook loses the distance it needs for checks and the defense collapses. That is why the order in the Philidor matters: **first the rook on the third rank, only later the checks from behind**.
+Many players know that "[the king must stay in front of the pawn](artigo:finais-de-peao)" and think that is enough. It isn't. If the defending rook stays on the eighth rank and the attacking king reaches the sixth, the rook loses the distance it needs for checks and the defense collapses. That is why the order in the Philidor matters: **first the rook on the third rank, only later the checks from behind**.
 
 Sometimes the defender is late and still has one last resource: a side check that pushes the king back and regains the third rank. The second exercise below shows exactly that.
 

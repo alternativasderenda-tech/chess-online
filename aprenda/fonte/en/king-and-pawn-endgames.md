@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [pawn endgames, king and pawn endgame, opposition, rule of the square, key squares, passed pawn, zugzwang, chess endgames]
 jogar: 3
-relacionados: [analisar-partidas, regras, jogar-do-zero]
+relacionados: [finais-de-torre, mates-basicos, empates, calculo, analisar-partidas]
 ensina: [Opposition, Key squares, Rule of the square, Passed pawn, Active king]
 ---
 A king and pawn endgame is the stage of the game where only kings and pawns are left on the board. The result hinges on three ideas: the **opposition** (who has to give way when the kings stand face to face), the **rule of the square** (whether a king can catch a passed pawn on its own) and **king activity**, because in the endgame the king stops being a target and becomes an attacking piece. Once you master these ideas, you can calculate pawn endgames precisely instead of guessing.
@@ -17,7 +17,7 @@ A king and pawn endgame is the stage of the game where only kings and pawns are 
 
 With so little material, every tempo counts. One king move in the wrong direction turns a win into a draw, or the other way around. Two practical consequences:
 
-- **Trading down into a pawn endgame can't be undone.** Before you trade off the last piece, calculate the pawn ending all the way through.
+- **Trading down into a pawn endgame can't be undone.** Before you trade off the last piece, [calculate](artigo:calculo) the pawn ending all the way through.
 - **Zugzwang is everywhere.** Zugzwang is a position where the side to move would rather pass, because every move makes things worse. In pawn endgames it's the main weapon.
 
 ## The active king {#rei-ativo "The active king"}

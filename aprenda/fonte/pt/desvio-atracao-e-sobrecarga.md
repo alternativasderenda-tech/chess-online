@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [desvio, atração, sobrecarga, deflexão, tática de xadrez, mate sufocado]
 jogar: 3
-relacionados: [taticas, garfo, mate-do-corredor, ataque-descoberto]
+relacionados: [taticas, garfo, mate-do-corredor, sacrificios, calculo]
 ensina: [Desvio, Atração, Sobrecarga]
 ---
 **Desvio**, **atração** e **sobrecarga** são táticas que atacam os defensores em vez dos alvos. No desvio, você obriga uma peça defensora a sair da casa onde ela trabalha. Na atração, você obriga uma peça adversária (quase sempre o rei) a ir para uma casa ruim. Na sobrecarga, você explora uma peça que tem duas tarefas ao mesmo tempo e não consegue cumprir as duas.
@@ -18,7 +18,7 @@ ensina: [Desvio, Atração, Sobrecarga]
 
 Nas táticas básicas, como o [garfo](artigo:garfo) e a [cravada](artigo:cravada), você ataca diretamente o que quer ganhar. Mas muitas vezes o alvo está bem defendido. Aí a pergunta muda de "o que eu ataco?" para "**quem defende isso, e como eu tiro essa peça do caminho?**".
 
-As três táticas deste artigo respondem a essa pergunta. Elas costumam vir com um **sacrifício** ou uma troca forçada: você entrega alguma coisa para que a peça adversária seja obrigada a se mover, e o golpe principal vem logo em seguida.
+As três táticas deste artigo respondem a essa pergunta. Elas costumam vir com um **[sacrifício](artigo:sacrificios)** ou uma troca forçada: você entrega alguma coisa para que a peça adversária seja obrigada a se mover, e o golpe principal vem logo em seguida.
 
 ## Sobrecarga: a peça com trabalho demais {#sobrecarga "Sobrecarga"}
 
@@ -131,4 +131,4 @@ No desvio, você tira um defensor da casa onde ele está. Na atração, você pu
 
 ### Essas táticas são para qual nível?
 
-Elas são o passo seguinte depois de garfo, cravada e espeto. Exigem calcular dois ou três lances, por isso aparecem no fim da trilha de [táticas de xadrez](artigo:taticas).
+Elas são o passo seguinte depois de garfo, cravada e espeto. Exigem [calcular dois ou três lances](artigo:calculo), por isso aparecem no fim da trilha de [táticas de xadrez](artigo:taticas).

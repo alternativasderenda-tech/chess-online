@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [chess clock, time management, time trouble, chess psychology, nerves, stalemate, chess tournament]
 jogar: 3
-relacionados: [ritmos-de-jogo, calculo, rotina-de-treino]
+relacionados: [ritmos-de-jogo, empates, finais-de-peao, calculo, rotina-de-treino]
 ensina: [Time management, Avoiding time trouble, Handling nerves, Playing when winning and when losing]
 ---
 Managing the clock and your own head is as much a part of chess as calculating. In practice, it means **budgeting your time** across the phases of the game and spending more at critical moments, **avoiding time trouble** (running short of time near the end), **controlling your nerves** with a fixed thinking routine, and **changing your attitude depending on the score on the board**: when winning, simplify and cut out counterplay; when losing, complicate and look for resources such as stalemate. Many games aren't decided by the best move but by the first mistake made under pressure.
@@ -42,7 +42,7 @@ To **survive** it when it comes:
 
 - **Simplify**: trade pieces if the position allows, keep your king safe and avoid complications.
 - **Do only the essential check**: your opponent's checks, captures and threats after your move.
-- **Know the basic endgames by heart.** Opposition, Lucena and Philidor must come out without calculation, because there won't be time to calculate.
+- **Know the basic endgames by heart.** [Opposition](artigo:finais-de-peao#oposicao), [Lucena and Philidor](artigo:finais-de-torre) must come out without calculation, because there won't be time to calculate.
 
 ```tabuleiro
 fen: 8/8/3k4/8/3K4/3P4/8/8 b - - 0 1
@@ -72,7 +72,7 @@ legenda: A rook up, trading queens (Qxd5) removes almost all of Black's counterp
 - **Trade pieces, not pawns.** Every piece trade reduces your opponent's counterplay; you need the pawns to win the endgame.
 - **Cut out counterplay** before pushing forward: ask what your opponent wants to do and stop it (prophylaxis).
 - **Don't rush.** If the position is winning, it will still be winning next move. Safe moves are worth more than fast ones.
-- **Watch out for stalemate** in very lopsided endgames.
+- **Watch out for [stalemate](artigo:xeque-mate-e-afogamento#afogamento)** in very lopsided endgames.
 
 ```tabuleiro
 fen: 7k/8/5KQ1/8/8/8/8/8 b - - 0 1
@@ -93,7 +93,7 @@ The first exercise below shows a classic resource for the side that's lost: the 
 
 ## Draw offers {#empate}
 
-A draw offer is also a psychological decision. Under FIDE rules, it should be made **after making your move and before pressing the clock**. A few practical guidelines:
+A [draw offer](artigo:empates#acordo) is also a psychological decision. Under FIDE rules, it should be made **after making your move and before pressing the clock**. A few practical guidelines:
 
 - **Offer a draw when the position justifies it**, not to escape the tension. An equal, simplified position is a good moment; a position where you're worse may be a bad one, because the offer reveals insecurity.
 - **When you receive an offer, evaluate the position, not your opponent.** Ask whether you have real winning chances without serious risk of losing.

@@ -9,10 +9,10 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [mate do corredor, mate na última fileira, xeque-mate, luft, tática de xadrez]
 jogar: 2
-relacionados: [taticas, desvio-e-sobrecarga, mate-do-pastor, espeto]
+relacionados: [taticas, desvio-e-sobrecarga, xeque-mate-e-afogamento, erros-de-iniciante, mates-basicos]
 ensina: [Mate do corredor, Fraqueza da última fileira, Luft]
 ---
-O **mate do corredor** é o xeque-mate dado por uma torre ou uma dama na última fileira do adversário, quando o rei está preso atrás dos próprios peões e não tem para onde fugir. É um dos mates mais comuns em partidas reais, em todos os níveis, porque nasce de uma posição perfeitamente normal: o rei roqueado com os três peões intactos na frente.
+O **mate do corredor** é o [xeque-mate](artigo:xeque-mate-e-afogamento) dado por uma torre ou uma dama na última fileira do adversário, quando o rei está preso atrás dos próprios peões e não tem para onde fugir. É um dos mates mais comuns em partidas reais, em todos os níveis, porque nasce de uma posição perfeitamente normal: o rei roqueado com os três peões intactos na frente.
 
 ## Como funciona o mate do corredor {#como-funciona "Como funciona"}
 
@@ -52,7 +52,7 @@ A regra prática é contar. Quantas peças suas podem chegar à última fileira?
 
 ## Por que esse mate é tão comum {#por-que "Por que é tão comum"}
 
-O mate do corredor pega jogadores de todos os níveis por três motivos:
+O mate do corredor [pega jogadores de todos os níveis](artigo:erros-de-iniciante) por três motivos:
 
 - **A posição que o causa é a mais normal do xadrez.** Roque pequeno, peões de f, g e h no lugar: é exatamente o que os livros de abertura recomendam. Ninguém sente que está correndo perigo.
 - **A ameaça vem de longe.** Uma torre do outro lado do tabuleiro, numa coluna aberta, não parece perigosa até o momento em que chega à última fileira.

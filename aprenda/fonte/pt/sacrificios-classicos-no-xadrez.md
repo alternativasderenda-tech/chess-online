@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [sacrifício no xadrez, sacrifício grego, bxh7, sacrifício de qualidade, mate abafado, ataque ao rei]
 jogar: 3
-relacionados: [calculo, planos-meio-jogo, bispos]
+relacionados: [taticas, calculo, desvio-e-sobrecarga, mate-do-corredor, ataque-descoberto]
 ensina: [Sacrifício grego, Sacrifício de qualidade, Mate abafado, Ataque ao rei roqueado]
 ---
 Um sacrifício é a entrega voluntária de material em troca de algo que vale mais: um mate, um ataque que o adversário não consegue conter ou uma vantagem posicional duradoura. Os sacrifícios clássicos — como o **Bxh7+**, conhecido como **sacrifício grego**, e o **sacrifício de qualidade** (torre por peça menor) — se repetem há séculos porque nascem das mesmas estruturas. Quem conhece os padrões e as condições de cada um sabe reconhecê-los na hora e, mais importante, sabe quando eles **não** funcionam.
@@ -21,7 +21,7 @@ Nem todo sacrifício é igual. Vale separar dois tipos:
 - **Calculado:** você enxerga até o fim. Depois da entrega vem uma sequência forçada (xeques, capturas, ameaças de mate) e você sabe que recupera o material com juros ou dá mate. O Bxh7+ deste artigo é desse tipo.
 - **Especulativo ou posicional:** você não vê um fim concreto, mas avalia que a compensação — rei inimigo exposto, peças mais ativas, estrutura de peões destruída — vale o material. O sacrifício de qualidade costuma ser desse tipo.
 
-O primeiro exige cálculo. O segundo exige julgamento. Os dois exigem conhecer os padrões, porque ninguém calcula do zero uma ideia que nunca viu.
+O primeiro exige cálculo. O segundo exige julgamento. Os dois exigem conhecer os [padrões](artigo:taticas), porque ninguém calcula do zero uma ideia que nunca viu.
 
 ## O sacrifício grego: Bxh7+ {#bxh7}
 
@@ -40,7 +40,7 @@ Antes de sacrificar, confira as **condições**. Nesta posição-modelo todas es
 2. **Não há cavalo preto em f6.** O peão branco de e5 tira essa casa das Pretas; um cavalo em f6 defenderia h7 e h5.
 3. **O cavalo chega a g5 em segurança.** As Pretas não têm bispo de casas escuras para capturá-lo, e o peão de h4 o protege.
 4. **A dama chega rápido** à coluna h: de d1 para h5 em um lance.
-5. **As casas de fuga estão vigiadas:** o bispo de c1 fica atrás do cavalo na diagonal até h6, pronto para um xeque descoberto, e o peão de h4 pode avançar com xeque.
+5. **As casas de fuga estão vigiadas:** o bispo de c1 fica atrás do cavalo na diagonal até h6, pronto para um [xeque descoberto](artigo:ataque-descoberto), e o peão de h4 pode avançar com xeque.
 
 A linha principal é 1.Bxh7+! Rxh7 2.Cg5+, e agora o rei preto tem quatro casas. Nenhuma salva:
 
@@ -66,9 +66,9 @@ E se as Pretas recusarem o bispo com 1...Rh8? Então as Brancas podem simplesmen
 
 Os sacrifícios mais espetaculares entregam a dama, e quase sempre seguem padrões conhecidos de mate:
 
-- **Mate abafado:** a dama se oferece em g8 (ou na casa ao lado do rei), uma torre é obrigada a capturar e tapa a última casa de fuga; o cavalo dá mate num rei cercado pelas próprias peças.
+- **Mate abafado** (ou sufocado): a dama se oferece em g8 (ou na casa ao lado do rei), uma torre é obrigada a capturar e tapa a última casa de fuga; o cavalo dá mate num rei cercado pelas próprias peças.
 - **Mate de Anastácia:** com um cavalo em e7 vigiando g8 e g6, a dama captura em h7, o rei recaptura e uma torre dá mate pela coluna h.
-- **Desvio na última fileira:** a dama se entrega para tirar o único defensor da 8ª fileira e a torre entra com mate.
+- **[Desvio](artigo:desvio-e-sobrecarga) na última fileira:** a dama se entrega para tirar o único defensor da [8ª fileira](artigo:mate-do-corredor) e a torre entra com mate.
 
 Os exercícios abaixo trazem dois desses padrões. Em todos, o sacrifício só funciona porque **cada lance é forçado**: xeque, captura obrigatória, mate.
 
@@ -76,7 +76,7 @@ Os exercícios abaixo trazem dois desses padrões. Em todos, o sacrifício só f
 
 "Qualidade" é a diferença entre uma torre e uma peça menor. Sacrificar a qualidade é entregar uma torre por um bispo ou um cavalo. Na contagem de pontos você perde cerca de dois, mas a torre nem sempre é a peça mais útil da posição. Os motivos mais comuns:
 
-- **Destruir a estrutura de peões do rei.** Na Siciliana, o lance ...Txc3 é clássico: depois de bxc3, o roque grande das Brancas fica com peões dobrados e isolados, e o peão de e4 perde um defensor.
+- **Destruir a estrutura de peões do rei.** Na [Siciliana](artigo:defesa-siciliana#dragao), o lance ...Txc3 é clássico: depois de bxc3, o roque grande das Brancas fica com peões dobrados e isolados, e o peão de e4 perde um defensor.
 - **Eliminar uma peça-chave**, como o cavalo que defende o roque ou o bispo que controla as casas de uma cor.
 - **Ganhar peões e iniciativa:** muitas vezes a qualidade volta acompanhada de um ou dois peões e de peças muito ativas.
 

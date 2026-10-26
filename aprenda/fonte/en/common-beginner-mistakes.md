@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [beginner chess mistakes, how to get better at chess, chess tips for beginners, hanging pieces, chess blunders]
 jogar: 2
-relacionados: [principios-de-abertura, valor-das-pecas, xeque-mate-e-afogamento, mate-do-pastor]
+relacionados: [principios-de-abertura, valor-das-pecas, taticas, mate-do-corredor, analisar-partidas]
 ensina: [Blunder checking, King safety, Hanging pieces]
 ---
 The most common chess mistakes beginners make are **leaving pieces undefended**, **missing the opponent's threats**, **bringing the queen out too early**, **leaving the king in the center** and **playing too fast**. Almost all of them share one cause: making a move without first looking at the whole board. The good news is that one simple habit fixes most of them, and you'll find it at the end of this lesson.
@@ -48,7 +48,7 @@ Rule of thumb: develop **knights and bishops first**. See the [opening principle
 
 When the central files open up, a king still sitting on e1 or e8 becomes an easy target. The cure is to **castle early**, usually within the first 10 moves.
 
-And once you've castled, watch your **back rank**: if the three pawns in front of your king have never moved, the king has no escape square, and a rook or queen that reaches your back rank can deliver mate. The classic fix is to move one of those pawns a single square at a quiet moment (h3 or h6, for example), giving your king some *luft* — "air", a breathing hole.
+And once you've castled, watch your **[back rank](artigo:mate-do-corredor)**: if the three pawns in front of your king have never moved, the king has no escape square, and a rook or queen that reaches your back rank can deliver mate. The classic fix is to move one of those pawns a single square at a quiet moment (h3 or h6, for example), giving your king some *luft* — "air", a breathing hole.
 
 ```tabuleiro
 fen: 6k1/5pp1/7p/8/8/8/5PPP/6K1 w - - 0 1
@@ -74,7 +74,7 @@ Before you touch a piece, run a quick three-step check, for **both sides**:
 
 1. **Checks:** does any move give check?
 2. **Captures:** can any piece be captured?
-3. **Threats:** does any move threaten to win material or deliver mate?
+3. **Threats:** does any move threaten to [win material](artigo:taticas) or deliver mate?
 
 First look at what your **opponent** can do after your move; then at what **you** can do. It takes a few seconds and prevents most of the mistakes in this lesson.
 
@@ -133,7 +133,7 @@ A German word meaning "air": an escape square made in front of a castled king, u
 
 ### How long does it take to stop making these mistakes?
 
-It depends on how much you play and review your games. Players who build the habit of checking checks, captures and threats on every move usually notice the difference quickly.
+It depends on how much you play and [review your games](artigo:analisar-partidas). Players who build the habit of checking checks, captures and threats on every move usually notice the difference quickly.
 
 :::pratique Practice blunder-checking
 Play the computer on Medium, without rushing. Before each move, run the check: checks, captures and threats — your opponent's first, then yours.

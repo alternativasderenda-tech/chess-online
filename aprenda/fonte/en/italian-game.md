@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [italian game, giuoco piano, giuoco pianissimo, evans gambit, two knights defense, fried liver attack, chess openings]
 jogar: 2
-relacionados: [aberturas-para-iniciantes, defesa-siciliana, mate-do-pastor]
+relacionados: [principios-de-abertura, aberturas-para-iniciantes, defesa-siciliana, garfo, mate-do-pastor]
 ---
 The Italian Game is the chess opening that starts with **1.e4 e5 2.Nf3 Nc6 3.Bc4**: White develops the bishop to c4, where it eyes f7, the weakest square in Black's camp early in the game. It splits into two families: the direct approach, where White opens the center with d4 (the Giuoco Piano and the Evans Gambit), and the slow maneuvering approach with c3 and d3 (the Giuoco Pianissimo). If Black answers 3...Nf6, the game becomes the Two Knights Defense.
 
@@ -108,7 +108,7 @@ explicacao: 6.Nxf7! Kxf7 7.Qf3+. The king has to go to e6 to keep the d5 knight 
 
 ### The Blackburne Shilling Gambit: when White falls for it
 
-Not every Italian trap favors White. After **3...Nd4?!**, Black leaves e5 undefended and 4.Nxe5? looks very tempting. But **4...Qg5!** forks the e5 knight and the g2 pawn. If White stays greedy with 5.Nxf7??, then 5...Qxg2 6.Rf1 Qxe4+ 7.Be2 and Black has mate.
+Not every Italian trap favors White. After **3...Nd4?!**, Black leaves e5 undefended and 4.Nxe5? looks very tempting. But **4...Qg5!** [forks](artigo:garfo) the e5 knight and the g2 pawn. If White stays greedy with 5.Nxf7??, then 5...Qxg2 6.Rf1 Qxe4+ 7.Be2 and Black has mate.
 
 ```exercicio
 fen: r1b1kbnr/pppp1Npp/8/8/3nq3/8/PPPPBP1P/RNBQKR2 b Qkq - 1 7
@@ -130,7 +130,7 @@ The Italian suits almost every style because you choose the tempo:
 
 - **You like to attack:** the Giuoco Piano with 5.d4, the Evans Gambit, and 4.Ng5 against the Two Knights.
 - **You prefer maneuvering:** the Giuoco Pianissimo with d3, which gives strategic positions in the spirit of the Ruy Lopez with less theory.
-- **You're moving past the beginner stage:** it's the natural bridge from opening principles to a real repertoire. The ideas (center, castling, pressure on f7) are the same ones you met in the [Scholar's Mate](artigo:mate-do-pastor), just applied with patience.
+- **You're moving past the beginner stage:** it's the natural bridge from [opening principles](artigo:principios-de-abertura) to a real repertoire. The ideas (center, castling, pressure on f7) are the same ones you met in the [Scholar's Mate](artigo:mate-do-pastor), just applied with patience.
 
 If you play Black and face 1.e4 a lot, also look at the [Sicilian Defense](artigo:defesa-siciliana), which avoids the Italian from move one.
 

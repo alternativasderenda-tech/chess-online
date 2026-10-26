@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [fork, chess fork, double attack, knight fork, pawn fork, chess tactics]
 jogar: 2
-relacionados: [taticas, movimento-do-cavalo, cravada, desvio-e-sobrecarga]
+relacionados: [taticas, movimento-do-cavalo, cravada, desvio-e-sobrecarga, valor-das-pecas]
 ensina: [Fork, Double attack, Royal fork]
 ---
 A **fork** is a move in which a single piece attacks two (or more) enemy pieces at the same time. Your opponent can only rescue one of them per move, so the other one is left to be captured. It is the most common tactical pattern in chess and, for players who are starting to win games, the most profitable one to learn.
@@ -46,7 +46,7 @@ To review the L-shaped move, see [how the knight moves](artigo:movimento-do-cava
 
 ## Pawn forks {#peao "Pawn forks"}
 
-The pawn is the cheapest unit on the board, which makes a pawn fork devastating: any piece it attacks is worth more than the pawn. A pawn that steps forward and hits two pieces diagonally usually wins one of them, even if the pawn is captured afterwards.
+The pawn is [the cheapest unit on the board](artigo:valor-das-pecas), which makes a pawn fork devastating: any piece it attacks is worth more than the pawn. A pawn that steps forward and hits two pieces diagonally usually wins one of them, even if the pawn is captured afterwards.
 
 ```tabuleiro
 fen: 6k1/ppp2ppp/3b1n2/4P3/3P4/8/PPP2PPP/6K1 b - - 0 1

@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [finais de peão, final de rei e peão, oposição, regra do quadrado, casas-chave, peão passado, zugzwang, finais de xadrez]
 jogar: 3
-relacionados: [analisar-partidas, regras, jogar-do-zero]
+relacionados: [finais-de-torre, mates-basicos, empates, calculo, analisar-partidas]
 ensina: [Oposição, Casas-chave, Regra do quadrado, Peão passado, Rei ativo]
 ---
 Um final de rei e peão é a fase da partida em que só restam reis e peões no tabuleiro. O resultado depende de três ideias: a **oposição** (quem tem de ceder passagem quando os reis ficam frente a frente), a **regra do quadrado** (se um rei alcança um peão passado sem ajuda) e a **atividade do rei**, que no final deixa de ser alvo e vira peça de ataque. Quem domina essas ideias calcula finais de peão com precisão em vez de adivinhar.
@@ -17,7 +17,7 @@ Um final de rei e peão é a fase da partida em que só restam reis e peões no 
 
 Com tão pouco material, cada tempo decide. Um lance de rei para o lado errado transforma vitória em empate, e vice-versa. Duas consequências práticas:
 
-- **Trocar peças para chegar a um final de peões é uma decisão sem volta.** Antes de trocar a última peça, calcule o final de peões até o fim.
+- **Trocar peças para chegar a um final de peões é uma decisão sem volta.** Antes de trocar a última peça, [calcule](artigo:calculo) o final de peões até o fim.
 - **O zugzwang aparece o tempo todo.** Zugzwang é a situação em que o lado que tem a vez preferiria não jogar, porque qualquer lance piora a posição. Nos finais de peão, ele é a arma principal.
 
 ## O rei ativo {#rei-ativo "O rei ativo"}

@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [espeto, espeto no xadrez, raio-x, tática de xadrez, cravada e espeto, final de torre]
 jogar: 2
-relacionados: [taticas, cravada, garfo, mate-do-corredor]
+relacionados: [cravada, taticas, finais-de-torre, garfo]
 ensina: [Espeto, Espeto absoluto, Espeto relativo]
 ---
 O **espeto** é um ataque em linha contra uma peça valiosa que, ao sair do caminho, deixa exposta outra peça que estava atrás dela. É o contrário da cravada: na cravada a peça da frente vale menos e não quer sair; no espeto a peça da frente vale mais e é obrigada a sair, entregando a de trás.
@@ -66,7 +66,7 @@ Uma boa forma de lembrar: na [cravada](artigo:cravada), a peça presa é a que e
 
 ## O truque da torre nos finais {#final-de-torre "O truque da torre nos finais"}
 
-O espeto aparece muito em finais de torre. A situação típica: a torre branca está na frente do próprio peão (em a8, com o peão em a7), e a torre preta está atrás do peão, na coluna a. Se o rei preto estiver no lugar errado, as Brancas têm um golpe: a torre sai de a8 para h8, e se a torre preta capturar o peão, a torre branca dá xeque na sétima fileira e ganha a torre por espeto.
+O espeto aparece muito em [finais de torre](artigo:finais-de-torre). A situação típica: a torre branca está na frente do próprio peão (em a8, com o peão em a7), e a torre preta está atrás do peão, na coluna a. Se o rei preto estiver no lugar errado, as Brancas têm um golpe: a torre sai de a8 para h8, e se a torre preta capturar o peão, a torre branca dá xeque na sétima fileira e ganha a torre por espeto.
 
 Com o rei preto em g7 ou h7, o truque não funciona, porque o rei controla h7 (ou já está lá). Por isso, nesse tipo de final, quem defende deve manter o rei nessas casas. O último exercício deste artigo mostra a versão vencedora.
 
@@ -81,7 +81,7 @@ Os espetos aparecem em situações bem reconhecíveis. Vale a pena conferir cada
 - **Reis no centro nos finais.** Quando as damas saem, o rei vira uma peça ativa e anda pelo tabuleiro. É ótimo para o final, mas expõe o rei a xeques em linha com uma torre ou um peão passado atrás dele.
 - **Diagonais longas abertas.** Um bispo em b2 ou g2 (ou b7 e g7) enxerga o tabuleiro inteiro. Rei e dama na mesma diagonal longa são um convite.
 - **Peças nas pontas da mesma fileira.** Torres e reis na mesma fileira, sem peões no meio, são alvos clássicos de espetos de torre ou de dama.
-- **Peões prestes a promover.** O espeto também ganha a dama recém-promovida: se o adversário promover numa casa alinhada com o rei dele, uma torre ou um bispo pode dar xeque e capturar a dama nova por trás.
+- **Peões prestes a promover.** O espeto também ganha a dama recém-promovida: se o adversário [promover](artigo:lances-especiais) numa casa alinhada com o rei dele, uma torre ou um bispo pode dar xeque e capturar a dama nova por trás.
 
 Uma boa forma de treinar o olho é, a cada lance do adversário, traçar mentalmente as linhas que saem do rei dele e ver o que está atrás.
 

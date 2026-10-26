@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [opening repertoire, opening preparation, how to study openings, opening theory, opening traps, transposition]
 jogar: 3
-relacionados: [aberturas-para-iniciantes, estrutura-de-peoes, rotina-de-treino]
+relacionados: [principios-de-abertura, abertura-italiana, defesa-siciliana, francesa-e-caro-kann, gambito-da-dama-e-london]
 ensina: [Opening repertoire, Studying ideas and structures, Move orders and transpositions, Opening traps]
 ---
 Opening preparation means building and studying a **repertoire**: a small, consistent set of lines you always play, with a ready answer to each of your opponent's main moves. A good repertoire starts with **ideas** — typical pawn structures and plans — and only then goes down to the moves; it lives in notes you can review; and it keeps being corrected with your own games. The goal is not to memorize as much theory as possible but to reach a middlegame you understand.
@@ -26,7 +26,7 @@ Consistency helps a lot. If your openings lead to similar structures — say, cl
 
 ## Ideas before moves {#ideias}
 
-Memorizing a sequence without understanding why works until your opponent leaves the book — and they always do. For each opening in your repertoire, first answer:
+Memorizing a sequence without understanding [why](artigo:principios-de-abertura) works until your opponent leaves the book — and they always do. For each opening in your repertoire, first answer:
 
 - **What is the typical pawn structure?** It defines the plans (see [pawn structure](artigo:estrutura-de-peoes)).
 - **Where do the pieces go?** The typical squares for each knight and bishop.
@@ -39,14 +39,14 @@ casas: f5 c6 e4:amarela
 legenda: Caro-Kann Defense after 1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Bf5. Black has developed the light-squared bishop before closing the chain with ...e6 — an idea, not just a move.
 ```
 
-In this Caro-Kann example, understanding that the c8 bishop comes out **before** ...e6 is worth more than memorizing ten moves: that's why the move exists, and that's what you'll remember when your opponent deviates from the main line.
+In this [Caro-Kann](artigo:francesa-e-caro-kann) example, understanding that the c8 bishop comes out **before** ...e6 is worth more than memorizing ten moves: that's why the move exists, and that's what you'll remember when your opponent deviates from the main line.
 
 ## How deep to go into theory {#profundidade}
 
 The right depth depends on your level and the type of opening:
 
-- **Positional openings** (systems like the London, closed structures): few concrete moves, many ideas. You can stay shallow.
-- **Tactical openings** (gambits, sharp Sicilian lines): a mistake in the first moves can lose the game. Here you need to know the critical lines precisely.
+- **Positional openings** (systems like the [London](artigo:gambito-da-dama-e-london#london), closed structures): few concrete moves, many ideas. You can stay shallow.
+- **Tactical openings** (gambits, sharp [Sicilian](artigo:defesa-siciliana) lines): a mistake in the first moves can lose the game. Here you need to know the critical lines precisely.
 - **Priority:** study first the lines you actually meet in your games, not the ones that fill the books.
 
 :::dica

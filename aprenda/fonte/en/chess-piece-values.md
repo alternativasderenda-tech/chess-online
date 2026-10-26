@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [chess piece values, how much is each chess piece worth, chess points, winning the exchange, chess trades]
 jogar: 1
-relacionados: [como-as-pecas-se-movem, movimento-do-cavalo, erros-de-iniciante, principios-de-abertura]
+relacionados: [como-as-pecas-se-movem, taticas, erros-de-iniciante, principios-de-abertura, bispos]
 ensina: [Relative piece values, Trading pieces, Winning the exchange]
 ---
 In chess, each piece has an approximate value in points, measured in pawns: **pawn = 1, knight = 3, bishop = 3, rook = 5 and queen = 9**. The king has no point value, because losing it means losing the game. These numbers aren't part of the rules; they're a tool for comparing trades and deciding, in seconds, whether a capture is worth it.
@@ -41,7 +41,7 @@ A piece's value comes mostly from **how many squares it controls** and how much 
 
 - **Pawn (1):** moves one square, forward only. It's the unit of measure. But careful: a pawn close to promotion can be worth far more, because it's one step from becoming a queen.
 - **Knight (3):** jumps over pieces and shines in closed positions, but it's slow to cross the board.
-- **Bishop (3):** covers long diagonals and is strong in open positions, but it only sees squares of one color. That's why **the bishop pair** (both bishops together) is usually a small advantage.
+- **Bishop (3):** covers long diagonals and is strong in open positions, but it only sees squares of one color. That's why **[the bishop pair](artigo:bispos)** (both bishops together) is usually a small advantage.
 - **Rook (5):** controls whole files and ranks. King and rook alone can already force checkmate against a lone king.
 - **Queen (9):** rook plus bishop in one piece. She's worth nearly as much as two rooks (10).
 
@@ -86,7 +86,7 @@ You don't need to add up 39 points every move. It's easier to compare **what has
 With that count in mind, your strategy changes with the score:
 
 - **If you're ahead in material**, trade pieces (without losing anything else). With fewer pieces on the board, your advantage weighs more and your opponent has fewer chances to fight back.
-- **If you're behind**, avoid trades and look for complications: attacks on the king and tactical threats are your chance to win back what you lost.
+- **If you're behind**, avoid trades and look for complications: attacks on the king and [tactical threats](artigo:taticas) are your chance to win back what you lost.
 
 This simple rule — ahead, trade; behind, complicate — holds from beginner to master level.
 
@@ -96,7 +96,7 @@ Points are a guide, not a law. Some situations change the math:
 
 - **Checkmate beats everything.** Giving up your queen to deliver mate is the best move on the board.
 - **Active pieces are worth more.** A centralized, attacking knight is worth more than a rook stuck in the corner.
-- **Advanced passed pawns.** A pawn on the 7th rank, about to promote, can be worth more than a piece.
+- **Advanced [passed pawns](artigo:estrutura-de-peoes).** A pawn on the 7th rank, about to promote, can be worth more than a piece.
 - **King safety.** Sometimes it's worth giving material to rip open the enemy king.
 
 Still, while you're learning, the practical rule is: **don't give away material without a concrete reason**. Losing pieces for nothing is one of the [most common beginner mistakes](artigo:erros-de-iniciante).

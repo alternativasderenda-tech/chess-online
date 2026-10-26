@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [bispo bom, bispo ruim, par de bispos, bispo contra cavalo, bispos de cores opostas, estratégia no xadrez]
 jogar: 3
-relacionados: [estrategia-posicional, estrutura-de-peoes, sacrificios]
+relacionados: [estrategia-posicional, estrutura-de-peoes, valor-das-pecas, finais-de-peao]
 ensina: [Bispo bom e bispo ruim, Par de bispos, Bispo contra cavalo, Bispos de cores opostas]
 ---
 Um **bispo bom** é aquele cujos peões estão fixos em casas da cor oposta à dele, deixando suas diagonais livres; um **bispo ruim** é aquele preso atrás dos próprios peões, fixos em casas da mesma cor. O **par de bispos** — ter os dois bispos contra bispo e cavalo, ou contra dois cavalos — é uma vantagem reconhecida, sobretudo em posições abertas, porque os dois juntos controlam casas das duas cores. Essas três ideias explicam boa parte das decisões de troca de peças no meio-jogo e no final.
@@ -62,7 +62,7 @@ Como **combater** o par de bispos:
 
 ## Bispo contra cavalo {#bispo-cavalo}
 
-Bispo e cavalo valem cerca de três peões cada, mas brilham em posições diferentes:
+Bispo e cavalo [valem cerca de três peões](artigo:valor-das-pecas) cada, mas brilham em posições diferentes:
 
 | Situação | Quem costuma ser melhor |
 | --- | --- |
@@ -132,4 +132,4 @@ Depende da estrutura. Bispos preferem posições abertas e peões nas duas alas;
 Porque o defensor bloqueia os peões em casas da cor do próprio bispo, e o bispo do atacante não tem como disputar essas casas.
 
 ### O que é o "bispo da cor errada"?
-É o bispo que não controla a casa de promoção de um peão de torre. Com ele, o rei defensor que chega ao canto empata.
+É o bispo que não controla a casa de promoção de um [peão de torre](artigo:finais-de-peao#peao-da-torre). Com ele, o rei defensor que chega ao canto empata.

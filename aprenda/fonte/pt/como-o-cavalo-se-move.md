@@ -9,7 +9,7 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [como o cavalo se move, movimento cavalo xadrez, cavalo xadrez L, garfo cavalo, xeque com cavalo]
 jogar: 1
-relacionados: [jogar-do-zero, regras, aberturas-para-iniciantes, mate-do-pastor]
+relacionados: [como-as-pecas-se-movem, garfo, valor-das-pecas, taticas]
 ---
 O cavalo é a peça mais especial do xadrez: ele se move em "L", pula sobre outras peças e tem um padrão único que confunde iniciantes — mas devasta nas mãos certas. Este guia mostra como o cavalo se move, por que ele é tão poderoso e os padrões táticos que todo jogador precisa conhecer.
 
@@ -70,7 +70,7 @@ Consequências práticas:
 
 ## 4. Valor e força do cavalo {#valor}
 
-Na contagem tradicional de valor das peças:
+Na contagem tradicional de [valor das peças](artigo:valor-das-pecas):
 
 - **Peão:** 1 ponto
 - **Cavalo:** 3 pontos
@@ -82,7 +82,7 @@ Cavalo e bispo valem o mesmo (3), mas **são úteis em situações diferentes**.
 
 ## 5. O garfo: a tática mais famosa do cavalo {#garfo}
 
-O **garfo** (em inglês, *fork*) é quando uma peça ataca duas peças adversárias ao mesmo tempo. O cavalo é o rei dos garfos no xadrez, porque o movimento em L permite ataques em direções que outras peças não conseguem.
+O **[garfo](artigo:garfo)** (em inglês, *fork*) é quando uma peça ataca duas peças adversárias ao mesmo tempo. O cavalo é o rei dos garfos no xadrez, porque o movimento em L permite ataques em direções que outras peças não conseguem.
 
 ### Exemplo clássico: garfo de família
 
@@ -120,11 +120,11 @@ Um cavalo é **mau** quando:
 - Pode ser facilmente expulso por um peão adversário.
 - Não consegue chegar em casas relevantes da posição.
 
-Em jogo, é comum trocar seu cavalo bom pelo bispo ruim do adversário. Esse tipo de troca pequena define partidas.
+Em jogo, é comum trocar seu cavalo bom pelo [bispo ruim](artigo:bispos) do adversário. Esse tipo de troca pequena define partidas.
 
 ## 7. Dicas práticas para usar bem o cavalo {#dicas}
 
-1. **Cavalos antes dos bispos.** Na abertura, desenvolva o cavalo primeiro (em C3 ou F3 para Brancas; C6 ou F6 para Pretas).
+1. **Cavalos antes dos bispos.** Na abertura, [desenvolva o cavalo primeiro](artigo:principios-de-abertura) (em C3 ou F3 para Brancas; C6 ou F6 para Pretas).
 2. **Procure pontos fortes.** Casas que nenhum peão adversário consegue atacar são chamadas de "pontos fortes". Um cavalo num ponto forte avançado vale tanto quanto uma torre.
 3. **Em posições fechadas, valorize seus cavalos.** Não troque um cavalo por um bispo se o jogo está fechado — o cavalo é melhor.
 4. **Cuidado com cavalos nos cantos.** Se seu cavalo está em A4, A5, H4 ou H5, está numa zona perigosa — pode ser expulso e perder muito tempo.

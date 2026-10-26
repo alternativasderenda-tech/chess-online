@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [princípios de abertura, abertura no xadrez, como começar uma partida de xadrez, controle do centro, desenvolvimento das peças]
 jogar: 2
-relacionados: [aberturas-para-iniciantes, lances-especiais, valor-das-pecas, erros-de-iniciante]
+relacionados: [aberturas-para-iniciantes, abertura-italiana, defesa-siciliana, gambito-da-dama-e-london, erros-de-iniciante]
 ensina: [Controle do centro, Desenvolvimento das peças, Segurança do rei, Princípios de abertura]
 ---
 Os princípios de abertura são regras práticas para os primeiros lances da partida: **controle o centro, desenvolva os cavalos e os bispos, faça o roque cedo e não mova a mesma peça várias vezes nem tire a dama cedo demais**. Seguindo essas ideias, você chega ao meio da partida com as peças prontas para jogar e o rei em segurança, mesmo sem decorar nenhuma abertura.
@@ -107,7 +107,7 @@ explicacao: 5.Cc6+! — é um xeque descoberto: o cavalo sai da frente e a dama 
 
 ### Qual é o melhor primeiro lance no xadrez?
 
-Não existe um único melhor. 1.e4 e 1.d4 são os mais populares e seguem os princípios: ocupam o centro e liberam peças. 1.c4 e 1.Cf3 também são excelentes.
+Não existe um único melhor. [1.e4](artigo:abertura-italiana) e [1.d4](artigo:gambito-da-dama-e-london) são os mais populares e seguem os princípios: ocupam o centro e liberam peças. 1.c4 e 1.Cf3 também são excelentes.
 
 ### Quantos lances dura a abertura?
 

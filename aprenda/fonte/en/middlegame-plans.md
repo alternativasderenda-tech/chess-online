@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [chess plan, middlegame, open files, outpost, minority attack, seventh rank, opposite-side castling]
 jogar: 3
-relacionados: [estrategia-posicional, estrutura-de-peoes, calculo]
+relacionados: [estrategia-posicional, estrutura-de-peoes, gambito-da-dama-e-london, defesa-siciliana, calculo]
 ensina: [How to make a plan, Attacking on the right wing, Open files, Outposts, Minority attack]
 ---
 A middlegame plan is a medium-term goal — attack the king, take over a file, fix a weak pawn, plant a knight on an outpost — chosen from your evaluation of the position. To build one, you identify each side's weaknesses and strengths, decide **which wing to play on** (as a rule, where you already have more space, more pieces or a target) and then regroup your pieces to carry it out. Without a plan, your moves become reactions to your opponent; with one, every move has a job.
@@ -38,7 +38,7 @@ legenda: King's Indian structure with a closed center: Black prepares ...f5 on t
 
 The pawn chains point the way. Here, Black's d6-e5 chain points to the kingside, and that's where Black attacks, with ...f5. White's d5-e4 chain points to the queenside, and that's where White advances, with c4-c5. Whoever wastes time on the "wrong" wing usually arrives late to the race.
 
-The same goes for **opposite-side castling**: with the kings on different wings, pawns become battering rams. Pushing pawns at the enemy king doesn't weaken your own king, and speed decides. In that kind of attack, a tempo is worth more than a pawn.
+The same goes for [**opposite-side castling**](artigo:defesa-siciliana#dragao): with the kings on different wings, pawns become battering rams. Pushing pawns at the enemy king doesn't weaken your own king, and speed decides. In that kind of attack, a tempo is worth more than a pawn.
 
 ## Open files and the seventh rank {#colunas}
 
@@ -65,7 +65,7 @@ In this Ruy Lopez position, the d2 knight has no future where it stands. The Nd2
 
 ## The minority attack {#minoria}
 
-The minority attack is a classic structural plan: advancing **two pawns against three** on the wing where you're in the minority, in order to trade them and leave your opponent with a weak pawn.
+[The minority attack](artigo:gambito-da-dama-e-london#recusado) is a classic structural plan: advancing **two pawns against three** on the wing where you're in the minority, in order to trade them and leave your opponent with a weak pawn.
 
 ```tabuleiro
 fen: r1bq1rk1/pp1n1ppp/2p2n2/3p4/1P1P4/2NBPN2/P1Q2PPP/1R3RK1 w - - 0 1

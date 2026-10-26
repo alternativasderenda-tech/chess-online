@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [sicilian defense, najdorf sicilian, dragon sicilian, sveshnikov, alapin, smith-morra gambit, chess openings]
 jogar: 3
-relacionados: [abertura-italiana, francesa-e-caro-kann, aberturas-para-iniciantes]
+relacionados: [francesa-e-caro-kann, abertura-italiana, cravada, sacrificios, preparacao-de-aberturas]
 ---
 The Sicilian Defense is the reply **1...c5** to 1.e4: instead of occupying the center with a pawn, Black attacks the d4 square from the side. The result is an unbalanced position where White usually attacks on the kingside and Black counterattacks along the c-file and on the queenside. It is one of the most played defenses against 1.e4 at every level, and the choice of players who want to win with Black, not just hold a draw.
 
@@ -58,7 +58,7 @@ legenda: The Dragon after 5...g6: the bishop is heading for g7, on the long diag
 White's most aggressive answer is the **Yugoslav Attack**: 6.Be3 Bg7 7.f3 O-O 8.Qd2 Nc6, then 9.Bc4 or 9.O-O-O. With opposite-side castling it becomes a race:
 
 - **White:** h4-h5 to open the h-file, and Bh6 to trade off the g7 bishop, the king's main defender.
-- **Black:** ...Rc8, a knight on c4 (via e5) and, often, the exchange sacrifice ...Rxc3 to wreck White's castled king.
+- **Black:** ...Rc8, a knight on c4 (via e5) and, often, the [exchange sacrifice](artigo:sacrificios) ...Rxc3 to wreck White's castled king.
 
 The move 7.f3 has a clear job: stop ...Ng4, which would hit the e3 bishop. Move order matters here, as the exercise further down shows.
 

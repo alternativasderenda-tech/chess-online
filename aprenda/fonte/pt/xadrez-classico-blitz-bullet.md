@@ -6,10 +6,10 @@ descricao: Entenda os formatos de xadrez por tempo: clássico, rápido, blitz e 
 nivel: dicas
 ordem: 10
 publicado: 2026-05-11
-atualizado: 2026-05-11
+atualizado: 2026-10-26
 tags: [xadrez blitz, xadrez bullet, xadrez rapido, xadrez classico, formatos xadrez, tempos de xadrez]
 jogar: 2
-relacionados: [jogar-do-zero, regras, aberturas-para-iniciantes, mate-do-pastor, movimento-do-cavalo]
+relacionados: [relogio-e-psicologia, regras, analisar-partidas, rotina-de-treino]
 ---
 Quando você abre um site de xadrez online, vê opções como 3+0, 10+5, 60 minutos. O que significa cada uma? Por que escolher uma e não outra? Este guia explica os formatos oficiais de xadrez por tempo e ajuda você a escolher o ritmo certo para o seu nível.
 
@@ -110,19 +110,19 @@ Recomendação prática segundo o seu objetivo:
 
 ### No Clássico
 
-- Anote suas variantes mentalmente, calcule pelo menos 3 lances à frente.
+- Anote suas variantes mentalmente, [calcule pelo menos 3 lances à frente](artigo:calculo).
 - Em posições críticas, gaste tempo. Você tem tempo.
-- Tome notas das partidas (mental ou escrita) — revise depois.
+- Tome notas das partidas (mental ou escrita) — [revise depois](artigo:analisar-partidas).
 
 ### No Rápido
 
-- Foque em **princípios**, não em variantes longas.
+- Foque em **[princípios](artigo:principios-de-abertura)**, não em variantes longas.
 - Faça lance natural, segura na abertura, pensa no meio-jogo.
-- Reserve mais tempo para os lances críticos (onde a posição muda muito).
+- [Reserve mais tempo para os lances críticos](artigo:relogio-e-psicologia#tempo) (onde a posição muda muito).
 
 ### No Blitz
 
-- Tenha um repertório fixo de aberturas. Não improvise.
+- Tenha um [repertório fixo de aberturas](artigo:preparacao-de-aberturas). Não improvise.
 - Decida rápido em posições normais; só pense de verdade em momentos críticos.
 - Aceite que vai errar. O importante é aproveitar os erros do adversário melhor.
 

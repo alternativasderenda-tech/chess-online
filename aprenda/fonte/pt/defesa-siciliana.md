@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [defesa siciliana, siciliana najdorf, siciliana dragão, sveshnikov, alapin, gambito smith-morra, aberturas de xadrez]
 jogar: 3
-relacionados: [abertura-italiana, francesa-e-caro-kann, aberturas-para-iniciantes]
+relacionados: [francesa-e-caro-kann, abertura-italiana, cravada, sacrificios, preparacao-de-aberturas]
 ---
 A Defesa Siciliana é a resposta **1...c5** contra 1.e4: em vez de ocupar o centro com um peão, as Pretas atacam a casa d4 pelo flanco. O resultado são posições assimétricas, em que as Brancas costumam atacar no flanco do rei e as Pretas contra-atacam pela coluna c e no flanco da dama. É uma das defesas mais jogadas contra 1.e4 em todos os níveis, e a escolha de quem joga de Pretas para ganhar, não só para empatar.
 
@@ -58,7 +58,7 @@ legenda: O Dragão depois de 5...g6: o bispo vai para g7, na grande diagonal.
 A resposta mais agressiva é o **Ataque Iugoslavo**: 6.Be3 Bg7 7.f3 O-O 8.Dd2 Cc6 e então 9.Bc4 ou 9.O-O-O. Com roques opostos, vira uma corrida:
 
 - **Brancas:** h4–h5 para abrir a coluna h e Bh6 para trocar o bispo de g7, o defensor do rei.
-- **Pretas:** ...Tc8, o cavalo em c4 (via e5) e, com frequência, o sacrifício de qualidade ...Txc3 para destruir o roque branco.
+- **Pretas:** ...Tc8, o cavalo em c4 (via e5) e, com frequência, o [sacrifício de qualidade](artigo:sacrificios) ...Txc3 para destruir o roque branco.
 
 O lance 7.f3 tem uma função clara: impedir ...Cg4, que atacaria o bispo de e3. E a ordem de lances importa, como mostra o exercício mais abaixo.
 

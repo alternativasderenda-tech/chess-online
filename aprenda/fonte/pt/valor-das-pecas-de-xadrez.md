@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [valor das peças de xadrez, quanto vale cada peça, pontos das peças, qualidade no xadrez, trocas no xadrez]
 jogar: 1
-relacionados: [como-as-pecas-se-movem, movimento-do-cavalo, erros-de-iniciante, principios-de-abertura]
+relacionados: [como-as-pecas-se-movem, taticas, erros-de-iniciante, principios-de-abertura, bispos]
 ensina: [Valor relativo das peças, Trocas de peças, Ganhar a qualidade]
 ---
 No xadrez, cada peça tem um valor aproximado em pontos, medido em peões: **peão = 1, cavalo = 3, bispo = 3, torre = 5 e dama = 9**. O rei não tem valor em pontos, porque perdê-lo é perder a partida. Esses números não fazem parte das regras; são uma ferramenta para comparar trocas e decidir, em segundos, se uma captura vale a pena.
@@ -41,7 +41,7 @@ O valor vem, principalmente, de **quantas casas a peça controla** e de quanto e
 
 - **Peão (1):** anda uma casa e só para a frente. É a unidade de medida. Mas cuidado: um peão perto da promoção pode valer muito mais, porque está a um passo de virar dama.
 - **Cavalo (3):** salta por cima das peças e é ótimo em posições fechadas, mas é lento para atravessar o tabuleiro.
-- **Bispo (3):** cobre diagonais longas e é forte em posições abertas, mas só enxerga casas de uma cor. Por isso **o par de bispos** (os dois juntos) costuma ser uma pequena vantagem.
+- **Bispo (3):** cobre diagonais longas e é forte em posições abertas, mas só enxerga casas de uma cor. Por isso **[o par de bispos](artigo:bispos)** (os dois juntos) costuma ser uma pequena vantagem.
 - **Torre (5):** controla colunas e fileiras inteiras. Com rei e torre já se força o mate contra o rei sozinho.
 - **Dama (9):** soma torre e bispo. Ela vale quase o mesmo que duas torres (10).
 
@@ -86,7 +86,7 @@ Você não precisa somar 39 pontos a cada lance. É mais fácil comparar **o que
 Com essa conta em mente, a estratégia muda conforme o placar:
 
 - **Se você está à frente em material**, troque peças (sem perder mais nada). Com menos peças no tabuleiro, a vantagem pesa mais, e o adversário tem menos chances de reagir.
-- **Se você está atrás**, evite trocas e procure complicar: ataques ao rei e ameaças táticas são a sua chance de recuperar o que perdeu.
+- **Se você está atrás**, evite trocas e procure complicar: ataques ao rei e [ameaças táticas](artigo:taticas) são a sua chance de recuperar o que perdeu.
 
 Essa regra simples — à frente, troque; atrás, complique — vale do iniciante ao mestre.
 
@@ -96,7 +96,7 @@ Os pontos são um guia, não uma lei. Algumas situações mudam a conta:
 
 - **Xeque-mate vale mais que tudo.** Entregar a dama para dar mate é o melhor lance do tabuleiro.
 - **Peças ativas valem mais.** Um cavalo no centro, atacando, vale mais que uma torre presa no canto.
-- **Peão passado avançado.** Um peão na 7ª fileira, prestes a promover, pode valer mais que uma peça.
+- **[Peão passado](artigo:estrutura-de-peoes) avançado.** Um peão na 7ª fileira, prestes a promover, pode valer mais que uma peça.
 - **Segurança do rei.** Às vezes vale entregar material para abrir o rei adversário.
 
 Mesmo assim, enquanto você está aprendendo, a regra prática é: **não entregue material sem uma razão concreta**. Perder peças "à toa" é um dos [erros mais comuns de iniciantes](artigo:erros-de-iniciante).

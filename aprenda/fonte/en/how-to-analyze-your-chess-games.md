@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [analyze chess games, chess analysis, decisive mistake, game review, replay, how to improve at chess, critical moment]
 jogar: 2
-relacionados: [finais-de-peao, abertura-italiana, ritmos-de-jogo]
+relacionados: [taticas, calculo, relogio-e-psicologia, rotina-de-treino, erros-de-iniciante]
 ensina: [Game analysis, Decisive mistake, Critical moment, Blunder check]
 ---
 Analyzing a chess game means going back over it move by move, after it's finished, to find where the evaluation changed: the moment a good or equal position turned into a lost one. The goal isn't to list every mistake but to find the **decisive mistake** and understand **why** you made it, whether it was a threat you missed, a miscalculation, a bad plan or clock pressure. It's the habit that most separates players who improve from players who just pile up games.
@@ -45,13 +45,13 @@ A practical tip: look for the **last moment the position was still defensible**.
 
 Give the mistake a name. The most common types:
 
-- **Tactical:** you missed a threat, a fork, a pin, a check.
-- **Calculation:** you saw the idea but got the count wrong at the end of the line.
+- **[Tactical](artigo:taticas):** you missed a threat, a fork, a pin, a check.
+- **[Calculation](artigo:calculo):** you saw the idea but got the count wrong at the end of the line.
 - **Strategic:** the wrong plan, a bad trade, a piece left on a poor square for many moves.
 - **Time:** low clock time led to a rushed move.
 - **Psychological:** you relaxed when winning, or panicked when losing.
 
-After a few weeks, the names start repeating. That's when you find out what to train.
+After a few weeks, the names start repeating. That's when you find out [what to train](artigo:rotina-de-treino).
 
 ### 5. Use the engine to confirm, not to think for you
 
@@ -63,7 +63,7 @@ Finish each review with one sentence: "in position X, I should have played Y, be
 
 ## The checklist that prevents the decisive mistake {#checklist "The blunder check"}
 
-A large share of decisive mistakes fail one simple test, worth running **before** every move in a game and **on every suspicious move** during analysis:
+A large share of decisive mistakes fail one [simple test](artigo:erros-de-iniciante#habito), worth running **before** every move in a game and **on every suspicious move** during analysis:
 
 1. **Checks:** what checks does my opponent have after my move?
 2. **Captures:** which of my pieces will be attacked or left undefended?
@@ -141,7 +141,7 @@ A mistake like this only shows up in your review if you know the technique. That
 - **Only analyzing losses.** Narrow wins also contain decisive mistakes your opponent failed to punish.
 - **Blaming only the last mistake.** The move that dropped the queen may be the result of a bad position created ten moves earlier.
 - **Reviewing without writing anything down.** Without a recorded lesson, the analysis is gone by the next game.
-- **Ignoring the clock.** If the mistake came with little time left, the problem may be time management, not chess. Choosing the right [time control](artigo:ritmos-de-jogo) to train with helps too.
+- **Ignoring the clock.** If the mistake came with little time left, the problem may be [time management](artigo:relogio-e-psicologia), not chess. Choosing the right [time control](artigo:ritmos-de-jogo) to train with helps too.
 
 :::pratique Play, review, play again
 Play a game against the computer, use Watch Replay at the end and apply the 6 steps. Then play the same opening again and see whether the lesson stuck.

@@ -9,7 +9,7 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [four move checkmate, scholar's mate, four move mate, fast checkmate, two move checkmate, three move checkmate]
 jogar: 1
-relacionados: [jogar-do-zero, aberturas-para-iniciantes, regras, movimento-do-cavalo]
+relacionados: [principios-de-abertura, erros-de-iniciante, mate-do-corredor, mates-basicos]
 ---
 There is a classic checkmate that works in just 4 moves against unsuspecting beginners. It is called the *Scholar's Mate*. I'll teach you how to deliver it, how to defend against it, and why you shouldn't rely on it to win.
 
@@ -34,7 +34,7 @@ You bring the queen out to h5. Now the queen and the bishop are **both aiming at
 The queen captures on f7. The f7 pawn was defended only by the king, so only the queen could capture it while being protected. The queen on f7 attacks the king (check), and the king **has nowhere to run**: g8 is occupied by the knight from f6 (which moved away), e7 is occupied by the bishop, and the king can't capture the queen because it's protected by the bishop on c4.
 
 :::aviso
-**⚠️ Important:** this mate only works if your opponent *fails to defend* the f7 square and plays 3...Nf6 (or another move that doesn't defend f7). Against any alert player, the mate **doesn't happen** — and you've still wasted time with an exposed queen.
+**⚠️ Important:** this mate only works if your opponent *fails to defend* the f7 square and plays 3...Nf6 (or another move that doesn't defend f7). Against any alert player, the mate **doesn't happen** — and you've still [wasted time with an exposed queen](artigo:principios-de-abertura#dama).
 :::
 
 ```tabuleiro
@@ -50,7 +50,7 @@ It works for three combined reasons:
 
 - **f7 is Black's natural weak point.** At the start, only the king defends that pawn.
 - **Two attackers on the same square.** The queen on h5 and the bishop on c4 attack f7 at the same time.
-- **Beginners ignore the opponent's threats.** The opponent sees the move 3.Qh5 and focuses on developing their own pieces, without asking "what are my opponent's pieces threatening?".
+- **[Beginners ignore the opponent's threats](artigo:erros-de-iniciante#ameaca).** The opponent sees the move 3.Qh5 and focuses on developing their own pieces, without asking "what are my opponent's pieces threatening?".
 
 ## How to defend against and neutralize the Scholar's Mate {#defender "How to defend (and shut it down)"}
 
@@ -136,7 +136,7 @@ explicacao: 2...Qh4# — the queen checks along the h4–e1 diagonal, no white p
 
 Once you master the Scholar's Mate (attack and defense), the next step is to learn more advanced checkmate patterns:
 
-- **Back-rank mate:** the enemy king trapped on the first rank, the rook delivers mate.
-- **Ladder mate:** two rooks work together, pushing the king to the edge.
+- **[Back-rank mate](artigo:mate-do-corredor):** the enemy king trapped on the first rank, the rook delivers mate.
+- **[Ladder mate](artigo:mates-basicos#escada):** two rooks work together, pushing the king to the edge.
 - **Queen and bishop mate:** in a simplified endgame.
 - **Knight and bishop mate:** the hardest of the basic mates — it requires technique.

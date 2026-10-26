@@ -100,7 +100,7 @@ Duas palavras aparecem o tempo todo no xadrez:
 - Uma peça **ataca** uma casa (ou uma peça adversária) quando poderia ir até ela no próximo lance. A torre em d4 do primeiro diagrama ataca todas as casas da coluna d e da fileira 4.
 - Uma peça está **defendida** (ou *protegida*) quando outra peça da mesma cor poderia capturar quem a capturasse. Se o adversário toma uma peça defendida, perde a dele em seguida.
 
-Uma peça atacada e sem defesa está **solta** (ou *pendurada*): o adversário pode levá-la de graça. Quando você aprender o movimento de cada peça, comece a olhar o tabuleiro dessa forma: o que está atacado, o que está defendido e o que está solto. É o primeiro passo para não perder peças e para ganhar as do adversário.
+Uma peça atacada e sem defesa está **solta** (ou *pendurada*): o adversário pode levá-la de graça. Quando você aprender o movimento de cada peça, comece a olhar o tabuleiro dessa forma: o que está atacado, o que está defendido e o que está solto. É o primeiro passo para não perder peças e para [ganhar as do adversário](artigo:garfo).
 
 ## Resumo dos movimentos {#resumo "Resumo"}
 

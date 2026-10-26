@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [repertório de aberturas, preparação de aberturas, estudar aberturas, teoria de aberturas, armadilhas de abertura, transposição]
 jogar: 3
-relacionados: [aberturas-para-iniciantes, estrutura-de-peoes, rotina-de-treino]
+relacionados: [principios-de-abertura, abertura-italiana, defesa-siciliana, francesa-e-caro-kann, gambito-da-dama-e-london]
 ensina: [Repertório de aberturas, Estudo de ideias e estruturas, Ordem de lances e transposições, Armadilhas de abertura]
 ---
 Preparar aberturas é montar e estudar um **repertório**: um conjunto pequeno e coerente de linhas que você joga sempre, com uma resposta pronta para cada lance principal do adversário. Um bom repertório começa pelas **ideias** — estruturas de peões e planos típicos — e só depois desce aos lances; é organizado em anotações que você consegue revisar; e é corrigido continuamente com as suas próprias partidas. O objetivo não é decorar o máximo de teoria, e sim chegar ao meio-jogo numa posição que você entende.
@@ -26,7 +26,7 @@ Coerência ajuda muito. Se as suas aberturas levam a estruturas parecidas — po
 
 ## Ideias antes de lances {#ideias}
 
-Decorar uma sequência sem entender o porquê funciona até o adversário sair do livro — e ele sempre sai. Para cada abertura do repertório, responda primeiro:
+Decorar uma sequência sem entender o [porquê](artigo:principios-de-abertura) funciona até o adversário sair do livro — e ele sempre sai. Para cada abertura do repertório, responda primeiro:
 
 - **Qual é a estrutura de peões típica?** Ela define os planos (veja [estrutura de peões](artigo:estrutura-de-peoes)).
 - **Onde ficam as peças?** Casas típicas de cada cavalo e de cada bispo.
@@ -39,14 +39,14 @@ casas: f5 c6 e4:amarela
 legenda: Defesa Caro-Kann depois de 1.e4 c6 2.d4 d5 3.Cc3 dxe4 4.Cxe4 Bf5. As Pretas tiraram o bispo de casas claras antes de fechar a cadeia com ...e6 — uma ideia, não só um lance.
 ```
 
-Neste exemplo da Caro-Kann, entender que o bispo de c8 sai **antes** de ...e6 vale mais do que decorar dez lances: é por isso que o lance existe, e é isso que você vai lembrar quando o adversário fugir da linha principal.
+Neste exemplo da [Caro-Kann](artigo:francesa-e-caro-kann), entender que o bispo de c8 sai **antes** de ...e6 vale mais do que decorar dez lances: é por isso que o lance existe, e é isso que você vai lembrar quando o adversário fugir da linha principal.
 
 ## Até onde ir na teoria {#profundidade}
 
 A profundidade certa depende do seu nível e do tipo de abertura:
 
-- **Aberturas de posição** (sistemas como o Londres, estruturas fechadas): poucos lances concretos, muitas ideias. Pode-se ir pouco fundo.
-- **Aberturas táticas** (gambitos, linhas afiadas da Siciliana): um erro nos primeiros lances pode perder a partida. Aqui é preciso conhecer as linhas críticas com precisão.
+- **Aberturas de posição** (sistemas como o [London](artigo:gambito-da-dama-e-london#london), estruturas fechadas): poucos lances concretos, muitas ideias. Pode-se ir pouco fundo.
+- **Aberturas táticas** (gambitos, linhas afiadas da [Siciliana](artigo:defesa-siciliana)): um erro nos primeiros lances pode perder a partida. Aqui é preciso conhecer as linhas críticas com precisão.
 - **Prioridade:** estude primeiro as linhas que você mais encontra nas suas partidas, e não as que aparecem nos livros.
 
 :::dica
@@ -115,7 +115,7 @@ tipo: mate
 lances: 1
 solucao: e4d6
 dica: O peão de e7 está cravado pela dama de e2.
-explicacao: 6.Cd6#. O peão de e7 não pode capturar o cavalo, porque está cravado pela dama de e2 contra o rei. É um mate abafado em plena abertura, e um bom motivo para conhecer as armadilhas da sua defesa.
+explicacao: 6.Cd6#. O peão de e7 não pode capturar o cavalo, porque está cravado pela dama de e2 contra o rei. É um mate sufocado em plena abertura, e um bom motivo para conhecer as armadilhas da sua defesa.
 ```
 
 ## Perguntas frequentes {#faq}

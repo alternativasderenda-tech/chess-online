@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [basic checkmates, queen checkmate, rook checkmate, two rook checkmate, ladder mate, how to checkmate]
 jogar: 1
-relacionados: [xeque-mate-e-afogamento, empates, valor-das-pecas, regras]
+relacionados: [xeque-mate-e-afogamento, empates, finais-de-peao, finais-de-torre, mate-do-corredor]
 ensina: [Two-rook checkmate, King and queen checkmate, King and rook checkmate]
 ---
 The **basic checkmates** are the techniques for mating an opponent who has only a king left: **king and queen vs. king**, **king and rook vs. king**, and **two rooks vs. king**. All three are guaranteed wins as long as you know the method: drive the enemy king to the edge of the board and mate it there, without falling into stalemate. With correct play, the queen mate takes at most 10 moves and the rook mate at most 16, from any position.
@@ -66,8 +66,8 @@ legenda: Queen mate: the queen on e7, right next to the black king and protected
 
 The rook needs the king too, and the process takes a little longer:
 
-1. **Cut the king off with the rook**: put it on a file or rank the king can't cross.
-2. **Bring your king** in front of the enemy king, with one square between them. This standoff, where the kings face each other and neither can step forward, is called **opposition**.
+1. **[Cut the king off](artigo:finais-de-torre) with the rook**: put it on a file or rank the king can't cross.
+2. **Bring your king** in front of the enemy king, with one square between them. This standoff, where the kings face each other and neither can step forward, is called **[opposition](artigo:finais-de-peao)**.
 3. **When the kings are in opposition, check with the rook**: the enemy king is pushed back one rank (or file).
 4. When there's no opposition, make a **waiting move** with the rook (staying on the line that cuts the king off) and let your opponent move.
 5. Repeat until you reach the edge. The final check comes with the kings face to face.

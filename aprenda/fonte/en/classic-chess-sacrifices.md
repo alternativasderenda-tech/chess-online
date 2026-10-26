@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [chess sacrifice, greek gift, bxh7 sacrifice, exchange sacrifice, smothered mate, king attack]
 jogar: 3
-relacionados: [calculo, planos-meio-jogo, bispos]
+relacionados: [taticas, calculo, desvio-e-sobrecarga, mate-do-corredor, ataque-descoberto]
 ensina: [Greek gift sacrifice, Exchange sacrifice, Smothered mate, Attacking the castled king]
 ---
 A sacrifice is the voluntary surrender of material in return for something worth more: a checkmate, an attack your opponent can't contain, or a lasting positional advantage. The classic sacrifices — such as **Bxh7+**, known as the **Greek gift**, and the **exchange sacrifice** (a rook for a minor piece) — keep recurring because they grow out of the same structures. If you know each pattern and its conditions, you'll spot it at the board and, just as important, you'll know when it does **not** work.
@@ -21,7 +21,7 @@ Not all sacrifices are alike. It helps to separate two kinds:
 - **Calculated:** you can see to the end. The sacrifice is followed by a forced sequence (checks, captures, mating threats) and you know you'll win the material back with interest or deliver mate. The Bxh7+ in this article is that kind.
 - **Speculative or positional:** you can't see a concrete end, but you judge that the compensation — an exposed enemy king, more active pieces, a wrecked pawn structure — is worth the material. Exchange sacrifices are usually of this kind.
 
-The first demands calculation. The second demands judgment. Both demand pattern knowledge, because nobody calculates from scratch an idea they have never seen.
+The first demands calculation. The second demands judgment. Both demand [pattern](artigo:taticas) knowledge, because nobody calculates from scratch an idea they have never seen.
 
 ## The Greek gift: Bxh7+ {#bxh7}
 
@@ -40,7 +40,7 @@ Before you sacrifice, check the **conditions**. In this model position all of th
 2. **There is no black knight on f6.** White's e5 pawn takes that square away; a knight on f6 would guard h7 and h5.
 3. **The knight reaches g5 safely.** Black has no dark-squared bishop to take it, and the h4 pawn supports it.
 4. **The queen arrives fast** on the h-file: d1 to h5 in one move.
-5. **The escape squares are covered:** the c1 bishop sits behind the knight on the diagonal to h6, ready for a discovered check, and the h4 pawn can advance with check.
+5. **The escape squares are covered:** the c1 bishop sits behind the knight on the diagonal to h6, ready for a [discovered check](artigo:ataque-descoberto), and the h4 pawn can advance with check.
 
 The main line is 1.Bxh7+! Kxh7 2.Ng5+, and now the black king has four squares. None of them saves it:
 
@@ -68,7 +68,7 @@ The most spectacular sacrifices give up the queen, and they almost always follow
 
 - **Smothered mate:** the queen offers itself on g8 (or next to the king), a rook is forced to capture and plugs the last flight square, and the knight mates a king boxed in by its own pieces.
 - **Anastasia's mate:** with a knight on e7 covering g8 and g6, the queen takes on h7, the king recaptures and a rook mates along the h-file.
-- **Back-rank deflection:** the queen is given up to remove the only defender of the eighth rank, and the rook comes in with mate.
+- **Back-rank [deflection](artigo:desvio-e-sobrecarga):** the queen is given up to remove the only defender of the [eighth rank](artigo:mate-do-corredor), and the rook comes in with mate.
 
 The exercises below feature two of these patterns. In every one of them, the sacrifice works only because **every move is forced**: check, forced capture, mate.
 
@@ -76,7 +76,7 @@ The exercises below feature two of these patterns. In every one of them, the sac
 
 "The exchange" is the difference between a rook and a minor piece. Sacrificing the exchange means giving a rook for a bishop or a knight. On the point count you lose about two, but the rook is not always the most useful piece in the position. The most common reasons:
 
-- **Wrecking the king's pawn cover.** In the Sicilian, ...Rxc3 is a classic: after bxc3, White's queenside castled position is left with doubled, isolated pawns, and the e4 pawn loses a defender.
+- **Wrecking the king's pawn cover.** In the [Sicilian](artigo:defesa-siciliana#dragao), ...Rxc3 is a classic: after bxc3, White's queenside castled position is left with doubled, isolated pawns, and the e4 pawn loses a defender.
 - **Eliminating a key piece**, such as the knight that defends the king or the bishop that controls the squares of one color.
 - **Gaining pawns and initiative:** the exchange often comes back with a pawn or two and very active pieces.
 

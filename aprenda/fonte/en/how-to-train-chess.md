@@ -9,14 +9,14 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [how to train chess, chess study plan, training routine, improve at chess, chess exercises, game analysis]
 jogar: 4
-relacionados: [calculo, finais-de-torre, preparacao-de-aberturas]
+relacionados: [taticas, analisar-partidas, calculo, finais-de-peao, espeto]
 ensina: [Weekly study plan, Tactics training, Endgame training, Analyzing your own games]
 ---
 Training chess to improve means combining five activities every week in balanced proportions: **tactics** (the biggest share, because they decide most games), **endgames**, **openings**, **games played** with time to think, and **analysis of your own games**. What makes the difference is not the number of hours but regularity and feedback: play, find out where you went wrong, and train exactly that. A plan of 30 to 60 minutes a day, followed for months, beats occasional marathons.
 
 ## The five pillars of training {#pilares}
 
-1. **Tactics.** Solving exercises every day trains pattern recognition: forks, pins, typical mates, sacrifices. The more patterns you know, the less you have to calculate from scratch.
+1. **Tactics.** Solving exercises every day trains [pattern recognition](artigo:taticas#padroes): forks, pins, typical mates, sacrifices. The more patterns you know, the less you have to calculate from scratch.
 2. **Endgames.** A handful of theoretical endgames covers a huge part of practical play: opposition, Lucena, Philidor, the wrong-colored bishop. Studying endgames also sharpens your technique and your feel for piece activity.
 3. **Openings.** Just enough to reach a middlegame you understand — ideas and structures before moves.
 4. **Games played.** Training without playing never turns into practice. Prefer time controls that give you time to think.
@@ -60,10 +60,10 @@ legenda: Smothered mate: a pattern that, once you've seen it a few times, you re
 
 You don't need to study hundreds of endgames. Start with the ones that come up most and play each against the computer until you can execute it without thinking:
 
-1. King and pawn versus king: the **opposition**.
+1. [King and pawn versus king](artigo:finais-de-peao): the **opposition**.
 2. Rook and pawn versus rook: **Lucena** and **Philidor** (see [rook endgames](artigo:finais-de-torre)).
 3. Bishop and rook pawn of the wrong color.
-4. Basic mates with queen and with rook.
+4. [Basic mates](artigo:mates-basicos) with queen and with rook.
 
 ```tabuleiro
 fen: 3K4/3P1k2/8/8/8/8/2r5/4R3 w - - 0 1
@@ -78,7 +78,7 @@ Play against the site's AI at **increasing difficulty**: start at a level where 
 Two rules make those games useful:
 
 - **Play with time to think** and apply your routine on every move: opponent's threats, candidates, calculation, final check.
-- **Analyze every game you lose**, and the wins that came with a scare. Look for the first move where the evaluation changed.
+- **[Analyze every game you lose](artigo:analisar-partidas)**, and the wins that came with a scare. Look for the first move where the evaluation changed.
 
 When you're ready for human opponents, the [site's tournaments](/en/tournaments) offer knockouts against other people and rankings of games against the AI. Tournaments give you something training can't: pressure to get a result. That pressure is what shows whether your routine works.
 

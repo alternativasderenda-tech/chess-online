@@ -8,9 +8,9 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [french defense, caro-kann, advance variation, winawer, tarrasch, exchange variation, panov attack, chess openings]
 jogar: 2
-relacionados: [defesa-siciliana, abertura-italiana, aberturas-para-iniciantes]
+relacionados: [defesa-siciliana, estrutura-de-peoes, bispos, gambito-da-dama-e-london, preparacao-de-aberturas]
 ---
-The French Defense (**1.e4 e6**) and the Caro-Kann (**1.e4 c6**) are the two most popular solid defenses against 1.e4. In both, Black prepares ...d5 to challenge the e4 pawn on move two and relies on a sturdy pawn structure rather than immediate tactics. The key difference is the light-squared bishop: in the French it stays locked behind the e6 pawn; in the Caro-Kann it gets out first, to f5 or g4.
+The French Defense (**1.e4 e6**) and the Caro-Kann (**1.e4 c6**) are the two most popular solid defenses against 1.e4. In both, Black prepares ...d5 to challenge the e4 pawn on move two and relies on a sturdy [pawn structure](artigo:estrutura-de-peoes) rather than immediate tactics. The key difference is the light-squared bishop: in the French it stays locked behind the e6 pawn; in the Caro-Kann it gets out first, to f5 or g4.
 
 ## What the two have in common {#em-comum "What they share"}
 
@@ -35,7 +35,7 @@ legenda: The French Advance after 3.e5: Black attacks the pawn chain with ...c5 
 
 With 3.e5, White grabs space on the kingside. Black's golden rule is to **attack the pawn chain**: ...c5 against the base (d4) and later ...f6 against the head (e5). The main line goes **3...c5 4.c3 Nc6 5.Nf3 Qb6**, with knight, queen and c5 pawn all piling up on d4.
 
-The French's chronic problem is the **c8 bishop**, stuck behind e6. Black often deals with it through ...b6 and ...Ba6, trading it for White's good bishop, or leaves it on defensive duty until the position opens up.
+The French's chronic problem is the **[c8 bishop](artigo:bispos)**, stuck behind e6. Black often deals with it through ...b6 and ...Ba6, trading it for White's good bishop, or leaves it on defensive duty until the position opens up.
 
 ### Winawer: 3.Nc3 Bb4
 
@@ -58,7 +58,7 @@ The **Winawer** is the sharpest line of the French. After **4.e5 c5 5.a3 Bxc3+ 6
 
 ### Advance trap: the queen that forgets about b5
 
-In the Advance, Black wants to win the d4 pawn. But if White's bishop is already on d3, capturing twice on d4 opens the b5-e8 diagonal for a check with a discovered attack.
+In the Advance, Black wants to win the d4 pawn. But if White's bishop is already on d3, capturing twice on d4 opens the b5-e8 diagonal for a check with a [discovered attack](artigo:ataque-descoberto).
 
 ```exercicio
 fen: r1b1kbnr/pp3ppp/4p3/3pP3/3q4/3B4/PP3PPP/RNBQK2R w KQkq - 0 9

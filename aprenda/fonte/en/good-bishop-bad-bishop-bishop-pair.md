@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [good bishop, bad bishop, bishop pair, bishop vs knight, opposite colored bishops, chess strategy]
 jogar: 3
-relacionados: [estrategia-posicional, estrutura-de-peoes, sacrificios]
+relacionados: [estrategia-posicional, estrutura-de-peoes, valor-das-pecas, finais-de-peao]
 ensina: [Good and bad bishops, Bishop pair, Bishop versus knight, Opposite-colored bishops]
 ---
 A **good bishop** is one whose own pawns are fixed on squares of the opposite color, leaving its diagonals open; a **bad bishop** is one stuck behind its own pawns, fixed on squares of its color. The **bishop pair** — having both bishops against bishop and knight, or against two knights — is a recognized advantage, especially in open positions, because together the two bishops control squares of both colors. These three ideas explain many of the trading decisions in the middlegame and the endgame.
@@ -62,7 +62,7 @@ How to **fight** the bishop pair:
 
 ## Bishop versus knight {#bispo-cavalo}
 
-A bishop and a knight are each worth about three pawns, but they shine in different positions:
+A bishop and a knight are each [worth about three pawns](artigo:valor-das-pecas), but they shine in different positions:
 
 | Situation | Usually better |
 | --- | --- |
@@ -132,4 +132,4 @@ It depends on the structure. Bishops prefer open positions and pawns on both win
 Because the defender blockades the pawns on squares of its own bishop's color, and the attacker's bishop has no way to contest those squares.
 
 ### What is the "wrong-colored bishop"?
-A bishop that doesn't control the promotion square of a rook pawn. Against it, a defending king that reaches the corner draws.
+A bishop that doesn't control the promotion square of a [rook pawn](artigo:finais-de-peao#peao-da-torre). Against it, a defending king that reaches the corner draws.

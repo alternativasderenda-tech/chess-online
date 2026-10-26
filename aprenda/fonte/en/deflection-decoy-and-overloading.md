@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [deflection, decoy, overloading, overloaded piece, chess tactics, smothered mate]
 jogar: 3
-relacionados: [taticas, garfo, mate-do-corredor, ataque-descoberto]
+relacionados: [taticas, garfo, mate-do-corredor, sacrificios, calculo]
 ensina: [Deflection, Decoy, Overloading]
 ---
 **Deflection**, **decoy** and **overloading** are tactics that attack the defenders instead of the targets. In a deflection, you force a defending piece to leave the square where it does its job. In a decoy, you force an enemy piece (usually the king) onto a bad square. In an overload, you exploit a piece that has two jobs at once and cannot do both.
@@ -18,7 +18,7 @@ ensina: [Deflection, Decoy, Overloading]
 
 In the basic tactics, such as the [fork](artigo:garfo) and the [pin](artigo:cravada), you attack what you want to win directly. But often the target is well defended. Then the question changes from "what do I attack?" to "**who defends it, and how do I get that piece out of the way?**".
 
-The three tactics in this article answer that question. They usually come with a **sacrifice** or a forced trade: you give something up so the enemy piece is obliged to move, and the main blow follows right after.
+The three tactics in this article answer that question. They usually come with a **[sacrifice](artigo:sacrificios)** or a forced trade: you give something up so the enemy piece is obliged to move, and the main blow follows right after.
 
 ## Overloading: the piece with too much work {#sobrecarga "Overloading"}
 
@@ -131,4 +131,4 @@ A mate delivered by a knight against a king surrounded by its own pieces, with n
 
 ### What level are these tactics for?
 
-They are the next step after forks, pins and skewers. They require calculating two or three moves ahead, which is why they come near the end of the [chess tactics](artigo:taticas) track.
+They are the next step after forks, pins and skewers. They require [calculating two or three moves ahead](artigo:calculo), which is why they come near the end of the [chess tactics](artigo:taticas) track.

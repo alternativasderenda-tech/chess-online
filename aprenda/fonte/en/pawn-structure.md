@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [pawn structure, isolated pawn, doubled pawns, backward pawn, pawn chain, pawn majority, passed pawn]
 jogar: 3
-relacionados: [estrategia-posicional, planos-meio-jogo, finais-de-torre]
+relacionados: [estrategia-posicional, planos-meio-jogo, finais-de-peao, gambito-da-dama-e-london, francesa-e-caro-kann]
 ensina: [Isolated pawn, Doubled pawns, Backward pawn, Pawn chain, Pawn majority]
 ---
 Pawn structure is the arrangement of the pawns on the board, and it shapes the plans of a game more than any other element, because **pawns can't move backward**: a weakness created in the opening often lasts until the endgame. The most important structures are the **isolated pawn** (no friendly pawns on the neighboring files), **doubled pawns** (two on the same file), the **backward pawn** (one that has fallen behind its neighbors), **pawn chains** (pawns on a diagonal protecting each other) and **majorities** (more pawns than your opponent on one wing, which lets you create a passed pawn).
@@ -26,7 +26,7 @@ When you look at a structure, ask three questions:
 
 ## The isolated pawn {#isolado}
 
-An isolated pawn has no friendly pawns on the adjacent files. The most famous case is the **isolated queen's pawn** (IQP) on d4 (or d5), which arises from many openings, such as the Queen's Gambit and the Caro-Kann Defense.
+An isolated pawn has no friendly pawns on the adjacent files. The most famous case is the **isolated queen's pawn** (IQP) on d4 (or d5), which arises from many openings, such as the [Queen's Gambit](artigo:gambito-da-dama-e-london) and the [Caro-Kann Defense](artigo:francesa-e-caro-kann).
 
 ```tabuleiro
 fen: r1bq1rk1/pp2bppp/2n1pn2/8/2BP4/2N2N2/PP3PPP/R1BQ1RK1 w - - 0 1
@@ -57,7 +57,7 @@ Doubled pawns are not always bad. They usually come with something in return: a 
 
 A backward pawn has fallen behind its neighboring pawns and can't advance safely, because the square in front of it is controlled by an enemy pawn. It is weak for two reasons: no pawn can defend it, and it sits on a half-open file, exposed to enemy rooks. The square in front of it is a natural outpost for the opponent.
 
-The classic example is Black's d6 pawn in Sicilian structures where Black has played ...e5: the d6 pawn is backward and the d5 square becomes White's big target. That's why, in those structures, the ...d5 break matters so much for Black: once it happens, the weakness disappears.
+The classic example is Black's d6 pawn in [Sicilian](artigo:defesa-siciliana) structures where Black has played ...e5: the d6 pawn is backward and the d5 square becomes White's big target. That's why, in those structures, the ...d5 break matters so much for Black: once it happens, the weakness disappears.
 
 ## Pawn chains {#cadeias}
 
@@ -82,7 +82,7 @@ casas: a2 b2 c2 f7 g7 h7
 legenda: Equal material, but majorities on different wings: White has 3 against 2 on the queenside; Black has 3 against 2 on the kingside.
 ```
 
-In the endgame, the majority farther from the kings is usually worth more, because the passed pawn it creates drags the enemy king away — that's the **outside passed pawn**. When pushing a majority, advance the **candidate pawn** first: the one with no enemy pawn in front of it on the same file. And when your opponent has a passed pawn, the classic answer is to blockade it with a piece, preferably a knight.
+In the [endgame](artigo:finais-de-peao), the majority farther from the kings is usually worth more, because the passed pawn it creates drags the enemy king away — that's the **outside passed pawn**. When pushing a majority, advance the **candidate pawn** first: the one with no enemy pawn in front of it on the same file. And when your opponent has a passed pawn, the classic answer is to blockade it with a piece, preferably a knight.
 
 :::dica
 **💡 Tip:** before trading pieces, look at the pawns. If the structure favors you (your opponent has an isolated pawn, doubled pawns or no majority), trade and head for the endgame. If it's bad for you, keep the pieces and look for activity.

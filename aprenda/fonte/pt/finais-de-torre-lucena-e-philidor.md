@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [finais de torre, posição de lucena, posição de philidor, construir a ponte, final torre e peão, finais de xadrez]
 jogar: 3
-relacionados: [estrutura-de-peoes, calculo, rotina-de-treino]
+relacionados: [finais-de-peao, mates-basicos, estrutura-de-peoes, rotina-de-treino]
 ensina: [Posição de Lucena, Posição de Philidor, Construir a ponte, Defesa na 3ª fileira]
 ---
 Finais de torre são os finais mais frequentes do xadrez, e quase toda a teoria deles se apoia em duas posições de torre e peão contra torre. A **posição de Lucena** é a vitória-modelo: o lado com o peão ganha "construindo a ponte", isto é, usando a própria torre como escudo contra os xeques. A **posição de Philidor** é o empate-modelo: o lado mais fraco segura o jogo com a torre na sua **3ª fileira**, impedindo o rei adversário de avançar, e depois dá xeques por trás. Quem domina as duas sabe, em segundos, se deve forçar uma troca ou fugir dela.
@@ -21,7 +21,7 @@ As torres são as últimas peças a sair de jogo. Em partidas de torneio, os fin
 A boa notícia é que você não precisa decorar centenas de posições. Basta entender três ideias:
 
 1. **Atividade vale mais do que material.** Uma torre ativa, que ataca peões e dá xeques, costuma compensar um peão a menos. Uma torre passiva, presa à defesa, perde.
-2. **O rei cortado é o rei que não defende.** Se a sua torre separa o rei adversário do peão por uma coluna ou fileira inteira, você está jogando com um rei a mais.
+2. **O rei cortado é o rei que não defende.** Se a sua torre [separa o rei adversário](artigo:mates-basicos#torre) do peão por uma coluna ou fileira inteira, você está jogando com um rei a mais.
 3. **Lucena e Philidor são os pontos de chegada.** Quase todo final de torre e peão contra torre termina em uma das duas. Saber qual delas está no horizonte orienta cada lance.
 
 ## A posição de Lucena: construir a ponte {#lucena}
@@ -82,7 +82,7 @@ Com o peão em e6, o rei branco perdeu o único abrigo que tinha: a casa à fren
 
 ## O erro clássico: a defesa passiva {#defesa-passiva}
 
-Muitos jogadores sabem que "o rei tem de ficar na frente do peão" e acham que isso basta. Não basta. Se a torre defensora ficar na 8ª fileira e o rei atacante chegar à 6ª, a torre perde a distância para os xeques e a defesa desmorona. Por isso a ordem da Philidor importa: **primeiro a torre na 3ª fileira, só depois os xeques por trás**.
+Muitos jogadores sabem que "[o rei tem de ficar na frente do peão](artigo:finais-de-peao)" e acham que isso basta. Não basta. Se a torre defensora ficar na 8ª fileira e o rei atacante chegar à 6ª, a torre perde a distância para os xeques e a defesa desmorona. Por isso a ordem da Philidor importa: **primeiro a torre na 3ª fileira, só depois os xeques por trás**.
 
 Há posições em que o defensor demorou e ainda tem um último recurso: um xeque lateral que empurra o rei de volta e recupera a 3ª fileira. O segundo exercício abaixo mostra exatamente isso.
 

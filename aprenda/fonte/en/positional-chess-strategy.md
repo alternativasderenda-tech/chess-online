@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [positional chess, chess strategy, position evaluation, weak squares, outpost, space advantage]
 jogar: 3
-relacionados: [estrutura-de-peoes, bispos, planos-meio-jogo]
+relacionados: [estrutura-de-peoes, planos-meio-jogo, bispos, taticas, analisar-partidas]
 ensina: [Position evaluation, Weak squares, Outposts, Space advantage, Open files]
 ---
 Positional strategy is the art of improving your position when there is no immediate tactic on the board. Instead of calculating a forced sequence, you evaluate the **stable elements** of the position — pawn structure, weak squares, piece activity, king safety, space and open files — and choose a plan that piles up small advantages until they turn into something concrete: winning material, a decisive attack or a won endgame.
@@ -18,7 +18,7 @@ Positional strategy is the art of improving your position when there is no immed
 
 Tactics deal with the short term: checks, captures, threats, sequences you can calculate to the end. Strategy deals with the long term: which square suits your knight, which pawn will become a target, which side of the board to attack on.
 
-The two don't compete. Tactics decide most games, but good tactics almost always appear in strategically good positions. Players who put their pieces on the right squares create chances; players without a plan wait for chances to show up.
+The two don't compete. [Tactics](artigo:taticas) decide most games, but good tactics almost always appear in strategically good positions. Players who put their pieces on the right squares create chances; players without a plan wait for chances to show up.
 
 The first to organize these ideas systematically was Wilhelm Steinitz, the first official world champion. Among the principles associated with him are the accumulation of small advantages and the idea that the right to attack belongs to the side with the advantage. Decades later, Aron Nimzowitsch, in his book *My System*, popularized concepts such as the outpost, the blockade and prophylaxis.
 

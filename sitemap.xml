@@ -111,6 +111,42 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-jogar-xadrez-do-zero"/>
   </url>
   <url>
+    <loc>https://xadrezonline.app/aprenda/tabuleiro-de-xadrez-e-notacao</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/tabuleiro-de-xadrez-e-notacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chessboard-and-chess-notation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/tabuleiro-de-xadrez-e-notacao"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/chessboard-and-chess-notation</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/tabuleiro-de-xadrez-e-notacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chessboard-and-chess-notation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/tabuleiro-de-xadrez-e-notacao"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/como-as-pecas-de-xadrez-se-movem</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/como-as-pecas-de-xadrez-se-movem"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/how-chess-pieces-move"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-as-pecas-de-xadrez-se-movem"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/how-chess-pieces-move</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/como-as-pecas-de-xadrez-se-movem"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/how-chess-pieces-move"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-as-pecas-de-xadrez-se-movem"/>
+  </url>
+  <url>
     <loc>https://xadrezonline.app/aprenda/regras-do-xadrez</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
@@ -147,6 +183,60 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-o-cavalo-se-move"/>
   </url>
   <url>
+    <loc>https://xadrezonline.app/aprenda/valor-das-pecas-de-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/valor-das-pecas-de-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chess-piece-values"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/valor-das-pecas-de-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/chess-piece-values</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/valor-das-pecas-de-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chess-piece-values"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/valor-das-pecas-de-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/xeque-xeque-mate-e-afogamento</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/xeque-xeque-mate-e-afogamento"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/check-checkmate-and-stalemate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/xeque-xeque-mate-e-afogamento"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/check-checkmate-and-stalemate</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/xeque-xeque-mate-e-afogamento"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/check-checkmate-and-stalemate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/xeque-xeque-mate-e-afogamento"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/roque-en-passant-e-promocao</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/roque-en-passant-e-promocao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/castling-en-passant-and-promotion"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/roque-en-passant-e-promocao"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/castling-en-passant-and-promotion</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/roque-en-passant-e-promocao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/castling-en-passant-and-promotion"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/roque-en-passant-e-promocao"/>
+  </url>
+  <url>
     <loc>https://xadrezonline.app/aprenda/xeque-mate-em-4-lances</loc>
     <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
@@ -163,6 +253,24 @@
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/xeque-mate-em-4-lances"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/four-move-checkmate-scholars-mate"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/xeque-mate-em-4-lances"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/principios-de-abertura-no-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/principios-de-abertura-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chess-opening-principles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/principios-de-abertura-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/chess-opening-principles</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/principios-de-abertura-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chess-opening-principles"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/principios-de-abertura-no-xadrez"/>
   </url>
   <url>
     <loc>https://xadrezonline.app/aprenda/aberturas-de-xadrez-para-iniciantes</loc>
@@ -183,8 +291,476 @@
     <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/aberturas-de-xadrez-para-iniciantes"/>
   </url>
   <url>
+    <loc>https://xadrezonline.app/aprenda/mates-basicos-dama-e-torre</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/mates-basicos-dama-e-torre"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/basic-checkmates-queen-and-rook"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/mates-basicos-dama-e-torre"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/basic-checkmates-queen-and-rook</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/mates-basicos-dama-e-torre"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/basic-checkmates-queen-and-rook"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/mates-basicos-dama-e-torre"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/empate-no-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/empate-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/draws-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/empate-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/draws-in-chess</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/empate-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/draws-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/empate-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/erros-comuns-de-iniciantes</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/erros-comuns-de-iniciantes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/common-beginner-mistakes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/erros-comuns-de-iniciantes"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/common-beginner-mistakes</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/erros-comuns-de-iniciantes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/common-beginner-mistakes"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/erros-comuns-de-iniciantes"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/taticas-de-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/taticas-de-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chess-tactics-explained"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/taticas-de-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/chess-tactics-explained</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/taticas-de-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/chess-tactics-explained"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/taticas-de-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/garfo-no-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/garfo-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/fork-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/garfo-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/fork-in-chess</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/garfo-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/fork-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/garfo-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/cravada-no-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/cravada-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/pin-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/cravada-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/pin-in-chess</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/cravada-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/pin-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/cravada-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/espeto-no-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/espeto-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/skewer-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/espeto-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/skewer-in-chess</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/espeto-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/skewer-in-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/espeto-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/ataque-descoberto-e-xeque-duplo</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/ataque-descoberto-e-xeque-duplo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/discovered-attack-and-double-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/ataque-descoberto-e-xeque-duplo"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/discovered-attack-and-double-check</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/ataque-descoberto-e-xeque-duplo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/discovered-attack-and-double-check"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/ataque-descoberto-e-xeque-duplo"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/desvio-atracao-e-sobrecarga</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/desvio-atracao-e-sobrecarga"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/deflection-decoy-and-overloading"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/desvio-atracao-e-sobrecarga"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/deflection-decoy-and-overloading</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/desvio-atracao-e-sobrecarga"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/deflection-decoy-and-overloading"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/desvio-atracao-e-sobrecarga"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/mate-do-corredor</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/mate-do-corredor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/back-rank-mate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/mate-do-corredor"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/back-rank-mate</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/mate-do-corredor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/back-rank-mate"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/mate-do-corredor"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/abertura-italiana</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/abertura-italiana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/italian-game"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/abertura-italiana"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/italian-game</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/abertura-italiana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/italian-game"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/abertura-italiana"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/defesa-siciliana</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/defesa-siciliana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/sicilian-defense"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/defesa-siciliana"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/sicilian-defense</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/defesa-siciliana"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/sicilian-defense"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/defesa-siciliana"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/defesa-francesa-e-caro-kann</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/defesa-francesa-e-caro-kann"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/french-and-caro-kann-defense"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/defesa-francesa-e-caro-kann"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/french-and-caro-kann-defense</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/defesa-francesa-e-caro-kann"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/french-and-caro-kann-defense"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/defesa-francesa-e-caro-kann"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/gambito-da-dama-e-sistema-london</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/gambito-da-dama-e-sistema-london"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/queens-gambit-and-london-system"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/gambito-da-dama-e-sistema-london"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/queens-gambit-and-london-system</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/gambito-da-dama-e-sistema-london"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/queens-gambit-and-london-system"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/gambito-da-dama-e-sistema-london"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/finais-de-rei-e-peao</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/finais-de-rei-e-peao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/king-and-pawn-endgames"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/finais-de-rei-e-peao"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/king-and-pawn-endgames</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/finais-de-rei-e-peao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/king-and-pawn-endgames"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/finais-de-rei-e-peao"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/como-analisar-suas-partidas</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/como-analisar-suas-partidas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/how-to-analyze-your-chess-games"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-analisar-suas-partidas"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/how-to-analyze-your-chess-games</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/como-analisar-suas-partidas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/how-to-analyze-your-chess-games"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-analisar-suas-partidas"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/estrategia-posicional-no-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/estrategia-posicional-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/positional-chess-strategy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/estrategia-posicional-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/positional-chess-strategy</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/estrategia-posicional-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/positional-chess-strategy"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/estrategia-posicional-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/estrutura-de-peoes</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/estrutura-de-peoes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/pawn-structure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/estrutura-de-peoes"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/pawn-structure</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/estrutura-de-peoes"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/pawn-structure"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/estrutura-de-peoes"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/bispo-bom-bispo-ruim-e-par-de-bispos</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/bispo-bom-bispo-ruim-e-par-de-bispos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/good-bishop-bad-bishop-bishop-pair"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/bispo-bom-bispo-ruim-e-par-de-bispos"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/good-bishop-bad-bishop-bishop-pair</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/bispo-bom-bispo-ruim-e-par-de-bispos"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/good-bishop-bad-bishop-bishop-pair"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/bispo-bom-bispo-ruim-e-par-de-bispos"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/planos-no-meio-jogo</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/planos-no-meio-jogo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/middlegame-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/planos-no-meio-jogo"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/middlegame-plans</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/planos-no-meio-jogo"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/middlegame-plans"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/planos-no-meio-jogo"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/finais-de-torre-lucena-e-philidor</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/finais-de-torre-lucena-e-philidor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/rook-endgames-lucena-and-philidor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/finais-de-torre-lucena-e-philidor"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/rook-endgames-lucena-and-philidor</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/finais-de-torre-lucena-e-philidor"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/rook-endgames-lucena-and-philidor"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/finais-de-torre-lucena-e-philidor"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/sacrificios-classicos-no-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/sacrificios-classicos-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/classic-chess-sacrifices"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/sacrificios-classicos-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/classic-chess-sacrifices</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/sacrificios-classicos-no-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/classic-chess-sacrifices"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/sacrificios-classicos-no-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/calculo-e-visualizacao</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/calculo-e-visualizacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/calculation-and-visualization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/calculo-e-visualizacao"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/calculation-and-visualization</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/calculo-e-visualizacao"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/calculation-and-visualization"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/calculo-e-visualizacao"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/preparacao-de-aberturas</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/preparacao-de-aberturas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/opening-preparation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/preparacao-de-aberturas"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/opening-preparation</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/preparacao-de-aberturas"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/opening-preparation"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/preparacao-de-aberturas"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/relogio-e-psicologia-no-torneio</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/relogio-e-psicologia-no-torneio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/time-management-and-tournament-psychology"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/relogio-e-psicologia-no-torneio"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/time-management-and-tournament-psychology</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/relogio-e-psicologia-no-torneio"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/time-management-and-tournament-psychology"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/relogio-e-psicologia-no-torneio"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/aprenda/como-treinar-xadrez</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/como-treinar-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/how-to-train-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-treinar-xadrez"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/learn/how-to-train-chess</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/como-treinar-xadrez"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/learn/how-to-train-chess"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/aprenda/como-treinar-xadrez"/>
+  </url>
+  <url>
     <loc>https://xadrezonline.app/aprenda/xadrez-classico-blitz-bullet</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/xadrez-classico-blitz-bullet"/>
@@ -193,7 +769,7 @@
   </url>
   <url>
     <loc>https://xadrezonline.app/en/learn/classical-rapid-blitz-bullet-chess</loc>
-    <lastmod>2026-05-11</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.8</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/aprenda/xadrez-classico-blitz-bullet"/>

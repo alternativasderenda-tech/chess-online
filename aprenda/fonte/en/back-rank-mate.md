@@ -9,10 +9,10 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [back-rank mate, back rank, checkmate, luft, chess tactics]
 jogar: 2
-relacionados: [taticas, desvio-e-sobrecarga, mate-do-pastor, espeto]
+relacionados: [taticas, desvio-e-sobrecarga, xeque-mate-e-afogamento, erros-de-iniciante, mates-basicos]
 ensina: [Back-rank mate, Back-rank weakness, Luft]
 ---
-A **back-rank mate** is a checkmate delivered by a rook or queen on the opponent's last rank, when the king is trapped behind its own pawns with nowhere to run. It is one of the most common mates in real games, at every level, because it grows out of a perfectly normal position: a castled king with its three pawns untouched in front of it.
+A **back-rank mate** is a [checkmate](artigo:xeque-mate-e-afogamento) delivered by a rook or queen on the opponent's last rank, when the king is trapped behind its own pawns with nowhere to run. It is one of the most common mates in real games, at every level, because it grows out of a perfectly normal position: a castled king with its three pawns untouched in front of it.
 
 ## How the back-rank mate works {#como-funciona "How it works"}
 
@@ -52,7 +52,7 @@ Sometimes it pays to give up the queen to clear the way. If the only defender of
 
 ## Why this mate is so common {#por-que "Why it is so common"}
 
-The back-rank mate catches players of every level for three reasons:
+The back-rank mate [catches players of every level](artigo:erros-de-iniciante) for three reasons:
 
 - **The position that causes it is the most normal one in chess.** Kingside castling, f-, g- and h-pawns at home: exactly what opening books recommend. Nobody feels in danger.
 - **The threat comes from far away.** A rook on the other side of the board, on an open file, does not look dangerous until the moment it lands on the last rank.

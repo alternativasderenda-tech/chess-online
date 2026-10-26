@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [cravada, cravada no xadrez, cravada absoluta, cravada relativa, peça cravada, tática de xadrez]
 jogar: 2
-relacionados: [taticas, garfo, espeto, aberturas-para-iniciantes]
+relacionados: [taticas, espeto, garfo, gambito-da-dama-e-london, abertura-italiana]
 ensina: [Cravada, Cravada absoluta, Cravada relativa]
 ---
 A **cravada** acontece quando uma peça atacada não pode (ou não deve) sair do lugar, porque atrás dela, na mesma linha, está uma peça mais valiosa. Se a peça de trás é o rei, a cravada é **absoluta** e mover a peça da frente é ilegal; se é a dama, uma torre ou outra peça, a cravada é **relativa** e mover é permitido, mas custa caro.
@@ -48,7 +48,7 @@ casas: f6 d8
 legenda: Depois de 1.d4 d5 2.c4 e6 3.Cc3 Cf6 4.Bg5, o cavalo de f6 está cravado na dama de d8. Ele pode se mexer, mas a dama ficaria exposta ao bispo.
 ```
 
-A cravada relativa engana muita gente, porque às vezes a peça "cravada" sai mesmo assim, com um golpe maior. O exemplo clássico é a **armadilha do elefante**, nessa mesma abertura:
+A cravada relativa engana muita gente, porque às vezes a peça "cravada" sai mesmo assim, com um golpe maior. O exemplo clássico é a **armadilha do elefante**, [nessa mesma abertura](artigo:gambito-da-dama-e-london):
 
 :::caixa 4...Cbd7 5.cxd5 exd5 6.Cxd5? Cxd5! 7.Bxd8 Bb4+ 8.Dd2 Bxd2+ 9.Rxd2 Rxd8
 As Brancas acharam que o cavalo de f6 estava preso e capturaram em d5. Mas ele saiu, entregando a dama, e o xeque de bispo em b4 recuperou tudo. No fim, as Pretas ficam com uma peça a mais por um peão.

@@ -9,7 +9,7 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [como jogar xadrez, xadrez para iniciantes, aprender xadrez, regras do xadrez, xadrez do zero, tutorial xadrez]
 jogar: 1
-relacionados: []
+relacionados: [tabuleiro-e-notacao, como-as-pecas-se-movem, lances-especiais, principios-de-abertura]
 ---
 Se você nunca jogou xadrez, este guia é o ponto de partida ideal. Em 5 passos, você vai entender o tabuleiro, aprender como cada peça se move, conhecer as jogadas especiais, saber o que é xeque-mate e ter um caminho prático para começar a jogar hoje mesmo — direto do navegador, sem precisar baixar nada.
 
@@ -19,7 +19,7 @@ O xadrez é jogado em um tabuleiro quadrado de **8 por 8 casas**, totalizando 64
 
 Uma regra simples para montar o tabuleiro: a **casa do canto direito de cada jogador deve ser branca** (clara). E a dama sempre começa na **casa da sua própria cor** — dama branca em casa branca, dama preta em casa preta.
 
-As linhas horizontais são chamadas de **fileiras** (numeradas de 1 a 8) e as linhas verticais de **colunas** (letras de A a H). Esse sistema permite descrever qualquer jogada com precisão: "peão para E4" significa mover o peão para a coluna E, fileira 4.
+As linhas horizontais são chamadas de **fileiras** (numeradas de 1 a 8) e as linhas verticais de **colunas** (letras de A a H). Esse sistema permite [descrever qualquer jogada com precisão](artigo:tabuleiro-e-notacao): "peão para E4" significa mover o peão para a coluna E, fileira 4.
 
 O jogador das peças brancas **sempre joga primeiro**. Depois, os jogadores alternam um lance de cada vez.
 
@@ -31,7 +31,7 @@ legenda: A posição inicial. As casas dos cantos à direita de cada jogador (h1
 
 ## 2. Como cada peça se move {#pecas}
 
-Aqui está o coração do xadrez. Não pule esta parte — entender como cada peça se move é metade do caminho para jogar bem.
+Aqui está o coração do xadrez. Não pule esta parte — [entender como cada peça se move](artigo:como-as-pecas-se-movem) é metade do caminho para jogar bem.
 
 :::peca ♟ Peão
 Anda **uma casa para frente**. No primeiro lance, pode avançar duas casas (à sua escolha). Captura na **diagonal, uma casa para frente**. O peão é a única peça que se move diferente de como captura.
@@ -54,7 +54,7 @@ Move em **diagonal**, quantas casas quiser. Cada bispo fica preso à cor da casa
 :::peca ♛ Dama
 A peça mais poderosa do jogo. Combina os movimentos da torre e do bispo: anda em **linha reta ou em diagonal**, quantas casas quiser, em qualquer direção.
 
-<small>Vale aproximadamente 9 pontos. Perder a dama cedo costuma decidir a partida.</small>
+<small>Vale aproximadamente [9 pontos](artigo:valor-das-pecas). Perder a dama cedo costuma decidir a partida.</small>
 :::
 
 :::peca ♞ Cavalo
@@ -73,7 +73,7 @@ Move **uma casa em qualquer direção**. Não pode mover-se para uma casa atacad
 
 ### Roque
 
-O roque é uma jogada que move o rei e uma das torres ao mesmo tempo. Serve para colocar o rei em segurança e ativar a torre. Há dois tipos: **roque curto** (lado do rei) e **roque longo** (lado da dama).
+O [roque](artigo:lances-especiais) é uma jogada que move o rei e uma das torres ao mesmo tempo. Serve para colocar o rei em segurança e ativar a torre. Há dois tipos: **roque curto** (lado do rei) e **roque longo** (lado da dama).
 
 Para fazer o roque, três condições precisam ser verdadeiras:
 
@@ -116,7 +116,7 @@ Quando o rei está sob ataque direto de uma peça adversária, dizemos que ele e
 
 Se o rei está em xeque e **nenhuma das três opções acima é possível**, é xeque-mate. Fim da partida. Quem deu o xeque-mate venceu.
 
-O xeque-mate é o objetivo final do xadrez. Não importa quantas peças cada lado tem: ganhar uma dama de vantagem não vale nada se você não conseguir dar o xeque-mate.
+O [xeque-mate](artigo:xeque-mate-e-afogamento) é o objetivo final do xadrez. Não importa quantas peças cada lado tem: ganhar uma dama de vantagem não vale nada se você não conseguir dar o xeque-mate.
 
 ```exercicio
 fen: 6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1
@@ -129,7 +129,7 @@ explicacao: 1.Ta8# — a torre dá xeque na 8ª fileira e o rei não tem fuga: f
 
 ### Empate (afogamento e outros)
 
-Nem toda partida termina com vencedor. Existem várias formas de empatar:
+Nem toda partida termina com vencedor. Existem [várias formas de empatar](artigo:empates):
 
 - **Afogamento (stalemate)**: o jogador da vez não está em xeque, mas não tem nenhuma jogada legal possível.
 - **Acordo entre os jogadores**: ambos concordam em empatar.
@@ -143,12 +143,12 @@ Aprender as regras é só o começo. O xadrez é um jogo que se aprimora com a p
 
 - **Jogue todo dia, mesmo que pouco**. Dez minutos diários valem mais que duas horas por semana.
 - **Comece contra o computador**. Você pode pausar, pensar e refazer jogadas sem pressão. Quando estiver mais à vontade, passe para partidas contra outras pessoas.
-- **Reveja suas partidas perdidas**. A maior parte do aprendizado vem dos erros.
-- **Aprenda algumas aberturas básicas**. Não precisa decorar variantes longas. Saber controlar o centro e desenvolver as peças já é suficiente para os primeiros 10 lances.
-- **Resolva exercícios de tática**. Garfo, cravada e ataque descoberto são padrões que aparecem o tempo todo.
+- **[Reveja suas partidas perdidas](artigo:analisar-partidas)**. A maior parte do aprendizado vem dos erros.
+- **Aprenda [algumas aberturas básicas](artigo:aberturas-para-iniciantes)**. Não precisa decorar variantes longas. Saber controlar o centro e desenvolver as peças já é suficiente para os primeiros 10 lances.
+- **Resolva exercícios de tática**. [Garfo](artigo:garfo), [cravada](artigo:cravada) e [ataque descoberto](artigo:ataque-descoberto) são padrões que aparecem o tempo todo.
 
 :::dica
-**💡 Dica honesta:** não tente decorar todas as aberturas do zero. Foque em *princípios* (controle do centro, desenvolvimento, segurança do rei) e em *tática*. Isso te leva muito mais longe nos primeiros seis meses.
+**💡 Dica honesta:** não tente decorar todas as aberturas do zero. Foque em [*princípios*](artigo:principios-de-abertura) (controle do centro, desenvolvimento, segurança do rei) e em *tática*. Isso te leva muito mais longe nos primeiros seis meses.
 :::
 
 :::pratique Pronto para a primeira partida?
@@ -159,9 +159,9 @@ Use o nosso **modo Aprendiz**, com 12 lições interativas que ensinam cada peç
 
 Quando você já estiver confortável com as regras, vale a pena conhecer:
 
-- As aberturas mais comuns (Abertura Italiana, Defesa Siciliana, Gambito da Dama).
-- Padrões de mate (mate do corredor, mate do pastor, mate em escada).
-- Finais básicos (rei e dama contra rei, rei e torre contra rei, peão passado).
-- Princípios de meio-jogo (peças ativas, fraquezas no campo adversário, troca vantajosa).
+- As aberturas mais comuns ([Abertura Italiana](artigo:abertura-italiana), [Defesa Siciliana](artigo:defesa-siciliana), [Gambito da Dama](artigo:gambito-da-dama-e-london)).
+- Padrões de mate ([mate do corredor](artigo:mate-do-corredor), [mate do pastor](artigo:mate-do-pastor), mate em escada).
+- Finais básicos ([rei e dama contra rei, rei e torre contra rei](artigo:mates-basicos), [peão passado](artigo:finais-de-peao)).
+- Princípios de meio-jogo ([peças ativas, fraquezas no campo adversário, troca vantajosa](artigo:estrategia-posicional)).
 
-Vamos publicar guias específicos sobre cada um desses temas em breve, aqui no [/aprenda](/aprenda). Se quiser receber os próximos, salve o site nos favoritos e volte sempre.
+Há um guia para cada um desses temas aqui no [/aprenda](/aprenda), em trilha do iniciante ao avançado. Salve o site nos favoritos e volte sempre.

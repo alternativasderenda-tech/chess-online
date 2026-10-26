@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [cálculo no xadrez, lances candidatos, visualização, xeques capturas ameaças, árvore de variantes, como calcular]
 jogar: 4
-relacionados: [sacrificios, planos-meio-jogo, rotina-de-treino]
+relacionados: [taticas, sacrificios, ataque-descoberto, analisar-partidas, rotina-de-treino]
 ensina: [Lances candidatos, Xeques capturas e ameaças, Árvore de variantes, Visualização]
 ---
 Calcular no xadrez é prever mentalmente uma sequência de lances — uma **variante** — e avaliar a posição a que ela leva, sem mexer nas peças. O método dos jogadores fortes tem quatro etapas: listar os **lances candidatos**, começando pelos forçantes (**xeques, capturas e ameaças**); calcular cada candidato até uma posição calma; **avaliar** essa posição; e só então comparar e escolher. A **visualização** é a habilidade que sustenta tudo isso: enxergar o tabuleiro como ele vai ficar, e não como ele está.
@@ -18,7 +18,7 @@ Calcular no xadrez é prever mentalmente uma sequência de lances — uma **vari
 
 Numa posição típica de meio-jogo há de 30 a 40 lances legais. Ninguém calcula todos. O primeiro passo é escolher de dois a quatro **candidatos**: os lances que merecem ser examinados a fundo. A ideia de listar candidatos antes de calcular, e de organizar o cálculo como uma árvore, ficou famosa com o livro *Think Like a Grandmaster*, de Alexander Kotov.
 
-A forma mais segura de não esquecer o lance decisivo é procurar, nesta ordem:
+A forma mais segura de não esquecer o [lance decisivo](artigo:taticas#como-enxergar) é procurar, nesta ordem:
 
 1. **Xeques.** Eles limitam ao máximo as respostas do adversário.
 2. **Capturas.** Mudam o material e costumam exigir resposta imediata.
@@ -65,7 +65,7 @@ Quatro atacantes contra três defensores parece vantagem. Mas o primeiro defenso
 O cálculo depende de você "ver" onde estão as peças três ou quatro lances depois. Os erros típicos de visualização são:
 
 - **Peças fantasmas:** esquecer que uma peça saiu da casa (e que a casa agora está livre) ou que uma peça foi capturada.
-- **Linhas que se abrem:** quando uma peça sai do caminho, uma torre, um bispo ou uma dama de trás passam a atacar. É o mecanismo do xeque descoberto.
+- **Linhas que se abrem:** quando uma peça sai do caminho, uma torre, um bispo ou uma dama de trás passam a atacar. É o mecanismo do [xeque descoberto](artigo:ataque-descoberto).
 - **Lances para trás:** recuos e lances laterais são os mais fáceis de esquecer, tanto os seus quanto os do adversário.
 
 ```tabuleiro
@@ -84,7 +84,7 @@ Calcular gasta tempo de relógio, e o tempo é limitado. Uma divisão sensata:
 
 - **Posições críticas** (sacrifícios, trocas que levam a finais, reis expostos) merecem cálculo profundo.
 - **Posições calmas** pedem mais avaliação e menos cálculo: use os princípios estratégicos e reserve o tempo para depois.
-- **Faça uma checagem final** antes de tocar na peça: "quais são os xeques, capturas e ameaças do meu adversário depois do meu lance?". Essa pergunta evita a maioria dos lances perdedores.
+- **Faça uma [checagem final](artigo:analisar-partidas#checklist)** antes de tocar na peça: "quais são os xeques, capturas e ameaças do meu adversário depois do meu lance?". Essa pergunta evita a maioria dos lances perdedores.
 
 ## Erros típicos de cálculo {#erros}
 

@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [chess opening principles, how to start a chess game, control the center, piece development, castle early]
 jogar: 2
-relacionados: [aberturas-para-iniciantes, lances-especiais, valor-das-pecas, erros-de-iniciante]
+relacionados: [aberturas-para-iniciantes, abertura-italiana, defesa-siciliana, gambito-da-dama-e-london, erros-de-iniciante]
 ensina: [Controlling the center, Piece development, King safety, Opening principles]
 ---
 Opening principles are rules of thumb for the first moves of a game: **control the center, develop your knights and bishops, castle early, and don't move the same piece over and over or bring your queen out too soon**. Follow them and you'll reach the middlegame with your pieces ready for action and your king safe, without memorizing a single opening.
@@ -107,7 +107,7 @@ explicacao: 5.Nc6+! — it's a discovered check: the knight steps aside and the 
 
 ### What is the best first move in chess?
 
-There isn't a single best one. 1.e4 and 1.d4 are the most popular and follow the principles: they take the center and free your pieces. 1.c4 and 1.Nf3 are excellent too.
+There isn't a single best one. [1.e4](artigo:abertura-italiana) and [1.d4](artigo:gambito-da-dama-e-london) are the most popular and follow the principles: they take the center and free your pieces. 1.c4 and 1.Nf3 are excellent too.
 
 ### How many moves does the opening last?
 

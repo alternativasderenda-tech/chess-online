@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [mates básicos, mate de dama, mate de torre, mate com duas torres, mate da escada, como dar xeque-mate]
 jogar: 1
-relacionados: [xeque-mate-e-afogamento, empates, valor-das-pecas, regras]
+relacionados: [xeque-mate-e-afogamento, empates, finais-de-peao, finais-de-torre, mate-do-corredor]
 ensina: [Mate com duas torres, Mate com rei e dama, Mate com rei e torre]
 ---
 Os **mates básicos** são as técnicas para dar xeque-mate quando o adversário ficou só com o rei: **rei e dama contra rei**, **rei e torre contra rei** e **duas torres contra rei**. Os três são vitórias garantidas, desde que você saiba o método: empurrar o rei adversário até a borda do tabuleiro e dar o mate ali, sem cair no afogamento. Com jogo correto, o mate de dama sai em no máximo 10 lances e o de torre em no máximo 16, de qualquer posição.
@@ -66,8 +66,8 @@ legenda: Mate com dama: a dama em e7, colada no rei preto e protegida pelo rei b
 
 A torre também precisa do rei, e o processo é um pouco mais longo:
 
-1. **Corte o rei com a torre**: coloque-a numa coluna ou fileira que ele não possa atravessar.
-2. **Traga o seu rei** para ficar de frente para o rei adversário, com uma casa entre os dois. Essa posição, em que os reis se encaram e nenhum pode avançar, chama-se **oposição**.
+1. **[Corte o rei](artigo:finais-de-torre) com a torre**: coloque-a numa coluna ou fileira que ele não possa atravessar.
+2. **Traga o seu rei** para ficar de frente para o rei adversário, com uma casa entre os dois. Essa posição, em que os reis se encaram e nenhum pode avançar, chama-se **[oposição](artigo:finais-de-peao)**.
 3. **Quando os reis estiverem em oposição, dê xeque com a torre**: o rei adversário é empurrado uma fileira (ou coluna) para trás.
 4. Quando não houver oposição, faça um **lance de espera** com a torre (sem sair da linha que corta o rei) e deixe o adversário se mover.
 5. Repita até a borda. O xeque final é dado com os reis frente a frente.

@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [relógio de xadrez, administração do tempo, zeitnot, psicologia no xadrez, nervosismo, afogamento, torneio de xadrez]
 jogar: 3
-relacionados: [ritmos-de-jogo, calculo, rotina-de-treino]
+relacionados: [ritmos-de-jogo, empates, finais-de-peao, calculo, rotina-de-treino]
 ensina: [Administração do tempo, Como evitar o zeitnot, Controle do nervosismo, Jogar em vantagem e em desvantagem]
 ---
 Administrar o relógio e a cabeça é parte do xadrez tanto quanto calcular. Na prática, isso significa **dividir o tempo** entre as fases da partida e gastar mais nos momentos críticos, **evitar o zeitnot** (a falta de tempo no fim da partida), **controlar o nervosismo** com uma rotina fixa de pensamento e **mudar de atitude conforme o placar do tabuleiro**: em vantagem, simplificar e cortar o contra-jogo; em desvantagem, complicar e procurar recursos como o afogamento. Muitas partidas não são decididas pelo melhor lance, e sim pelo primeiro erro sob pressão.
@@ -42,7 +42,7 @@ Para **sobreviver** quando ele chegar:
 
 - **Simplifique**: troque peças se a posição permitir, mantenha o rei seguro e evite complicações.
 - **Faça só a checagem essencial**: xeques, capturas e ameaças do adversário depois do seu lance.
-- **Tenha os finais básicos no automático.** Oposição, Lucena e Philidor precisam sair sem cálculo, porque não haverá tempo para calcular.
+- **Tenha os finais básicos no automático.** [Oposição](artigo:finais-de-peao#oposicao), [Lucena e Philidor](artigo:finais-de-torre) precisam sair sem cálculo, porque não haverá tempo para calcular.
 
 ```tabuleiro
 fen: 8/8/3k4/8/3K4/3P4/8/8 b - - 0 1
@@ -72,7 +72,7 @@ legenda: Com uma torre a mais, trocar as damas (Dxd5) elimina quase todo o contr
 - **Troque peças, não peões.** Cada troca de peças diminui o contra-jogo do adversário; os peões são necessários para ganhar o final.
 - **Corte o contra-jogo** antes de avançar: pergunte o que o adversário quer fazer e impeça (profilaxia).
 - **Não se apresse.** Se a posição é ganha, ela continua ganha no lance seguinte. Lances seguros valem mais do que lances rápidos.
-- **Cuidado com o afogamento** em finais muito vantajosos.
+- **Cuidado com o [afogamento](artigo:xeque-mate-e-afogamento#afogamento)** em finais muito vantajosos.
 
 ```tabuleiro
 fen: 7k/8/5KQ1/8/8/8/8/8 b - - 0 1
@@ -93,7 +93,7 @@ O primeiro exercício abaixo mostra um recurso clássico de quem está perdido: 
 
 ## Ofertas de empate {#empate}
 
-A oferta de empate também é uma decisão psicológica. Pelas regras da FIDE, ela deve ser feita **depois de jogar o seu lance e antes de apertar o relógio**. Algumas orientações práticas:
+A [oferta de empate](artigo:empates#acordo) também é uma decisão psicológica. Pelas regras da FIDE, ela deve ser feita **depois de jogar o seu lance e antes de apertar o relógio**. Algumas orientações práticas:
 
 - **Ofereça empate quando a posição justificar**, não para se livrar da tensão. Uma posição igual e simplificada é um bom momento; uma posição em que você está pior pode ser um mau momento, porque a oferta revela insegurança.
 - **Ao receber uma oferta, avalie a posição, não o adversário.** Pergunte se você tem chances reais de ganhar sem riscos sérios de perder.

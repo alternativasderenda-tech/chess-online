@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [xeque, xeque-mate, afogamento, rei afogado, como sair do xeque, diferença entre xeque-mate e afogamento]
 jogar: 1
-relacionados: [regras, mates-basicos, empates, como-as-pecas-se-movem]
+relacionados: [regras, mates-basicos, empates, ataque-descoberto, como-as-pecas-se-movem]
 ensina: [Xeque, Xeque-mate, Afogamento]
 ---
 **Xeque** é quando o rei está sendo atacado por uma peça adversária; o jogador é obrigado a tirar o rei do ataque no lance seguinte. **Xeque-mate** é um xeque do qual não há saída: a partida acaba e quem deu o mate vence. **Afogamento** é quando o jogador da vez **não está em xeque**, mas não tem nenhum lance legal: a partida acaba empatada. A diferença entre mate e afogamento decide muitas partidas de iniciantes, então vale a pena entender bem.
@@ -36,12 +36,12 @@ Diante de um xeque, só existem três respostas possíveis. Lembre-se delas como
 Se nenhuma das três for possível, é xeque-mate.
 
 :::aviso
-**⚠️ Cuidado:** você **não pode** fazer nenhum lance que deixe o seu próprio rei em xeque. Isso inclui mover uma peça que está protegendo o rei de um ataque. Num jogo online, o sistema simplesmente não aceita o lance.
+**⚠️ Cuidado:** você **não pode** fazer nenhum lance que deixe o seu próprio rei em xeque. Isso inclui [mover uma peça que está protegendo o rei](artigo:cravada) de um ataque. Num jogo online, o sistema simplesmente não aceita o lance.
 :::
 
 ### Xeque duplo
 
-Às vezes duas peças dão xeque ao mesmo tempo. É o **xeque duplo**. Como não dá para capturar ou bloquear duas peças com um lance só, a única saída é **mover o rei**.
+Às vezes duas peças dão xeque ao mesmo tempo. É o **[xeque duplo](artigo:ataque-descoberto)**. Como não dá para capturar ou bloquear duas peças com um lance só, a única saída é **mover o rei**.
 
 ### Preciso dizer "xeque"?
 
@@ -86,7 +86,7 @@ Isso parece injusto para quem tem a dama, mas é a regra. O afogamento é a gran
 
 Não. Muitos iniciantes dão xeque sempre que podem, mas um xeque sem plano costuma só empurrar o rei adversário para uma casa melhor e deixar a sua peça exposta. Antes de dar xeque, pergunte:
 
-- **O xeque ganha alguma coisa?** Por exemplo, ataca o rei e outra peça ao mesmo tempo, ou obriga o rei a ir para uma casa pior.
+- **O xeque ganha alguma coisa?** Por exemplo, [ataca o rei e outra peça ao mesmo tempo](artigo:garfo), ou obriga o rei a ir para uma casa pior.
 - **A peça que dá xeque fica segura?** Um xeque com uma peça que pode ser capturada é só uma forma rápida de perdê-la.
 - **Existe algo melhor?** Às vezes um lance tranquilo, que tira as casas de fuga do rei, prepara um mate que o xeque apressado estragaria.
 

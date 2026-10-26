@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [erros de iniciante no xadrez, como melhorar no xadrez, dicas de xadrez para iniciantes, peça pendurada, erros no xadrez]
 jogar: 2
-relacionados: [principios-de-abertura, valor-das-pecas, xeque-mate-e-afogamento, mate-do-pastor]
+relacionados: [principios-de-abertura, valor-das-pecas, taticas, mate-do-corredor, analisar-partidas]
 ensina: [Verificação de lances, Segurança do rei, Peças sem defesa]
 ---
 Os erros mais comuns de iniciantes no xadrez são **deixar peças sem defesa**, **não ver a ameaça do adversário**, **tirar a dama cedo demais**, **deixar o rei no centro** e **jogar rápido demais**. Quase todos têm a mesma causa: fazer o lance sem antes olhar o tabuleiro inteiro. A boa notícia é que existe um hábito simples que corrige a maioria deles, e ele está no fim deste artigo.
@@ -48,7 +48,7 @@ Regra prática: desenvolva **cavalos e bispos primeiro**. Veja os [princípios d
 
 Quando as colunas do centro se abrem, um rei que ficou em e1 ou e8 vira alvo fácil. O remédio é **rocar cedo**, normalmente nos primeiros 10 lances.
 
-E, depois de rocar, cuidado com a **última fileira**: se os três peões na frente do rei nunca se moveram, o rei fica sem casa de fuga, e uma torre ou dama que chegue à primeira fileira pode dar mate. A solução clássica é, num momento tranquilo, mover um desses peões uma casa (por exemplo, h3 ou h6) para abrir uma "janela" para o rei.
+E, depois de rocar, cuidado com a **[última fileira](artigo:mate-do-corredor)**: se os três peões na frente do rei nunca se moveram, o rei fica sem casa de fuga, e uma torre ou dama que chegue à primeira fileira pode dar mate. A solução clássica é, num momento tranquilo, mover um desses peões uma casa (por exemplo, h3 ou h6) para abrir uma "janela" para o rei.
 
 ```tabuleiro
 fen: 6k1/5pp1/7p/8/8/8/5PPP/6K1 w - - 0 1
@@ -74,7 +74,7 @@ Antes de tocar numa peça, faça uma verificação rápida em três passos, para
 
 1. **Xeques:** algum lance dá xeque?
 2. **Capturas:** alguma peça pode ser capturada?
-3. **Ameaças:** algum lance ameaça ganhar material ou dar mate?
+3. **Ameaças:** algum lance ameaça [ganhar material](artigo:taticas) ou dar mate?
 
 Primeiro olhe o que o **adversário** pode fazer depois do seu lance; depois, o que **você** pode fazer. Leva poucos segundos e evita a maioria dos erros deste artigo.
 
@@ -133,7 +133,7 @@ Porque ela vira alvo das peças menores do adversário, que se desenvolvem ataca
 
 ### Quanto tempo leva para parar de cometer esses erros?
 
-Depende de quanto você joga e revisa as partidas. Quem cria o hábito de verificar xeques, capturas e ameaças em todo lance costuma notar a diferença rapidamente.
+Depende de quanto você joga e [revisa as partidas](artigo:analisar-partidas). Quem cria o hábito de verificar xeques, capturas e ameaças em todo lance costuma notar a diferença rapidamente.
 
 :::pratique Pratique a verificação de lances
 Jogue contra o computador no nível Médio, sem pressa. Antes de cada lance, faça a verificação: xeques, capturas e ameaças, primeiro do adversário, depois as suas.

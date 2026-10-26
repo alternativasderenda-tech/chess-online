@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [empate no xadrez, afogamento, repetição tripla, regra dos 50 lances, material insuficiente, xeque perpétuo]
 jogar: 2
-relacionados: [xeque-mate-e-afogamento, mates-basicos, regras, ritmos-de-jogo]
+relacionados: [xeque-mate-e-afogamento, mates-basicos, finais-de-peao, regras, ritmos-de-jogo]
 ensina: [Afogamento, Repetição tripla, Regra dos 50 lances, Material insuficiente, Xeque perpétuo]
 ---
 Um **empate** no xadrez é o resultado em que nenhum jogador vence: cada um recebe meio ponto. Pelas regras da FIDE, a partida empata por **acordo entre os jogadores**, por **afogamento**, por **repetição tripla** da mesma posição, pela **regra dos 50 lances** ou quando nenhum lado consegue mais dar xeque-mate, como no caso de **material insuficiente**. Conhecer essas regras ajuda quem está ganhando a não deixar a vitória escapar, e quem está perdendo a encontrar uma salvação.
@@ -30,7 +30,7 @@ casas: a8:amarela b8:vermelha b7:vermelha
 legenda: As Pretas jogam e não têm lance: b8 é atacada pelo peão de a7, b7 pelo rei branco, e o rei preto não está em xeque. Afogamento.
 ```
 
-Este exemplo é clássico: com rei e peão da coluna a (ou h) contra rei, quando o rei adversário chega ao canto, muitas vezes não há como vencer. Veja mais em [xeque, xeque-mate e afogamento](artigo:xeque-mate-e-afogamento).
+Este exemplo é clássico: com [rei e peão da coluna a (ou h) contra rei](artigo:finais-de-peao), quando o rei adversário chega ao canto, muitas vezes não há como vencer. Veja mais em [xeque, xeque-mate e afogamento](artigo:xeque-mate-e-afogamento).
 
 ## 3. Material insuficiente {#material "3. Material insuficiente"}
 

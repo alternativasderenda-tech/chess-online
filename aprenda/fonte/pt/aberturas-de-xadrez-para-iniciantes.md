@@ -9,13 +9,13 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [aberturas de xadrez, aberturas para iniciantes, abertura italiana, defesa siciliana, abertura espanhola, ruy lopez, gambito da rainha, sistema de londres]
 jogar: 2
-relacionados: [jogar-do-zero, regras, mate-do-pastor, movimento-do-cavalo]
+relacionados: [principios-de-abertura, abertura-italiana, defesa-siciliana, francesa-e-caro-kann, gambito-da-dama-e-london]
 ---
 Você não precisa decorar 20 lances de cada abertura. Precisa entender os princípios e ter, no máximo, três aberturas confortáveis no seu repertório. Este guia mostra as 10 aberturas mais importantes para um iniciante e ajuda você a escolher quais adotar.
 
 ## Os princípios que importam mais que decorar lances {#principios}
 
-Quase todo jogador iniciante comete o mesmo erro: tenta decorar sequências longas de aberturas famosas, acha que se perder a sequência o jogo está acabado e desanima. Você não precisa disso. A verdade é que **os princípios cobrem 95% das situações da abertura**:
+Quase todo jogador iniciante comete o mesmo erro: tenta decorar sequências longas de aberturas famosas, acha que se perder a sequência o jogo está acabado e desanima. Você não precisa disso. A verdade é que **[os princípios](artigo:principios-de-abertura) cobrem 95% das situações da abertura**:
 
 - **Controle o centro.** As quatro casas centrais (D4, D5, E4, E5) são as mais valiosas do tabuleiro. Peças no centro têm mais mobilidade.
 - **Desenvolva as peças menores primeiro.** Cavalos antes de bispos. Cavalos vão para C3, F3, C6, F6 na maior parte das aberturas.
@@ -30,7 +30,7 @@ Se você seguir esses cinco princípios, vai ter posições jogáveis em *qualqu
 ### 1. Abertura Italiana
 
 :::caixa 1.e4 e5 2.Cf3 Cc6 3.Bc4
-A abertura mais clássica que existe e a recomendação número um para iniciantes. As ideias são simples e diretas: ocupar o centro, desenvolver as peças menores e mirar o ponto fraco do adversário (a casa F7).
+[A abertura mais clássica que existe](artigo:abertura-italiana) e a recomendação número um para iniciantes. As ideias são simples e diretas: ocupar o centro, desenvolver as peças menores e mirar o ponto fraco do adversário (a casa F7).
 
 <small>Bom porque: rápida de aprender, ataque natural, ensina os princípios na prática.</small>
 :::
@@ -52,7 +52,7 @@ Considerada a abertura mais respeitada da história do xadrez. O bispo em B5 pre
 ### 3. Gambito da Rainha
 
 :::caixa 1.d4 d5 2.c4
-"Gambito" porque oferece um peão, mas o peão é difícil de manter. Quase sempre as Pretas recusam ou aceitam temporariamente. Excelente para quem prefere jogo posicional em vez de ataques diretos.
+"Gambito" porque oferece um peão, mas o peão é difícil de manter. Quase sempre as Pretas [recusam ou aceitam temporariamente](artigo:gambito-da-dama-e-london). Excelente para quem prefere jogo posicional em vez de ataques diretos.
 
 <small>Bom porque: posições sólidas, planos claros, base sólida para entender estratégia.</small>
 :::
@@ -70,7 +70,7 @@ Em vez de empurrar o peão do rei, as Brancas começam com o peão da dama no fl
 ### 5. Defesa Siciliana
 
 :::caixa 1.e4 c5
-A defesa mais agressiva contra 1.e4 e a mais popular do mundo profissional. As Pretas atacam o centro pelo flanco da dama em vez de copiar o peão das Brancas. Posições assimétricas e dinâmicas.
+[A defesa mais agressiva contra 1.e4](artigo:defesa-siciliana) e a mais popular do mundo profissional. As Pretas atacam o centro pelo flanco da dama em vez de copiar o peão das Brancas. Posições assimétricas e dinâmicas.
 
 <small>Cuidado: tem MUITA teoria. Para iniciante, vale começar com variantes simples como a Najdorf ou o Dragão Acelerado.</small>
 :::
@@ -93,7 +93,7 @@ As Pretas constroem uma cadeia de peões sólida e fecham o centro. Estratégica
 ### 7. Defesa Caro-Kann
 
 :::caixa 1.e4 c6 2.d4 d5
-Parecida com a Francesa, mas com o bispo de C8 mais ativo. Menos teoria, mais simplicidade. Karpov usou a vida inteira.
+[Parecida com a Francesa](artigo:francesa-e-caro-kann), mas com o bispo de C8 mais ativo. Menos teoria, mais simplicidade. Karpov usou a vida inteira.
 
 <small>Bom porque: defesa robusta, fácil de aprender, ideal para iniciantes que jogam de Pretas contra 1.e4.</small>
 :::
@@ -145,7 +145,7 @@ Jogue contra o computador no Xadrez Online. Sem cadastro, direto no navegador. E
 
 ## Erros comuns na abertura
 
-- **Mover a dama cedo demais.** Ela é perseguida por peças menores e você desperdiça tempo recuando.
+- **[Mover a dama cedo demais](artigo:erros-de-iniciante#dama).** Ela é perseguida por peças menores e você desperdiça tempo recuando.
 - **Atacar antes de desenvolver.** Uma peça sozinha não derruba um exército. Desenvolva primeiro, ataque depois.
 - **Capturar peões sem motivo.** Muitas vezes o peão é envenenado — você ganha material mas perde tempo e posição.
 - **Esquecer do roque.** Rei no meio do tabuleiro é convite para xeque-mate. Faça o roque antes do lance 10.

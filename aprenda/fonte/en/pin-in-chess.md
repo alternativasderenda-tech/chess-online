@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [pin, chess pin, absolute pin, relative pin, pinned piece, chess tactics]
 jogar: 2
-relacionados: [taticas, garfo, espeto, aberturas-para-iniciantes]
+relacionados: [taticas, espeto, garfo, gambito-da-dama-e-london, abertura-italiana]
 ensina: [Pin, Absolute pin, Relative pin]
 ---
 A **pin** happens when an attacked piece cannot (or should not) move, because a more valuable piece stands behind it on the same line. If the piece behind is the king, the pin is **absolute** and moving the front piece is illegal; if it is the queen, a rook or another piece, the pin is **relative**: moving is allowed, but it costs material.
@@ -48,7 +48,7 @@ casas: f6 d8
 legenda: After 1.d4 d5 2.c4 e6 3.Nc3 Nf6 4.Bg5, the f6 knight is pinned to the queen on d8. It may move, but the queen would be left hanging to the bishop.
 ```
 
-Relative pins fool a lot of players, because sometimes the "pinned" piece moves anyway, with a bigger blow. The classic example is the **Elephant Trap**, in this very opening:
+Relative pins fool a lot of players, because sometimes the "pinned" piece moves anyway, with a bigger blow. The classic example is the **Elephant Trap**, in [this very opening](artigo:gambito-da-dama-e-london):
 
 :::caixa 4...Nbd7 5.cxd5 exd5 6.Nxd5? Nxd5! 7.Bxd8 Bb4+ 8.Qd2 Bxd2+ 9.Kxd2 Kxd8
 White thought the f6 knight was stuck and grabbed the d5 pawn. But the knight moved, giving up the queen, and the bishop check on b4 won everything back. In the end Black is a piece up for a pawn.

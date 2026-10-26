@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [discovered attack, discovered check, double check, chess tactics, battery]
 jogar: 2
-relacionados: [taticas, garfo, cravada, desvio-e-sobrecarga]
+relacionados: [taticas, garfo, desvio-e-sobrecarga, sacrificios, calculo]
 ensina: [Discovered attack, Discovered check, Double check]
 ---
 A **discovered attack** happens when a piece moves and, by stepping out of the way, opens the line of another long-range piece (bishop, rook or queen) standing behind it. If the opened line hits the king, it is a **discovered check**. If the piece that moved gives check as well, the king is attacked twice at once: that is a **double check**, the most forcing tactic in chess.
@@ -79,7 +79,7 @@ The most spectacular use of discovered check is the **windmill**. It happens whe
 3. the rook moves away capturing a piece, with a **discovered check** from the bishop;
 4. the king goes back to its previous square, and the rook returns with a direct check.
 
-On every turn of the windmill the rook eats a piece, and the defender can do nothing but shuffle the king back and forth. The typical picture is Black's king between g8 and h8, a white bishop on the long diagonal and a white rook on the seventh rank. When you see it, count how many pieces the rook can collect before it stops.
+On every turn of the windmill the rook eats a piece, and the defender can do nothing but shuffle the king back and forth. The typical picture is Black's king between g8 and h8, a white bishop on the long diagonal and a white rook on the seventh rank. When you see it, [count how many pieces the rook can collect](artigo:calculo) before it stops.
 
 ## Common mistakes {#erros "Common mistakes"}
 

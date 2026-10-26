@@ -6,10 +6,10 @@ descricao: Understand chess time controls: classical, rapid, blitz and bullet. T
 nivel: dicas
 ordem: 10
 publicado: 2026-05-11
-atualizado: 2026-05-11
+atualizado: 2026-10-26
 tags: [blitz chess, bullet chess, rapid chess, classical chess, chess time controls, chess formats]
 jogar: 2
-relacionados: [jogar-do-zero, regras, aberturas-para-iniciantes, mate-do-pastor, movimento-do-cavalo]
+relacionados: [relogio-e-psicologia, regras, analisar-partidas, rotina-de-treino]
 ---
 When you open an online chess site, you see options like 3+0, 10+5, 60 minutes. What does each one mean? Why pick one over another? This guide explains the official chess time controls and helps you choose the right pace for your level.
 
@@ -110,19 +110,19 @@ A practical recommendation based on your goal:
 
 ### In Classical
 
-- Track your variations mentally, calculate at least 3 moves ahead.
+- Track your variations mentally, [calculate at least 3 moves ahead](artigo:calculo).
 - In critical positions, spend time. You have time.
-- Take notes on your games (mentally or written) — review them afterwards.
+- Take notes on your games (mentally or written) — [review them afterwards](artigo:analisar-partidas).
 
 ### In Rapid
 
-- Focus on **principles**, not long variations.
+- Focus on **[principles](artigo:principios-de-abertura)**, not long variations.
 - Make natural moves, play it safe in the opening, think in the middlegame.
-- Save more time for the critical moves (where the position changes a lot).
+- [Save more time for the critical moves](artigo:relogio-e-psicologia#tempo) (where the position changes a lot).
 
 ### In Blitz
 
-- Have a fixed opening repertoire. Don't improvise.
+- Have a fixed [opening repertoire](artigo:preparacao-de-aberturas). Don't improvise.
 - Decide quickly in normal positions; only think hard at critical moments.
 - Accept that you'll make mistakes. What matters is exploiting your opponent's mistakes better.
 

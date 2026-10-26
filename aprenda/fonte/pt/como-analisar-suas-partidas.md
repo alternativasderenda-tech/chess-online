@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [analisar partidas, análise de xadrez, erro decisivo, revisar partidas, replay, como melhorar no xadrez, momento crítico]
 jogar: 2
-relacionados: [finais-de-peao, abertura-italiana, ritmos-de-jogo]
+relacionados: [taticas, calculo, relogio-e-psicologia, rotina-de-treino, erros-de-iniciante]
 ensina: [Análise de partidas, Erro decisivo, Momento crítico, Checklist de lances]
 ---
 Analisar uma partida de xadrez é revê-la lance a lance, depois que ela acabou, para descobrir onde a avaliação mudou: o momento em que uma posição boa ou igual virou perdida. O objetivo não é listar todos os erros, mas achar o **erro decisivo** e entender **por que** você o cometeu, seja uma ameaça que não viu, uma conta errada, um plano ruim ou a pressão do relógio. É o hábito que mais separa quem melhora de quem só acumula partidas.
@@ -45,13 +45,13 @@ Uma dica prática: procure o **último momento em que a posição ainda era defe
 
 Dê um nome ao erro. Os tipos mais comuns:
 
-- **Tático:** você não viu uma ameaça, um garfo, uma cravada, um xeque.
-- **De cálculo:** você viu a ideia, mas errou a conta no fim da variante.
+- **[Tático](artigo:taticas):** você não viu uma ameaça, um garfo, uma cravada, um xeque.
+- **De [cálculo](artigo:calculo):** você viu a ideia, mas errou a conta no fim da variante.
 - **Estratégico:** plano errado, troca ruim, peça mal colocada por muitos lances.
 - **De tempo:** pouco tempo no relógio levou a um lance apressado.
 - **Psicológico:** relaxou quando estava ganhando, ou se desesperou quando estava perdendo.
 
-Depois de algumas semanas, os nomes se repetem. É aí que você descobre o que treinar.
+Depois de algumas semanas, os nomes se repetem. É aí que você descobre [o que treinar](artigo:rotina-de-treino).
 
 ### 5. Use o motor para confirmar, não para pensar por você
 
@@ -63,7 +63,7 @@ Feche cada análise com uma frase: "na posição X, eu devia ter feito Y, porque
 
 ## O checklist que evita o erro decisivo {#checklist "O checklist de cada lance"}
 
-Boa parte dos erros decisivos falha num teste simples, que vale fazer **antes** de cada lance na partida e **em cada lance suspeito** na análise:
+Boa parte dos erros decisivos falha num [teste simples](artigo:erros-de-iniciante#habito), que vale fazer **antes** de cada lance na partida e **em cada lance suspeito** na análise:
 
 1. **Xeques:** quais xeques o adversário tem depois do meu lance?
 2. **Capturas:** quais peças minhas ficam atacadas ou sem defesa?
@@ -141,7 +141,7 @@ Na revisão, um erro assim só aparece se você conhece a técnica. É por isso 
 - **Analisar só as derrotas.** Vitórias apertadas também têm erros decisivos que o adversário não puniu.
 - **Culpar só o último erro.** O lance que perdeu a dama pode ser consequência de uma posição ruim criada dez lances antes.
 - **Revisar e não registrar.** Sem uma lição anotada, a análise se perde até a próxima partida.
-- **Ignorar o relógio.** Se o erro veio com pouco tempo, o problema pode ser a gestão do tempo, não o xadrez. Escolher o [ritmo de jogo](artigo:ritmos-de-jogo) certo para treinar também ajuda.
+- **Ignorar o relógio.** Se o erro veio com pouco tempo, o problema pode ser a [gestão do tempo](artigo:relogio-e-psicologia), não o xadrez. Escolher o [ritmo de jogo](artigo:ritmos-de-jogo) certo para treinar também ajuda.
 
 :::pratique Jogue, revise e jogue de novo
 Jogue uma partida contra o computador, use o Ver Replay ao fim e aplique os 6 passos. Depois, jogue de novo a mesma abertura e veja se a lição ficou.

@@ -9,7 +9,7 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [xeque mate em 4 lances, mate do pastor, mate em 4 jogadas, xeque mate rapido, mate em 2 lances, mate em 3 lances]
 jogar: 1
-relacionados: [jogar-do-zero, aberturas-para-iniciantes, regras, movimento-do-cavalo]
+relacionados: [principios-de-abertura, erros-de-iniciante, mate-do-corredor, mates-basicos]
 ---
 Existe um xeque-mate clássico que funciona em apenas 4 lances contra jogadores iniciantes desavisados. Chama-se "Mate do Pastor" (em inglês *Scholar's Mate*). Vou te ensinar como dar, como defender e por que você não deve depender dele para vencer.
 
@@ -34,7 +34,7 @@ Você tira a dama para H5. Agora a dama e o bispo estão **os dois mirando F7**.
 A dama captura em F7. O peão F7 era defendido apenas pelo rei, então só a dama poderia capturar com proteção. A dama em F7 ataca o rei (xeque), e o rei **não tem para onde fugir**: G8 está ocupado pelo cavalo de F6 (que se moveu), E7 está ocupada pelo bispo, e o rei não pode capturar a dama porque ela está defendida pelo bispo de C4.
 
 :::aviso
-**⚠️ Importante:** esse mate só funciona se o adversário *não defender* a casa F7 e jogar 3...Cf6 (ou outro lance que não defenda F7). Contra qualquer jogador atento, o mate **não acontece** — e você ainda perde tempo com a dama exposta.
+**⚠️ Importante:** esse mate só funciona se o adversário *não defender* a casa F7 e jogar 3...Cf6 (ou outro lance que não defenda F7). Contra qualquer jogador atento, o mate **não acontece** — e você ainda [perde tempo com a dama exposta](artigo:principios-de-abertura#dama).
 :::
 
 ```tabuleiro
@@ -50,7 +50,7 @@ Funciona por três razões combinadas:
 
 - **F7 é o ponto fraco natural das Pretas.** No início, apenas o rei defende esse peão.
 - **Dois ataques na mesma casa.** A dama em H5 e o bispo em C4 atacam F7 simultaneamente.
-- **Iniciantes ignoram ameaças do adversário.** O adversário vê o lance 3.Dh5 e foca em desenvolver suas próprias peças, sem perguntar "o que minhas peças estão ameaçando?".
+- **[Iniciantes ignoram ameaças do adversário](artigo:erros-de-iniciante#ameaca).** O adversário vê o lance 3.Dh5 e foca em desenvolver suas próprias peças, sem perguntar "o que minhas peças estão ameaçando?".
 
 ## Como defender e neutralizar o Mate do Pastor {#defender "Como defender (e neutralizar)"}
 
@@ -136,7 +136,7 @@ explicacao: 2...Dh4# — a dama dá xeque pela diagonal h4–e1, nenhuma peça b
 
 Quando você dominar o Mate do Pastor (ataque e defesa), o próximo passo é aprender padrões de xeque-mate mais avançados:
 
-- **Mate do Corredor:** rei adversário preso na primeira fileira, torre dá mate.
-- **Mate em escada:** duas torres trabalham juntas, levando o rei até a borda.
+- **[Mate do Corredor](artigo:mate-do-corredor):** rei adversário preso na primeira fileira, torre dá mate.
+- **[Mate em escada](artigo:mates-basicos#escada):** duas torres trabalham juntas, levando o rei até a borda.
 - **Mate com dama e bispo:** em final de jogo simplificado.
 - **Mate com cavalo e bispo:** o mais difícil dos mates básicos — exige técnica.

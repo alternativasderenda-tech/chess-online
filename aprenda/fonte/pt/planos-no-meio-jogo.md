@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [plano no xadrez, meio-jogo, colunas abertas, posto avançado, ataque de minoria, 7ª fileira, roques opostos]
 jogar: 3
-relacionados: [estrategia-posicional, estrutura-de-peoes, calculo]
+relacionados: [estrategia-posicional, estrutura-de-peoes, gambito-da-dama-e-london, defesa-siciliana, calculo]
 ensina: [Como montar um plano, Atacar na ala certa, Colunas abertas, Postos avançados, Ataque de minoria]
 ---
 Um plano no meio-jogo é um objetivo de médio prazo — atacar o rei, conquistar uma coluna, fixar um peão fraco, instalar um cavalo num posto avançado — escolhido a partir da avaliação da posição. Para montá-lo, você identifica as fraquezas e as vantagens de cada lado, decide **em que ala jogar** (em regra, onde você já tem mais espaço, mais peças ou um alvo) e então reposiciona as peças para executá-lo. Sem plano, os lances viram reações ao adversário; com plano, cada lance tem uma função.
@@ -38,7 +38,7 @@ legenda: Estrutura da Índia do Rei com o centro fechado: as Pretas preparam ...
 
 As cadeias de peões apontam o caminho. Aqui, a cadeia preta d6-e5 aponta para a ala do rei, e é lá que as Pretas atacam, com ...f5. A cadeia branca d5-e4 aponta para a ala da dama, e é lá que as Brancas avançam, com c4-c5. Quem perde tempo na ala "errada" costuma chegar atrasado na corrida.
 
-O mesmo vale para os **roques opostos**: com os reis em alas diferentes, os peões viram aríetes. Avançar os peões contra o rei adversário não enfraquece o seu próprio rei, e a velocidade decide. Num ataque desse tipo, um tempo vale mais do que um peão.
+O mesmo vale para os [**roques opostos**](artigo:defesa-siciliana#dragao): com os reis em alas diferentes, os peões viram aríetes. Avançar os peões contra o rei adversário não enfraquece o seu próprio rei, e a velocidade decide. Num ataque desse tipo, um tempo vale mais do que um peão.
 
 ## Colunas abertas e a 7ª fileira {#colunas}
 
@@ -65,7 +65,7 @@ Nesta posição da Abertura Espanhola, o cavalo de d2 não tem futuro onde está
 
 ## O ataque de minoria {#minoria}
 
-O ataque de minoria é um plano estrutural clássico: avançar **dois peões contra três** na ala em que você está em minoria, para trocá-los e deixar o adversário com um peão fraco.
+[O ataque de minoria](artigo:gambito-da-dama-e-london#recusado) é um plano estrutural clássico: avançar **dois peões contra três** na ala em que você está em minoria, para trocá-los e deixar o adversário com um peão fraco.
 
 ```tabuleiro
 fen: r1bq1rk1/pp1n1ppp/2p2n2/3p4/1P1P4/2NBPN2/P1Q2PPP/1R3RK1 w - - 0 1

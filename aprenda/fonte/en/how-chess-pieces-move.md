@@ -100,7 +100,7 @@ Two words come up all the time in chess:
 - A piece **attacks** a square (or an enemy piece) when it could move there on its next turn. The rook on d4 in the first diagram attacks every square on the d-file and the 4th rank.
 - A piece is **defended** (or *protected*) when another piece of the same color could capture whatever takes it. If your opponent captures a defended piece, they lose their own piece right after.
 
-A piece that's attacked and not defended is **hanging**: your opponent can take it for free. Once you know how each piece moves, start looking at the board this way: what's attacked, what's defended and what's hanging. It's the first step toward not losing pieces — and toward winning your opponent's.
+A piece that's attacked and not defended is **hanging**: your opponent can take it for free. Once you know how each piece moves, start looking at the board this way: what's attacked, what's defended and what's hanging. It's the first step toward not losing pieces — and toward [winning your opponent's](artigo:garfo).
 
 ## Quick summary {#resumo "Summary"}
 

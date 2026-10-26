@@ -9,14 +9,14 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [como treinar xadrez, plano de estudo, rotina de treino, melhorar no xadrez, exercícios de xadrez, análise de partidas]
 jogar: 4
-relacionados: [calculo, finais-de-torre, preparacao-de-aberturas]
+relacionados: [taticas, analisar-partidas, calculo, finais-de-peao, espeto]
 ensina: [Plano de estudo semanal, Treino de táticas, Treino de finais, Análise das próprias partidas]
 ---
 Treinar xadrez para evoluir é combinar, toda semana, cinco atividades em proporções equilibradas: **táticas** (a maior fatia, porque decidem a maioria das partidas), **finais**, **aberturas**, **partidas jogadas** com tempo para pensar e **análise das próprias partidas**. O que faz a diferença não é a quantidade de horas, e sim a regularidade e o retorno: jogar, descobrir onde errou e treinar exatamente aquilo. Um plano de 30 a 60 minutos por dia, seguido por meses, rende mais do que maratonas esporádicas.
 
 ## Os cinco pilares do treino {#pilares}
 
-1. **Táticas.** Resolver exercícios todos os dias treina o reconhecimento de padrões: garfos, cravadas, mates típicos, sacrifícios. Quanto mais padrões você conhece, menos precisa calcular do zero.
+1. **Táticas.** Resolver exercícios todos os dias treina o [reconhecimento de padrões](artigo:taticas#padroes): garfos, cravadas, mates típicos, sacrifícios. Quanto mais padrões você conhece, menos precisa calcular do zero.
 2. **Finais.** Poucos finais teóricos cobrem uma enorme parte da prática: oposição, Lucena, Philidor, bispo da cor errada. E estudar finais melhora a técnica e a noção de atividade das peças.
 3. **Aberturas.** O suficiente para chegar a um meio-jogo que você entende — ideias e estruturas antes de lances.
 4. **Partidas jogadas.** Treino sem jogo não vira prática. Prefira ritmos em que dá tempo de pensar.
@@ -60,10 +60,10 @@ legenda: O mate abafado: um padrão que, depois de visto algumas vezes, você re
 
 Não é preciso estudar centenas de finais. Comece pelos que mais aparecem e jogue cada um contra o computador até executá-lo sem pensar:
 
-1. Rei e peão contra rei: a **oposição**.
+1. [Rei e peão contra rei](artigo:finais-de-peao): a **oposição**.
 2. Torre e peão contra torre: **Lucena** e **Philidor** (veja [finais de torre](artigo:finais-de-torre)).
 3. Bispo e peão de torre da cor errada.
-4. Mates básicos com dama e com torre.
+4. [Mates básicos](artigo:mates-basicos) com dama e com torre.
 
 ```tabuleiro
 fen: 3K4/3P1k2/8/8/8/8/2r5/4R3 w - - 0 1
@@ -78,7 +78,7 @@ Jogue contra a IA do site em **dificuldade crescente**: comece num nível em que
 Duas regras tornam essas partidas úteis:
 
 - **Jogue com tempo para pensar** e aplique a sua rotina em cada lance: ameaças do adversário, candidatos, cálculo, checagem final.
-- **Analise toda partida perdida**, e também as ganhas com sustos. Procure o primeiro lance em que a avaliação mudou.
+- **[Analise toda partida perdida](artigo:analisar-partidas)**, e também as ganhas com sustos. Procure o primeiro lance em que a avaliação mudou.
 
 Quando estiver pronto para adversários humanos, os [torneios do site](/torneios) oferecem eliminatórias contra outras pessoas e rankings de partidas contra a IA. Torneios dão uma coisa que o treino não dá: pressão de resultado. É ela que mostra se a sua rotina funciona.
 

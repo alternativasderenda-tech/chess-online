@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [abertura italiana, giuoco piano, giuoco pianissimo, gambito evans, defesa dos dois cavalos, fried liver, aberturas de xadrez]
 jogar: 2
-relacionados: [aberturas-para-iniciantes, defesa-siciliana, mate-do-pastor]
+relacionados: [principios-de-abertura, aberturas-para-iniciantes, defesa-siciliana, garfo, mate-do-pastor]
 ---
 A Abertura Italiana é a abertura de xadrez que começa com **1.e4 e5 2.Cf3 Cc6 3.Bc4**: as Brancas desenvolvem o bispo para c4, de onde ele mira f7, a casa mais fraca do campo preto no começo da partida. Ela se divide em duas famílias: o jogo direto, em que as Brancas abrem o centro com d4 (Giuoco Piano e Gambito Evans), e o jogo de manobra, com c3 e d3 (Giuoco Pianissimo). Contra 3...Cf6, a partida entra na Defesa dos Dois Cavalos.
 
@@ -108,7 +108,7 @@ explicacao: 6.Cxf7! Rxf7 7.Df3+ — o rei tem de ir para e6 (para defender o cav
 
 ### Gambito Blackburne Shilling: quando as Brancas caem
 
-Nem toda armadilha da Italiana é a favor das Brancas. Depois de **3...Cd4?!**, o cavalo preto deixa e5 sem defesa e é muito tentador capturar com 4.Cxe5?. Mas **4...Dg5!** ataca o cavalo de e5 e o peão g2 ao mesmo tempo. Se as Brancas continuarem gananciosas com 5.Cxf7??, vem 5...Dxg2 6.Tf1 Dxe4+ 7.Be2, e as Pretas têm mate.
+Nem toda armadilha da Italiana é a favor das Brancas. Depois de **3...Cd4?!**, o cavalo preto deixa e5 sem defesa e é muito tentador capturar com 4.Cxe5?. Mas **4...Dg5!** [ataca o cavalo de e5 e o peão g2 ao mesmo tempo](artigo:garfo). Se as Brancas continuarem gananciosas com 5.Cxf7??, vem 5...Dxg2 6.Tf1 Dxe4+ 7.Be2, e as Pretas têm mate.
 
 ```exercicio
 fen: r1b1kbnr/pppp1Npp/8/8/3nq3/8/PPPPBP1P/RNBQKR2 b Qkq - 1 7
@@ -130,7 +130,7 @@ A Italiana serve a quase todos os estilos porque você escolhe o ritmo:
 
 - **Gosta de ataque:** Giuoco Piano com 5.d4, Gambito Evans e 4.Cg5 contra a Dois Cavalos.
 - **Prefere manobra:** Giuoco Pianissimo com d3, que leva a posições estratégicas parecidas com as da Abertura Espanhola, só que com menos teoria.
-- **Está saindo do nível iniciante:** é a ponte natural entre os princípios de abertura e um repertório de verdade. As ideias (centro, roque, pressão em f7) são as mesmas que você já conhece do [Mate do Pastor](artigo:mate-do-pastor), só que aplicadas com paciência.
+- **Está saindo do nível iniciante:** é a ponte natural entre os [princípios de abertura](artigo:principios-de-abertura) e um repertório de verdade. As ideias (centro, roque, pressão em f7) são as mesmas que você já conhece do [Mate do Pastor](artigo:mate-do-pastor), só que aplicadas com paciência.
 
 Se você joga de Pretas e enfrenta muito 1.e4, conheça também a [Defesa Siciliana](artigo:defesa-siciliana), que evita a Italiana desde o primeiro lance.
 

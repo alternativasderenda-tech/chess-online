@@ -2,14 +2,14 @@
 id: movimento-do-cavalo
 titulo: How the Knight Moves in Chess: The Definitive Guide
 titulo_seo: How the Knight Moves in Chess: The Definitive Guide | Chess Online
-descricao: Everything about how the knight moves in chess: the L-shape, why it jumps over pieces, forks, tactical patterns and how to master the board's most unpredictable piece.
+descricao: How the knight moves in chess: the L-shape, why it jumps over pieces, forks, tactical patterns and how to master the board's most unpredictable piece.
 nivel: iniciante
 ordem: 30
 publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [how the knight moves, knight movement chess, knight L-shape, knight fork, check with knight]
 jogar: 1
-relacionados: [jogar-do-zero, regras, aberturas-para-iniciantes, mate-do-pastor]
+relacionados: [como-as-pecas-se-movem, garfo, valor-das-pecas, taticas]
 ---
 The knight is the most special piece in chess: it moves in an "L", jumps over other pieces and follows a unique pattern that confuses beginners — yet devastates in the right hands. This guide shows how the knight moves, why it is so powerful and the tactical patterns every player needs to know.
 
@@ -70,7 +70,7 @@ Practical consequences:
 
 ## 4. The value and strength of the knight {#valor}
 
-In the traditional count of piece values:
+In the traditional count of [piece values](artigo:valor-das-pecas):
 
 - **Pawn:** 1 point
 - **Knight:** 3 points
@@ -82,7 +82,7 @@ Knight and bishop are worth the same (3), but **they are useful in different sit
 
 ## 5. The fork: the knight's most famous tactic {#garfo}
 
-A **fork** is when a single piece attacks two enemy pieces at the same time. The knight is the king of forks in chess, because the L-shaped move enables attacks in directions no other piece can manage.
+A **[fork](artigo:garfo)** is when a single piece attacks two enemy pieces at the same time. The knight is the king of forks in chess, because the L-shaped move enables attacks in directions no other piece can manage.
 
 ### Classic example: the family fork
 
@@ -120,11 +120,11 @@ A knight is **bad** when:
 - It can easily be driven away by an enemy pawn.
 - It can't reach the squares that matter in the position.
 
-In play, it's common to trade your good knight for the opponent's bad bishop. That kind of small trade decides games.
+In play, it's common to trade your good knight for the opponent's [bad bishop](artigo:bispos). That kind of small trade decides games.
 
 ## 7. Practical tips for using the knight well {#dicas}
 
-1. **Knights before bishops.** In the opening, develop the knight first (to c3 or f3 for White; c6 or f6 for Black).
+1. **Knights before bishops.** In the opening, [develop the knight first](artigo:principios-de-abertura) (to c3 or f3 for White; c6 or f6 for Black).
 2. **Look for outposts.** Squares that no enemy pawn can attack are called "outposts". A knight on an advanced outpost is worth as much as a rook.
 3. **In closed positions, treasure your knights.** Don't trade a knight for a bishop if the game is closed — the knight is better.
 4. **Beware of knights on the rim.** If your knight is on a4, a5, h4 or h5, it's in a dangerous zone — it can be driven away and lose a lot of time.

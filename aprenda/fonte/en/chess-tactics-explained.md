@@ -9,10 +9,10 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [chess tactics, tactical patterns, fork, pin, skewer, chess puzzles]
 jogar: 2
-relacionados: [garfo, cravada, mate-do-corredor, jogar-do-zero]
+relacionados: [garfo, cravada, calculo, sacrificios, analisar-partidas]
 ensina: [Chess tactics, Tactical patterns, Calculation]
 ---
-A **chess tactic** is a short, usually forcing sequence of moves that wins material or delivers checkmate by exploiting a concrete weakness in the opponent's position. Tactics rest on a handful of **patterns** that come up again and again: the fork, the pin, the skewer, the discovered attack, deflection and the back-rank mate. Once you learn to recognise them, you start winning pieces and games that used to slip away.
+A **chess tactic** is a short, usually forcing sequence of moves that wins material or delivers [checkmate](artigo:xeque-mate-e-afogamento) by exploiting a concrete weakness in the opponent's position. Tactics rest on a handful of **patterns** that come up again and again: the fork, the pin, the skewer, the discovered attack, deflection and the back-rank mate. Once you learn to recognise them, you start winning pieces and games that used to slip away.
 
 ## Tactics vs strategy {#tatica-x-estrategia "Tactics vs strategy"}
 
@@ -46,7 +46,7 @@ legenda: The f7 knight, protected by the c4 bishop, attacks the queen on d8 and 
 
 ### Pin
 
-In a pin, a long-range piece (bishop, rook or queen) attacks a piece that cannot move, because something more valuable stands behind it. If that is the king, moving the pinned piece is illegal.
+In a pin, a long-range piece (bishop, rook or queen) attacks a piece that cannot move, because something [more valuable](artigo:valor-das-pecas) stands behind it. If that is the king, moving the pinned piece is illegal.
 
 ```tabuleiro
 fen: 4k3/8/2n5/1B6/8/8/5PPP/6K1 w - - 0 1
@@ -111,8 +111,8 @@ Before each move, scan for **checks, captures and threats**: look at every possi
 
 1. **Solve short puzzles every day.** Fifteen minutes a day beats two hours at the weekend.
 2. **Study one pattern at a time**, in the order of the table above, and only move on when that pattern's puzzles feel easy.
-3. **Calculate before you touch.** In a puzzle, only move a piece once the whole line is in your head, including your opponent's best reply.
-4. **Play games** and, after each one, look for the tactics you and your opponent missed.
+3. **Calculate before you touch.** In a puzzle, only move a piece once [the whole line is in your head](artigo:calculo), including your opponent's best reply.
+4. **Play games** and, after each one, [look for the tactics you and your opponent missed](artigo:analisar-partidas).
 
 If you are still learning the rules, start with [how to play chess for beginners](artigo:jogar-do-zero).
 

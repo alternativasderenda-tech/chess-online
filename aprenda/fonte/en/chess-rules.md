@@ -9,13 +9,13 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [chess rules, official chess rules, fide rules, checkmate rules, chess rules for beginners]
 jogar: 1
-relacionados: [jogar-do-zero, aberturas-para-iniciantes, mate-do-pastor, ritmos-de-jogo]
+relacionados: [como-as-pecas-se-movem, lances-especiais, xeque-mate-e-afogamento, empates, ritmos-de-jogo]
 ---
 This is a complete summary of the official rules of chess according to FIDE (the International Chess Federation), translated into plain, accessible language. Everything you need to know to play by the international standard, without having to read the original 60-page rulebook.
 
 ## 1. The board and the starting position {#tabuleiro}
 
-Chess is played on a board of 64 squares (8x8) in alternating colors. **The square in each player's right-hand corner must be white**. The pieces start on the first two ranks on each side.
+Chess is played on a [board of 64 squares](artigo:tabuleiro-e-notacao) (8x8) in alternating colors. **The square in each player's right-hand corner must be white**. The pieces start on the first two ranks on each side.
 
 Order of the pieces on the first rank (from A to H):
 
@@ -31,7 +31,7 @@ legenda: Starting position: the king and queen stand in the middle of the first 
 
 ## 2. How the pieces move {#movimentos}
 
-Each piece has its own way of moving. Here is the summary:
+Each piece has its own [way of moving](artigo:como-as-pecas-se-movem). Here is the summary:
 
 :::peca ♟ Pawn
 Moves one square forward. On its first move, it may advance two squares. It captures diagonally, one square forward. It never moves backward.
@@ -63,7 +63,7 @@ Moves one square in any direction. It cannot move onto a square attacked by an e
 
 The king and one rook move together: the king moves two squares toward the rook, and the rook jumps to the other side of the king. There is kingside castling (the king's side, the more common one) and queenside castling (the queen's side).
 
-Conditions for castling:
+[Conditions for castling](artigo:lances-especiais):
 
 - Neither the king nor the chosen rook may have moved earlier in the game.
 - There must be no pieces between the king and the rook.
@@ -113,7 +113,7 @@ A player may resign at any moment. This usually happens when the player realizes
 
 ### Stalemate
 
-The player to move is not in check but has no legal move available. The game ends in a draw. This is one of the most important endgame rules — you can be up a whole queen, but if you stalemate the opponent's king, the game ends in a draw.
+The player to move is not in check but has no legal move available. The game ends in a draw. This is one of the most important endgame rules — you can be up a whole queen, but if you [stalemate the opponent's king](artigo:xeque-mate-e-afogamento), the game ends in a draw.
 
 ```tabuleiro
 fen: 7k/5Q2/6K1/8/8/8/8/8 b - - 0 1
@@ -127,7 +127,7 @@ The two players can agree to a draw at any moment. In official tournaments, ther
 
 ### The fifty-move rule
 
-If 50 consecutive moves go by with no capture and no pawn move, either player can claim a draw. The rule exists to prevent endless games in endgames that make no progress.
+If 50 consecutive moves go by with no capture and no pawn move, [either player can claim a draw](artigo:empates). The rule exists to prevent endless games in endgames that make no progress.
 
 ### Threefold repetition
 

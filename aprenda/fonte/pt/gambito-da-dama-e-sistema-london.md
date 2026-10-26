@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [gambito da dama, gambito da rainha, gambito da dama aceito, gambito da dama recusado, defesa eslava, sistema london, sistema de londres, armadilha do elefante]
 jogar: 2
-relacionados: [aberturas-para-iniciantes, abertura-italiana, francesa-e-caro-kann]
+relacionados: [francesa-e-caro-kann, estrutura-de-peoes, cravada, preparacao-de-aberturas, aberturas-para-iniciantes]
 ---
 O Gambito da Dama (**1.d4 d5 2.c4**) e o Sistema London (**1.d4** com o bispo em f4 logo cedo) são as duas formas mais populares de jogar 1.d4. No Gambito da Dama, as Brancas oferecem o peão c4 para desviar o peão d5 do centro. No London, montam quase sempre a mesma estrutura (d4, Bf4, e3, c3, Cf3, Cbd2 e Bd3), com pouca dependência do que as Pretas fazem. O primeiro é uma luta pelo centro com muita teoria; o segundo, um sistema que troca teoria por planos.
 
@@ -52,7 +52,7 @@ A linha clássica é **3.Cc3 Cf6 4.Bg5 Be7 5.e3 O-O 6.Cf3**, a base da **Defesa 
 
 ### Variante das Trocas: 4.cxd5 exd5
 
-As Brancas trocam em d5 logo cedo: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. O plano típico é o **ataque das minorias**: os peões b (b4–b5) avançam contra a maioria preta no flanco da dama para criar um peão fraco em c6. Em troca, o bispo de c8 das Pretas fica livre.
+As Brancas trocam em d5 logo cedo: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. O plano típico é o **[ataque das minorias](artigo:estrutura-de-peoes)**: os peões b (b4–b5) avançam contra a maioria preta no flanco da dama para criar um peão fraco em c6. Em troca, o bispo de c8 das Pretas fica livre.
 
 ## Defesa Eslava: 2...c6 {#eslava "Defesa Eslava"}
 
@@ -97,7 +97,7 @@ explicacao: 6.Df3! ataca a torre de a8 pela diagonal f3–a8. Se as Pretas inter
 
 ### Gambito da Dama Recusado: a Armadilha do Elefante
 
-Na posição do Gambito Recusado, o cavalo de f6 parece cravado pelo bispo de g5. Por isso, as Brancas às vezes acham que podem ganhar o peão d5. Não podem.
+Na posição do Gambito Recusado, o cavalo de f6 parece [cravado](artigo:cravada) pelo bispo de g5. Por isso, as Brancas às vezes acham que podem ganhar o peão d5. Não podem.
 
 ```exercicio
 fen: r1bqkb1r/pppn1ppp/5n2/3N2B1/3P4/8/PP2PPPP/R2QKBNR b KQkq - 0 6
@@ -113,7 +113,7 @@ explicacao: 6...Cxd5! 7.Bxd8 Bb4+ 8.Dd2 Bxd2+ 9.Rxd2 Rxd8 — as Pretas devolvem
 
 ## Qual escolher: Gambito da Dama ou London? {#qual-escolher "Qual escolher"}
 
-- **Gambito da Dama:** para quem quer lutar pela vantagem com 1.d4 e aceita estudar as respostas pretas (Aceito, Recusado e Eslava). Ensina estratégia clássica: estruturas, colunas abertas, peão isolado.
+- **Gambito da Dama:** para quem quer lutar pela vantagem com 1.d4 e aceita [estudar as respostas pretas](artigo:preparacao-de-aberturas) (Aceito, Recusado e Eslava). Ensina estratégia clássica: estruturas, colunas abertas, peão isolado.
 - **Sistema London:** para quem tem pouco tempo de estudo, joga muito blitz ou quer as mesmas posições toda partida.
 
 Muitos jogadores começam pelo London e migram para o Gambito da Dama quando querem posições mais ambiciosas. Se você está montando o primeiro repertório, compare também as opções do [guia de aberturas para iniciantes](artigo:aberturas-para-iniciantes).

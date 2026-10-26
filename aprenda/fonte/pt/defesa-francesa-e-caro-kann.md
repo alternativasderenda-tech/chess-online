@@ -8,9 +8,9 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [defesa francesa, caro-kann, variante do avanço, winawer, tarrasch, variante das trocas, ataque panov, aberturas de xadrez]
 jogar: 2
-relacionados: [defesa-siciliana, abertura-italiana, aberturas-para-iniciantes]
+relacionados: [defesa-siciliana, estrutura-de-peoes, bispos, gambito-da-dama-e-london, preparacao-de-aberturas]
 ---
-A Defesa Francesa (**1.e4 e6**) e a Caro-Kann (**1.e4 c6**) são as duas defesas sólidas mais populares contra 1.e4. Nas duas, as Pretas preparam ...d5 para contestar o peão e4 já no segundo lance e apostam numa estrutura de peões firme em vez de jogo tático imediato. A diferença central está no bispo das casas brancas: na Francesa, ele fica preso atrás do peão e6; na Caro-Kann, ele sai antes, para f5 ou g4.
+A Defesa Francesa (**1.e4 e6**) e a Caro-Kann (**1.e4 c6**) são as duas defesas sólidas mais populares contra 1.e4. Nas duas, as Pretas preparam ...d5 para contestar o peão e4 já no segundo lance e apostam numa [estrutura de peões](artigo:estrutura-de-peoes) firme em vez de jogo tático imediato. A diferença central está no bispo das casas brancas: na Francesa, ele fica preso atrás do peão e6; na Caro-Kann, ele sai antes, para f5 ou g4.
 
 ## O que as duas têm em comum {#em-comum "O que têm em comum"}
 
@@ -35,7 +35,7 @@ legenda: A Francesa, Variante do Avanço, depois de 3.e5: as Pretas atacam a cad
 
 Com 3.e5, as Brancas ganham espaço no flanco do rei. A regra de ouro das Pretas é **atacar a cadeia de peões**: ...c5 contra a base (d4) e, mais tarde, ...f6 contra a ponta (e5). A linha principal segue **3...c5 4.c3 Cc6 5.Cf3 Db6**: cavalo, dama e peão c5 somam pressão contra d4.
 
-O problema crônico da Francesa é o **bispo de c8**, preso atrás de e6. As Pretas costumam resolver isso com ...b6 e ...Ba6, trocando-o pelo bispo branco, ou deixando-o na defesa até abrir a posição.
+O problema crônico da Francesa é o **[bispo de c8](artigo:bispos)**, preso atrás de e6. As Pretas costumam resolver isso com ...b6 e ...Ba6, trocando-o pelo bispo branco, ou deixando-o na defesa até abrir a posição.
 
 ### Winawer: 3.Cc3 Bb4
 
@@ -58,7 +58,7 @@ A **Winawer** é a linha mais aguda da Francesa. Depois de **4.e5 c5 5.a3 Bxc3+ 
 
 ### Armadilha do Avanço: a dama que se esquece de b5
 
-No Avanço, as Pretas querem ganhar o peão d4. Mas, se o bispo branco já está em d3, capturar duas vezes em d4 abre a diagonal b5–e8 para um xeque com ataque descoberto.
+No Avanço, as Pretas querem ganhar o peão d4. Mas, se o bispo branco já está em d3, capturar duas vezes em d4 abre a diagonal b5–e8 para um xeque com [ataque descoberto](artigo:ataque-descoberto).
 
 ```exercicio
 fen: r1b1kbnr/pp3ppp/4p3/3pP3/3q4/3B4/PP3PPP/RNBQK2R w KQkq - 0 9

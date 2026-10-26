@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [skewer, chess skewer, x-ray, chess tactics, pin and skewer, rook endgame]
 jogar: 2
-relacionados: [taticas, cravada, garfo, mate-do-corredor]
+relacionados: [cravada, taticas, finais-de-torre, garfo]
 ensina: [Skewer, Absolute skewer, Relative skewer]
 ---
 A **skewer** is an attack along a line against a valuable piece which, when it steps out of the way, exposes another piece standing behind it. It is the reverse of a pin: in a pin the front piece is worth less and does not want to move; in a skewer the front piece is worth more and is forced to move, giving up the one behind.
@@ -66,7 +66,7 @@ An easy way to remember it: in a [pin](artigo:cravada), the stuck piece is the o
 
 ## The rook-endgame trick {#final-de-torre "The rook-endgame trick"}
 
-Skewers are everywhere in rook endgames. The typical case: White's rook stands in front of its own pawn (on a8, with the pawn on a7), and Black's rook is behind the pawn on the a-file. If Black's king is on the wrong square, White has a shot: the rook leaves a8 for h8, and if Black's rook grabs the pawn, White's rook checks along the seventh rank and wins the rook with a skewer.
+Skewers are everywhere in [rook endgames](artigo:finais-de-torre). The typical case: White's rook stands in front of its own pawn (on a8, with the pawn on a7), and Black's rook is behind the pawn on the a-file. If Black's king is on the wrong square, White has a shot: the rook leaves a8 for h8, and if Black's rook grabs the pawn, White's rook checks along the seventh rank and wins the rook with a skewer.
 
 With Black's king on g7 or h7 the trick fails, because the king covers h7 (or is already standing there). That is why the defender in this kind of ending should keep the king on those squares. The last puzzle in this article shows the winning version.
 
@@ -81,7 +81,7 @@ Skewers appear in very recognisable situations. It is worth checking each of the
 - **Kings in the centre in the endgame.** Once the queens are off, the king becomes an active piece and walks around the board. That is great for the endgame, but it exposes the king to checks along a line with a rook or a passed pawn behind it.
 - **Open long diagonals.** A bishop on b2 or g2 (or b7 and g7) sees across the whole board. King and queen on the same long diagonal are an invitation.
 - **Pieces at both ends of the same rank.** Rooks and kings on the same rank with no pawns in between are classic targets for rook or queen skewers.
-- **Pawns about to promote.** A skewer can also win a freshly promoted queen: if your opponent promotes on a square lined up with their own king, a rook or bishop can give check and take the new queen from behind.
+- **Pawns about to promote.** A skewer can also win a freshly promoted queen: if your opponent [promotes](artigo:lances-especiais) on a square lined up with their own king, a rook or bishop can give check and take the new queen from behind.
 
 A good way to train your eye is, after each of your opponent's moves, to trace the lines coming out of their king and see what stands behind.
 

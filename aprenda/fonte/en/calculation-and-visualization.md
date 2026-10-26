@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [chess calculation, candidate moves, visualization, checks captures threats, tree of variations, how to calculate]
 jogar: 4
-relacionados: [sacrificios, planos-meio-jogo, rotina-de-treino]
+relacionados: [taticas, sacrificios, ataque-descoberto, analisar-partidas, rotina-de-treino]
 ensina: [Candidate moves, Checks captures and threats, Tree of variations, Visualization]
 ---
 Calculating in chess means predicting a sequence of moves in your head — a **variation** — and evaluating the position it leads to, without touching the pieces. Strong players follow a four-step method: list the **candidate moves**, starting with the forcing ones (**checks, captures and threats**); calculate each candidate until the position is quiet; **evaluate** that position; and only then compare and choose. **Visualization** is the skill that supports all of this: seeing the board as it will be, not as it is.
@@ -18,7 +18,7 @@ Calculating in chess means predicting a sequence of moves in your head — a **v
 
 A typical middlegame position has 30 to 40 legal moves. Nobody calculates them all. The first step is to choose two to four **candidates**: the moves that deserve a deep look. The idea of listing candidates before calculating, and of organizing calculation as a tree, became famous through Alexander Kotov's book *Think Like a Grandmaster*.
 
-The safest way to avoid missing the decisive move is to look, in this order, for:
+The safest way to avoid missing the [decisive move](artigo:taticas#como-enxergar) is to look, in this order, for:
 
 1. **Checks.** They restrict your opponent's replies the most.
 2. **Captures.** They change the material balance and usually demand an immediate answer.
@@ -65,7 +65,7 @@ Four attackers against three defenders looks like an edge. But the first defende
 Calculation depends on "seeing" where the pieces are three or four moves later. Typical visualization errors are:
 
 - **Ghost pieces:** forgetting that a piece has left its square (so the square is now free) or that a piece has been captured.
-- **Lines that open:** when a piece moves out of the way, a rook, bishop or queen behind it starts attacking. That's how discovered checks work.
+- **Lines that open:** when a piece moves out of the way, a rook, bishop or queen behind it starts attacking. That's how [discovered checks](artigo:ataque-descoberto) work.
 - **Backward moves:** retreats and sideways moves are the easiest to overlook, both yours and your opponent's.
 
 ```tabuleiro
@@ -84,7 +84,7 @@ Calculating costs clock time, and time is limited. A sensible split:
 
 - **Critical positions** (sacrifices, trades that lead to endgames, exposed kings) deserve deep calculation.
 - **Quiet positions** call for more evaluation and less calculation: lean on strategic principles and save time for later.
-- **Do a final blunder check** before touching a piece: "what are my opponent's checks, captures and threats after my move?". That one question prevents most losing moves.
+- **Do a final [blunder check](artigo:analisar-partidas#checklist)** before touching a piece: "what are my opponent's checks, captures and threats after my move?". That one question prevents most losing moves.
 
 ## Typical calculation errors {#erros}
 

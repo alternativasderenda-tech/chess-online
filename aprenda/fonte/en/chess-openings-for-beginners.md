@@ -9,13 +9,13 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [chess openings, openings for beginners, italian game, sicilian defense, ruy lopez, spanish opening, queen's gambit, london system]
 jogar: 2
-relacionados: [jogar-do-zero, regras, mate-do-pastor, movimento-do-cavalo]
+relacionados: [principios-de-abertura, abertura-italiana, defesa-siciliana, francesa-e-caro-kann, gambito-da-dama-e-london]
 ---
 You don't need to memorize 20 moves of every opening. You need to understand the principles and keep, at most, three openings you're comfortable with in your repertoire. This guide walks through the 10 most important openings for a beginner and helps you decide which ones to adopt.
 
 ## The principles that matter more than memorizing moves {#principios}
 
-Almost every beginner makes the same mistake: they try to memorize long sequences of famous openings, assume the game is over the moment they lose the thread, and get discouraged. You don't need any of that. The truth is that **the principles cover 95% of opening situations**:
+Almost every beginner makes the same mistake: they try to memorize long sequences of famous openings, assume the game is over the moment they lose the thread, and get discouraged. You don't need any of that. The truth is that **[the principles](artigo:principios-de-abertura) cover 95% of opening situations**:
 
 - **Control the center.** The four central squares (d4, d5, e4, e5) are the most valuable on the board. Pieces in the center have more mobility.
 - **Develop your minor pieces first.** Knights before bishops. In most openings, knights go to c3, f3, c6, and f6.
@@ -30,7 +30,7 @@ If you follow these five principles, you'll get playable positions in *any* open
 ### 1. Italian Game
 
 :::caixa 1.e4 e5 2.Nf3 Nc6 3.Bc4
-The most classic opening there is, and the number-one recommendation for beginners. The ideas are simple and direct: occupy the center, develop your minor pieces, and target your opponent's weak spot (the f7 square).
+[The most classic opening there is](artigo:abertura-italiana), and the number-one recommendation for beginners. The ideas are simple and direct: occupy the center, develop your minor pieces, and target your opponent's weak spot (the f7 square).
 
 <small>Why it's good: quick to learn, a natural attack, and it teaches the principles in practice.</small>
 :::
@@ -52,7 +52,7 @@ Considered the most respected opening in chess history. The bishop on b5 pressur
 ### 3. Queen's Gambit
 
 :::caixa 1.d4 d5 2.c4
-It's a "gambit" because it offers a pawn, but that pawn is hard to hold on to. Black almost always declines it or accepts it only temporarily. Excellent for players who prefer positional play over direct attacks.
+It's a "gambit" because it offers a pawn, but that pawn is hard to hold on to. Black almost always [declines it or accepts it only temporarily](artigo:gambito-da-dama-e-london). Excellent for players who prefer positional play over direct attacks.
 
 <small>Why it's good: solid positions, clear plans, and a strong foundation for understanding strategy.</small>
 :::
@@ -70,7 +70,7 @@ Instead of pushing the king's pawn, White starts with the queenside pawn on the 
 ### 5. Sicilian Defense
 
 :::caixa 1.e4 c5
-The most aggressive defense against 1.e4 and the most popular at the professional level. Black attacks the center from the queenside instead of mirroring White's pawn. Asymmetrical, dynamic positions.
+[The most aggressive defense against 1.e4](artigo:defesa-siciliana) and the most popular at the professional level. Black attacks the center from the queenside instead of mirroring White's pawn. Asymmetrical, dynamic positions.
 
 <small>Heads up: it has a LOT of theory. As a beginner, it's worth starting with simpler variations like the Najdorf or the Accelerated Dragon.</small>
 :::
@@ -93,7 +93,7 @@ Black builds a solid pawn chain and closes the center. Strategic and patient. Ex
 ### 7. Caro-Kann Defense
 
 :::caixa 1.e4 c6 2.d4 d5
-Similar to the French, but with a more active c8 bishop. Less theory, more simplicity. Karpov used it his entire life.
+[Similar to the French](artigo:francesa-e-caro-kann), but with a more active c8 bishop. Less theory, more simplicity. Karpov used it his entire life.
 
 <small>Why it's good: a sturdy defense, easy to learn, ideal for beginners playing Black against 1.e4.</small>
 :::
@@ -145,7 +145,7 @@ Play against the computer on Chess Online. No sign-up, right in your browser. Pi
 
 ## Common opening mistakes
 
-- **Bringing the queen out too early.** She gets chased around by minor pieces and you waste time retreating.
+- **[Bringing the queen out too early](artigo:erros-de-iniciante#dama).** She gets chased around by minor pieces and you waste time retreating.
 - **Attacking before developing.** A lone piece doesn't take down an army. Develop first, attack later.
 - **Capturing pawns for no reason.** Often the pawn is poisoned — you win material but lose time and position.
 - **Forgetting to castle.** A king stuck in the center is an invitation to checkmate. Castle before move 10.

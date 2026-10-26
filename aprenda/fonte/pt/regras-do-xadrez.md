@@ -9,13 +9,13 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [regras do xadrez, regras oficiais xadrez, regras fide, xeque mate regras, regras xadrez para iniciantes]
 jogar: 1
-relacionados: [jogar-do-zero, aberturas-para-iniciantes, mate-do-pastor, ritmos-de-jogo]
+relacionados: [como-as-pecas-se-movem, lances-especiais, xeque-mate-e-afogamento, empates, ritmos-de-jogo]
 ---
 Este é o resumo completo das regras oficiais do xadrez segundo a FIDE (Federação Internacional de Xadrez), traduzido para uma linguagem acessível. Tudo o que você precisa saber para jogar conforme o padrão internacional, sem precisar ler o regulamento original de 60 páginas.
 
 ## 1. O tabuleiro e a posição inicial {#tabuleiro}
 
-O xadrez é jogado em um tabuleiro de 64 casas (8x8), com cores alternadas. **A casa do canto direito de cada jogador deve ser branca**. As peças começam nas duas primeiras fileiras de cada lado.
+O xadrez é jogado em um [tabuleiro de 64 casas](artigo:tabuleiro-e-notacao) (8x8), com cores alternadas. **A casa do canto direito de cada jogador deve ser branca**. As peças começam nas duas primeiras fileiras de cada lado.
 
 Ordem das peças na primeira fileira (de A para H):
 
@@ -31,7 +31,7 @@ legenda: Posição inicial: o rei e a dama ocupam o centro da primeira fileira, 
 
 ## 2. Movimentos das peças {#movimentos}
 
-Cada peça tem um movimento próprio. Veja o resumo:
+Cada peça tem um [movimento próprio](artigo:como-as-pecas-se-movem). Veja o resumo:
 
 :::peca ♟ Peão
 Anda uma casa para frente. No primeiro lance, pode avançar duas casas. Captura na diagonal, uma casa para frente. Não anda para trás.
@@ -63,7 +63,7 @@ Move uma casa em qualquer direção. Não pode mover-se para uma casa atacada po
 
 O rei e uma torre se movem juntos: o rei avança duas casas em direção à torre e a torre pula para o outro lado do rei. Existe roque curto (lado do rei, mais comum) e roque longo (lado da dama).
 
-Condições para fazer o roque:
+[Condições para fazer o roque](artigo:lances-especiais):
 
 - O rei e a torre escolhida não podem ter se movido antes.
 - Não pode haver peças entre o rei e a torre.
@@ -113,7 +113,7 @@ Um jogador pode desistir a qualquer momento. Geralmente isso acontece quando o j
 
 ### Afogamento (stalemate)
 
-O jogador da vez não está em xeque, mas não tem nenhuma jogada legal possível. A partida termina em empate. Essa é uma das regras mais importantes do final de jogo — você pode ter dama de vantagem mas, se afogar o rei adversário, o jogo termina empate.
+O jogador da vez não está em xeque, mas não tem nenhuma jogada legal possível. A partida termina em empate. Essa é uma das regras mais importantes do final de jogo — você pode ter dama de vantagem mas, se [afogar o rei adversário](artigo:xeque-mate-e-afogamento), o jogo termina empate.
 
 ```tabuleiro
 fen: 7k/5Q2/6K1/8/8/8/8/8 b - - 0 1
@@ -127,7 +127,7 @@ Os dois jogadores podem concordar em empatar a qualquer momento. Em torneios ofi
 
 ### Regra dos 50 lances
 
-Se passam 50 lances consecutivos sem captura nem movimento de peão, qualquer jogador pode pedir empate. A regra existe para impedir partidas infinitas em finais sem progresso.
+Se passam 50 lances consecutivos sem captura nem movimento de peão, [qualquer jogador pode pedir empate](artigo:empates). A regra existe para impedir partidas infinitas em finais sem progresso.
 
 ### Repetição tripla
 

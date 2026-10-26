@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [draw in chess, stalemate, threefold repetition, 50-move rule, insufficient material, perpetual check]
 jogar: 2
-relacionados: [xeque-mate-e-afogamento, mates-basicos, regras, ritmos-de-jogo]
+relacionados: [xeque-mate-e-afogamento, mates-basicos, finais-de-peao, regras, ritmos-de-jogo]
 ensina: [Stalemate, Threefold repetition, The 50-move rule, Insufficient material, Perpetual check]
 ---
 A **draw** in chess is a result where neither player wins: each gets half a point. Under FIDE rules, a game is drawn by **agreement between the players**, by **stalemate**, by **threefold repetition** of the same position, by the **50-move rule**, or when neither side can deliver checkmate anymore, as with **insufficient material**. Knowing these rules helps the winning side avoid letting victory slip away, and helps the losing side find a way to save the game.
@@ -30,7 +30,7 @@ casas: a8:amarela b8:vermelha b7:vermelha
 legenda: Black to move, but there's no move: b8 is attacked by the a7-pawn, b7 by the white king, and the black king isn't in check. Stalemate.
 ```
 
-This is a classic: with king and a- (or h-) pawn against a king, once the defending king reaches the corner, there's often no way to win. More in [check, checkmate and stalemate](artigo:xeque-mate-e-afogamento).
+This is a classic: with [king and a- (or h-) pawn against a king](artigo:finais-de-peao), once the defending king reaches the corner, there's often no way to win. More in [check, checkmate and stalemate](artigo:xeque-mate-e-afogamento).
 
 ## 3. Insufficient material {#material "3. Insufficient material"}
 

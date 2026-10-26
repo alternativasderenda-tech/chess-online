@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [garfo, garfo no xadrez, ataque duplo, garfo de cavalo, garfo de peão, tática de xadrez]
 jogar: 2
-relacionados: [taticas, movimento-do-cavalo, cravada, desvio-e-sobrecarga]
+relacionados: [taticas, movimento-do-cavalo, cravada, desvio-e-sobrecarga, valor-das-pecas]
 ensina: [Garfo, Ataque duplo, Garfo real]
 ---
 O **garfo** é um lance em que uma única peça ataca duas (ou mais) peças adversárias ao mesmo tempo. Como o adversário só consegue salvar uma delas por lance, a outra fica para ser capturada. É o padrão tático mais comum do xadrez e, para quem está começando a ganhar partidas, o mais lucrativo de aprender.
@@ -46,7 +46,7 @@ Para revisar o movimento em L, veja [como o cavalo se move](artigo:movimento-do-
 
 ## Garfo de peão {#peao "Garfo de peão"}
 
-O peão é a peça mais barata do tabuleiro, por isso o garfo de peão é devastador: qualquer peça que ele ataque vale mais do que ele. Um peão que avança e ataca duas peças na diagonal costuma ganhar uma delas, mesmo que o adversário depois capture o peão.
+O peão é [a peça mais barata do tabuleiro](artigo:valor-das-pecas), por isso o garfo de peão é devastador: qualquer peça que ele ataque vale mais do que ele. Um peão que avança e ataca duas peças na diagonal costuma ganhar uma delas, mesmo que o adversário depois capture o peão.
 
 ```tabuleiro
 fen: 6k1/ppp2ppp/3b1n2/4P3/3P4/8/PPP2PPP/6K1 b - - 0 1

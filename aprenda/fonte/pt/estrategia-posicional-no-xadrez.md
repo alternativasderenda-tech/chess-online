@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [estratégia posicional, xadrez posicional, avaliação de posição, casas fracas, posto avançado, espaço no xadrez]
 jogar: 3
-relacionados: [estrutura-de-peoes, bispos, planos-meio-jogo]
+relacionados: [estrutura-de-peoes, planos-meio-jogo, bispos, taticas, analisar-partidas]
 ensina: [Avaliação de posição, Casas fracas, Posto avançado, Vantagem de espaço, Colunas abertas]
 ---
 Estratégia posicional é a arte de melhorar a sua posição quando não há uma tática imediata no tabuleiro. Em vez de calcular uma sequência forçada, você avalia os **elementos estáveis** da posição — estrutura de peões, casas fracas, atividade das peças, segurança do rei, espaço e colunas abertas — e escolhe um plano para acumular pequenas vantagens até que elas se transformem em algo concreto: ganho de material, um ataque decisivo ou um final vencido.
@@ -18,7 +18,7 @@ Estratégia posicional é a arte de melhorar a sua posição quando não há uma
 
 A tática trata do curto prazo: xeques, capturas, ameaças, sequências que você consegue calcular até o fim. A estratégia trata do longo prazo: em que casa o cavalo vai ficar melhor, qual peão vai virar alvo, em que lado do tabuleiro atacar.
 
-As duas não competem. A tática decide a maioria das partidas, mas as boas táticas aparecem quase sempre em posições estrategicamente boas. Quem coloca as peças nas casas certas cria oportunidades; quem joga sem plano espera que elas apareçam.
+As duas não competem. A [tática](artigo:taticas) decide a maioria das partidas, mas as boas táticas aparecem quase sempre em posições estrategicamente boas. Quem coloca as peças nas casas certas cria oportunidades; quem joga sem plano espera que elas apareçam.
 
 O primeiro a organizar essas ideias de forma sistemática foi Wilhelm Steinitz, primeiro campeão mundial oficial. Entre os princípios associados a ele estão a acumulação de pequenas vantagens e a ideia de que o direito de atacar pertence a quem tem a vantagem. Décadas depois, Aron Nimzowitsch, no livro *Meu Sistema*, popularizou conceitos como o posto avançado, o bloqueio e a profilaxia.
 

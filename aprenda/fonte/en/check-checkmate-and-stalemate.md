@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [check, checkmate, stalemate, how to get out of check, difference between checkmate and stalemate]
 jogar: 1
-relacionados: [regras, mates-basicos, empates, como-as-pecas-se-movem]
+relacionados: [regras, mates-basicos, empates, ataque-descoberto, como-as-pecas-se-movem]
 ensina: [Check, Checkmate, Stalemate]
 ---
 **Check** means the king is under attack by an enemy piece; the player must get the king out of attack on their very next move. **Checkmate** is a check with no way out: the game ends and the player who delivered it wins. **Stalemate** is when the player to move is **not in check** but has no legal move at all: the game ends in a draw. The difference between checkmate and stalemate decides a lot of beginner games, so it's worth getting it right.
@@ -36,12 +36,12 @@ There are only three possible answers to a check. Remember them as **move, captu
 If none of the three is possible, it's checkmate.
 
 :::aviso
-**⚠️ Watch out:** you **can't** make any move that leaves your own king in check. That includes moving a piece that is shielding your king from an attack. In an online game, the system simply won't accept the move.
+**⚠️ Watch out:** you **can't** make any move that leaves your own king in check. That includes [moving a piece that is shielding your king](artigo:cravada) from an attack. In an online game, the system simply won't accept the move.
 :::
 
 ### Double check
 
-Sometimes two pieces give check at the same time. That's a **double check**. Since one move can't capture or block two attackers, the only way out is to **move the king**.
+Sometimes two pieces give check at the same time. That's a **[double check](artigo:ataque-descoberto)**. Since one move can't capture or block two attackers, the only way out is to **move the king**.
 
 ### Do I have to say "check"?
 
@@ -86,7 +86,7 @@ It feels unfair to the side with the queen, but that's the rule. Stalemate is th
 
 No. Many beginners check whenever they can, but a check without a plan often just pushes the enemy king to a better square and leaves your piece exposed. Before giving check, ask:
 
-- **Does the check win something?** For example, it attacks the king and another piece at once, or forces the king onto a worse square.
+- **Does the check win something?** For example, it [attacks the king and another piece at once](artigo:garfo), or forces the king onto a worse square.
 - **Is the checking piece safe?** A check with a piece that can be captured is just a quick way to lose it.
 - **Is there something better?** Sometimes a quiet move that takes away the king's escape squares sets up a mate that a hasty check would spoil.
 

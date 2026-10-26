@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [estrutura de peões, peão isolado, peões dobrados, peão atrasado, cadeia de peões, maioria de peões, peão passado]
 jogar: 3
-relacionados: [estrategia-posicional, planos-meio-jogo, finais-de-torre]
+relacionados: [estrategia-posicional, planos-meio-jogo, finais-de-peao, gambito-da-dama-e-london, francesa-e-caro-kann]
 ensina: [Peão isolado, Peões dobrados, Peão atrasado, Cadeia de peões, Maioria de peões]
 ---
 Estrutura de peões é a disposição dos peões no tabuleiro, e ela define os planos da partida mais do que qualquer outro elemento, porque **peão não anda para trás**: uma fraqueza criada na abertura costuma durar até o final. As estruturas mais importantes são o **peão isolado** (sem peões vizinhos), os **peões dobrados** (dois na mesma coluna), o **peão atrasado** (que ficou para trás dos vizinhos), as **cadeias de peões** (peões em diagonal que se protegem) e as **maiorias** (mais peões que o adversário numa ala, o que permite criar um peão passado).
@@ -26,7 +26,7 @@ Ao olhar para uma estrutura, faça três perguntas:
 
 ## Peão isolado {#isolado}
 
-O peão isolado não tem peões da mesma cor nas colunas vizinhas. O caso mais famoso é o **peão isolado da dama**, em d4 (ou d5), que aparece em muitas aberturas, como o Gambito da Dama e a Defesa Caro-Kann.
+O peão isolado não tem peões da mesma cor nas colunas vizinhas. O caso mais famoso é o **peão isolado da dama**, em d4 (ou d5), que aparece em muitas aberturas, como o [Gambito da Dama](artigo:gambito-da-dama-e-london) e a [Defesa Caro-Kann](artigo:francesa-e-caro-kann).
 
 ```tabuleiro
 fen: r1bq1rk1/pp2bppp/2n1pn2/8/2BP4/2N2N2/PP3PPP/R1BQ1RK1 w - - 0 1
@@ -57,7 +57,7 @@ Peões dobrados nem sempre são ruins. Em troca deles costuma vir algo: uma colu
 
 O peão atrasado é aquele que ficou para trás dos peões vizinhos e não consegue avançar com segurança, porque a casa à frente dele é controlada por um peão adversário. Ele é fraco por dois motivos: não pode ser defendido por peões e fica numa coluna semiaberta, exposto às torres inimigas. A casa à frente dele é um posto avançado natural para o adversário.
 
-O exemplo clássico é o peão preto de d6 em estruturas da Siciliana em que as Pretas jogaram ...e5: o peão de d6 fica atrasado e a casa d5 vira o grande alvo das Brancas. Por isso, nessas estruturas, a ruptura ...d5 é tão importante para as Pretas: quando ela acontece, a fraqueza desaparece.
+O exemplo clássico é o peão preto de d6 em estruturas da [Siciliana](artigo:defesa-siciliana) em que as Pretas jogaram ...e5: o peão de d6 fica atrasado e a casa d5 vira o grande alvo das Brancas. Por isso, nessas estruturas, a ruptura ...d5 é tão importante para as Pretas: quando ela acontece, a fraqueza desaparece.
 
 ## Cadeias de peões {#cadeias}
 
@@ -82,7 +82,7 @@ casas: a2 b2 c2 f7 g7 h7
 legenda: Material igual, mas maiorias em alas diferentes: as Brancas têm 3 contra 2 na ala da dama; as Pretas, 3 contra 2 na ala do rei.
 ```
 
-Nos finais, a maioria mais distante dos reis costuma valer mais, porque o peão passado que ela cria afasta o rei adversário — é o **peão passado externo**. Ao avançar uma maioria, empurre primeiro o **peão candidato**, aquele que não tem peão adversário à frente na mesma coluna. E quando o adversário tiver um peão passado, a resposta clássica é bloqueá-lo com uma peça, de preferência um cavalo.
+Nos [finais](artigo:finais-de-peao), a maioria mais distante dos reis costuma valer mais, porque o peão passado que ela cria afasta o rei adversário — é o **peão passado externo**. Ao avançar uma maioria, empurre primeiro o **peão candidato**, aquele que não tem peão adversário à frente na mesma coluna. E quando o adversário tiver um peão passado, a resposta clássica é bloqueá-lo com uma peça, de preferência um cavalo.
 
 :::dica
 **💡 Dica:** antes de trocar peças, olhe para os peões. Se a estrutura favorece você (adversário com isolado, dobrados ou sem maioria), troque peças e caminhe para o final. Se ela é ruim para você, mantenha as peças e busque atividade.

@@ -8,7 +8,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [queen's gambit, queen's gambit accepted, queen's gambit declined, slav defense, london system, elephant trap, chess openings]
 jogar: 2
-relacionados: [aberturas-para-iniciantes, abertura-italiana, francesa-e-caro-kann]
+relacionados: [francesa-e-caro-kann, estrutura-de-peoes, cravada, preparacao-de-aberturas, aberturas-para-iniciantes]
 ---
 The Queen's Gambit (**1.d4 d5 2.c4**) and the London System (**1.d4** with an early bishop to f4) are the two most popular ways to play 1.d4. In the Queen's Gambit, White offers the c4 pawn to lure Black's d5 pawn away from the center. In the London, White builds nearly the same setup every game (d4, Bf4, e3, c3, Nf3, Nbd2 and Bd3) and depends very little on what Black does. The first is a fight for the center with plenty of theory; the second is a system that trades theory for plans.
 
@@ -52,7 +52,7 @@ The classical line is **3.Nc3 Nf6 4.Bg5 Be7 5.e3 O-O 6.Nf3**, the basis of the *
 
 ### Exchange Variation: 4.cxd5 exd5
 
-White trades on d5 early: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. The typical plan is the **minority attack**: White's b-pawn (b4-b5) advances against Black's queenside majority to create a weak pawn on c6. In return, Black's c8 bishop is free.
+White trades on d5 early: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. The typical plan is the **[minority attack](artigo:estrutura-de-peoes)**: White's b-pawn (b4-b5) advances against Black's queenside majority to create a weak pawn on c6. In return, Black's c8 bishop is free.
 
 ## Slav Defense: 2...c6 {#eslava "Slav Defense"}
 
@@ -97,7 +97,7 @@ explicacao: 6.Qf3! hits the a8 rook along the f3-a8 diagonal. If Black puts a pi
 
 ### Queen's Gambit Declined: the Elephant Trap
 
-In the Declined, the f6 knight looks pinned by the g5 bishop, so White sometimes thinks the d5 pawn is free. It isn't.
+In the Declined, the f6 knight looks [pinned](artigo:cravada) by the g5 bishop, so White sometimes thinks the d5 pawn is free. It isn't.
 
 ```exercicio
 fen: r1bqkb1r/pppn1ppp/5n2/3N2B1/3P4/8/PP2PPPP/R2QKBNR b KQkq - 0 6
@@ -113,7 +113,7 @@ explicacao: 6...Nxd5! 7.Bxd8 Bb4+ 8.Qd2 Bxd2+ 9.Kxd2 Kxd8 — Black gives the qu
 
 ## Which to choose: Queen's Gambit or London? {#qual-escolher "Which to choose"}
 
-- **Queen's Gambit:** for players who want to fight for an advantage with 1.d4 and are willing to study Black's replies (Accepted, Declined and Slav). It teaches classical strategy: structures, open files, the isolated pawn.
+- **Queen's Gambit:** for players who want to fight for an advantage with 1.d4 and are willing to [study Black's replies](artigo:preparacao-de-aberturas) (Accepted, Declined and Slav). It teaches classical strategy: structures, open files, the isolated pawn.
 - **London System:** for players with little study time, who play a lot of blitz or want the same positions every game.
 
 Plenty of players start with the London and switch to the Queen's Gambit when they want more ambitious positions. If you're building your first repertoire, also compare the options in the [openings guide for beginners](artigo:aberturas-para-iniciantes).

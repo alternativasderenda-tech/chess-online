@@ -9,10 +9,10 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [táticas de xadrez, tática de xadrez, padrões táticos, garfo, cravada, espeto, exercícios de xadrez]
 jogar: 2
-relacionados: [garfo, cravada, mate-do-corredor, jogar-do-zero]
+relacionados: [garfo, cravada, calculo, sacrificios, analisar-partidas]
 ensina: [Táticas de xadrez, Padrões táticos, Cálculo]
 ---
-**Tática de xadrez** é uma sequência curta de lances, quase sempre forçada, que ganha material ou dá xeque-mate aproveitando um ponto fraco concreto da posição adversária. Ela se apoia em poucos **padrões** que se repetem o tempo todo: o garfo, a cravada, o espeto, o ataque descoberto, o desvio e o mate do corredor. Quem aprende a reconhecer esses padrões passa a ganhar peças e partidas que antes deixava escapar.
+**Tática de xadrez** é uma sequência curta de lances, quase sempre forçada, que ganha material ou dá [xeque-mate](artigo:xeque-mate-e-afogamento) aproveitando um ponto fraco concreto da posição adversária. Ela se apoia em poucos **padrões** que se repetem o tempo todo: o garfo, a cravada, o espeto, o ataque descoberto, o desvio e o mate do corredor. Quem aprende a reconhecer esses padrões passa a ganhar peças e partidas que antes deixava escapar.
 
 ## Tática x estratégia {#tatica-x-estrategia "Tática x estratégia"}
 
@@ -46,7 +46,7 @@ legenda: O cavalo de f7, protegido pelo bispo de c4, ataca a dama de d8 e a torr
 
 ### Cravada
 
-Na cravada, uma peça de longo alcance (bispo, torre ou dama) ataca uma peça que não pode sair do lugar, porque atrás dela há algo mais valioso. Se for o rei, mover a peça cravada é ilegal.
+Na cravada, uma peça de longo alcance (bispo, torre ou dama) ataca uma peça que não pode sair do lugar, porque atrás dela há algo [mais valioso](artigo:valor-das-pecas). Se for o rei, mover a peça cravada é ilegal.
 
 ```tabuleiro
 fen: 4k3/8/2n5/1B6/8/8/5PPP/6K1 w - - 0 1
@@ -111,8 +111,8 @@ Antes de cada lance, faça a varredura **xeques, capturas e ameaças**: olhe pri
 
 1. **Resolva exercícios curtos todos os dias.** Quinze minutos por dia rendem mais do que duas horas no fim de semana.
 2. **Estude um padrão de cada vez**, na ordem da tabela acima, e só avance quando os exercícios do padrão ficarem fáceis.
-3. **Calcule antes de mexer.** No exercício, só toque na peça quando tiver a linha inteira na cabeça, inclusive a melhor resposta do adversário.
-4. **Jogue partidas** e, depois de cada uma, procure as táticas que você e o adversário perderam.
+3. **Calcule antes de mexer.** No exercício, só toque na peça quando tiver [a linha inteira na cabeça](artigo:calculo), inclusive a melhor resposta do adversário.
+4. **Jogue partidas** e, depois de cada uma, [procure as táticas que você e o adversário perderam](artigo:analisar-partidas).
 
 Se ainda está aprendendo as regras, comece por [como jogar xadrez do zero](artigo:jogar-do-zero).
 

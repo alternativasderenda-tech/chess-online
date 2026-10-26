@@ -9,7 +9,7 @@ publicado: 2026-10-26
 atualizado: 2026-10-26
 tags: [ataque descoberto, xeque descoberto, xeque duplo, tática de xadrez, bateria]
 jogar: 2
-relacionados: [taticas, garfo, cravada, desvio-e-sobrecarga]
+relacionados: [taticas, garfo, desvio-e-sobrecarga, sacrificios, calculo]
 ensina: [Ataque descoberto, Xeque descoberto, Xeque duplo]
 ---
 O **ataque descoberto** acontece quando uma peça se move e, ao sair do caminho, abre a linha de outra peça de longo alcance (bispo, torre ou dama) que estava atrás dela. Se a linha aberta ataca o rei, é um **xeque descoberto**. Se a peça que se moveu também dá xeque, o rei recebe dois xeques ao mesmo tempo: é o **xeque duplo**, a tática mais forçante do xadrez.
@@ -79,7 +79,7 @@ O caso mais espetacular de xeque descoberto é o **moinho**. Ele acontece quando
 3. a torre sai capturando alguma peça com **xeque descoberto** do bispo;
 4. o rei volta para a casa anterior, e a torre retorna dando xeque direto.
 
-A cada volta, a torre come uma peça, e o adversário não pode fazer nada além de mexer o rei para lá e para cá. O desenho típico é o rei preto entre g8 e h8, um bispo branco na grande diagonal e uma torre branca na sétima fileira. Quando você vir esse desenho, conte quantas peças a torre consegue recolher antes de sair.
+A cada volta, a torre come uma peça, e o adversário não pode fazer nada além de mexer o rei para lá e para cá. O desenho típico é o rei preto entre g8 e h8, um bispo branco na grande diagonal e uma torre branca na sétima fileira. Quando você vir esse desenho, [conte quantas peças a torre consegue recolher](artigo:calculo) antes de sair.
 
 ## Erros comuns {#erros "Erros comuns"}
 

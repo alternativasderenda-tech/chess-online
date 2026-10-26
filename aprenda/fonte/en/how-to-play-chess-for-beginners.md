@@ -9,7 +9,7 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [how to play chess, chess for beginners, learn chess, chess rules, chess from scratch, chess tutorial]
 jogar: 1
-relacionados: []
+relacionados: [tabuleiro-e-notacao, como-as-pecas-se-movem, lances-especiais, principios-de-abertura]
 ---
 If you've never played chess before, this guide is the perfect place to start. In 5 steps, you'll get to know the board, learn how each piece moves, discover the special moves, understand what checkmate is, and walk away with a practical path to start playing today — right in your browser, with nothing to download.
 
@@ -19,7 +19,7 @@ Chess is played on a square board of **8 by 8 squares**, making 64 squares in to
 
 A simple rule for setting up the board: the **square in each player's right-hand corner must be white** (light). And the queen always starts on a **square of her own color** — white queen on a white square, black queen on a black square.
 
-The horizontal lines are called **ranks** (numbered 1 to 8) and the vertical lines are called **files** (letters A to H). This system lets you describe any move precisely: "pawn to E4" means moving the pawn to file E, rank 4.
+The horizontal lines are called **ranks** (numbered 1 to 8) and the vertical lines are called **files** (letters A to H). This system lets you [describe any move precisely](artigo:tabuleiro-e-notacao): "pawn to E4" means moving the pawn to file E, rank 4.
 
 The player with the white pieces **always moves first**. After that, the players alternate, one move at a time.
 
@@ -31,7 +31,7 @@ legenda: The starting position. Each player's right-hand corner square (h1 and a
 
 ## 2. How each piece moves {#pecas}
 
-This is the heart of chess. Don't skip this part — understanding how each piece moves is half the battle when it comes to playing well.
+This is the heart of chess. Don't skip this part — [understanding how each piece moves](artigo:como-as-pecas-se-movem) is half the battle when it comes to playing well.
 
 :::peca ♟ Pawn
 Moves **one square forward**. On its first move, it can advance two squares (your choice). It captures **diagonally, one square forward**. The pawn is the only piece that moves differently from how it captures.
@@ -54,7 +54,7 @@ Moves **diagonally**, as many squares as you like. Each bishop is stuck on the c
 :::peca ♛ Queen
 The most powerful piece in the game. She combines the rook's and the bishop's moves: she travels in a **straight line or diagonally**, as many squares as you like, in any direction.
 
-<small>She's worth roughly 9 points. Losing your queen early often decides the game.</small>
+<small>She's worth roughly [9 points](artigo:valor-das-pecas). Losing your queen early often decides the game.</small>
 :::
 
 :::peca ♞ Knight
@@ -73,7 +73,7 @@ Moves **one square in any direction**. It cannot move to a square attacked by an
 
 ### Castling
 
-Castling is a move that shifts the king and one of the rooks at the same time. It serves to bring the king to safety and activate the rook. There are two types: **kingside castling** (the king's side) and **queenside castling** (the queen's side).
+[Castling](artigo:lances-especiais) is a move that shifts the king and one of the rooks at the same time. It serves to bring the king to safety and activate the rook. There are two types: **kingside castling** (the king's side) and **queenside castling** (the queen's side).
 
 To castle, three conditions must all be true:
 
@@ -116,7 +116,7 @@ When the king is under direct attack from an enemy piece, we say it is in **chec
 
 If the king is in check and **none of the three options above is possible**, it's checkmate. The game is over. Whoever delivered the checkmate wins.
 
-Checkmate is the ultimate goal of chess. It doesn't matter how many pieces each side has: being a queen up is worth nothing if you can't deliver checkmate.
+[Checkmate](artigo:xeque-mate-e-afogamento) is the ultimate goal of chess. It doesn't matter how many pieces each side has: being a queen up is worth nothing if you can't deliver checkmate.
 
 ```exercicio
 fen: 6k1/5ppp/8/8/8/8/5PPP/R5K1 w - - 0 1
@@ -129,7 +129,7 @@ explicacao: 1.Ra8# — the rook gives check on the 8th rank and the king has no 
 
 ### Draws (stalemate and others)
 
-Not every game ends with a winner. There are several ways to draw:
+Not every game ends with a winner. There are [several ways to draw](artigo:empates):
 
 - **Stalemate**: the player to move is not in check but has no legal move available.
 - **Agreement between the players**: both agree to a draw.
@@ -143,12 +143,12 @@ Learning the rules is just the beginning. Chess is a game you get better at thro
 
 - **Play every day, even if just a little**. Ten minutes a day are worth more than two hours once a week.
 - **Start against the computer**. You can pause, think, and replay moves without pressure. Once you feel more comfortable, move on to games against other people.
-- **Review the games you lose**. Most of the learning comes from your mistakes.
-- **Learn a few basic openings**. You don't need to memorize long variations. Knowing how to control the center and develop your pieces is already enough for the first 10 moves.
-- **Solve tactics puzzles**. The fork, the pin, and the discovered attack are patterns that show up all the time.
+- **[Review the games you lose](artigo:analisar-partidas)**. Most of the learning comes from your mistakes.
+- **Learn [a few basic openings](artigo:aberturas-para-iniciantes)**. You don't need to memorize long variations. Knowing how to control the center and develop your pieces is already enough for the first 10 moves.
+- **Solve tactics puzzles**. The [fork](artigo:garfo), the [pin](artigo:cravada), and the [discovered attack](artigo:ataque-descoberto) are patterns that show up all the time.
 
 :::dica
-**💡 Honest tip:** don't try to memorize every opening from scratch. Focus on *principles* (controlling the center, development, king safety) and on *tactics*. That will take you much further in your first six months.
+**💡 Honest tip:** don't try to memorize every opening from scratch. Focus on [*principles*](artigo:principios-de-abertura) (controlling the center, development, king safety) and on *tactics*. That will take you much further in your first six months.
 :::
 
 :::pratique Ready for your first game?
@@ -159,9 +159,9 @@ Use our **Apprentice mode**, with 12 interactive lessons that teach every piece 
 
 Once you're comfortable with the rules, it's worth getting to know:
 
-- The most common openings (the Italian Game, the Sicilian Defense, the Queen's Gambit).
-- Mating patterns (back-rank mate, Scholar's Mate, ladder mate).
-- Basic endgames (king and queen versus king, king and rook versus king, the passed pawn).
-- Middlegame principles (active pieces, weaknesses in the opponent's camp, favorable exchanges).
+- The most common openings (the [Italian Game](artigo:abertura-italiana), the [Sicilian Defense](artigo:defesa-siciliana), the [Queen's Gambit](artigo:gambito-da-dama-e-london)).
+- Mating patterns ([back-rank mate](artigo:mate-do-corredor), [Scholar's Mate](artigo:mate-do-pastor), ladder mate).
+- Basic endgames ([king and queen versus king, king and rook versus king](artigo:mates-basicos), [the passed pawn](artigo:finais-de-peao)).
+- Middlegame principles ([active pieces, weaknesses in the opponent's camp, favorable exchanges](artigo:estrategia-posicional)).
 
-We'll be publishing dedicated guides on each of these topics soon, right here in [/en/learn](/en/learn). If you'd like to catch the next ones, bookmark the site and come back often.
+Each of these topics has its own guide right here in [/en/learn](/en/learn), on a path from beginner to advanced. Bookmark the site and come back often.
