@@ -14,7 +14,7 @@ ensina: [Lucena position, Philidor position, Building a bridge, Third-rank defen
 ---
 Rook endgames are the most common endgames in chess, and nearly all of their theory rests on two rook-and-pawn-versus-rook positions. The **Lucena position** is the model win: the side with the pawn wins by "building a bridge", using its own rook as a shield against checks. The **Philidor position** is the model draw: the weaker side holds by keeping its rook on its **third rank**, so the enemy king cannot advance, and then checking from behind. Once you know both, you can tell in seconds whether to go for a trade or avoid it.
 
-## Why study rook endgames first {#por-que}
+## Why rook endgames matter {#por-que}
 
 Rooks are the last pieces to leave the board. In tournament games, endgames with one rook each are the most common of all. They are also treacherous: an extra pawn is often not enough to win, and a single passive move can turn a draw into a loss.
 
@@ -22,11 +22,11 @@ The good news is that you don't need to memorize hundreds of positions. Three id
 
 1. **Activity beats material.** An active rook that attacks pawns and gives checks often makes up for a missing pawn. A passive rook tied to defense loses.
 2. **A cut-off king is a king that can't defend.** If your rook [separates the enemy king](artigo:mates-basicos#torre) from the pawn by a whole file or rank, you are effectively playing with an extra king.
-3. **Lucena and Philidor are the destinations.** Almost every rook-and-pawn-versus-rook ending ends up in one of them. Knowing which one is on the horizon guides every move.
+3. **Lucena and Philidor are the destinations.** Many rook-and-pawn versus rook endings lead to one of them. Knowing which one is on the horizon guides every move.
 
 ## The Lucena position: building a bridge {#lucena}
 
-The Lucena position has four ingredients: the pawn on the seventh rank (not a rook pawn), the attacking king on the promotion square in front of it, the defending king cut off by at least one file, and the defending rook checking from the side. It is named after the Spaniard Luis Ramírez de Lucena, author of one of the first printed chess books, although the position does not actually appear in his book.
+The Lucena position has four ingredients: the pawn on the seventh rank (not a rook pawn), the attacking king on the promotion square in front of it, the defending king cut off by at least one file, and the defending rook checking from the side. It is named after the Spaniard Luis Ramírez de Lucena, author of one of the first printed chess books, although the position does not actually appear in his book (it appears in Salvio, 1634).
 
 ```tabuleiro
 fen: 3K4/3P1k2/8/8/8/8/2r5/4R3 w - - 0 1
@@ -71,13 +71,13 @@ The idea is simple: as long as the pawn is on the fifth rank, the black rook for
 fen: 4k3/7R/4P3/3K4/8/8/8/1r6 w - - 0 1
 setas: b1b5:azul
 casas: e6
-legenda: After 1.e6 Rb1: the pawn on e6 no longer shelters the white king, which is exposed to checks along the file and the rank.
+legenda: After 1.e6 Rb1: the white king no longer has anywhere to hide from the checks from behind.
 ```
 
-With the pawn on e6, the white king has lost the only shelter it had: the square in front of its own pawn is now occupied. The black rook gives check after check and the king can't hide. It's a draw.
+With the pawn on e6, the white king has lost the only shelter it had: e6, now occupied by its own pawn (and e7 is covered by the black king). The black rook gives check after check and the king can't hide. It's a draw.
 
 :::aviso
-**⚠️ Careful:** after e6, bringing the rook back to the eighth rank (Rb8) **loses**. The rook must go far away, to the first or second rank, where it has room to check. A rook close to the enemy king doesn't give checks; it gets forked.
+**⚠️ Careful:** after e6, bringing the rook back to the eighth rank (Rb8) **loses**. The rook must get away from the white king — the first rank, as in the diagram, is the safest — so it has room to check from behind. Close to the enemy king, the rook has no room to check: the king walks up and the rook is taken or driven off.
 :::
 
 ## The classic mistake: passive defense {#defesa-passiva}
@@ -112,7 +112,7 @@ explicacao: 1...Rb6+! gives check and reoccupies the sixth rank. The white king 
 - **Count files before trading pieces.** If the trade leads to a Lucena, great. If it leads to a Philidor, your opponent draws easily.
 
 :::pratique Practice endgames against the AI
-Set up a Lucena or a Philidor in a game against the computer and play both positions until you can build the bridge and check from behind without thinking.
+In a game against the computer, trade down to a rook-and-pawn ending. Before each move, ask: am I heading for a Lucena or a Philidor?
 :::
 
 ## Frequently asked questions {#faq}

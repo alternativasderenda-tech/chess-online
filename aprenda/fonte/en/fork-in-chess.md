@@ -2,7 +2,7 @@
 id: garfo
 titulo: Fork in Chess: the Double Attack That Wins Material
 titulo_seo: Fork in Chess: What It Is and How to Use It | Chess Online
-descricao: What a fork is in chess, why the knight is the king of forks, pawn and queen forks, plus 4 interactive puzzles to practise the double attack.
+descricao: What a fork is in chess, why the knight is the king of forks, pawn and queen forks, plus 4 interactive puzzles to practice the double attack.
 nivel: intermediario
 ordem: 15
 publicado: 2026-10-26
@@ -40,7 +40,7 @@ casas: e8:vermelha b7
 legenda: The knight on d6 checks the king on e8 and attacks the bishop on b7. The king steps out of check and the bishop falls.
 ```
 
-A geometry tip that makes knight forks easier to spot: **every square a knight attacks is the same colour** (the opposite colour of the square it stands on). So whenever your opponent's king and queen sit on squares of the same colour, it is worth looking for a knight square that reaches both.
+A geometry tip that makes knight forks easier to spot: **every square a knight attacks is the same color** (the opposite color of the square it stands on). So whenever your opponent's king and queen sit on squares of the same color, it is worth looking for a knight square that reaches both.
 
 To review the L-shaped move, see [how the knight moves](artigo:movimento-do-cavalo#garfo).
 
@@ -62,11 +62,13 @@ Notice the classic setup: two enemy pieces side by side, one square apart, in fr
 The **queen** forks in eight directions, so she shows up in plenty of double attacks, especially with check. The catch is her value: if one of the targets is defended and can capture her, the fork backfires.
 
 ```tabuleiro
-fen: 4k3/8/8/8/Q6r/8/5PPP/6K1 b - - 0 1
+fen: 4k2r/p4ppp/8/8/Q6n/8/P4PPP/6K1 b k - 0 1
 setas: a4e8:vermelha a4h4
 casas: e8:vermelha h4
-legenda: Qa4+ checks along the diagonal and hits the h4 rook along the rank. Once the king moves, the queen takes the rook.
+legenda: Qa4+ checks along the diagonal and hits the h4 knight along the rank. No black piece can block on b5, c6 or d7: once the king moves, the queen takes the knight.
 ```
+
+Watch out: if the target on the rank were a rook, it would simply take the queen. Before forking with your queen, check that neither target can capture her.
 
 The **bishop** forks along diagonals (for example king and rook on the same long diagonal), and the **rook** forks along ranks and files, which is very common in endgames when it hits two pawns or a king and a loose piece. Even the **king** forks in the endgame, when it reaches two undefended pieces.
 
@@ -75,12 +77,12 @@ The **bishop** forks along diagonals (for example king and rook on the same long
 Forks do not appear out of nowhere: they grow out of **loose** (undefended) pieces and **badly placed** ones. Before each move, run this quick checklist:
 
 1. **Which enemy pieces are undefended?** They are the natural targets.
-2. **Are the king and queen lined up, or on the same square colour?** Look for a knight square, a diagonal or a rank that reaches both.
+2. **Are the king and queen lined up, or on the same square color?** Look for a knight square, a diagonal or a rank that reaches both.
 3. **Can one of my pieces reach a square that hits two targets?** Check that the square is safe.
 4. **Can I force a piece onto a forking square?** Sometimes a sacrifice with check drags the king exactly where you want it (see [deflection and decoy](artigo:desvio-e-sobrecarga)).
 
 :::dica
-**💡 Tip:** forks matter on defence too. Before you move, ask "where can his knight jump next move?". Many forks could have been avoided with that one question.
+**💡 Tip:** forks matter on defense too. Before you move, ask "where can their knight jump next?". Many forks could have been avoided with that one question.
 :::
 
 ## How to defend against a fork {#defesa "How to defend"}
@@ -89,8 +91,8 @@ Forks do not appear out of nowhere: they grow out of **loose** (undefended) piec
 - **Counter with a check:** if the fork has already landed, look for a check or a bigger threat before giving up the piece.
 - **Save the more valuable piece** and, if possible, make your opponent pay something for the other one.
 
-:::pratique Practise forks now
-Play against the computer and try to land at least one fork per game. At Medium level it leaves pieces loose often enough for you to practise.
+:::pratique Practice forks now
+Play against the computer and try to land at least one fork per game. At Medium level it leaves pieces loose often enough for you to practice.
 :::
 
 ## Fork puzzles {#exercicios "Puzzles"}
@@ -109,7 +111,7 @@ explicacao: 1.Ne7+ is a royal fork: check to the king on g8 and an attack on the
 fen: r5k1/p1q3p1/7p/8/8/8/PP1Q2PP/5RK1 w - - 0 1
 enunciado: White to move **wins the rook** with a queen double attack.
 solucao: d2d5 g8h7 d5a8
-dica: The king on g8 and the rook on a8 sit at the ends of two diagonals that cross in the centre of the board.
+dica: The king on g8 and the rook on a8 sit at the ends of two diagonals that cross in the center of the board.
 explicacao: 1.Qd5+ checks along the d5–g8 diagonal and attacks the a8 rook along the d5–a8 diagonal. Once the king moves, 2.Qxa8.
 ```
 
@@ -133,7 +135,7 @@ explicacao: 1.Rh8+! Kxh8 (forced) 2.Nxf7+ forks the king on h8 and the queen on 
 
 ### Are a fork and a double attack the same thing?
 
-Almost. Every fork is a double attack, but "double attack" also covers cases where one move creates two threats without a single piece hitting two others, such as a mate threat combined with an attack on the queen.
+Almost. Every fork is a double attack, but "double attack" also covers moves with two threats coming from different sources, such as a mate threat combined with an attack on the queen.
 
 ### Which piece forks the most?
 
@@ -143,6 +145,6 @@ The knight, because it jumps and because no piece it attacks can hit back, excep
 
 A fork that attacks the king and the queen at the same time. Since the king must get out of check, the queen is almost always lost.
 
-### How do I practise forks?
+### How do I practice forks?
 
 Solve short puzzles every day and, in your own games, ask before each move which enemy pieces are loose. Then move on to the [pin](artigo:cravada), the next pattern in the course.

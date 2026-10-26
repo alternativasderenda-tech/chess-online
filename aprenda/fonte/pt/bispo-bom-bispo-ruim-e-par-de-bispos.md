@@ -40,7 +40,7 @@ O que fazer com um bispo ruim:
 
 ## O par de bispos {#par}
 
-Dois bispos juntos não têm o ponto fraco de um bispo sozinho: controlam casas das duas cores. Em posições abertas, com diagonais livres, eles cruzam o tabuleiro de uma ala à outra num lance, cortam o rei adversário e dominam os cavalos.
+Dois bispos juntos não têm o ponto fraco de um bispo sozinho: controlam casas das duas cores. Em posições abertas, com diagonais livres, eles cruzam o tabuleiro de um flanco ao outro num lance, cortam o rei adversário e dominam os cavalos.
 
 ```tabuleiro
 fen: 2r2rk1/pp3ppp/2n1b3/8/8/1P1B4/PB3PPP/2R2RK1 w - - 0 1
@@ -51,7 +51,7 @@ legenda: O par de bispos em posição aberta: os bispos de b2 e d3 apontam para 
 Como **usar** o par de bispos:
 
 - **Abra a posição.** Rupturas de peões e trocas de peões favorecem os bispos.
-- **Troque as outras peças**, não os bispos. Num final com peões nas duas alas, o par de bispos costuma ser decisivo.
+- **Troque as outras peças**, não os bispos. Num final com peões nos dois flancos, o par de bispos costuma ser decisivo.
 - **Tire as casas dos cavalos** com avanços de peões, para que eles não encontrem postos avançados.
 
 Como **combater** o par de bispos:
@@ -67,10 +67,10 @@ Bispo e cavalo [valem cerca de três peões](artigo:valor-das-pecas) cada, mas b
 | Situação | Quem costuma ser melhor |
 | --- | --- |
 | Posição aberta, poucas cadeias de peões | Bispo |
-| Peões nas duas alas, final | Bispo |
+| Peões nos dois flancos, final | Bispo |
 | Posição fechada, cadeias travadas | Cavalo |
 | Posto avançado disponível | Cavalo |
-| Peões do adversário fixos na cor do bispo | Cavalo, se o bispo for ruim |
+| Peões fixos na mesma cor do próprio bispo (bispo ruim) | Cavalo |
 
 Essa tabela é a razão de muitas trocas "estranhas" de jogadores fortes: entregar o par de bispos para fechar a posição, ou trocar um cavalo bom por um bispo que parecia inofensivo.
 
@@ -84,7 +84,7 @@ Quando cada lado tem um único bispo, e eles andam em cores diferentes, os dois 
 ```tabuleiro
 fen: 8/8/2b1k3/8/4PP2/2B1K3/8/8 w - - 0 1
 casas: e5 f5:verde e4 f4
-legenda: Bispos de cores opostas: mesmo com dois peões a mais e as Brancas a jogar, a base de finais confirma o empate. O rei e o bispo pretos vigiam as casas de avanço.
+legenda: Bispos de cores opostas: mesmo com dois peões a mais e com a vez das Brancas, a base de finais confirma o empate. O rei e o bispo pretos vigiam as casas de avanço.
 ```
 
 ## Como saber se o seu bispo é bom {#teste}
@@ -97,11 +97,15 @@ Um teste rápido: conte os seus peões **fixos** — os que não podem mais avan
 
 O mesmo teste vale para o bispo do adversário. Fixar os peões dele na cor do bispo dele — por exemplo, bloqueando-os com os seus — transforma um bispo razoável num bispo ruim.
 
+:::pratique Cuide do seu bispo
+Jogue contra o computador e, ao fixar cada peão central, pergunte: ele fica na cor do meu bispo? Procure terminar a abertura com o bispo bom.
+:::
+
 ## Exercícios
 
 ```exercicio
 fen: 2kr3r/pp1nqpbp/2n1p1p1/8/5B2/2N2Q2/PPP2PPP/3R1BK1 w - - 0 1
-enunciado: O par de bispos branco mira o rei preto pelas duas cores. Brancas jogam e dão **mate em 2**.
+enunciado: O par de bispos das Brancas mira o rei preto pelas duas cores. Brancas jogam e dão **mate em 2**.
 tipo: mate
 lances: 2
 solucao: f3c6 b7c6 f1a6
@@ -111,10 +115,10 @@ explicacao: 1.Dxc6+! bxc6 2.Ba6#. Os dois bispos cruzam as linhas de fuga: o de 
 
 ```exercicio
 fen: 8/8/3k4/PK6/3B4/8/8/8 b - - 0 1
-enunciado: As Brancas têm bispo e peão de torre, mas o bispo é de casas escuras e a casa de promoção, a8, é clara. Pretas jogam e empatam — só um lance salva.
+enunciado: As Brancas têm bispo e peão de torre, mas é o **bispo da cor errada**: ele é de casas escuras e a casa de promoção, a8, é clara. Pretas jogam e empatam — só um lance salva.
 solucao: d6c7
 dica: Corra para o canto que o bispo não controla.
-explicacao: 1...Rc7! segue para b8 e a8. Com o rei preto no canto, o bispo de casas escuras nunca o expulsa de a8, e o peão de a não consegue coroar. Segundo a base de finais, qualquer outro lance perde.
+explicacao: 1...Rc7! segue para b8 e a8. Com o rei preto no canto, o bispo de casas escuras nunca o expulsa de a8, e o peão de a não consegue promover. Segundo a base de finais, qualquer outro lance perde.
 ```
 
 ## Perguntas frequentes {#faq}
@@ -123,10 +127,10 @@ explicacao: 1...Rc7! segue para b8 e a8. Com o rei preto no canto, o bispo de ca
 É o bispo cujos peões estão fixos em casas da mesma cor que a dele. Ele fica preso atrás deles e tem pouca mobilidade.
 
 ### O par de bispos vale mais que bispo e cavalo?
-Em posições abertas e em finais com peões nas duas alas, normalmente sim. Em posições fechadas, a vantagem diminui ou desaparece.
+Em posições abertas e em finais com peões nos dois flancos, normalmente sim. Em posições fechadas, a vantagem diminui ou desaparece.
 
 ### Bispo ou cavalo: qual é melhor?
-Depende da estrutura. Bispos preferem posições abertas e peões nas duas alas; cavalos preferem posições fechadas e postos avançados.
+Depende da estrutura. Bispos preferem posições abertas e peões nos dois flancos; cavalos preferem posições fechadas e postos avançados.
 
 ### Por que finais de bispos de cores opostas empatam tanto?
 Porque o defensor bloqueia os peões em casas da cor do próprio bispo, e o bispo do atacante não tem como disputar essas casas.

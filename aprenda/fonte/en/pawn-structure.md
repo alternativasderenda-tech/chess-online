@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [estrategia-posicional, planos-meio-jogo, finais-de-peao, gambito-da-dama-e-london, francesa-e-caro-kann]
 ensina: [Isolated pawn, Doubled pawns, Backward pawn, Pawn chain, Pawn majority]
 ---
-Pawn structure is the arrangement of the pawns on the board, and it shapes the plans of a game more than any other element, because **pawns can't move backward**: a weakness created in the opening often lasts until the endgame. The most important structures are the **isolated pawn** (no friendly pawns on the neighboring files), **doubled pawns** (two on the same file), the **backward pawn** (one that has fallen behind its neighbors), **pawn chains** (pawns on a diagonal protecting each other) and **majorities** (more pawns than your opponent on one wing, which lets you create a passed pawn).
+Pawn structure is the arrangement of the pawns on the board, and it shapes [the plans of a game](artigo:planos-meio-jogo) more than any other element, because **pawns can't move backward**: a weakness created in the opening often lasts until the endgame. The most important structures are the **isolated pawn** (no friendly pawns on the neighboring files), **doubled pawns** (two on the same file), the **backward pawn** (one that has fallen behind its neighbors), **pawn chains** (pawns on a diagonal protecting each other) and **majorities** (more pawns than your opponent on one wing, which lets you create a passed pawn).
 
 ## Why pawns decide the plans {#por-que}
 
@@ -67,7 +67,7 @@ A chain is a diagonal line of pawns in which each one protects the one in front.
 fen: rnbqkbnr/pp3ppp/4p3/2ppP3/3P4/2P5/PP3PPP/RNBQKBNR b KQkq - 0 4
 setas: c5d4:vermelha
 casas: d4:vermelha c3 e5
-legenda: French Defense, Advance Variation: White's chain c3-d4-e5. Black attacks the base with ...c5; White props up d4 with c3.
+legenda: French Defense, Advance Variation: White's d4-e5 chain. Black attacks its base, d4, with ...c5; White props it up with c3.
 ```
 
 The chain also tells you where to attack: as a rule, **you attack on the side the chain points toward**. White's d4-e5 chain points to the kingside, where White has more space; Black looks for play on the queenside, against the base on d4.
@@ -82,20 +82,24 @@ casas: a2 b2 c2 f7 g7 h7
 legenda: Equal material, but majorities on different wings: White has 3 against 2 on the queenside; Black has 3 against 2 on the kingside.
 ```
 
-In the [endgame](artigo:finais-de-peao), the majority farther from the kings is usually worth more, because the passed pawn it creates drags the enemy king away — that's the **outside passed pawn**. When pushing a majority, advance the **candidate pawn** first: the one with no enemy pawn in front of it on the same file. And when your opponent has a passed pawn, the classic answer is to blockade it with a piece, preferably a knight.
+In the [endgame](artigo:finais-de-peao), the majority farther from the kings is usually worth more, because the passed pawn it creates drags the enemy king away — that's the **outside passed pawn**, which you met in [king and pawn endgames](artigo:finais-de-peao#peao-passado). When pushing a majority, advance the **candidate pawn** first: the one with no enemy pawn in front of it on the same file. And when your opponent has a passed pawn, the classic answer is to blockade it with a piece, preferably a knight.
 
 :::dica
 **💡 Tip:** before trading pieces, look at the pawns. If the structure favors you (your opponent has an isolated pawn, doubled pawns or no majority), trade and head for the endgame. If it's bad for you, keep the pieces and look for activity.
 :::
 
+:::pratique Play by the structure
+In a game against the computer, before every trade, look only at the pawns: who ends up with an isolated pawn, doubled pawns or a majority? Trade when the structure favors you.
+:::
+
 ## Exercises
 
 ```exercicio
-fen: 8/ppp3k1/8/PPP5/8/8/8/6K1 w - - 0 1
-enunciado: Three pawns against three, and the kings are far away. White to play and create a passed pawn nobody can catch.
-solucao: b5b6 a7b6 c5c6 b7c6 a5a6
-dica: Sacrifice the middle pawn.
-explicacao: 1.b6! is the classic breakthrough. If 1...axb6, 2.c6! bxc6 3.a6 and the a-pawn queens. If 1...cxb6, 2.a6! bxa6 3.c6 and the c-pawn queens. Slow moves don't work: the black king would arrive in time.
+fen: 8/8/1p6/1P6/P7/3k4/8/7K w - - 0 1
+enunciado: A two-against-one majority on the queenside, and the black king is coming. White to play and win — only one move works.
+solucao: a4a5
+dica: Push the candidate pawn: the one with no enemy pawn in front of it.
+explicacao: 1.a5! creates the passed pawn at once. If 1...bxa5, 2.b6 and the pawn queens: the black king is outside the square. If the black king comes closer (1...Kc4), 2.axb6 or 2.a6 leaves a passed pawn it can't stop. According to the endgame tablebase, every white king move only draws: after 1.Kg2? Kc4!, the black king reaches b5 in time.
 ```
 
 ```exercicio

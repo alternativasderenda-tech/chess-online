@@ -38,10 +38,10 @@ Para encontrar sobrecargas, conte: para cada peça defensora do adversário, **q
 No **desvio** (em inglês, *deflection*), você força o defensor a sair do lugar com uma captura, uma troca ou um xeque. A diferença para a sobrecarga é sutil: na sobrecarga o defensor tem duas tarefas; no desvio, você simplesmente o obriga a ir embora, e o que ele protegia cai.
 
 ```tabuleiro
-fen: 5rk1/5ppp/5n2/6N1/4P3/7Q/5PPP/6K1 w - - 0 1
-setas: e4e5 f6h7:azul h3h7
+fen: 5rk1/5ppp/5n2/8/6P1/3B3Q/5P1P/6K1 w - - 0 1
+setas: g4g5 f6h7:azul h3h7 d3h7
 casas: h7:vermelha f6
-legenda: O cavalo de f6 é o defensor de h7. Com 1.e5, o peão ataca o cavalo: se ele deixar de defender h7, vem 2.Dxh7#.
+legenda: O cavalo de f6 é o único defensor de h7 além do rei. Com 1.g5, o peão ataca o cavalo: se ele sair (por exemplo 1...Cd5), vem 2.Dxh7#; se ficar, 2.gxf6. As Pretas perdem o cavalo.
 ```
 
 O desvio mais comum é a troca com xeque: você captura uma peça que está protegida pelo defensor, ele é obrigado a recapturar, e a casa que ele vigiava fica livre.

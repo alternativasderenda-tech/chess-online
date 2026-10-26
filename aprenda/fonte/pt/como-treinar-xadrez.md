@@ -17,7 +17,7 @@ Treinar xadrez para evoluir é combinar, toda semana, cinco atividades em propor
 ## Os cinco pilares do treino {#pilares}
 
 1. **Táticas.** Resolver exercícios todos os dias treina o [reconhecimento de padrões](artigo:taticas#padroes): garfos, cravadas, mates típicos, sacrifícios. Quanto mais padrões você conhece, menos precisa calcular do zero.
-2. **Finais.** Poucos finais teóricos cobrem uma enorme parte da prática: oposição, Lucena, Philidor, bispo da cor errada. E estudar finais melhora a técnica e a noção de atividade das peças.
+2. **Finais.** Poucos finais teóricos cobrem uma enorme parte da prática: oposição, Lucena, Philidor, [bispo da cor errada](artigo:bispos#faq). E estudar finais melhora a técnica e a noção de atividade das peças.
 3. **Aberturas.** O suficiente para chegar a um meio-jogo que você entende — ideias e estruturas antes de lances.
 4. **Partidas jogadas.** Treino sem jogo não vira prática. Prefira ritmos em que dá tempo de pensar.
 5. **Análise.** É onde o aprendizado acontece: cada partida mostra exatamente o que você precisa treinar.
@@ -48,12 +48,12 @@ O jeito errado de treinar tática é clicar no primeiro lance que parece bom. O 
 - **Comece pelos forçantes:** xeques, capturas e ameaças.
 - **Quando errar, entenda o padrão**, não só a resposta. O mesmo padrão vai voltar em outra posição.
 
-Os exercícios de cada artigo do Aprenda servem para isso: estão organizados por tema, e a solução de cada um foi conferida com o motor do jogo.
+Os exercícios de cada artigo do Aprenda servem para isso: estão organizados por tema, e cada solução foi conferida — no motor do jogo e, nos finais, na base de finais.
 
 ```tabuleiro
 fen: r5rk/pp1b1Npp/2pq4/8/8/2P5/PP3PPP/R4RK1 b - - 1 2
 casas: h8:vermelha g8 g7 h7
-legenda: O mate abafado: um padrão que, depois de visto algumas vezes, você reconhece em segundos. Treinar padrões é o que transforma cálculo em reconhecimento.
+legenda: O mate sufocado: um padrão que, depois de visto algumas vezes, você reconhece em segundos. Treinar padrões é o que transforma cálculo em reconhecimento.
 ```
 
 ## Finais: poucos, mas bem sabidos {#finais}
@@ -91,10 +91,7 @@ Para escolher as suas aberturas, veja [aberturas para iniciantes](artigo:abertur
 
 ## Como analisar as próprias partidas {#analise}
 
-1. **Primeiro, sozinho.** Antes de usar o computador, anote o que você pensou nos momentos críticos e onde acha que errou.
-2. **Depois, com o motor.** Compare. As maiores diferenças entre a sua avaliação e a do motor são as lições da partida.
-3. **Classifique o erro** no caderno: tático, de cálculo, de plano, de abertura, de final, de tempo.
-4. **Transforme em treino.** Muitos erros de final? Mais finais na terça. Muitos lances no zeitnot? Treine a [administração do tempo](artigo:relogio-e-psicologia).
+Use o [método de 6 passos](artigo:analisar-partidas#metodo) e, no fim, transforme o erro em treino: muitos erros de final? Mais finais na terça. Muitos lances no zeitnot? Treine a [administração do tempo](artigo:relogio-e-psicologia). Anote cada erro no caderno, com o tipo dele.
 
 ## Como medir o progresso {#progresso}
 
@@ -106,6 +103,10 @@ Rating sobe e desce por muitos motivos, e semanas ruins acontecem com todo mundo
 - **Nível da IA.** Subir de dificuldade e manter bons resultados é uma medida concreta de evolução.
 
 Revise o plano a cada mês, com o caderno de erros na mão, e mude as proporções do treino conforme o que ele mostrar.
+
+:::pratique Comece a semana hoje
+Abra a primeira partida do plano: jogue contra o computador com tempo para pensar e analise-a com os 6 passos.
+:::
 
 ## Exercícios
 
@@ -122,7 +123,7 @@ fen: 7K/8/k1P5/7p/8/8/8/8 w - - 0 1
 enunciado: Final do dia: o famoso estudo de Richard Réti (1921). O rei branco parece longe de tudo. Brancas jogam e empatam.
 solucao: h8g7
 dica: O rei pode perseguir o peão de h e, ao mesmo tempo, se aproximar do próprio peão.
-explicacao: 1.Rg7! h4 2.Rf6, e agora 2...Rb6 3.Re5! alcança o peão de h, enquanto 2...h3 3.Re7 h2 4.c7 Rb7 5.Rd7 também empata, porque os dois peões coroam. O rei avança pela diagonal e serve a dois objetivos ao mesmo tempo. Segundo a base de finais, é o único lance que empata.
+explicacao: 1.Rg7! h4 2.Rf6, e agora 2...Rb6 3.Re5! alcança o peão de h, enquanto 2...h3 3.Re7 h2 4.c7 Rb7 5.Rd7 também empata, porque os dois peões promovem. O rei avança pela diagonal e serve a dois objetivos ao mesmo tempo. Segundo a base de finais, é o único lance que empata.
 ```
 
 ## Perguntas frequentes {#faq}

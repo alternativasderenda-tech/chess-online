@@ -79,7 +79,14 @@ O caso mais espetacular de xeque descoberto é o **moinho**. Ele acontece quando
 3. a torre sai capturando alguma peça com **xeque descoberto** do bispo;
 4. o rei volta para a casa anterior, e a torre retorna dando xeque direto.
 
-A cada volta, a torre come uma peça, e o adversário não pode fazer nada além de mexer o rei para lá e para cá. O desenho típico é o rei preto entre g8 e h8, um bispo branco na grande diagonal e uma torre branca na sétima fileira. Quando você vir esse desenho, [conte quantas peças a torre consegue recolher](artigo:calculo) antes de sair.
+A cada volta, a torre come uma peça, e o adversário não pode fazer nada além de mexer o rei para lá e para cá. O desenho típico é o rei preto entre g8 e h8, um bispo branco na diagonal longa e uma torre branca na sétima fileira. Quando você vir esse desenho, [conte quantas peças a torre consegue recolher](artigo:calculo) antes de sair.
+
+```tabuleiro
+fen: 5n1k/pp1q2R1/8/8/8/8/1B3PPP/6K1 w - - 0 1
+setas: g7d7 b2h8:vermelha
+casas: h8:vermelha d7 b7 a7
+legenda: O moinho. A torre de g7, protegida pelo bispo de b2, sai capturando com xeque descoberto: 1.Txd7+ Rg8 2.Tg7+ Rh8 3.Txb7+ Rg8 4.Tg7+ Rh8 5.Txa7+. Todas as respostas pretas são forçadas.
+```
 
 ## Erros comuns {#erros "Erros comuns"}
 
@@ -129,7 +136,7 @@ explicacao: 1.Cf7+ é xeque duplo (bispo de b2 e cavalo de f7): o rei só tem g8
 
 ```exercicio
 fen: rnb1kb1r/pp3ppp/2p5/4q3/4n3/3Q4/PPPB1PPP/2KR1BNR w kq - 0 9
-enunciado: Uma das miniaturas mais famosas da história (Réti x Tartakower, Viena, 1910). Brancas jogam e dão **mate em 3**.
+enunciado: Uma das miniaturas (partidas curtas, de até uns 25 lances) mais famosas da história (Réti x Tartakower, Viena, 1910). Brancas jogam e dão **mate em 3**.
 tipo: mate
 lances: 3
 solucao: d3d8 e8d8 d2g5 d8c7 g5d8

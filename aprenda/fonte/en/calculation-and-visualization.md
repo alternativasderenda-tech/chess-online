@@ -1,7 +1,7 @@
 ---
 id: calculo
 titulo: "Calculation in Chess: Candidate Moves and Visualization"
-titulo_seo: Chess Calculation and Visualization | Chess Online
+titulo_seo: "How to Calculate in Chess: Candidate Moves | Chess Online"
 descricao: How to calculate variations in chess: pick candidate moves, start with checks, captures and threats, evaluate the final position and train your visualization.
 nivel: avancado
 ordem: 40
@@ -58,7 +58,7 @@ casas: d5:vermelha e6 f6 d8
 legenda: The d5 pawn is attacked four times (Nc3, Bf3, Qd2 and Rd1, lined up) and defended three times (the e6 pawn, Nf6 and Qd8).
 ```
 
-Four attackers against three defenders looks like an edge. But the first defender is a pawn: after 1.Nxd5 exd5 2.Bxd5 Nxd5 3.Qxd5 Qxd5 4.Rxd5, White ends up a piece down for two pawns. Defending with cheap pieces and attacking with expensive ones loses the exchange.
+Four attackers against three defenders looks like an edge. But the first defender is a pawn: after 1.Nxd5 exd5 2.Bxd5 Nxd5 3.Qxd5 Qxd5 4.Rxd5, White ends up a piece down for two pawns. When the defender recaptures with cheap pieces and the attacker captures with expensive ones, the attacker comes out behind.
 
 ## Visualization: seeing what isn't on the board yet {#visualizacao}
 
@@ -68,15 +68,17 @@ Calculation depends on "seeing" where the pieces are three or four moves later. 
 - **Lines that open:** when a piece moves out of the way, a rook, bishop or queen behind it starts attacking. That's how [discovered checks](artigo:ataque-descoberto) work.
 - **Backward moves:** retreats and sideways moves are the easiest to overlook, both yours and your opponent's.
 
-```tabuleiro
-fen: 4rr2/ppqb1ppk/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 b - - 1 2
-setas: c1h6:amarela d1h5:azul
-legenda: Visualization drill: this is the position after 1.Bxh7+ Kxh7 2.Ng5+, starting from the first diagram. Try to rebuild it in your head before looking.
-```
-
 :::dica
 **💡 Tip:** to train visualization, solve the exercises on this site **without moving the pieces** until you have the whole line in your head. Only then play the solution on the interactive board.
 :::
+
+Visualization drill: before scrolling to the next diagram, go back to the first one, play 1.Bxh7+ Kxh7 2.Ng5+ in your head and name where every piece stands. Then check here.
+
+```tabuleiro
+fen: 4rr2/ppqb1ppk/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 b - - 1 2
+setas: c1h6:amarela d1h5:azul
+legenda: The position after 1.Bxh7+ Kxh7 2.Ng5+, starting from the first diagram.
+```
 
 ## Calculation in practice: how much time to spend {#pratica}
 
@@ -94,6 +96,10 @@ Almost every calculation error falls into one of these categories:
 - **Stopping too early.** The line ends with you "winning a piece", but a capture or a check is still pending.
 - **Calculating only what you want.** Looking at the defense that's convenient for you instead of the strongest one. Flip the board in your mind and look for their best move.
 - **Trusting lines that are too long.** The longer the line, the bigger the chance of a visualization slip somewhere in the middle. When a line runs past five or six moves, double-check the first ones.
+
+:::pratique Calculate before you touch
+Play the computer and, on critical moves, write down (or say out loud) the whole line before you move a piece.
+:::
 
 ## Exercises
 

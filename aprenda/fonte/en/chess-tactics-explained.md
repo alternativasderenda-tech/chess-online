@@ -2,7 +2,7 @@
 id: taticas
 titulo: Chess Tactics Explained: the Patterns That Win Games
 titulo_seo: Chess Tactics Explained: the Basic Patterns | Chess Online
-descricao: What chess tactics are, the patterns every player needs to know (fork, pin, skewer, discovered attack, back-rank mate) and how to practise them.
+descricao: What chess tactics are, the patterns every player needs to know (fork, pin, skewer, discovered attack, back-rank mate) and how to practice them.
 nivel: intermediario
 ordem: 10
 publicado: 2026-10-26
@@ -12,7 +12,7 @@ jogar: 2
 relacionados: [garfo, cravada, calculo, sacrificios, analisar-partidas]
 ensina: [Chess tactics, Tactical patterns, Calculation]
 ---
-A **chess tactic** is a short, usually forcing sequence of moves that wins material or delivers [checkmate](artigo:xeque-mate-e-afogamento) by exploiting a concrete weakness in the opponent's position. Tactics rest on a handful of **patterns** that come up again and again: the fork, the pin, the skewer, the discovered attack, deflection and the back-rank mate. Once you learn to recognise them, you start winning pieces and games that used to slip away.
+A **chess tactic** is a short, usually forcing sequence of moves that wins material or delivers [checkmate](artigo:xeque-mate-e-afogamento) by exploiting a concrete weakness in the opponent's position. Tactics rest on a handful of **patterns** that come up again and again: the fork, the pin, the skewer, the discovered attack, deflection and the back-rank mate. Once you learn to recognize them, you start winning pieces and games that used to slip away.
 
 ## Tactics vs strategy {#tatica-x-estrategia "Tactics vs strategy"}
 
@@ -38,7 +38,7 @@ The order of the table is the suggested study order: each pattern builds on idea
 The fork is the double attack: one piece hits two enemy pieces and only one can be saved. The knight is the specialist, but pawns, queens and even the king fork too.
 
 ```tabuleiro
-fen: 3qk2r/5Npp/8/8/2B5/8/5PPP/6K1 b k - 0 1
+fen: 3qk2r/5Npp/8/8/2B5/8/2Q2PPP/6K1 b k - 0 1
 setas: f7d8 f7h8
 casas: d8 h8
 legenda: The f7 knight, protected by the c4 bishop, attacks the queen on d8 and the rook on h8 at the same time.
@@ -71,15 +71,22 @@ legenda: The a6 rook checks the king on d6. When the king leaves the sixth rank,
 A piece steps out from in front of another and reveals an attack. If the revealed attack hits the king, it is a discovered check; if the piece that moved also gives check, it is a double check, the most forcing tactic there is.
 
 ```tabuleiro
-fen: 3q2k1/5ppp/8/8/3N4/8/5PPP/3R2K1 w - - 0 1
-setas: d1d8:vermelha
+fen: 3q4/5pkp/6p1/8/3N4/8/5PPP/3R2K1 w - - 0 1
+setas: d4f5 d1d8:vermelha
 casas: d4 d8
-legenda: The d4 knight stands in front of the d1 rook. Once it moves, the rook attacks the queen on d8.
+legenda: The d4 knight stands in front of the d1 rook. With 1.Nf5+ (or 1.Ne6+) it steps away with check and the rook now attacks the queen on d8: Black deals with the king and loses the queen.
 ```
 
 ### Deflection, decoy and overloading
 
 When the target is well defended, go after the defender: deflect it with a trade or a check, lure the king onto a bad square, or exploit a piece that defends two things at once.
+
+```tabuleiro
+fen: 6k1/3q1ppp/8/1b3n2/8/5Q2/5PPP/1R4K1 w - - 0 1
+setas: b1b5 f3f5 d7b5:azul d7f5:azul
+casas: d7:vermelha
+legenda: The d7 queen defends both the bishop on b5 and the knight on f5. After 1.Rxb5 Qxb5 2.Qxf5, White wins material.
+```
 
 ### Back-rank mate
 
@@ -107,22 +114,23 @@ Before each move, scan for **checks, captures and threats**: look at every possi
 **💡 Tip:** run the same scan from your opponent's point of view. Half of tactics is seeing the other side's blow before it lands.
 :::
 
-## How to practise tactics {#treinar "How to practise"}
+## How to practice tactics {#treinar "How to practice"}
 
-1. **Solve short puzzles every day.** Fifteen minutes a day beats two hours at the weekend.
+1. **Solve short puzzles every day.** Fifteen minutes a day beats two hours on the weekend.
 2. **Study one pattern at a time**, in the order of the table above, and only move on when that pattern's puzzles feel easy.
 3. **Calculate before you touch.** In a puzzle, only move a piece once [the whole line is in your head](artigo:calculo), including your opponent's best reply.
 4. **Play games** and, after each one, [look for the tactics you and your opponent missed](artigo:analisar-partidas).
+5. **Follow a plan.** To fit tactics into a weekly routine with endgames, openings and analysis, see [how to improve at chess](artigo:rotina-de-treino).
 
-If you are still learning the rules, start with [how to play chess for beginners](artigo:jogar-do-zero).
+If you still drop pieces by accident, review [common beginner mistakes](artigo:erros-de-iniciante) first.
 
-:::pratique Practise tactics now
+:::pratique Practice tactics now
 Play against the computer at Medium level. It makes enough mistakes to leave tactics on the board, and with every game you will spot them faster.
 :::
 
 ## Puzzles to get started {#exercicios "Puzzles"}
 
-One puzzle for each basic pattern. Tap (or click) a piece and then its destination square.
+One puzzle each for four of the six patterns; the other two are in [discovered attack](artigo:ataque-descoberto#exercicios) and [deflection and overloading](artigo:desvio-e-sobrecarga#exercicios). Tap (or click) a piece and then its destination square.
 
 ```exercicio
 fen: 6k1/p2r1p1p/1p4p1/8/4N3/8/PP3PPP/6K1 w - - 0 1

@@ -9,6 +9,7 @@ atualizado: 2026-10-26
 tags: [abertura italiana, giuoco piano, giuoco pianissimo, gambito evans, defesa dos dois cavalos, fried liver, aberturas de xadrez]
 jogar: 2
 relacionados: [principios-de-abertura, aberturas-para-iniciantes, defesa-siciliana, garfo, mate-do-pastor]
+ensina: [Abertura Italiana, Giuoco Piano, Gambito Evans, Defesa dos Dois Cavalos]
 ---
 A Abertura Italiana é a abertura de xadrez que começa com **1.e4 e5 2.Cf3 Cc6 3.Bc4**: as Brancas desenvolvem o bispo para c4, de onde ele mira f7, a casa mais fraca do campo preto no começo da partida. Ela se divide em duas famílias: o jogo direto, em que as Brancas abrem o centro com d4 (Giuoco Piano e Gambito Evans), e o jogo de manobra, com c3 e d3 (Giuoco Pianissimo). Contra 3...Cf6, a partida entra na Defesa dos Dois Cavalos.
 
@@ -36,7 +37,7 @@ setas: c3d4 d4c5:vermelha
 legenda: Giuoco Piano depois de 1.e4 e5 2.Cf3 Cc6 3.Bc4 Bc5 4.c3 Cf6 5.d4: o peão c3 apoia d4, que ataca o bispo de c5.
 ```
 
-A linha principal segue **5...exd4 6.cxd4 Bb4+ 7.Bd2 Bxd2+ 8.Cbxd2 d5!**. O lance 8...d5 é a resposta típica: as Pretas atacam o centro antes que as Brancas consolidem e4 e d4. Depois de 9.exd5 Cxd5, a posição é considerada equilibrada; as Brancas ficam com um **peão isolado em d4** e jogo ativo de peças, e as Pretas tentam bloquear e atacar esse peão.
+A linha principal segue **5...exd4 6.cxd4 Bb4+ 7.Bd2 Bxd2+ 8.Cbxd2 d5!**. O lance 8...d5 é a resposta típica: as Pretas atacam o centro antes que as Brancas consolidem e4 e d4. Depois de 9.exd5 Cxd5, a posição é considerada equilibrada; as Brancas ficam com um **peão isolado em d4** (sem peões vizinhos nas colunas c e e; veja [estrutura de peões](artigo:estrutura-de-peoes#isolado)) e jogo ativo de peças, e as Pretas tentam bloquear e atacar esse peão.
 
 Ideias de cada lado:
 
@@ -60,7 +61,7 @@ Os planos típicos:
 - **Brancas:** a manobra **Cbd2–f1–g3** leva o cavalo ao flanco do rei. Os lances h3 (contra ...Bg4 e ...Cg4) e, às vezes, a4 completam o quadro; com tudo pronto, vem **d4**.
 - **Pretas:** **...a6 e ...Ba7** preservam o bispo contra d4 ou b4; ...h6 tira a casa g5 das peças brancas; ...Be6 oferece a troca do bispo branco de b3.
 
-Aqui o importante é a ordem de lances, não a memória. Se você entende por que o cavalo vai para g3 e por que o bispo preto recua para a7, joga a posição sem decorar.
+Aqui o importante é entender o plano, não decorar lances. Se você entende por que o cavalo vai para g3 e por que o bispo preto recua para a7, joga a posição sem decorar.
 
 ## Gambito Evans: 4.b4 {#evans "Gambito Evans"}
 
@@ -90,7 +91,7 @@ A defesa principal é **4...d5 5.exd5 Ca5!**. O cavalo ataca o bispo e as Pretas
 Existem outros caminhos:
 
 - **4...Bc5**, o **Contra-ataque Traxler**: as Pretas ignoram a ameaça e atacam f2. É arriscado para os dois lados.
-- Do lado branco, **4.d3** ou **4.d4** evitam a teoria aguda. Com 4.d3, a partida volta a um jogo parecido com o do Pianissimo.
+- Do lado branco, **4.d3** evita a teoria aguda e leva a um jogo de manobra parecido com o do Pianissimo. Já **4.d4** abre o centro e entra em linhas igualmente teóricas, como o Ataque Max Lange.
 
 ## Armadilhas típicas da Italiana {#armadilhas "Armadilhas típicas"}
 
@@ -103,7 +104,7 @@ fen: r1bqkb1r/ppp2ppp/2n5/3np1N1/2B5/8/PPPP1PPP/RNBQK2R w KQkq - 0 6
 enunciado: Depois de 4.Cg5 d5 5.exd5 Cxd5?!, as Brancas sacrificam uma peça em f7. Encontre o sacrifício e o xeque que vem a seguir.
 solucao: g5f7 e8f7 d1f3
 dica: O cavalo de g5 captura em f7; depois, a dama dá xeque em f3 e também ataca o cavalo de d5.
-explicacao: 6.Cxf7! Rxf7 7.Df3+ — o rei tem de ir para e6 (para defender o cavalo de d5) ou abandoná-lo. Com 8.Cc3, as Brancas pressionam d5 e o rei preto fica preso no centro.
+explicacao: 6.Cxf7! Rxf7 7.Df3+ — o rei tem de ir para e6 (para defender o cavalo de d5) ou abandoná-lo. Com 8.Cc3, as Brancas pressionam d5 e o rei preto fica preso no centro. (Objetivamente, 6.d4 é ainda mais forte que o sacrifício, mas o Fried Liver é o golpe que todo jogador da Italiana precisa conhecer.)
 ```
 
 ### Gambito Blackburne Shilling: quando as Brancas caem

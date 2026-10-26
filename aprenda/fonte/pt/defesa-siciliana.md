@@ -9,6 +9,7 @@ atualizado: 2026-10-26
 tags: [defesa siciliana, siciliana najdorf, siciliana dragão, sveshnikov, alapin, gambito smith-morra, aberturas de xadrez]
 jogar: 3
 relacionados: [francesa-e-caro-kann, abertura-italiana, cravada, sacrificios, preparacao-de-aberturas]
+ensina: [Defesa Siciliana, Najdorf, Dragão, Sveshnikov, Anti-sicilianas]
 ---
 A Defesa Siciliana é a resposta **1...c5** contra 1.e4: em vez de ocupar o centro com um peão, as Pretas atacam a casa d4 pelo flanco. O resultado são posições assimétricas, em que as Brancas costumam atacar no flanco do rei e as Pretas contra-atacam pela coluna c e no flanco da dama. É uma das defesas mais jogadas contra 1.e4 em todos os níveis, e a escolha de quem joga de Pretas para ganhar, não só para empatar.
 
@@ -47,12 +48,12 @@ A Najdorf exige estudo. Em troca, ela dá às Pretas uma posição rica, em que 
 
 ## Dragão: 5...g6 {#dragao "Dragão"}
 
-No **Dragão**, as Pretas fazem o fianqueto do bispo em g7, de onde ele varre a grande diagonal a1–h8 e pressiona d4 e o flanco da dama branco.
+No **Dragão**, as Pretas fazem o fianqueto do bispo em g7, de onde ele varre a diagonal longa a1–h8 e pressiona d4 e o flanco da dama das Brancas.
 
 ```tabuleiro
 fen: rnbqkb1r/pp2pp1p/3p1np1/8/3NP3/2N5/PPP2PPP/R1BQKB1R w KQkq - 0 6
 setas: f8g7:azul
-legenda: O Dragão depois de 5...g6: o bispo vai para g7, na grande diagonal.
+legenda: O Dragão depois de 5...g6: o bispo vai para g7, na diagonal longa.
 ```
 
 A resposta mais agressiva é o **Ataque Iugoslavo**: 6.Be3 Bg7 7.f3 O-O 8.Dd2 Cc6 e então 9.Bc4 ou 9.O-O-O. Com roques opostos, vira uma corrida:
@@ -96,14 +97,14 @@ Quem joga a Siciliana de Pretas precisa de uma resposta pronta para cada uma del
 
 ### Dragão: o ...Cg4 prematuro
 
-Se as Pretas jogam ...Cg4 antes de ...Bg7, o lance parece ganhar o par de bispos, já que o cavalo ataca e3. Mas o cavalo de g4 só é defendido pelo bispo de c8, e um xeque muda tudo.
+Se as Pretas jogam ...Cg4 antes de ...Bg7, o lance parece ganhar o **par de bispos** (ficar com os dois bispos contra bispo e cavalo), já que o cavalo ataca e3. Mas o cavalo de g4 só é defendido pelo bispo de c8, e um xeque muda tudo.
 
 ```exercicio
 fen: rnbqkb1r/pp2pp1p/3p2p1/8/3NP1n1/2N1B3/PPP2PPP/R2QKB1R w KQkq - 2 7
 enunciado: Depois de 5...g6 6.Be3 Cg4?, as Brancas ganham material. Qual é o lance?
-solucao: f1b5 c8d7 d1g4
+solucao: f1b5
 dica: O cavalo de g4 é defendido só pelo bispo de c8. Um xeque obriga as Pretas a cobrir na diagonal b5–e8.
-explicacao: 7.Bb5+! Bd7 8.Dxg4 — o bispo de d7 está cravado pelo bispo de b5 e não pode retomar em g4. Se 7...Cd7, o cavalo fecha a diagonal c8–g4 e 8.Dxg4 também ganha a peça; se 7...Dd7, vem 8.Bxd7+ e as Brancas ganham a dama.
+explicacao: 7.Bb5+! Bd7 8.Dxg4 — o bispo de d7 está cravado pelo bispo de b5 e não pode retomar em g4. Se 7...Cd7, o cavalo fecha a diagonal c8–g4 e 8.Dxg4 também ganha a peça; se 7...Dd7, vem 8.Bxd7+ e as Brancas ganham a dama. A defesa mais resistente é 7...Cc6, que fecha o xeque sem tirar o bispo de c8 da defesa de g4: 8.Cxc6 bxc6 9.Bxc6+ Bd7 10.Bxa8 Dxa8, e as Brancas ganham a qualidade e um peão.
 ```
 
 ### Smith-Morra: a Armadilha Siberiana
@@ -113,9 +114,9 @@ No Gambito Smith-Morra, a armadilha mais conhecida favorece as Pretas. As Branca
 ```exercicio
 fen: r1b1kb1r/ppqp1ppp/2n1p3/8/2B1P1n1/2N2N1P/PP2QPP1/R1B2RK1 b kq - 0 9
 enunciado: Depois de 2.d4 cxd4 3.c3 dxc3 4.Cxc3 Cc6 5.Cf3 e6 6.Bc4 Dc7 7.O-O Cf6 8.De2 Cg4 9.h3?, as Pretas ganham. Encontre o lance.
-solucao: c6d4 f3d4 c7h2
+solucao: c6d4
 dica: Só o cavalo de f3 defende h2. Ataque a dama de forma que capturar a sua peça custe o rei.
-explicacao: 9...Cd4! ataca a dama de e2. Se 10.Cxd4, vem 10...Dh2#, porque a casa h2 perdeu o seu único defensor. Qualquer outra resposta custa a dama ou leva ao mate: se a dama sai, 10...Cxf3+ elimina o defensor de h2.
+explicacao: 9...Cd4! ataca a dama de e2. Se 10.Cxd4??, vem 10...Dh2#, porque h2 perdeu o seu único defensor. Se a dama sai (10.Dd1, 10.Dd3, 10.De3), 10...Cxf3+ elimina esse defensor e 11...Dh2# vem em seguida. A melhor defesa é 10.hxg4 Cxe2+ 11.Cxe2, mas as Brancas ficam com dois cavalos pela dama.
 ```
 
 :::aviso
@@ -126,7 +127,7 @@ explicacao: 9...Cd4! ataca a dama de e2. Se 10.Cxd4, vem 10...Dh2#, porque a cas
 
 - **É para você** se gosta de posições desequilibradas, aceita estudar teoria e quer jogar para ganhar de Pretas.
 - **Pense duas vezes** se prefere posições calmas ou não tem tempo para estudar: aí a [Francesa ou a Caro-Kann](artigo:francesa-e-caro-kann) dão posições sólidas com menos teoria forçada.
-- **Comece simples:** escolha uma variante (Najdorf, Dragão ou Sveshnikov) e prepare uma resposta para a Alapin, a Fechada e o Smith-Morra. Não tente aprender tudo de uma vez.
+- **Comece simples:** escolha uma variante só (o Dragão tem planos mais fáceis de entender; a Najdorf e a Sveshnikov pedem mais teoria) e prepare uma resposta para a Alapin, a Fechada e o Smith-Morra. Não tente aprender tudo de uma vez.
 
 Se você joga de Brancas e quer evitar essa luta, a [Abertura Italiana](artigo:abertura-italiana) só acontece quando as Pretas respondem 1...e5. Contra a Siciliana, você vai precisar de um plano próprio.
 

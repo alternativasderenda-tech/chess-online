@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [estrategia-posicional, planos-meio-jogo, finais-de-peao, gambito-da-dama-e-london, francesa-e-caro-kann]
 ensina: [Peão isolado, Peões dobrados, Peão atrasado, Cadeia de peões, Maioria de peões]
 ---
-Estrutura de peões é a disposição dos peões no tabuleiro, e ela define os planos da partida mais do que qualquer outro elemento, porque **peão não anda para trás**: uma fraqueza criada na abertura costuma durar até o final. As estruturas mais importantes são o **peão isolado** (sem peões vizinhos), os **peões dobrados** (dois na mesma coluna), o **peão atrasado** (que ficou para trás dos vizinhos), as **cadeias de peões** (peões em diagonal que se protegem) e as **maiorias** (mais peões que o adversário numa ala, o que permite criar um peão passado).
+Estrutura de peões é a disposição dos peões no tabuleiro, e ela define [os planos da partida](artigo:planos-meio-jogo) mais do que qualquer outro elemento, porque **peão não anda para trás**: uma fraqueza criada na abertura costuma durar até o final. As estruturas mais importantes são o **peão isolado** (sem peões vizinhos), os **peões dobrados** (dois na mesma coluna), o **peão atrasado** (que ficou para trás dos vizinhos), as **cadeias de peões** (peões em diagonal que se protegem) e as **maiorias** (mais peões que o adversário num flanco, o que permite criar um peão passado).
 
 ## Por que os peões decidem os planos {#por-que}
 
@@ -67,35 +67,39 @@ Uma cadeia é uma diagonal de peões em que cada um protege o da frente. A regra
 fen: rnbqkbnr/pp3ppp/4p3/2ppP3/3P4/2P5/PP3PPP/RNBQKBNR b KQkq - 0 4
 setas: c5d4:vermelha
 casas: d4:vermelha c3 e5
-legenda: Defesa Francesa, Variante do Avanço: a cadeia branca c3-d4-e5. As Pretas atacam a base com ...c5; as Brancas defendem d4 com c3.
+legenda: Defesa Francesa, Variante do Avanço: a cadeia branca d4-e5. As Pretas atacam a base, d4, com ...c5; as Brancas a reforçam com c3.
 ```
 
-A cadeia também indica o lado do ataque: em geral, **ataca-se na ala para onde a cadeia aponta**. A cadeia branca d4-e5 aponta para a ala do rei, onde as Brancas têm mais espaço; as Pretas buscam jogo na ala da dama, contra a base em d4.
+A cadeia também indica o lado do ataque: em geral, **ataca-se no flanco para onde a cadeia aponta**. A cadeia branca d4-e5 aponta para o flanco do rei, onde as Brancas têm mais espaço; as Pretas buscam jogo no flanco da dama, contra a base em d4.
 
 ## Maiorias e peões passados {#maiorias}
 
-Quando você tem mais peões do que o adversário em uma ala, tem uma **maioria**. Uma maioria saudável (sem peões dobrados) consegue criar um **peão passado**: um peão que nenhum peão adversário pode deter.
+Quando você tem mais peões do que o adversário em um flanco, tem uma **maioria**. Uma maioria saudável (sem peões dobrados) consegue criar um **peão passado**: um peão que nenhum peão adversário pode deter.
 
 ```tabuleiro
 fen: 8/pp3ppp/4k3/8/8/4K3/PPP2PP1/8 w - - 0 1
 casas: a2 b2 c2 f7 g7 h7
-legenda: Material igual, mas maiorias em alas diferentes: as Brancas têm 3 contra 2 na ala da dama; as Pretas, 3 contra 2 na ala do rei.
+legenda: Material igual, mas maiorias em flancos diferentes: as Brancas têm 3 contra 2 no flanco da dama; as Pretas, 3 contra 2 no flanco do rei.
 ```
 
-Nos [finais](artigo:finais-de-peao), a maioria mais distante dos reis costuma valer mais, porque o peão passado que ela cria afasta o rei adversário — é o **peão passado externo**. Ao avançar uma maioria, empurre primeiro o **peão candidato**, aquele que não tem peão adversário à frente na mesma coluna. E quando o adversário tiver um peão passado, a resposta clássica é bloqueá-lo com uma peça, de preferência um cavalo.
+Nos [finais](artigo:finais-de-peao), a maioria mais distante dos reis costuma valer mais, porque o peão passado que ela cria afasta o rei adversário — é o **peão passado distante** (também chamado de externo), que você viu em [finais de rei e peão](artigo:finais-de-peao#peao-passado). Ao avançar uma maioria, empurre primeiro o **peão candidato**, aquele que não tem peão adversário à frente na mesma coluna. E quando o adversário tiver um peão passado, a resposta clássica é bloqueá-lo com uma peça, de preferência um cavalo.
 
 :::dica
 **💡 Dica:** antes de trocar peças, olhe para os peões. Se a estrutura favorece você (adversário com isolado, dobrados ou sem maioria), troque peças e caminhe para o final. Se ela é ruim para você, mantenha as peças e busque atividade.
 :::
 
+:::pratique Jogue pela estrutura
+Numa partida contra o computador, antes de cada troca de peças, olhe só para os peões: quem fica com isolado, dobrados ou maioria? Troque quando a estrutura for sua.
+:::
+
 ## Exercícios
 
 ```exercicio
-fen: 8/ppp3k1/8/PPP5/8/8/8/6K1 w - - 0 1
-enunciado: Três peões contra três, e os reis estão longe. Brancas jogam e criam um peão passado que ninguém alcança.
-solucao: b5b6 a7b6 c5c6 b7c6 a5a6
-dica: Sacrifique o peão do meio.
-explicacao: 1.b6! é a ruptura clássica. Se 1...axb6, 2.c6! bxc6 3.a6 e o peão de a coroa. Se 1...cxb6, 2.a6! bxa6 3.c6 e o peão de c coroa. Lances lentos não funcionam: o rei preto chegaria a tempo.
+fen: 8/8/1p6/1P6/P7/3k4/8/7K w - - 0 1
+enunciado: Maioria de dois peões contra um no flanco da dama, e o rei preto se aproxima. Brancas jogam e ganham — só um lance funciona.
+solucao: a4a5
+dica: Avance o peão candidato: o que não tem peão adversário à frente.
+explicacao: 1.a5! cria o peão passado na hora. Se 1...bxa5, 2.b6 e o peão promove: o rei preto está fora do quadrado. Se o rei preto se aproxima (1...Rc4), 2.axb6 ou 2.a6 deixa um peão passado que ele não segura. Segundo a base de finais, qualquer lance do rei branco só empata: depois de 1.Rg2? Rc4!, o rei preto chega a b5 a tempo.
 ```
 
 ```exercicio
@@ -120,5 +124,5 @@ Um peão que ficou para trás dos vizinhos, não pode avançar com segurança e 
 ### Onde atacar uma cadeia de peões?
 Na base, o peão de trás da cadeia, que não é protegido por nenhum outro peão.
 
-### O que é peão passado externo?
+### O que é peão passado distante?
 Um peão passado longe dos reis. Ele desvia o rei adversário e permite que o seu rei ataque os peões do outro lado.

@@ -56,13 +56,13 @@ The back-rank mate [catches players of every level](artigo:erros-de-iniciante) f
 
 - **The position that causes it is the most normal one in chess.** Kingside castling, f-, g- and h-pawns at home: exactly what opening books recommend. Nobody feels in danger.
 - **The threat comes from far away.** A rook on the other side of the board, on an open file, does not look dangerous until the moment it lands on the last rank.
-- **The defence is usually left to a single piece.** When the only rook guarding the rank also has to defend a pawn or a file, it becomes [overloaded](artigo:desvio-e-sobrecarga#sobrecarga), and a single trade leaves the rank empty.
+- **The defense is usually left to a single piece.** When the only rook guarding the rank also has to defend a pawn or a file, it becomes [overloaded](artigo:desvio-e-sobrecarga#sobrecarga), and a single trade leaves the rank empty.
 
-So even when your position looks calm, it is worth asking: "if one of his rooks reached my back rank right now, could I capture it or block the check?". If the answer is no, it is time to think about a window for your king.
+So even when your position looks calm, it is worth asking: "if one of their rooks reached my back rank right now, could I capture it or block the check?". If the answer is no, it is time to think about a window for your king.
 
 ## How to avoid a back-rank mate {#evitar "How to avoid it"}
 
-The classic defence is to open a **window** for the king, often called by its German name: **luft** ("air"). Just push one of the pawns in front of the king, usually the rook's pawn (h3 for White, h6 for Black).
+The classic defense is to open a **window** for the king, often called by its German name: **luft** ("air"). Just push one of the pawns in front of the king, usually the rook's pawn (h3 for White, h6 for Black).
 
 ```tabuleiro
 fen: 6k1/5pp1/7p/8/8/8/5PPP/4R1K1 w - - 0 1
@@ -81,20 +81,20 @@ Other ways to stay safe:
 **⚠️ Careful:** back-rank mates tend to show up when the game looks quiet, after some trades, with queens and rooks still on the board. That is exactly when nobody expects them.
 :::
 
-:::pratique Practise the back-rank mate now
+:::pratique Practice the back-rank mate now
 Play against the computer and check whether its king has an escape square. When it does not, try to bring a rook to the last rank with more attackers than defenders.
 :::
 
 ## Back-rank mate puzzles {#exercicios "Puzzles"}
 
 ```exercicio
-fen: 6k1/pp3ppp/1q6/8/8/6P1/1r3P1P/4R1K1 w - - 0 1
+fen: 2r3k1/pp3ppp/8/8/8/1q4P1/5P1P/2R1R1K1 w - - 0 1
 enunciado: White to move gives **mate in 1**.
 tipo: mate
 lances: 1
-solucao: e1e8
-dica: Black's pawns on f7, g7 and h7 trap the king, and no black piece controls e8 or f8.
-explicacao: 1.Re8#. No black piece can capture the rook or step onto f8.
+solucao: c1c8
+dica: The c8 rook is the only piece guarding the eighth rank. What if it disappears with check?
+explicacao: 1.Rxc8# — the rook takes the back rank's only defender, and the king is still boxed in by its own pawns. 1.Re8+? fails to 1...Rxe8.
 ```
 
 ```exercicio

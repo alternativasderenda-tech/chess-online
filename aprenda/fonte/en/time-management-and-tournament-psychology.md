@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [ritmos-de-jogo, empates, finais-de-peao, calculo, rotina-de-treino]
 ensina: [Time management, Avoiding time trouble, Handling nerves, Playing when winning and when losing]
 ---
-Managing the clock and your own head is as much a part of chess as calculating. In practice, it means **budgeting your time** across the phases of the game and spending more at critical moments, **avoiding time trouble** (running short of time near the end), **controlling your nerves** with a fixed thinking routine, and **changing your attitude depending on the score on the board**: when winning, simplify and cut out counterplay; when losing, complicate and look for resources such as stalemate. Many games aren't decided by the best move but by the first mistake made under pressure.
+Time management in chess means budgeting your clock across the phases of the game, saving minutes for the critical moments, and keeping your nerves in check so you don't blunder under pressure. In practice, it means **budgeting your time** across the phases of the game and spending more at critical moments, **avoiding time trouble** (running short of time near the end), **controlling your nerves** with a fixed thinking routine, and **changing your attitude depending on the score on the board**: when winning, simplify and cut out counterplay; when losing, complicate and look for resources such as stalemate. Many games aren't decided by the best move but by the first mistake made under pressure.
 
 ## How to budget your time {#tempo}
 
@@ -64,9 +64,9 @@ Every player gets nervous. What sets experienced players apart is a **routine** 
 When you're winning, the goal is to **reduce risk**, not to win in the prettiest way.
 
 ```tabuleiro
-fen: 5rk1/5ppp/8/3q4/3Q4/8/5PPP/R2R2K1 w - - 0 1
-setas: d4d5
-legenda: A rook up, trading queens (Qxd5) removes almost all of Black's counterplay.
+fen: 5rk1/5qpp/8/8/8/8/5QPP/R4RK1 w - - 0 1
+setas: f2f7
+legenda: A rook up, trading queens (Qxf7+) removes almost all of Black's counterplay.
 ```
 
 - **Trade pieces, not pawns.** Every piece trade reduces your opponent's counterplay; you need the pawns to win the endgame.
@@ -99,6 +99,10 @@ A [draw offer](artigo:empates#acordo) is also a psychological decision. Under FI
 - **When you receive an offer, evaluate the position, not your opponent.** Ask whether you have real winning chances without serious risk of losing.
 - **Consider the tournament situation**, but don't let it replace your assessment of the board.
 
+:::pratique Play with a clock
+Play the computer with a fixed time budget and note how much you spent on the opening, middlegame and endgame. The goal is to reach the endgame with time in hand.
+:::
+
 ## Exercises
 
 ```exercicio
@@ -106,15 +110,15 @@ fen: 6r1/Q7/8/8/8/5K2/7p/7k b - - 0 1
 enunciado: Black has a rook against a queen, and the black king has no moves. Black to play and draw.
 solucao: g8g3|g8f8
 dica: If the rook disappears, Black has no legal moves left.
-explicacao: 1...Rg3+! If 2.Kxg3, it's stalemate. If the king runs, the rook keeps checking, and capturing it at any moment also stalemates the black king. 1...Rf8+ works on the same idea. According to the endgame tablebase, these are the only drawing moves.
+explicacao: 1...Rg3+! If 2.Kxg3, it's stalemate. If the king runs, the rook keeps checking, always offering itself where taking it stalemates the black king. 1...Rf8+ works on the same idea. According to the endgame tablebase, these are the only drawing moves.
 ```
 
 ```exercicio
-fen: 8/8/4k3/8/3K4/4P3/8/8 w - - 0 1
-enunciado: King and pawn endgame, in time trouble. White to play and win — only one move works.
-solucao: d4e4
-dica: Put your king face to face with the black king, with one square between them.
-explicacao: 1.Ke4! takes the opposition: now Black has to move the king and give way. According to the endgame tablebase, every other move draws.
+fen: 4k3/8/8/8/8/8/4P3/4K3 w - - 0 1
+enunciado: Time trouble, and you're left with a king-and-pawn ending. White to play and win.
+solucao: e1d2|e1f2
+dica: Before pushing the pawn, the king goes in front of it.
+explicacao: 1.Kd2! (or 1.Kf2) walks the king in front of the pawn, toward the key squares d4, e4 and f4. After 1...Kd7 2.Kd3 (or 2.Ke3), the white king reaches one of them before the black king does. Pushing the pawn first (1.e3? or 1.e4?) lets the black king settle in front of it, and it's a draw; 1.Kd1? and 1.Kf1? also draw. According to the endgame tablebase, only the two king moves forward win.
 ```
 
 ## Frequently asked questions {#faq}

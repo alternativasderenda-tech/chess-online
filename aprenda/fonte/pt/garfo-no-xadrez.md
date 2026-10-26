@@ -62,11 +62,13 @@ Repare no padrão clássico: peças adversárias lado a lado, separadas por uma 
 A **dama** dá garfos em oito direções, por isso aparece em muitos ataques duplos, sobretudo com xeque. O cuidado é que ela vale muito: se um dos alvos estiver defendido e puder capturá-la, o garfo sai pela culatra.
 
 ```tabuleiro
-fen: 4k3/8/8/8/Q6r/8/5PPP/6K1 b - - 0 1
+fen: 4k2r/p4ppp/8/8/Q6n/8/P4PPP/6K1 b k - 0 1
 setas: a4e8:vermelha a4h4
 casas: e8:vermelha h4
-legenda: Da4+ dá xeque pela diagonal e ataca a torre de h4 pela fileira. Depois que o rei se mexe, a dama captura a torre.
+legenda: Da4+ dá xeque pela diagonal e ataca o cavalo de h4 pela fileira. Nenhuma peça preta consegue se pôr no caminho (b5, c6 ou d7): depois que o rei se mexe, a dama captura o cavalo.
 ```
+
+Atenção: se o alvo na fileira fosse uma torre, ela capturaria a dama. Antes de garfar com a dama, confira se algum dos alvos pode capturá-la.
 
 O **bispo** garfa em diagonal (por exemplo, rei e torre na mesma diagonal longa), e a **torre** garfa em fileiras e colunas, muito comum em finais quando ataca dois peões ou um rei e uma peça solta. Até o **rei** dá garfo nos finais, quando atinge duas peças desprotegidas.
 
@@ -133,7 +135,7 @@ explicacao: 1.Th8+! Rxh8 (forçado) 2.Cxf7+ garfa o rei de h8 e a dama de d8. De
 
 ### Garfo e ataque duplo são a mesma coisa?
 
-Quase. Todo garfo é um ataque duplo, mas "ataque duplo" também inclui casos em que as duas ameaças vêm de um lance só sem que seja a mesma peça atacando duas outras, como uma ameaça de mate somada a um ataque à dama.
+Quase. Todo garfo é um ataque duplo, mas o ataque duplo também inclui lances com duas ameaças de origens diferentes, como uma ameaça de mate somada a um ataque à dama.
 
 ### Qual peça dá mais garfos?
 

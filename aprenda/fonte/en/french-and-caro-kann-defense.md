@@ -1,14 +1,15 @@
 ---
 id: francesa-e-caro-kann
-titulo: French and Caro-Kann Defense: Plans and Lines
+titulo: "French Defense vs Caro-Kann: Plans and Main Lines"
 descricao: The French and Caro-Kann side by side: Advance, Winawer, Classical, Exchange and Panov, each side's plans and which of the two to choose against 1.e4.
 nivel: intermediario
 ordem: 55
 publicado: 2026-10-26
 atualizado: 2026-10-26
-tags: [french defense, caro-kann, advance variation, winawer, tarrasch, exchange variation, panov attack, chess openings]
+tags: [french defense, french defence, french vs caro-kann, caro-kann, advance variation, winawer, tarrasch, exchange variation, panov attack, chess openings]
 jogar: 2
 relacionados: [defesa-siciliana, estrutura-de-peoes, bispos, gambito-da-dama-e-london, preparacao-de-aberturas]
+ensina: [French Defense, Caro-Kann Defense, Advance Variation, Winawer, Panov-Botvinnik Attack]
 ---
 The French Defense (**1.e4 e6**) and the Caro-Kann (**1.e4 c6**) are the two most popular solid defenses against 1.e4. In both, Black prepares ...d5 to challenge the e4 pawn on move two and relies on a sturdy [pawn structure](artigo:estrutura-de-peoes) rather than immediate tactics. The key difference is the light-squared bishop: in the French it stays locked behind the e6 pawn; in the Caro-Kann it gets out first, to f5 or g4.
 
@@ -35,7 +36,7 @@ legenda: The French Advance after 3.e5: Black attacks the pawn chain with ...c5 
 
 With 3.e5, White grabs space on the kingside. Black's golden rule is to **attack the pawn chain**: ...c5 against the base (d4) and later ...f6 against the head (e5). The main line goes **3...c5 4.c3 Nc6 5.Nf3 Qb6**, with knight, queen and c5 pawn all piling up on d4.
 
-The French's chronic problem is the **[c8 bishop](artigo:bispos)**, stuck behind e6. Black often deals with it through ...b6 and ...Ba6, trading it for White's good bishop, or leaves it on defensive duty until the position opens up.
+The French's chronic problem is the **[c8 bishop](artigo:bispos)**, stuck behind e6. Black often deals with it through ...b6 and ...Ba6, trading it for White's light-squared bishop (the one from f1), or leaves it on defensive duty until the position opens up.
 
 ### Winawer: 3.Nc3 Bb4
 
@@ -47,13 +48,13 @@ legenda: Winawer after 3.Nc3 Bb4 4.e5 c5 5.a3 Bxc3+ 6.bxc3: White has doubled pa
 
 The **Winawer** is the sharpest line of the French. After **4.e5 c5 5.a3 Bxc3+ 6.bxc3**, both sides have clear trumps:
 
-- **White:** the bishop pair, space, and the dark squares on Black's kingside now that the f8 bishop is gone. 7.Qg4, hitting g7, is the most direct try.
+- **White:** the [bishop pair](artigo:bispos#par) (both bishops against bishop and knight), space, and the dark squares on Black's kingside now that the f8 bishop is gone. 7.Qg4, hitting g7, is the most direct try.
 - **Black:** doubled white pawns to target (c3), queenside play with ...Ne7, ...Qc7 or ...Qa5, and a solid center.
 
 ### Classical, Tarrasch and Exchange
 
 - **Classical (3.Nc3 Nf6):** after 4.Bg5, Black develops with ...Be7. After 4.e5 (the Steinitz Variation), the f6 knight is kicked and the game resembles the Advance.
-- **Tarrasch (3.Nd2):** the knight can't be pinned by ...Bb4. The reply 3...c5 often leads to positions where Black has an isolated pawn on d5.
+- **Tarrasch (3.Nd2):** the knight sidesteps the Winawer pin (...Bb4 and ...Bxc3+, doubling White's pawns); if Black plays ...Bb4 anyway, c3 kicks the bishop. The reply 3...c5 often leads to positions where Black has an [isolated pawn](artigo:estrutura-de-peoes#isolado) (a pawn with no friendly pawns on the neighboring files) on d5.
 - **Exchange Variation (3.exd5 exd5):** a symmetrical structure and a free c8 bishop. It usually leads to a quiet game.
 
 ### Advance trap: the queen that forgets about b5
@@ -63,9 +64,9 @@ In the Advance, Black wants to win the d4 pawn. But if White's bishop is already
 ```exercicio
 fen: r1b1kbnr/pp3ppp/4p3/3pP3/3q4/3B4/PP3PPP/RNBQK2R w KQkq - 0 9
 enunciado: After 5...Qb6 6.Bd3 cxd4 7.cxd4 Nxd4? 8.Nxd4 Qxd4??, White wins the queen. How?
-solucao: d3b5 c8d7 d1d4
+solucao: d3b5
 dica: White's queen on d1 and Black's queen on d4 share the d-file. Which piece can step out of the way with check?
-explicacao: 9.Bb5+! — the bishop gives check and opens the d-file for the queen on d1. Whatever Black does (9...Bd7, 9...Ke7 or 9...Kd8), 10.Qxd4 follows.
+explicacao: 9.Bb5+! — the bishop gives check and opens the d-file for the queen on d1. Against 9...Ke7 or 9...Kd8, 10.Qxd4 follows. Against 9...Bd7, first 10.Bxd7+ Kxd7 and only then 11.Qxd4: grabbing the queen at once (10.Qxd4?) would allow 10...Bxb5.
 ```
 
 ## Caro-Kann {#caro-kann "Caro-Kann"}
@@ -102,7 +103,7 @@ Here the contrast with the French is plain to see: the bishop comes out **before
 After 4...Nd7 5.Qe2, the natural 5...Ngf6?? loses on the spot. The d7 knight takes away a flight square from the king and, as soon as the e4 knight moves, the queen on e2 pins the e7 pawn along the e-file.
 
 ```exercicio
-fen: r1bqkb1r/pp1npppp/2p2n2/8/3PN3/8/PPP1QPPP/R1B1KBNR w KQkq - 2 6
+fen: r1bqkb1r/pp1npppp/2p2n2/8/3PN3/8/PPP1QPPP/R1B1KBNR w KQkq - 3 6
 enunciado: After 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2 Ngf6??, White has **mate in 1**.
 tipo: mate
 lances: 1

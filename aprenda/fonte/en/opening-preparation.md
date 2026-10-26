@@ -71,7 +71,7 @@ Knowing your transpositions lets you:
 
 ## Traps: know them so you don't fall in, and so you can punish {#armadilhas}
 
-Every opening has traps, and your repertoire should include the ones in your lines — both to avoid them and to cash in when your opponent falls for them. A classic example is **Légal's mate**: after 1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6?, White plays 5.Nxe5!, apparently giving up the queen. If 5...Bxd1??, mate in two follows (it's the first exercise below). Instead, Black should accept losing a pawn — for example, 5...dxe5 6.Qxg4.
+Every opening has traps, and your repertoire should include the ones in your lines — both to avoid them and to cash in when your opponent falls for them. A classic example is **Légal's mate**: after 1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6?, White plays 5.Nxe5!, apparently giving up the queen. If 5...Bxd1??, mate in two follows (you solved it in [opening principles](artigo:principios-de-abertura)). Instead, Black should accept losing a pawn — for example, 5...dxe5 6.Qxg4.
 
 ```tabuleiro
 fen: rn1qkbnr/ppp2p1p/3p2p1/4p3/2B1P1b1/2N2N2/PPPP1PPP/R1BQK2R w KQkq - 0 5
@@ -96,26 +96,29 @@ Engines and game databases are excellent tools for opening preparation, but they
 - **Use master games** to see how the plans work in practice: where the pieces go, which pawn breaks happen, which endgames arise.
 - **Check your own games.** They show the lines you actually face, at your level, rather than the ones in fashion among professionals.
 
+:::pratique Test your repertoire
+Play 5 games against the computer with the same opening and compare each one with your file: where did the game leave what you studied?
+:::
+
 ## Exercises
 
+Both exercises are traps you haven't met yet in this course. Notice that both depend on move order: a single move played at the wrong moment (4.e3? in the Albin, 5.Nxe5? in the Ruy Lopez) is enough.
+
 ```exercicio
-fen: rn1qkbnr/ppp2p1p/3p2p1/4N3/2B1P3/2N5/PPPP1PPP/R1BbK2R w KQkq - 0 6
-enunciado: After 1.e4 e5 2.Nf3 d6 3.Bc4 Bg4 4.Nc3 g6? 5.Nxe5! Bxd1??, White has **mate in 2**.
-tipo: mate
-lances: 2
-solucao: c4f7 e8e7 c3d5
-dica: Black's weak point is f7, and the d5 square is free for the knight.
-explicacao: 6.Bxf7+ Ke7 (the only move) 7.Nd5#. The black king is boxed in by its own pieces and by White's knights: that's Légal's mate.
+fen: rnbqk1nr/ppp2ppp/8/4P3/1BP5/4p3/PP3PPP/RN1QKBNR b KQkq - 0 6
+enunciado: Albin Countergambit: 1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3! 6.Bxb4??. Black to play wins decisive material.
+tipo: tatica
+solucao: e3f2 e1e2 f2g1n
+dica: Start with a pawn check. When you promote, a queen is not the best choice.
+explicacao: 6...exf2+ 7.Ke2 (7.Kxf2? Qxd1) fxg1=N+! — promoting to a knight gives check. If 8.Rxg1, 8...Bg4+ wins the queen; if 8.Ke1, 8...Qh4+ and Black, a piece up, attacks the king. Promoting to a queen (7...fxg1=Q?) would allow 8.Qxd8+. This is the Lasker Trap, a must-know for anyone who plays the Albin.
 ```
 
 ```exercicio
-fen: r1bqkb1r/pp1npppp/2p2n2/8/3PN3/8/PPP1QPPP/R1B1KBNR w KQkq - 3 6
-enunciado: Caro-Kann: 1.e4 c6 2.d4 d5 3.Nc3 dxe4 4.Nxe4 Nd7 5.Qe2 Ngf6??. White to play and **mate in 1**.
-tipo: mate
-lances: 1
-solucao: e4d6
-dica: The e7 pawn is pinned by the queen on e2.
-explicacao: 6.Nd6#. The e7 pawn can't take the knight because it's pinned to the king by the e2 queen. It's a smothered mate right in the opening, and a good reason to know the traps in your defense.
+fen: r1bqkb1r/pp1pnppp/2p2n2/4N3/2B1P3/3P4/PPP2PPP/RNBQK2R b KQkq - 1 6
+enunciado: Ruy Lopez, Mortimer Trap: 1.e4 e5 2.Nf3 Nc6 3.Bb5 Nf6 4.d3 Ne7 5.Nxe5? c6 6.Bc4?. Black to play and **win a piece**.
+solucao: d8a5
+dica: The e5 knight has been left undefended. A check could hit it at the same time.
+explicacao: 6...Qa5+! checks along the a5-e1 diagonal and hits the e5 knight along the fifth rank. Whatever White does about the check (c3, b4, Nc3, Nd2, Bd2, Qd2 or a king move), the knight falls: 7...Qxe5. Anyone who plays the Ruy Lopez as White needs to know that 5.Nxe5 is a mistake in this move order.
 ```
 
 ## Frequently asked questions {#faq}

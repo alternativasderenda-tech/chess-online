@@ -88,13 +88,13 @@ Jogue contra o computador e repare se o rei dele tem casa de fuga. Quando não t
 ## Exercícios do mate do corredor {#exercicios "Exercícios"}
 
 ```exercicio
-fen: 6k1/pp3ppp/1q6/8/8/6P1/1r3P1P/4R1K1 w - - 0 1
+fen: 2r3k1/pp3ppp/8/8/8/1q4P1/5P1P/2R1R1K1 w - - 0 1
 enunciado: Brancas jogam e dão **mate em 1**.
 tipo: mate
 lances: 1
-solucao: e1e8
-dica: Os peões pretos de f7, g7 e h7 prendem o rei, e nenhuma peça preta controla e8 ou f8.
-explicacao: 1.Te8#. Nenhuma peça preta pode capturar a torre ou se colocar em f8.
+solucao: c1c8
+dica: A torre de c8 é a única peça que guarda a oitava fileira. E se ela sumir com xeque?
+explicacao: 1.Txc8# — a torre captura o único defensor da última fileira, e o rei continua preso pelos próprios peões. 1.Te8+? não funciona: 1...Txe8.
 ```
 
 ```exercicio

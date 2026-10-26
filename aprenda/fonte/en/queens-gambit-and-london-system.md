@@ -9,6 +9,7 @@ atualizado: 2026-10-26
 tags: [queen's gambit, queen's gambit accepted, queen's gambit declined, slav defense, london system, elephant trap, chess openings]
 jogar: 2
 relacionados: [francesa-e-caro-kann, estrutura-de-peoes, cravada, preparacao-de-aberturas, aberturas-para-iniciantes]
+ensina: [Queen's Gambit, Queen's Gambit Accepted, Queen's Gambit Declined, Slav Defense, London System]
 ---
 The Queen's Gambit (**1.d4 d5 2.c4**) and the London System (**1.d4** with an early bishop to f4) are the two most popular ways to play 1.d4. In the Queen's Gambit, White offers the c4 pawn to lure Black's d5 pawn away from the center. In the London, White builds nearly the same setup every game (d4, Bf4, e3, c3, Nf3, Nbd2 and Bd3) and depends very little on what Black does. The first is a fight for the center with plenty of theory; the second is a system that trades theory for plans.
 
@@ -28,10 +29,10 @@ Black has three main replies, each with its own established name.
 
 Black takes the pawn without trying to keep it, and gets free development in return. The main line goes **3.Nf3 Nf6 4.e3 e6 5.Bxc4 c5 6.O-O a6**.
 
-- **White:** regain the pawn, develop quickly and play in the center (Qe2, Rd1, sometimes e4). White often ends up with an isolated pawn on d4, which comes with active piece play.
+- **White:** regain the pawn, develop quickly and play in the center (Qe2, Rd1, sometimes e4). White often ends up with an [isolated pawn](artigo:estrutura-de-peoes#isolado) on d4 (no friendly pawns on the c- or e-files), which comes with active piece play.
 - **Black:** ...b5 and ...Bb7, pressure on d4 with ...cxd4, and a solid endgame if pieces come off.
 
-Another way to meet it is **3.e4**, grabbing the center right away.
+Instead of 3.Nf3, White can also play **3.e4**, grabbing the center right away.
 
 What Black should **not** do is try to hang on to the c4 pawn with ...b5. The opening's best-known trap shows why (see the exercise below).
 
@@ -52,7 +53,7 @@ The classical line is **3.Nc3 Nf6 4.Bg5 Be7 5.e3 O-O 6.Nf3**, the basis of the *
 
 ### Exchange Variation: 4.cxd5 exd5
 
-White trades on d5 early: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. The typical plan is the **[minority attack](artigo:estrutura-de-peoes)**: White's b-pawn (b4-b5) advances against Black's queenside majority to create a weak pawn on c6. In return, Black's c8 bishop is free.
+White trades on d5 early: **4.cxd5 exd5 5.Bg5 c6 6.e3 Be7 7.Bd3**. The typical plan is the **[minority attack](artigo:planos-meio-jogo#minoria)**: White's a- and b-pawns advance (b4-b5, backed by a4) against Black's queenside majority to create a weak pawn on c6. In return, Black's c8 bishop is free.
 
 ## Slav Defense: 2...c6 {#eslava "Slav Defense"}
 
@@ -101,8 +102,8 @@ In the Declined, the f6 knight looks [pinned](artigo:cravada) by the g5 bishop, 
 
 ```exercicio
 fen: r1bqkb1r/pppn1ppp/5n2/3N2B1/3P4/8/PP2PPPP/R2QKBNR b KQkq - 0 6
-enunciado: After 3.Nc3 Nf6 4.Bg5 Nbd7 5.cxd5 exd5 6.Nxd5??, Black wins a piece. Find the move that starts it all.
-solucao: f6d5 g5d8 f8b4 d1d2 b4d2 e1d2 e8d8
+enunciado: After 3.Nc3 Nf6 4.Bg5 Nbd7 5.cxd5 exd5 6.Nxd5?, Black wins a piece. Find the move that starts it all.
+solucao: f6d5 g5d8 f8b4
 dica: The pin is fake. If the bishop takes your queen, a check wins White's queen back.
 explicacao: 6...Nxd5! 7.Bxd8 Bb4+ 8.Qd2 Bxd2+ 9.Kxd2 Kxd8 — Black gives the queen back but ends up a piece up for a pawn. This is the Elephant Trap.
 ```

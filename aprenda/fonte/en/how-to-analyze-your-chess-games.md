@@ -37,7 +37,7 @@ For each mark, write one sentence about what you were thinking at the time. Only
 
 ### 3. Find the critical moment and the decisive mistake
 
-A **critical moment** is a position where the choice really matters: there's one good move and several bad ones, or a decision that changes the type of game (trading queens, opening the center, going into an endgame). The **decisive mistake** is the move after which the game could no longer be saved. The two usually sit close together: most games are decided in two or three moves.
+A **critical moment** is a position where the choice really matters: there's one good move and several bad ones, or a decision that changes the type of game (trading queens, opening the center, going into an endgame). The **decisive mistake** is the move after which the game could no longer be saved. The two usually sit close together: in many games, everything is decided in two or three moves.
 
 A practical tip: look for the **last moment the position was still defensible**. The next move is almost always the decisive mistake.
 

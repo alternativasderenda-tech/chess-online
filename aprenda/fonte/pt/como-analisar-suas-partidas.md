@@ -37,7 +37,7 @@ Para cada marca, escreva em uma frase o que você pensava na hora. Só depois co
 
 ### 3. Ache o momento crítico e o erro decisivo
 
-**Momento crítico** é uma posição em que a escolha importa muito: há um lance bom e vários ruins, ou uma decisão que muda o tipo de partida (trocar damas, abrir o centro, ir para o final). O **erro decisivo** é o lance depois do qual a partida não tinha mais salvação. Os dois costumam estar perto um do outro: a maioria das partidas se decide em dois ou três lances.
+**Momento crítico** é uma posição em que a escolha importa muito: há um lance bom e vários ruins, ou uma decisão que muda o tipo de partida (trocar damas, abrir o centro, ir para o final). O **erro decisivo** é o lance depois do qual a partida não tinha mais salvação. Os dois costumam estar perto um do outro: em muitas partidas, tudo se decide em dois ou três lances.
 
 Uma dica prática: procure o **último momento em que a posição ainda era defensável**. O lance seguinte é, quase sempre, o erro decisivo.
 

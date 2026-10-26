@@ -120,7 +120,7 @@ fen: 8/ppp3k1/8/PPP5/8/8/8/6K1 w - - 0 1
 enunciado: White to play and win. The kings are far away and only one pawn move works.
 solucao: b5b6 c7b6 a5a6 b7a6 c5c6
 dica: Sacrifice the middle pawn. After each capture, push the pawn that's no longer blocked.
-explicacao: 1.b6! cxb6 2.a6! bxa6 3.c6 and the c-pawn queens: Black's king can't catch it. If 1...axb6, 2.c6! bxc6 3.a6, and now the a-pawn runs. Any other first move gives Black's king time (1...Kf6), and the breakthrough no longer works.
+explicacao: 1.b6! cxb6 2.a6! bxa6 3.c6 and the c-pawn queens: Black's king can't catch it. If 1...axb6, 2.c6! bxc6 3.a6, and now the a-pawn runs. In general, a slower first move gives Black's king time to come closer (1...Kf6), and the breakthrough may no longer work.
 ```
 
 ## How to think in a pawn endgame {#metodo "How to think"}

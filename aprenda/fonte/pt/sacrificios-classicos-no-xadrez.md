@@ -1,16 +1,16 @@
 ---
 id: sacrificios
 titulo: "Sacrifícios Clássicos no Xadrez: Bxh7+ e Qualidade"
-titulo_seo: Sacrifícios Clássicos no Xadrez | Xadrez Online
-descricao: Como funcionam os sacrifícios clássicos de ataque — o Bxh7+ (sacrifício grego), o mate abafado e o sacrifício de qualidade — e como saber se um deles funciona.
+titulo_seo: "Sacrifícios no Xadrez: Grego e Qualidade | Xadrez Online"
+descricao: Como funcionam os sacrifícios clássicos de ataque — o Bxh7+ (sacrifício grego), o mate sufocado e o sacrifício de qualidade — e como saber se um deles funciona.
 nivel: avancado
 ordem: 35
 publicado: 2026-10-26
 atualizado: 2026-10-26
-tags: [sacrifício no xadrez, sacrifício grego, bxh7, sacrifício de qualidade, mate abafado, ataque ao rei]
+tags: [sacrifício no xadrez, sacrifício grego, bxh7, sacrifício de qualidade, mate sufocado, mate abafado, ataque ao rei]
 jogar: 3
 relacionados: [taticas, calculo, desvio-e-sobrecarga, mate-do-corredor, ataque-descoberto]
-ensina: [Sacrifício grego, Sacrifício de qualidade, Mate abafado, Ataque ao rei roqueado]
+ensina: [Sacrifício grego, Sacrifício de qualidade, Mate sufocado, Ataque ao rei roqueado]
 ---
 Um sacrifício é a entrega voluntária de material em troca de algo que vale mais: um mate, um ataque que o adversário não consegue conter ou uma vantagem posicional duradoura. Os sacrifícios clássicos — como o **Bxh7+**, conhecido como **sacrifício grego**, e o **sacrifício de qualidade** (torre por peça menor) — se repetem há séculos porque nascem das mesmas estruturas. Quem conhece os padrões e as condições de cada um sabe reconhecê-los na hora e, mais importante, sabe quando eles **não** funcionam.
 
@@ -38,20 +38,20 @@ Antes de sacrificar, confira as **condições**. Nesta posição-modelo todas es
 
 1. **O bispo de d3 mira h7** e o peão de h7 só é defendido pelo rei.
 2. **Não há cavalo preto em f6.** O peão branco de e5 tira essa casa das Pretas; um cavalo em f6 defenderia h7 e h5.
-3. **O cavalo chega a g5 em segurança.** As Pretas não têm bispo de casas escuras para capturá-lo, e o peão de h4 o protege.
+3. **O cavalo chega a g5 em segurança.** O bispo preto de casas escuras está longe, em a5, e não alcança g5; além disso, o peão de h4 apoia o cavalo.
 4. **A dama chega rápido** à coluna h: de d1 para h5 em um lance.
 5. **As casas de fuga estão vigiadas:** o bispo de c1 fica atrás do cavalo na diagonal até h6, pronto para um [xeque descoberto](artigo:ataque-descoberto), e o peão de h4 pode avançar com xeque.
 
 A linha principal é 1.Bxh7+! Rxh7 2.Cg5+, e agora o rei preto tem quatro casas. Nenhuma salva:
 
-- **2...Rg8 3.Dh5** — o mate em h7 é inevitável. Conferimos com o motor: qualquer resposta das Pretas permite 4.Dh7#, porque a torre de f8 não tem casa (e8 está ocupada) e o cavalo de g5 vigia f7.
+- **2...Rg8** — mate em dois lances; resolva no primeiro exercício abaixo.
 - **2...Rh8 3.Dh5+ Rg8 4.Dh7#.**
-- **2...Rg6 3.h5+!** — se 3...Rf5, então 4.g4#. Se 3...Rh6, 4.Dg4 ameaça um xeque descoberto do cavalo, e o mate vem em poucos lances.
+- **2...Rg6 3.h5+!** — se 3...Rf5, então 4.g4#. Se 3...Rh6, 4.Cxe6+ é xeque descoberto do bispo de c1 e, como na linha seguinte, 5.Cxc7 ganha a dama.
 - **2...Rh6 3.Cxe6+** — xeque descoberto do bispo de c1. O cavalo em e6 ainda ataca a dama em c7, e 4.Cxc7 ganha a dama.
 
 ```tabuleiro
 fen: 4rr2/ppqb1ppk/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 b - - 1 2
-setas: d1h5:azul c1h6:amarela
+setas: c1h6:amarela
 casas: g8 h8 g6 h6
 legenda: Depois de 1.Bxh7+ Rxh7 2.Cg5+: o rei preto tem quatro casas e todas perdem.
 ```
@@ -66,7 +66,7 @@ E se as Pretas recusarem o bispo com 1...Rh8? Então as Brancas podem simplesmen
 
 Os sacrifícios mais espetaculares entregam a dama, e quase sempre seguem padrões conhecidos de mate:
 
-- **Mate abafado** (ou sufocado): a dama se oferece em g8 (ou na casa ao lado do rei), uma torre é obrigada a capturar e tapa a última casa de fuga; o cavalo dá mate num rei cercado pelas próprias peças.
+- **Mate sufocado** (ou abafado), que você viu em [desvio e atração](artigo:desvio-e-sobrecarga#atracao): a dama se oferece em g8 (ou na casa ao lado do rei), uma torre é obrigada a capturar e tapa a última casa de fuga; o cavalo dá mate num rei cercado pelas próprias peças.
 - **Mate de Anastácia:** com um cavalo em e7 vigiando g8 e g6, a dama captura em h7, o rei recaptura e uma torre dá mate pela coluna h.
 - **[Desvio](artigo:desvio-e-sobrecarga) na última fileira:** a dama se entrega para tirar o único defensor da [8ª fileira](artigo:mate-do-corredor) e a torre entra com mate.
 
@@ -102,24 +102,30 @@ Antes de entregar material, faça estas perguntas, nesta ordem:
 **💡 Dica:** quando não conseguir calcular até o fim, compare o pior cenário do sacrifício com o melhor cenário do lance tranquilo. Se o lance tranquilo leva a uma posição sem perspectivas, o risco pode valer a pena.
 :::
 
+:::pratique Procure o Bxh7+
+Jogue de Brancas contra o computador com estruturas de peão em e5 e confira as cinco condições do sacrifício grego antes de entregar o bispo.
+:::
+
 ## Exercícios
 
 ```exercicio
-fen: 4rrk1/ppqb1ppp/2n1p3/b2pP3/3P3P/2PB1N2/1P3PP1/R1BQ1RK1 w - - 0 1
-enunciado: A posição-modelo. Qual é o lance que inicia o ataque decisivo?
-solucao: d3h7
-dica: O peão de h7 só é defendido pelo rei, e o cavalo pode chegar a g5 com xeque.
-explicacao: 1.Bxh7+! Rxh7 2.Cg5+ e as Pretas perdem em todas as linhas: 2...Rg8 3.Dh5 e 4.Dh7#; 2...Rh8 3.Dh5+ Rg8 4.Dh7#; 2...Rg6 3.h5+ com mate; 2...Rh6 3.Cxe6+ ganha a dama. Recusar com 1...Rh8 deixa as Brancas com um peão a mais depois de 2.Bd3.
+fen: 4rrk1/ppqb1pp1/2n1p3/b2pP1N1/3P3P/2P5/1P3PP1/R1BQ1RK1 w - - 2 3
+enunciado: Depois de 1.Bxh7+ Rxh7 2.Cg5+ Rg8, as Brancas dão **mate em 2** — e o primeiro lance não é xeque.
+tipo: mate
+lances: 2
+solucao: d1h5 f7f5 h5h7
+dica: O cavalo de g5 já vigia h7 e f7. Falta trazer a dama para a coluna h.
+explicacao: 3.Dh5! ameaça 4.Dh7#, e não há defesa: a torre de f8 não tem casa (e8 está ocupada), f7 é vigiada pelo cavalo e nenhuma peça preta chega a h7 a tempo. Por exemplo, 3...f5 4.Dh7#. O motor confirma: qualquer lance preto permite o mate.
 ```
 
 ```exercicio
-fen: r3r2k/pp1b2pp/2pq3N/8/2Q5/2P5/PP3PPP/R4RK1 w - - 0 1
-enunciado: Brancas jogam e dão **mate em 2** com um sacrifício de dama.
+fen: r3r2k/pp1b2pp/2pq4/6N1/2Q5/2P5/PP4PP/5RK1 w - - 0 1
+enunciado: Brancas jogam e dão **mate em 4**. Todos os lances são xeques. Você já conhece o fim deste golpe de [desvio e atração](artigo:desvio-e-sobrecarga#atracao); agora encontre o começo.
 tipo: mate
-lances: 2
-solucao: c4g8 e8g8 h6f7
-dica: O cavalo de h6 protege g8. Quem é obrigado a capturar ali?
-explicacao: 1.Dg8+! Txg8 (o rei não pode capturar, porque o cavalo de h6 protege g8) 2.Cf7#. É o mate abafado: o rei está cercado pelas próprias peças.
+lances: 4
+solucao: g5f7 h8g8 f7h6 g8h8 c4g8 e8g8 h6f7
+dica: Comece com o cavalo. O xeque duplo vem logo depois, e a dama se entrega no fim.
+explicacao: 1.Cf7+ Rg8 2.Ch6+ (xeque duplo: cavalo e dama) Rh8 (f8 é vigiada pela torre de f1) 3.Dg8+! Txg8 (o rei não pode capturar, porque o cavalo de h6 protege g8) 4.Cf7#. É o mate sufocado completo, conhecido como legado de Philidor: o rei termina cercado pelas próprias peças.
 ```
 
 ```exercicio

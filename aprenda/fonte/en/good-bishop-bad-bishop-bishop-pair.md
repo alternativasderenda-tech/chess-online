@@ -70,7 +70,7 @@ A bishop and a knight are each [worth about three pawns](artigo:valor-das-pecas)
 | Pawns on both wings, endgame | Bishop |
 | Closed position, locked chains | Knight |
 | An outpost is available | Knight |
-| Opponent's pawns fixed on the bishop's color | Knight, if the bishop is bad |
+| Pawns fixed on the same color as their own bishop (bad bishop) | Knight |
 
 This table explains many "strange" trades by strong players: giving up the bishop pair to close the position, or trading a good knight for a bishop that looked harmless.
 
@@ -97,6 +97,10 @@ A quick test: count your **fixed** pawns — the ones that can no longer advance
 
 The same test works for your opponent's bishop. Fixing their pawns on their bishop's color — for example, by blockading them with yours — turns a reasonable bishop into a bad one.
 
+:::pratique Look after your bishop
+Play the computer and, whenever you fix a central pawn, ask: is it on my bishop's color? Try to come out of the opening with the good bishop.
+:::
+
 ## Exercises
 
 ```exercicio
@@ -111,7 +115,7 @@ explicacao: 1.Qxc6+! bxc6 2.Ba6#. The two bishops criss-cross the escape routes:
 
 ```exercicio
 fen: 8/8/3k4/PK6/3B4/8/8/8 b - - 0 1
-enunciado: White has a bishop and a rook pawn, but the bishop is dark-squared and the promotion square, a8, is light. Black to play and draw — only one move saves the game.
+enunciado: White has a bishop and a rook pawn, but it's the **wrong-colored bishop**: it's dark-squared and the promotion square, a8, is light. Black to play and draw — only one move saves the game.
 solucao: d6c7
 dica: Run for the corner the bishop doesn't control.
 explicacao: 1...Kc7! heads for b8 and a8. With the black king in the corner, the dark-squared bishop can never drive it out of a8, and the a-pawn can't promote. According to the endgame tablebase, every other move loses.
