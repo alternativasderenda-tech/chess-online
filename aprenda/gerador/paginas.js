@@ -1,6 +1,6 @@
 'use strict';
 /** Modelos HTML do Aprenda: artigo, índice e 404. Tudo estático; JS só para exercício e busca. */
-const { T, SITE, NIVEIS, dataPorExtenso } = require('./textos');
+const { T, SITE, NIVEIS, dataPorExtenso, ASSUNTOS_CONTATO, EMAIL_CONTATO } = require('./textos');
 const { esc } = require('./markdown');
 
 // alternateName: o mesmo site se chama "Chess Online" em inglês (og:site_name e migalhas do EN) — uma entidade só
@@ -28,7 +28,7 @@ function topo(idioma, outro, atual = 'aprenda') {
 </header>`;
 }
 
-function rodape(idioma) {
+function rodape(idioma, atual = null) {
   const t = T[idioma], r = t.rodape;
   return `<footer class="site">
   <a href="${t.inicio}">${r.jogar}</a> •
@@ -36,7 +36,7 @@ function rodape(idioma) {
   <a href="${t.torneios}">${r.torneios}</a> •
   <a href="${t.privacidade}">${r.privacidade}</a> •
   <a href="${t.termos}">${r.termos}</a> •
-  <a href="mailto:alternativasderenda@gmail.com">${r.contato}</a>
+  <a href="${t.contato}"${atual === 'contato' ? ' aria-current="page"' : ''}>${r.contato}</a>
 </footer>`;
 }
 
@@ -372,4 +372,99 @@ function pagina404(ativos) {
 `;
 }
 
-module.exports = { artigo, indice, pagina404, topo, rodape, selo };
+/** /contato e /en/contact (D-CON-05): formulário que fala com POST /functions/v1/contato (contato.js). Sem JS, o
+ *  formulário fica escondido e a página mostra o e-mail (mailto). */
+function paginaContato(idioma, ativos) {
+  const t = T[idioma], C = t.paginaContato;
+  const url = SITE + t.contato;
+  const outro = idioma === 'pt' ? T.en.contato : T.pt.contato;
+  const mail = `<a href="mailto:${EMAIL_CONTATO}">${EMAIL_CONTATO}</a>`;
+  const og = `<meta property="og:type" content="website">
+<meta property="og:title" content="${esc(C.titulo)}">
+<meta property="og:description" content="${esc(C.descricao)}">
+<meta property="og:url" content="${url}">
+<meta property="og:site_name" content="${t.marca}">
+<meta property="og:locale" content="${t.og}">
+<meta property="og:image" content="${SITE}/icon-512.png">
+<meta property="og:image:width" content="512">
+<meta property="og:image:height" content="512">
+<meta name="twitter:card" content="summary">
+`;
+  const ld = {
+    '@context': 'https://schema.org',
+    '@type': 'ContactPage',
+    name: C.titulo, description: C.descricao, url, inLanguage: t.lang,
+    mainEntity: { ...ORG, email: EMAIL_CONTATO, contactPoint: { '@type': 'ContactPoint', contactType: 'customer support', email: EMAIL_CONTATO,
+      url, availableLanguage: ['Portuguese', 'English'] } },
+  };
+  const head = cabecaComum({
+    idioma, titulo: C.titulo, descricao: C.descricao, canonical: url, pt: SITE + T.pt.contato, en: SITE + T.en.contato,
+    css: ativos.css, og, extra: jsonLd(ld) + '\n',
+  });
+  const opcoes = ASSUNTOS_CONTATO.map(([v, pt, en]) => `        <option value="${v}">${esc(idioma === 'pt' ? pt : en)}</option>`).join('\n');
+  return `${head}
+<body>
+${topo(idioma, outro, null)}
+<main class="container contato" id="conteudo">
+  <h1>${C.h1}</h1>
+  <p class="lead">${C.lead}</p>
+  <p class="contato-email">${C.prefere} ${mail}.</p>
+  <noscript><p class="contato-aviso">${C.semJs} ${mail}.</p></noscript>
+
+  <form id="contato-form" class="contato-form" novalidate hidden>
+    <p class="contato-conta" id="c-conta" hidden></p>
+    <div class="campo">
+      <label for="c-nome">${C.nome}</label>
+      <input id="c-nome" name="nome" type="text" autocomplete="name" maxlength="100" required aria-describedby="c-nome-erro">
+      <p class="campo-erro" id="c-nome-erro"></p>
+    </div>
+    <div class="campo">
+      <label for="c-email">${C.email}</label>
+      <input id="c-email" name="email" type="email" inputmode="email" autocomplete="email" maxlength="254" required spellcheck="false" aria-describedby="c-email-dica c-email-erro">
+      <p class="campo-dica" id="c-email-dica">${C.emailDica}</p>
+      <p class="campo-erro" id="c-email-erro"></p>
+    </div>
+    <div class="campo">
+      <label for="c-assunto">${C.assunto}</label>
+      <select id="c-assunto" name="assunto" required aria-describedby="c-assunto-erro">
+        <option value="">${C.escolha}</option>
+${opcoes}
+      </select>
+      <p class="campo-erro" id="c-assunto-erro"></p>
+    </div>
+    <div class="campo" id="c-campo-link" hidden>
+      <label for="c-link">${C.link} <span class="opcional">${C.opcional}</span></label>
+      <input id="c-link" name="link" type="url" inputmode="url" maxlength="500" spellcheck="false" placeholder="https://xadrezonline.app/…" aria-describedby="c-link-dica c-link-erro">
+      <p class="campo-dica" id="c-link-dica">${C.linkDica}</p>
+      <p class="campo-erro" id="c-link-erro"></p>
+    </div>
+    <div class="campo">
+      <label for="c-mensagem">${C.mensagem}</label>
+      <textarea id="c-mensagem" name="mensagem" rows="7" maxlength="4000" required aria-describedby="c-contador c-mensagem-erro"></textarea>
+      <p class="contador" id="c-contador">0 / 4${idioma === 'pt' ? '.' : ','}000</p>
+      <p class="sr-only" id="c-contador-aviso" aria-live="polite"></p>
+      <p class="campo-erro" id="c-mensagem-erro"></p>
+    </div>
+    <div class="hp" aria-hidden="true">
+      <label for="c-site">${C.hp}</label>
+      <input id="c-site" name="site_web" type="text" tabindex="-1" autocomplete="off">
+    </div>
+    <p class="contato-erro" id="c-erro" role="alert"></p>
+    <button type="submit" class="cta-btn" id="c-enviar">${C.enviar}</button>
+    <p class="contato-privacidade">${C.privacidade}</p>
+  </form>
+
+  <section class="contato-ok" id="c-ok" hidden>
+    <h2 id="c-ok-titulo" tabindex="-1">${C.okTitulo}</h2>
+    <p id="c-ok-texto"></p>
+    <p class="contato-ok-acoes"><button type="button" class="btn" id="c-outra">${C.outra}</button> <a class="btn" href="${t.inicio}">${C.voltar}</a></p>
+  </section>
+</main>
+${rodape(idioma, 'contato')}
+<script src="${ativos.contato}" defer></script>
+</body>
+</html>
+`;
+}
+
+module.exports = { artigo, indice, pagina404, paginaContato, topo, rodape, selo };

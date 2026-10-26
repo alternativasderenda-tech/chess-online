@@ -2,5 +2,5 @@
   "name": "xadrez-realtime",
   "private": true,
   "type": "commonjs",
-  "dependencies": { "pg": "8.23.1", "ws": "8.22.0" }
+  "dependencies": { "nodemailer": "10.0.16", "pg": "8.23.1", "ws": "8.22.0" }
 }

@@ -4,6 +4,7 @@
  * Gerador do Aprenda (D-APR-01). Fonte: aprenda/fonte/<pt|en>/<slug>.md. Gera, a partir dela e do motor do jogo:
  *   aprenda/<slug>.html · en/learn/<slug>.html · aprenda/index.html · en/learn/index.html
  *   aprenda/busca.json · en/learn/search.json · aprenda/motor.js · 404.html · sitemap.xml · lista de cache do sw.js
+ *   contato.html · en/contact.html (formulário de contato, D-CON-05; JS em /contato.js, escrito à mão)
  *   aprenda/img/<pt|en>/<slug>.png (prévia 1200×630, só o que mudou; manifesto em aprenda/gerador/imagens.json)
  *
  *   node aprenda/gerador/gerar.js                 → valida e (re)gera tudo
@@ -35,10 +36,11 @@ const IDIOMAS = ['pt', 'en'];
 
 /** Páginas do site fora do Aprenda, para o sitemap. lastmod: ATUALIZAR À MÃO quando a página mudar de conteúdo. */
 const PAGINAS_FIXAS = [
-  { pt: '/', en: '/en', lastmod: '2026-10-24', changefreq: 'weekly', priority: '1.0' },
+  { pt: '/', en: '/en', lastmod: '2026-10-26', changefreq: 'weekly', priority: '1.0' },
   { pt: '/torneios', en: '/en/tournaments', lastmod: '2026-10-26', changefreq: 'daily', priority: '0.8' },
-  { pt: '/privacidade', en: '/en/privacy', lastmod: '2026-10-24', changefreq: 'yearly', priority: '0.3' },
-  { pt: '/termos', en: '/en/terms', lastmod: '2026-10-24', changefreq: 'yearly', priority: '0.3' },
+  { pt: '/privacidade', en: '/en/privacy', lastmod: '2026-10-26', changefreq: 'yearly', priority: '0.3' },
+  { pt: '/termos', en: '/en/terms', lastmod: '2026-10-26', changefreq: 'yearly', priority: '0.3' },
+  { pt: '/contato', en: '/en/contact', lastmod: '2026-10-26', changefreq: 'yearly', priority: '0.3' },
 ];
 /** Service worker (D-APR-08): só o núcleo é pré-carregado; artigo entra no cache quando é aberto (network-first). */
 const SW_VERSAO = 'xadrez-v16';
@@ -436,9 +438,11 @@ if (!erros.length) {
   catch { erro('servidor/motor/motor-gerado.js', 0, 'desatualizado em relação ao index.html: rode node servidor/motor/extrair.js'); }
 }
 
-for (const f of ['aprenda/post.css', 'aprenda/aprenda.js']) if (!fs.existsSync(path.join(RAIZ, f))) erro(f, 0, 'arquivo estático do Aprenda não existe');
+for (const f of ['aprenda/post.css', 'aprenda/aprenda.js', 'contato.js']) if (!fs.existsSync(path.join(RAIZ, f))) erro(f, 0, 'arquivo estático (escrito à mão) não existe');
 if (!erros.length) {
-  try { new vm.Script(ler('aprenda/aprenda.js'), { filename: 'aprenda/aprenda.js' }); } catch (e) { erro('aprenda/aprenda.js', 0, 'erro de sintaxe: ' + e.message); }
+  for (const f of ['aprenda/aprenda.js', 'contato.js']) {
+    try { new vm.Script(ler(f), { filename: f }); } catch (e) { erro(f, 0, 'erro de sintaxe: ' + e.message); }
+  }
 }
 
 const imagensPedidas = [];
@@ -451,6 +455,7 @@ if (!erros.length) {
     css: ativo('/aprenda/post.css', ler('aprenda/post.css')),
     js: ativo('/aprenda/aprenda.js', ler('aprenda/aprenda.js')),
     motor: ativo('/aprenda/motor.js', motor),
+    contato: ativo('/contato.js', ler('contato.js')),
   };
 
   for (const a of artigos.filter(x => !x.rascunho)) {
@@ -493,6 +498,8 @@ if (!erros.length) {
   }
 
   saidas.set('404.html', PG.pagina404(ativos));
+  saidas.set('contato.html', PG.paginaContato('pt', ativos));
+  saidas.set('en/contact.html', PG.paginaContato('en', ativos));
 
   // sitemap
   const urlXml = (loc, lastmod, changefreq, priority, pt, en) => `  <url>

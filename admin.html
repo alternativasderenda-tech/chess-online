@@ -10,8 +10,9 @@
 <script src="/config.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js"></script>
 
+<!-- <link> e não @import: o @import dentro do <style> virava um GET 404 em /url('https://fonts…') no Chrome -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap">
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500;600&display=swap');
   * { margin: 0; padding: 0; box-sizing: border-box; }
   :root {
     --bg-dark: #1a1a2e;
@@ -275,6 +276,22 @@
       </details>
     </div>
 
+    <!-- D-CON-06: mensagens do formulário /contato (xadrez_rt.contato, pelas RPCs admin_contatos / admin_contato_marcar) -->
+    <div class="section" id="contato-section" style="border-color: rgba(111,168,226,0.35);">
+      <h2 style="color:#8fbcef;">✉️ Mensagens de contato <span id="ct-novas" class="pill" style="font-size:11px;"></span></h2>
+      <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
+        O que chega pelo formulário de <a href="/contato" style="color:var(--accent)">/contato</a> (e <a href="/en/contact" style="color:var(--accent)">/en/contact</a>). Novas primeiro.
+        "Responder" abre o seu e-mail com o assunto preenchido; depois de responder, marque como respondida.
+      </p>
+      <div class="diff-filter" id="ct-filtro" role="group" aria-label="Filtrar por situação">
+        <button class="diff-tab active" data-st="nova" aria-pressed="true">Novas</button>
+        <button class="diff-tab" data-st="respondida" aria-pressed="false">Respondidas</button>
+        <button class="diff-tab" data-st="spam" aria-pressed="false">Spam</button>
+        <button class="diff-tab" data-st="" aria-pressed="false">Todas</button>
+      </div>
+      <div id="ct-lista">Carregando...</div>
+    </div>
+
     <div class="section" id="fraud-section" style="border-color: rgba(255,107,107,0.3);">
       <h2 style="color: var(--danger);">🚨 Scores Sem Jogo (Possível Fraude)</h2>
       <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
@@ -340,7 +357,8 @@
     <a href="/">Jogar</a> •
     <a href="/aprenda">Aprenda</a> •
     <a href="/privacidade">Privacidade</a> •
-    <a href="/termos">Termos</a>
+    <a href="/termos">Termos</a> •
+    <a href="/contato">Contato</a>
   </footer>
 </div>
 
@@ -414,6 +432,7 @@ async function init() {
                               // pra reativar no futuro.
     loadOverview(),
     loadPaymentProblems(),
+    loadContatos(),
     loadOrphanScores(),
     loadByDifficulty(),
     loadDaily(),
@@ -635,6 +654,100 @@ async function loadPaymentProblems() {
     </div>
     <p style="font-size:12px; color:var(--text-muted); margin-top:10px;">${data.length} item(ns). Erros de rotina somem depois de 2 dias; avisos de Pix, depois de 30 dias.</p>`;
 }
+
+// ====== Mensagens de contato (admin_contatos / admin_contato_marcar — D-CON-06) ======
+const CT_ASSUNTOS = {
+  duvida: ['Dúvida', 'Question'], sugestao: ['Sugestão', 'Suggestion'], problema: ['Problema no site', 'Site problem'],
+  pagamento: ['Pagamento / estorno de torneio', 'Tournament payment / refund'], parceria: ['Parceria / imprensa', 'Partnership / press'],
+  outro: ['Outro', 'Other'],
+};
+const CT_STATUS = { nova: ['Nova', '#ffd86b'], respondida: ['Respondida', 'var(--success)'], spam: ['Spam', 'var(--text-muted)'] };
+let ctTodas = [], ctFiltro = 'nova';
+function ctMailto(c) {
+  const en = c.idioma === 'en';
+  const assunto = (CT_ASSUNTOS[c.assunto] || [c.assunto, c.assunto])[en ? 1 : 0];
+  const quando = new Date(c.criado_em).toLocaleDateString(en ? 'en-US' : 'pt-BR', { timeZone: 'America/Sao_Paulo' });
+  const citacao = c.mensagem.length > 1200 ? c.mensagem.slice(0, 1200) + '…' : c.mensagem;
+  const corpo = (en ? `Hi ${c.nome},\n\n\n\n— Chess Online (xadrezonline.app)\n\nYour message (${quando}):\n` : `Olá, ${c.nome},\n\n\n\n— Xadrez Online (xadrezonline.app)\n\nSua mensagem (${quando}):\n`)
+    + citacao.split('\n').map(l => '> ' + l).join('\n');
+  const para = c.email.replace(/[?&#%]/g, encodeURIComponent);
+  return `mailto:${para}?subject=${encodeURIComponent(`Re: ${assunto} — ${en ? 'Chess Online' : 'Xadrez Online'}`)}&body=${encodeURIComponent(corpo)}`;
+}
+function renderContatos() {
+  const lista = document.getElementById('ct-lista');
+  const novas = ctTodas.filter(c => c.status === 'nova').length;
+  const badge = document.getElementById('ct-novas');
+  badge.textContent = novas ? `${novas} nova${novas > 1 ? 's' : ''}` : 'nenhuma nova';
+  badge.style.color = novas ? '#ffd86b' : 'var(--text-muted)';
+  document.querySelectorAll('#ct-filtro .diff-tab').forEach(b => {
+    const n = b.dataset.st ? ctTodas.filter(c => c.status === b.dataset.st).length : ctTodas.length;
+    b.textContent = `${{ nova: 'Novas', respondida: 'Respondidas', spam: 'Spam', '': 'Todas' }[b.dataset.st]} (${n})`;
+  });
+  const vis = ctFiltro ? ctTodas.filter(c => c.status === ctFiltro) : ctTodas;
+  if (!vis.length) {
+    lista.innerHTML = `<div class="status-msg" style="padding:20px;${ctFiltro === 'nova' ? ' color:var(--success);' : ''}">${ctFiltro === 'nova' ? '✓ Nenhuma mensagem nova.' : 'Nada aqui.'}</div>`;
+    return;
+  }
+  lista.innerHTML = vis.map(c => {
+    const st = CT_STATUS[c.status] || [c.status, 'var(--text-light)'];
+    const assunto = (CT_ASSUNTOS[c.assunto] || [c.assunto])[0];
+    const previa = c.mensagem.length > 140 ? c.mensagem.slice(0, 140) + '…' : c.mensagem;
+    const conta = c.user_id ? `<small title="${esc(c.user_id)}">· logado${c.conta_email && c.conta_email.toLowerCase() !== c.email.toLowerCase() ? ' como ' + esc(c.conta_email) : ''}</small>` : '<small>· visitante</small>';
+    const botoes = [
+      `<a class="btn primary" href="${esc(ctMailto(c))}">↩ Responder</a>`,
+      c.status !== 'respondida' ? `<button class="btn" data-ct="${esc(c.id)}" data-acao="respondida">✓ Marcar como respondida</button>` : '',
+      c.status !== 'spam' ? `<button class="btn" data-ct="${esc(c.id)}" data-acao="spam">🚫 Spam</button>` : '',
+      c.status !== 'nova' ? `<button class="btn" data-ct="${esc(c.id)}" data-acao="nova">↺ Voltar para nova</button>` : '',
+    ].join(' ');
+    return `<div class="pag-cartao ct-cartao" style="display:block;">
+      <div class="lin"><span><span class="pill" style="color:${st[1]}">${esc(st[0])}</span> <b>${esc(assunto)}</b></span><small>${fmtDateTime(c.criado_em)}${c.respondida_em ? ' · respondida ' + fmtDateTime(c.respondida_em) : ''}</small></div>
+      <div style="margin-bottom:4px;"><b>${esc(c.nome)}</b> &lt;${esc(c.email)}&gt; ${conta} <small>· ${c.idioma === 'en' ? 'EN' : 'PT'}</small></div>
+      <details>
+        <summary style="cursor:pointer; color:var(--text-light); min-height:32px; padding:4px 0;">${esc(previa)}</summary>
+        <div style="white-space:pre-wrap; background:rgba(255,255,255,0.04); border-radius:8px; padding:10px 12px; margin:8px 0; font-size:13.5px; line-height:1.55;">${esc(c.mensagem)}</div>
+        ${c.link ? `<div style="margin-bottom:8px;"><small>Link:</small> <a href="${esc(c.link)}" target="_blank" rel="noopener noreferrer" style="color:var(--accent)">${esc(c.link)}</a></div>` : ''}
+        <label style="display:block; font-size:12px; color:var(--text-muted); margin:6px 0 4px;" for="ct-nota-${esc(c.id)}">Nota interna (só o admin vê)</label>
+        <textarea id="ct-nota-${esc(c.id)}" maxlength="2000" rows="2" style="width:100%; background:var(--bg-dark); color:var(--text-light); border:1px solid rgba(226,185,111,0.4); border-radius:8px; padding:8px; font:inherit; font-size:13px;">${esc(c.nota_admin || '')}</textarea>
+        <div style="margin-top:6px;"><button class="btn" data-ct="${esc(c.id)}" data-acao="nota">💾 Salvar nota</button> <span class="ct-msg" style="font-size:12px; color:var(--text-muted);"></span></div>
+      </details>
+      ${c.nota_admin ? `<div style="font-size:12px; color:var(--text-muted); margin-top:4px;">📝 ${esc(c.nota_admin)}</div>` : ''}
+      <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">${botoes}</div>
+    </div>`;
+  }).join('') + `<p style="font-size:12px; color:var(--text-muted); margin-top:10px;">${vis.length} mensagem(ns).</p>`;
+}
+async function loadContatos() {
+  const lista = document.getElementById('ct-lista');
+  const { data, error } = await supa.rpc('admin_contatos', { p_status: null });
+  if (error) { lista.innerHTML = '<div class="status-msg error">Não consegui carregar: ' + esc(error.message) + '</div>'; return; }
+  ctTodas = data || [];
+  renderContatos();
+}
+document.getElementById('ct-filtro').addEventListener('click', ev => {
+  const b = ev.target.closest('.diff-tab');
+  if (!b) return;
+  ctFiltro = b.dataset.st;
+  document.querySelectorAll('#ct-filtro .diff-tab').forEach(x => { x.classList.toggle('active', x === b); x.setAttribute('aria-pressed', x === b ? 'true' : 'false'); });
+  renderContatos();
+});
+document.getElementById('ct-lista').addEventListener('click', async ev => {
+  const b = ev.target.closest('button[data-ct]');
+  if (!b) return;
+  const id = b.dataset.ct, acao = b.dataset.acao;
+  const params = { p_id: id, p_status: null, p_nota: null };
+  if (acao === 'nota') params.p_nota = document.getElementById('ct-nota-' + id).value;
+  else params.p_status = acao;
+  b.disabled = true;
+  const { error } = await supa.rpc('admin_contato_marcar', params);
+  b.disabled = false;
+  if (error) { alert('Não consegui salvar: ' + error.message); return; }
+  const c = ctTodas.find(x => x.id === id);
+  if (c) {
+    if (acao === 'nota') c.nota_admin = params.p_nota.trim() || null;
+    else { c.status = acao; c.respondida_em = acao === 'respondida' ? (c.respondida_em || new Date().toISOString()) : acao === 'nova' ? null : c.respondida_em; }
+  }
+  if (acao === 'nota') { const m = b.parentElement.querySelector('.ct-msg'); if (m) m.textContent = '✓ Nota salva'; return; }
+  renderContatos();
+});
 
 async function loadOrphanScores() {
   const container = document.getElementById('fraud-content');

@@ -1,6 +1,6 @@
 // PWA Cache
 // >>> gerado por aprenda/gerador/gerar.js (D-APR-08) — não editar entre as marcas
-const CACHE_NAME = 'xadrez-v16-0adb81a6';
+const CACHE_NAME = 'xadrez-v16-bb77160a';
 const ASSETS = [
   '/',
   '/index.html',
@@ -13,7 +13,7 @@ const ASSETS = [
   '/en/tournaments',
   '/aprenda',
   '/en/learn',
-  '/aprenda/post.css?v=84acaa3adb',
+  '/aprenda/post.css?v=a590697841',
   '/aprenda/aprenda.js?v=8ea2034de3',
   '/aprenda/motor.js?v=7658f30a44'
 ];

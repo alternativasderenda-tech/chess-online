@@ -4,7 +4,7 @@
         xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://xadrezonline.app/</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/"/>
@@ -13,7 +13,7 @@
   </url>
   <url>
     <loc>https://xadrezonline.app/en</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/"/>
@@ -40,7 +40,7 @@
   </url>
   <url>
     <loc>https://xadrezonline.app/privacidade</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/privacidade"/>
@@ -49,7 +49,7 @@
   </url>
   <url>
     <loc>https://xadrezonline.app/en/privacy</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/privacidade"/>
@@ -58,7 +58,7 @@
   </url>
   <url>
     <loc>https://xadrezonline.app/termos</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/termos"/>
@@ -67,12 +67,30 @@
   </url>
   <url>
     <loc>https://xadrezonline.app/en/terms</loc>
-    <lastmod>2026-10-24</lastmod>
+    <lastmod>2026-10-26</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.3</priority>
     <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/termos"/>
     <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/terms"/>
     <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/termos"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/contato</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/contato"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/contato"/>
+  </url>
+  <url>
+    <loc>https://xadrezonline.app/en/contact</loc>
+    <lastmod>2026-10-26</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.3</priority>
+    <xhtml:link rel="alternate" hreflang="pt-BR" href="https://xadrezonline.app/contato"/>
+    <xhtml:link rel="alternate" hreflang="en" href="https://xadrezonline.app/en/contact"/>
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://xadrezonline.app/contato"/>
   </url>
   <url>
     <loc>https://xadrezonline.app/aprenda</loc>

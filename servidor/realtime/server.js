@@ -213,6 +213,7 @@ async function gaStats(req, res) {
 }
 
 let pix = null;   // criado depois do pool e do verificar (abaixo)
+let contato = null;   // formulário de contato (contato.js, D-CON-*)
 
 // ---------- /t/<código>: link curto de compartilhamento com a prévia (Open Graph) que WhatsApp/Facebook/X leem — essas
 // redes não rodam o JavaScript da página. Quem abre é levado na hora para a página do torneio.
@@ -267,6 +268,7 @@ async function compartilhar(req, res) {
 }
 const servidor = http.createServer(async (req, res) => {
   if (pix && await pix.rota(req, res)) return;
+  if (contato && await contato.rota(req, res)) return;
   if (req.method === 'GET' && /^\/(en\/)?t\/[A-Za-z0-9-]{12,40}\/?$/.test(req.url.split('?')[0])) { compartilhar(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
   if (req.url === '/xrt/saude') { res.writeHead(200, { 'content-type': 'application/json' }); res.end(JSON.stringify({ ok: true, conexoes: wss.clients.size })); return; }
   if (req.url.split('?')[0] === '/functions/v1/ga-stats' && req.method === 'POST') { gaStats(req, res).catch(() => { res.writeHead(500); res.end(); }); return; }
@@ -447,6 +449,9 @@ setTimeout(rotina, 5_000).unref();
 pix = require('./pix')({ pool, verificar });
 console.log('Pix:', pix.modo);
 setInterval(() => pix.rotina().catch(e => console.error('[pix] rotina', e.message)), 60_000).unref();
+
+contato = require('./contato')({ pool, verificar, segredo: SEGREDO, ambiente: process.env.AMBIENTE });
+console.log('Contato: aviso por e-mail', contato.aviso());
 
 escutar();
 servidor.listen(PORTA, '127.0.0.1', () => console.log(`tempo real do xadrez em 127.0.0.1:${PORTA}`));

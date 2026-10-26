@@ -54,3 +54,32 @@ guardado 5 min). Só responde a quem está em `public.admin_users`. Chave da con
 (projeto "Xadrez" no Google Cloud) em `/opt/xadrez/etc/ga-sa.json`; propriedade em `/opt/xadrez/etc/ga.env`
 (`GA_PROPERTY_ID=`). A organização bloqueia criar chave de conta de serviço por padrão
 (`iam.disableServiceAccountKeyCreation`): para gerar outra, liberar a política só no projeto e reativar depois.
+
+## Formulário de contato (`/contato`, `/en/contact` → `POST /functions/v1/contato`)
+
+As mensagens ficam em `xadrez_rt.contato` (migração 015) e aparecem no /admin ("Mensagens de contato"). Decisões:
+D-CON-01…07 em `DECISOES.md`. O código é `servidor/realtime/contato.js`; a página é gerada por `aprenda/gerador`
+(com o JS em `/contato.js`).
+
+**Aviso por e-mail (opcional).** Sem configuração, o servidor só grava. Para receber cada mensagem em
+`contato@xadrezonline.app` (com Reply-To de quem escreveu), crie `/opt/xadrez/etc/smtp.env` (root:xadrez 640):
+
+```
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=465
+SMTP_USER=<conta que envia>
+SMTP_PASS=<senha de app da conta>
+SMTP_FROM=Xadrez Online <conta que envia>
+# SMTP_TO=contato@xadrezonline.app   (padrão)
+```
+
+e acrescente ao `/opt/xadrez/bin/realtime-run.sh`, logo abaixo da linha do `mp.env`:
+
+```
+[ -f /opt/xadrez/etc/smtp.env ] && { set -a; . /opt/xadrez/etc/smtp.env; set +a; }
+```
+
+Depois `systemctl restart xadrez-rt`; o log mostra `Contato: aviso por e-mail smtp <host>`. No teste o arquivo é
+`smtp-teste.env` (linha equivalente em `teste-rt-run.sh`); sem ele o teste não manda e-mail. Porta 465 = TLS direto,
+587 = STARTTLS obrigatório (a AWS bloqueia a 25 de saída). Falha de envio vai para o log (`[contato] aviso por e-mail
+falhou <id>`) e não perde a mensagem: ela já está no banco.

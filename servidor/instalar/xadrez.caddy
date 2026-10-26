@@ -47,7 +47,7 @@ xadrezonline.app {
 		header ?Cache-Control "public, max-age=3600"
 		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
 		header @img Cache-Control "public, max-age=86400, immutable"
-		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
+		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments /contato /en/contact *.html
 		header @semcache Cache-Control "public, max-age=0, must-revalidate"
 		# CSS/JS do Aprenda com ?v=<hash do conteúdo> (D-APR-08): o endereço muda quando o arquivo muda (LAY-desempenho-18)
 		@versionado query v=*
@@ -118,7 +118,7 @@ novo.xadrezonline.app {
 		header ?Cache-Control "public, max-age=3600"
 		@img path *.png *.jpg *.jpeg *.svg *.webp *.ico *.woff *.woff2
 		header @img Cache-Control "public, max-age=86400, immutable"
-		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments *.html
+		@semcache path / /sw.js /config.js /privacidade /termos /torneios /en/tournaments /contato /en/contact *.html
 		header @semcache Cache-Control "public, max-age=0, must-revalidate"
 		# CSS/JS do Aprenda com ?v=<hash do conteúdo> (D-APR-08): o endereço muda quando o arquivo muda (LAY-desempenho-18)
 		@versionado query v=*

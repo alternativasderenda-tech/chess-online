@@ -5,6 +5,14 @@ const SITE = 'https://xadrezonline.app';
 
 const NIVEIS = ['iniciante', 'intermediario', 'avancado', 'dicas'];
 
+/** assuntos do formulário de contato: os MESMOS códigos e textos de servidor/realtime/contato.js (ASSUNTOS) */
+const ASSUNTOS_CONTATO = [
+  ['duvida', 'Dúvida', 'Question'], ['sugestao', 'Sugestão', 'Suggestion'], ['problema', 'Problema no site', 'Site problem'],
+  ['pagamento', 'Pagamento / estorno de torneio', 'Tournament payment / refund'],
+  ['parceria', 'Parceria / imprensa', 'Partnership / press'], ['outro', 'Outro', 'Other'],
+];
+const EMAIL_CONTATO = 'contato@xadrezonline.app';
+
 const T = {
   pt: {
     lang: 'pt-BR', og: 'pt_BR', marca: 'Xadrez Online', base: '/aprenda', inicio: '/', torneios: '/torneios',
@@ -34,7 +42,23 @@ const T = {
     dificuldade: { 1: 'Fácil', 2: 'Médio', 3: 'Difícil', 4: 'Expert' },
     relacionados: 'Leia também',
     rodape: { jogar: 'Jogar', aprenda: 'Aprenda', torneios: 'Torneios', privacidade: 'Política de Privacidade', termos: 'Termos de Uso', contato: 'Contato' },
-    privacidade: '/privacidade', termos: '/termos',
+    privacidade: '/privacidade', termos: '/termos', contato: '/contato',
+    paginaContato: {
+      titulo: 'Contato | Xadrez Online',
+      h1: 'Fale com a gente',
+      descricao: 'Fale com o Xadrez Online: dúvidas, sugestões, problemas no site ou com o pagamento de um torneio. Respondemos por e-mail.',
+      lead: 'Dúvida, sugestão, problema no site ou com o pagamento de um torneio? Escreva aqui: respondemos por e-mail.',
+      prefere: 'Prefere e-mail? Escreva para',
+      semJs: 'O formulário precisa de JavaScript ligado. Escreva direto para',
+      nome: 'Seu nome', email: 'Seu e-mail', emailDica: 'É por ele que vamos responder.',
+      assunto: 'Assunto', escolha: 'Escolha o assunto…',
+      link: 'Link do torneio ou da partida', opcional: '(opcional)',
+      linkDica: 'Copie o endereço da página do torneio ou da partida: ajuda a achar o caso mais rápido.',
+      mensagem: 'Mensagem', hp: 'Não preencha este campo',
+      enviar: 'Enviar mensagem',
+      privacidade: 'Usamos seus dados só para responder. Veja a <a href="/privacidade">Política de Privacidade</a>.',
+      okTitulo: 'Mensagem enviada ✓', outra: 'Enviar outra mensagem', voltar: 'Voltar ao jogo',
+    },
     indice: {
       titulo: 'Aprenda Xadrez: Curso Gratuito do Zero ao Avançado',
       tituloSeo: 'Aprenda Xadrez: Curso Gratuito | Xadrez Online',
@@ -90,7 +114,23 @@ const T = {
     dificuldade: { 1: 'Easy', 2: 'Medium', 3: 'Hard', 4: 'Expert' },
     relacionados: 'Read next',
     rodape: { jogar: 'Play', aprenda: 'Learn', torneios: 'Tournaments', privacidade: 'Privacy Policy', termos: 'Terms of Use', contato: 'Contact' },
-    privacidade: '/en/privacy', termos: '/en/terms',
+    privacidade: '/en/privacy', termos: '/en/terms', contato: '/en/contact',
+    paginaContato: {
+      titulo: 'Contact us | Chess Online',
+      h1: 'Contact us',
+      descricao: 'Contact Chess Online: questions, suggestions, problems with the site or with a tournament payment. We reply by email.',
+      lead: 'A question, a suggestion, a problem with the site or with a tournament payment? Write to us here: we reply by email.',
+      prefere: 'Prefer email? Write to',
+      semJs: 'The form needs JavaScript turned on. Write directly to',
+      nome: 'Your name', email: 'Your email', emailDica: 'We will reply to this address.',
+      assunto: 'Subject', escolha: 'Choose a subject…',
+      link: 'Link to the tournament or game', opcional: '(optional)',
+      linkDica: 'Copy the address of the tournament or game page: it helps us find the case faster.',
+      mensagem: 'Message', hp: 'Do not fill in this field',
+      enviar: 'Send message',
+      privacidade: 'We only use your data to reply. See the <a href="/en/privacy">Privacy Policy</a>.',
+      okTitulo: 'Message sent ✓', outra: 'Send another message', voltar: 'Back to the game',
+    },
     indice: {
       titulo: 'Learn Chess: a Free Course from Beginner to Advanced',
       tituloSeo: 'Learn Chess: Free Course | Chess Online',
@@ -126,4 +166,4 @@ function dataPorExtenso(iso, idioma) {
   return t.data(a, m, d, t.meses);
 }
 
-module.exports = { T, SITE, NIVEIS, dataPorExtenso };
+module.exports = { T, SITE, NIVEIS, dataPorExtenso, ASSUNTOS_CONTATO, EMAIL_CONTATO };

@@ -57,6 +57,7 @@ cat > $X/bin/realtime-run.sh <<'SH'
 #!/bin/bash
 set -a; . /opt/xadrez/etc/segredos.env; [ -f /opt/xadrez/etc/ga.env ] && . /opt/xadrez/etc/ga.env; set +a
 [ -f /opt/xadrez/etc/mp.env ] && { set -a; . /opt/xadrez/etc/mp.env; set +a; }
+[ -f /opt/xadrez/etc/smtp.env ] && { set -a; . /opt/xadrez/etc/smtp.env; set +a; }
 export PORT=3202 GA_SA_FILE=/opt/xadrez/etc/ga-sa.json AMBIENTE=oficial PUBLIC_URL=https://xadrezonline.app
 unset PG_AUTHENTICATOR PG_AUTH_ADMIN SERVICE_KEY ANON_KEY
 cd /opt/xadrez/realtime && exec /usr/bin/node server.js
