@@ -281,7 +281,8 @@
       <h2 style="color:#8fbcef;">✉️ Mensagens de contato <span id="ct-novas" class="pill" style="font-size:11px;"></span></h2>
       <p style="font-size:12px; color:var(--text-muted); margin-bottom:12px;">
         O que chega pelo formulário de <a href="/contato" style="color:var(--accent)">/contato</a> (e <a href="/en/contact" style="color:var(--accent)">/en/contact</a>). Novas primeiro.
-        "Responder" abre o seu e-mail com o assunto preenchido; depois de responder, marque como respondida.
+        "Responder" abre uma caixa aqui mesmo: a resposta sai de contato@xadrezonline.app, fica no histórico do cartão e marca a mensagem como respondida.
+        Se responder pelo seu e-mail (link dentro da caixa), marque como respondida à mão.
       </p>
       <div class="diff-filter" id="ct-filtro" role="group" aria-label="Filtrar por situação">
         <button class="diff-tab active" data-st="nova" aria-pressed="true">Novas</button>
@@ -663,6 +664,13 @@ const CT_ASSUNTOS = {
 };
 const CT_STATUS = { nova: ['Nova', '#ffd86b'], respondida: ['Respondida', 'var(--success)'], spam: ['Spam', 'var(--text-muted)'] };
 let ctTodas = [], ctFiltro = 'nova';
+// D-CON-08: respostas enviadas pelo painel (por contato_id); rascunho e caixa aberta sobrevivem ao redesenho da lista
+let ctRespostas = {};
+const ctRascunho = {}, ctAberta = new Set();
+const CT_RESP_SIT = { enviada: ['enviada', 'var(--success)'], falhou: ['falhou', 'var(--danger)'], enviando: ['sem confirmação', '#ffd86b'] };
+function ctModelo(c) {
+  return c.idioma === 'en' ? `Hi ${c.nome},\n\n\n\nBest regards,\nChess Online` : `Olá, ${c.nome},\n\n\n\nAbraço,\nXadrez Online`;
+}
 function ctMailto(c) {
   const en = c.idioma === 'en';
   const assunto = (CT_ASSUNTOS[c.assunto] || [c.assunto, c.assunto])[en ? 1 : 0];
@@ -693,8 +701,27 @@ function renderContatos() {
     const assunto = (CT_ASSUNTOS[c.assunto] || [c.assunto])[0];
     const previa = c.mensagem.length > 140 ? c.mensagem.slice(0, 140) + '…' : c.mensagem;
     const conta = c.user_id ? `<small title="${esc(c.user_id)}">· logado${c.conta_email && c.conta_email.toLowerCase() !== c.email.toLowerCase() ? ' como ' + esc(c.conta_email) : ''}</small>` : '<small>· visitante</small>';
+    const resps = ctRespostas[c.id] || [];
+    const historico = resps.length ? `<div style="margin-top:8px;">${resps.map(r => {
+      const s = CT_RESP_SIT[r.situacao] || [r.situacao, 'var(--text-light)'];
+      return `<details style="border-left:3px solid ${s[1]}; padding-left:10px; margin-top:6px;">
+        <summary style="cursor:pointer; font-size:12px; color:var(--text-muted); min-height:28px; padding:4px 0;">↩ Resposta ${esc(s[0])} · ${fmtDateTime(r.enviada_em || r.criado_em)}${r.autor_email ? ' · ' + esc(r.autor_email) : ''}</summary>
+        <div style="white-space:pre-wrap; font-size:13px; line-height:1.5; padding:6px 0;">${esc(r.texto)}</div>
+        ${r.erro ? `<div style="font-size:12px; color:var(--danger);">Erro: ${esc(r.erro)}</div>` : ''}
+      </details>`;
+    }).join('')}</div>` : '';
+    const caixa = ctAberta.has(c.id) ? `<div class="ct-caixa" style="margin-top:10px;">
+        <label style="display:block; font-size:12px; color:var(--text-muted); margin-bottom:4px;" for="ct-resp-${esc(c.id)}">Resposta para ${esc(c.email)} (sai de contato@xadrezonline.app, com a mensagem dela citada no fim)</label>
+        <textarea id="ct-resp-${esc(c.id)}" data-resp="${esc(c.id)}" maxlength="8000" rows="9" style="width:100%; background:var(--bg-dark); color:var(--text-light); border:1px solid rgba(226,185,111,0.6); border-radius:8px; padding:10px; font:inherit; font-size:14px; line-height:1.5;">${esc(ctRascunho[c.id] ?? ctModelo(c))}</textarea>
+        <div style="display:flex; flex-wrap:wrap; gap:6px; align-items:center; margin-top:6px;">
+          <button class="btn primary" data-ct="${esc(c.id)}" data-acao="enviar">📨 Enviar resposta</button>
+          <button class="btn" data-ct="${esc(c.id)}" data-acao="fechar">Cancelar</button>
+          <a href="${esc(ctMailto(c))}" style="font-size:12px; color:var(--accent);">ou responder pelo meu e-mail</a>
+          <span class="ct-envio" style="font-size:12px; color:var(--text-muted);"></span>
+        </div>
+      </div>` : '';
     const botoes = [
-      `<a class="btn primary" href="${esc(ctMailto(c))}">↩ Responder</a>`,
+      ctAberta.has(c.id) ? '' : `<button class="btn primary" data-ct="${esc(c.id)}" data-acao="abrir">↩ Responder</button>`,
       c.status !== 'respondida' ? `<button class="btn" data-ct="${esc(c.id)}" data-acao="respondida">✓ Marcar como respondida</button>` : '',
       c.status !== 'spam' ? `<button class="btn" data-ct="${esc(c.id)}" data-acao="spam">🚫 Spam</button>` : '',
       c.status !== 'nova' ? `<button class="btn" data-ct="${esc(c.id)}" data-acao="nova">↺ Voltar para nova</button>` : '',
@@ -711,16 +738,56 @@ function renderContatos() {
         <div style="margin-top:6px;"><button class="btn" data-ct="${esc(c.id)}" data-acao="nota">💾 Salvar nota</button> <span class="ct-msg" style="font-size:12px; color:var(--text-muted);"></span></div>
       </details>
       ${c.nota_admin ? `<div style="font-size:12px; color:var(--text-muted); margin-top:4px;">📝 ${esc(c.nota_admin)}</div>` : ''}
+      ${historico}
+      ${caixa}
       <div style="display:flex; flex-wrap:wrap; gap:6px; margin-top:8px;">${botoes}</div>
     </div>`;
   }).join('') + `<p style="font-size:12px; color:var(--text-muted); margin-top:10px;">${vis.length} mensagem(ns).</p>`;
 }
 async function loadContatos() {
   const lista = document.getElementById('ct-lista');
-  const { data, error } = await supa.rpc('admin_contatos', { p_status: null });
+  const [{ data, error }, resp] = await Promise.all([
+    supa.rpc('admin_contatos', { p_status: null }),
+    supa.rpc('admin_contato_respostas'),
+  ]);
   if (error) { lista.innerHTML = '<div class="status-msg error">Não consegui carregar: ' + esc(error.message) + '</div>'; return; }
   ctTodas = data || [];
+  ctRespostas = {};
+  (resp.data || []).forEach(r => { (ctRespostas[r.contato_id] = ctRespostas[r.contato_id] || []).push(r); });
   renderContatos();
+}
+document.getElementById('ct-lista').addEventListener('input', ev => {
+  const t = ev.target.closest('textarea[data-resp]');
+  if (t) ctRascunho[t.dataset.resp] = t.value;
+});
+async function ctEnviar(id, b) {
+  const c = ctTodas.find(x => x.id === id);
+  const caixa = b.closest('.ct-caixa'), msg = caixa.querySelector('.ct-envio');
+  const texto = (ctRascunho[id] ?? ctModelo(c)).trim();
+  if (!texto || texto === ctModelo(c).trim()) { msg.textContent = 'Escreva a resposta antes de enviar.'; return; }
+  if (!confirm(`Enviar a resposta para ${c.email}?`)) return;
+  b.disabled = true; msg.style.color = 'var(--text-muted)'; msg.textContent = 'Enviando...';
+  let j = {}, st = 0;
+  try {
+    const { data: { session } } = await supa.auth.getSession();
+    const r = await fetch(`${SUPABASE_URL}/functions/v1/contato-responder`, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json', Authorization: `Bearer ${session ? session.access_token : ''}` },
+      body: JSON.stringify({ id, texto }),
+    });
+    st = r.status; j = await r.json().catch(() => ({}));
+  } catch { st = 0; }
+  b.disabled = false;
+  if (st !== 200) {
+    const motivo = { sem_smtp: 'o servidor está sem e-mail configurado', limite: 'limite de 60 respostas por hora', admin: 'sua conta não é admin',
+      sessao: 'sessão vencida — recarregue a página', nao_encontrada: 'mensagem não encontrada', envio: 'o Gmail recusou: ' + (j.detalhe || '') }[j.erro];
+    msg.style.color = 'var(--danger)';
+    msg.textContent = '✗ Não enviada' + (motivo ? ': ' + motivo : st ? ` (HTTP ${st})` : ' (sem conexão)') + '.';
+    if (j.erro === 'envio') loadContatos();   // a tentativa que falhou entra no histórico
+    return;
+  }
+  delete ctRascunho[id]; ctAberta.delete(id);
+  await loadContatos();
 }
 document.getElementById('ct-filtro').addEventListener('click', ev => {
   const b = ev.target.closest('.diff-tab');
@@ -733,6 +800,14 @@ document.getElementById('ct-lista').addEventListener('click', async ev => {
   const b = ev.target.closest('button[data-ct]');
   if (!b) return;
   const id = b.dataset.ct, acao = b.dataset.acao;
+  if (acao === 'abrir') {
+    ctAberta.add(id); renderContatos();
+    const t = document.getElementById('ct-resp-' + id);
+    if (t) { t.focus(); const p = t.value.indexOf('\n\n') + 2; t.setSelectionRange(p, p); }
+    return;
+  }
+  if (acao === 'fechar') { ctAberta.delete(id); renderContatos(); return; }
+  if (acao === 'enviar') return ctEnviar(id, b);
   const params = { p_id: id, p_status: null, p_nota: null };
   if (acao === 'nota') params.p_nota = document.getElementById('ct-nota-' + id).value;
   else params.p_status = acao;

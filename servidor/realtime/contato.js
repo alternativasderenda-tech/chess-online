@@ -10,6 +10,9 @@
  * máximo 3 links na mensagem. O IP só vira HMAC com sal secreto. NUNCA registrar em log o conteúdo da mensagem.
  * Aviso por e-mail opcional: com SMTP_HOST e SMTP_FROM no ambiente (SMTP_PORT, SMTP_USER, SMTP_PASS, SMTP_TO), manda
  * para SMTP_TO (padrão contato@xadrezonline.app) com Reply-To de quem escreveu. Sem SMTP, só grava.
+ *   POST /functions/v1/contato-responder  { id, texto }  Authorization: Bearer <token de ADMIN>  (D-CON-08)
+ *        → envia a resposta pelo mesmo SMTP para quem escreveu, com a mensagem citada, e grava o histórico.
+ *        200 { ok, id } · 401/403 · 404 · 429 · 502 { erro: 'envio', detalhe } · 503 { erro: 'sem_smtp' }.
  */
 const crypto = require('node:crypto');
 
@@ -77,7 +80,7 @@ const responder = (res, st, o) => {
   res.end(JSON.stringify(o));
 };
 
-module.exports = function criarContato({ pool, verificar, segredo, ambiente }) {
+module.exports = function criarContato({ pool, verificar, ehAdmin, segredo, ambiente }) {
   // chaves derivadas do segredo do ambiente (nada novo para guardar): uma assina o horário, outra é o sal do IP
   const chaveTempo = crypto.createHmac('sha256', segredo).update('xadrez-contato-tempo-v1').digest();
   const salIp = crypto.createHmac('sha256', segredo).update('xadrez-contato-ip-v1').digest();
@@ -200,7 +203,60 @@ module.exports = function criarContato({ pool, verificar, segredo, ambiente }) {
     avisar(j.id, { nome, email, assunto, mensagem, link: linkBruto, idioma, userId });
   }
 
+  // ---------- resposta pelo painel (D-CON-08): só admin; grava 'enviando' antes, 'enviada'/'falhou' depois
+  async function responderPeloPainel(req, res) {
+    const claims = verificar((req.headers.authorization || '').replace(/^Bearer\s+/i, ''));
+    if (!claims) return responder(res, 401, { ok: false, erro: 'sessao' });
+    if (!(await ehAdmin(claims))) return responder(res, 403, { ok: false, erro: 'admin' });
+    const t = smtp();
+    if (!t) return responder(res, 503, { ok: false, erro: 'sem_smtp' });
+    let corpo;
+    try { corpo = await corpoJson(req); } catch (e) { return responder(res, e.status || 400, { ok: false, erro: 'formato' }); }
+    const id = String(corpo && corpo.id || '');
+    const texto = limpar(corpo && corpo.texto, { linhas: true });
+    if (!/^[0-9a-f-]{36}$/i.test(id)) return responder(res, 400, { ok: false, erro: 'id' });
+    if (!texto || texto.length > 8000) return responder(res, 400, { ok: false, erro: 'texto' });
+
+    const r = await pool.query('select xadrez_rt.contato_resposta_iniciar($1, $2, $3) j', [id, claims.sub, texto]);
+    const c = r.rows[0].j;
+    if (c.erro) return responder(res, c.erro === 'nao_encontrada' ? 404 : c.erro === 'limite' ? 429 : 400, { ok: false, erro: c.erro });
+
+    const en = c.idioma === 'en';
+    const assunto = (ASSUNTOS[c.assunto] || ASSUNTOS.outro)[en ? 'en' : 'pt'];
+    const quando = new Date(c.criado_em).toLocaleString(en ? 'en-US' : 'pt-BR', { timeZone: 'America/Sao_Paulo', dateStyle: 'short', timeStyle: 'short' });
+    const citacao = c.mensagem.split('\n').map(l => '> ' + l).join('\n');
+    const texto2 = [texto, '', '—', en ? 'Chess Online · https://xadrezonline.app' : 'Xadrez Online · https://xadrezonline.app', '',
+      en ? `Your message (${quando}, Brasília time):` : `Sua mensagem (${quando}, horário de Brasília):`, citacao].join('\n');
+    try {
+      await t.sendMail({
+        from: process.env.SMTP_FROM,
+        to: { name: c.nome, address: c.email },
+        replyTo: 'contato@xadrezonline.app',   // nunca o SMTP_TO: ele pode ser a caixa pessoal que recebe os avisos
+        subject: `Re: ${assunto} — ${en ? 'Chess Online' : 'Xadrez Online'}${ambiente === 'teste' ? ' [TESTE]' : ''}`,
+        text: texto2,
+      });
+    } catch (e) {
+      const erro = ((e.code || '') + ' ' + String(e.message || '')).trim().slice(0, 300);
+      console.error('[contato] resposta falhou', c.id, erro);
+      await pool.query('select xadrez_rt.contato_resposta_concluir($1, false, $2)', [c.id, erro]).catch(() => {});
+      return responder(res, 502, { ok: false, erro: 'envio', detalhe: erro });
+    }
+    await pool.query('select xadrez_rt.contato_resposta_concluir($1, true, null)', [c.id]);
+    console.log('[contato] resposta enviada', c.id, 'para a mensagem', id);
+    responder(res, 200, { ok: true, id: c.id });
+  }
+
   async function rota(req, res) {
+    if (req.url.split('?')[0] === '/functions/v1/contato-responder') {
+      try {
+        if (req.method === 'POST') await responderPeloPainel(req, res);
+        else responder(res, 405, { ok: false, erro: 'metodo' });
+      } catch (e) {
+        console.error('[contato] resposta: falha', e.message);
+        if (!res.headersSent) responder(res, 500, { ok: false, erro: 'falha' });
+      }
+      return true;
+    }
     if (req.url.split('?')[0] !== '/functions/v1/contato') return false;
     try {
       if (req.method === 'GET') responder(res, 200, { token: novoToken() });

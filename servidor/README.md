@@ -83,3 +83,10 @@ Depois `systemctl restart xadrez-rt`; o log mostra `Contato: aviso por e-mail sm
 `smtp-teste.env` (linha equivalente em `teste-rt-run.sh`); sem ele o teste não manda e-mail. Porta 465 = TLS direto,
 587 = STARTTLS obrigatório (a AWS bloqueia a 25 de saída). Falha de envio vai para o log (`[contato] aviso por e-mail
 falhou <id>`) e não perde a mensagem: ela já está no banco.
+
+**Resposta pelo painel (D-CON-08, migração 016).** O "Responder" do /admin manda pelo mesmo SMTP, de `SMTP_FROM`,
+para quem escreveu. Para sair como `contato@xadrezonline.app` pelo Gmail, o endereço tem de estar confirmado em
+Gmail → Configurações → Contas e importação → "Enviar e-mail como" (servidor `smtp.gmail.com`, o próprio Gmail e a
+senha de app); sem isso o Gmail troca o remetente pela conta. Aí `SMTP_FROM=Xadrez Online <contato@xadrezonline.app>`.
+Cada resposta fica em `xadrez_rt.contato_resposta` (`enviando` → `enviada`/`falhou`); enviada marca a mensagem como
+respondida. Limite: 60 respostas por hora.

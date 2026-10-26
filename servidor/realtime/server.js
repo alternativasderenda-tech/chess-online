@@ -450,7 +450,7 @@ pix = require('./pix')({ pool, verificar });
 console.log('Pix:', pix.modo);
 setInterval(() => pix.rotina().catch(e => console.error('[pix] rotina', e.message)), 60_000).unref();
 
-contato = require('./contato')({ pool, verificar, segredo: SEGREDO, ambiente: process.env.AMBIENTE });
+contato = require('./contato')({ pool, verificar, ehAdmin, segredo: SEGREDO, ambiente: process.env.AMBIENTE });
 console.log('Contato: aviso por e-mail', contato.aviso());
 
 escutar();
