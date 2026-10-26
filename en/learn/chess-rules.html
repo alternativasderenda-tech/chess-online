@@ -81,16 +81,14 @@
   },
   "educationalLevel": "Beginner",
   "teaches": [
-    "chess rules",
-    "official chess rules",
-    "fide rules",
-    "checkmate rules",
-    "chess rules for beginners"
+    "FIDE Laws of Chess",
+    "How a game ends",
+    "Draws"
   ],
   "learningResourceType": "Guide",
   "keywords": "chess rules, official chess rules, fide rules, checkmate rules, chess rules for beginners",
-  "timeRequired": "PT6M",
-  "wordCount": 1126,
+  "timeRequired": "PT7M",
+  "wordCount": 1344,
   "isAccessibleForFree": true,
   "isPartOf": {
     "@type": "Course",
@@ -129,6 +127,48 @@
   ]
 }
 </script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "@id": "https://xadrezonline.app/en/learn/chess-rules#faq",
+  "inLanguage": "en",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How many pieces does each player have?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Sixteen: eight pawns, two rooks, two knights, two bishops, one queen and one king."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "What happens when a player runs out of time?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "The player whose time ran out loses — unless the opponent cannot checkmate by any possible series of legal moves, in which case the game is a draw (FIDE Laws, Article 6.9)."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Is \"touch-move\" an official rule?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Under Article 4.3 of the FIDE Laws, a player whose turn it is and who deliberately touches one of their own pieces must move it, if it has a legal move; touching an opponent's piece means capturing it, if possible. To straighten a piece on its square, you must say \"I adjust\" (or \"j'adoube\") first."
+      }
+    },
+    {
+      "@type": "Question",
+      "name": "Can you have two queens?",
+      "acceptedAnswer": {
+        "@type": "Answer",
+        "text": "Yes. Through promotion, a pawn that reaches the last rank can become a queen even while the original queen is still on the board. See how promotion works."
+      }
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <a class="pular" href="#conteudo">Skip to content</a>
@@ -148,9 +188,9 @@
   <article>
     <header class="art-cab">
       <h1>The Official Rules of Chess (FIDE) Explained</h1>
-      <p class="meta"><span class="meta-item meta-licao">Lesson 4 of 14</span><span class="selo nivel-iniciante">Beginner</span><span class="meta-item">⏱ 6 min read</span><span class="meta-item"><time datetime="2026-10-26">Updated October 26, 2026</time></span></p>
+      <p class="meta"><span class="meta-item meta-licao">Lesson 4 of 14</span><span class="selo nivel-iniciante">Beginner</span><span class="meta-item">⏱ 7 min read</span><span class="meta-item"><time datetime="2026-10-26">Updated October 26, 2026</time></span></p>
     </header>
-<p class="lead">This is a complete summary of the official rules of chess according to FIDE (the International Chess Federation), translated into plain, accessible language. Everything you need to know to play by the international standard, without having to read the original 60-page rulebook.</p>
+<p class="lead">The rules of chess are the <a href="https://handbook.fide.com/chapter/E012023" rel="noopener">FIDE Laws of Chess</a>, set by the International Chess Federation. In short: each player starts with 16 pieces on a 64-square board, White moves first, the players alternate one move at a time, and whoever checkmates the opponent's king wins. A game can also end by resignation, by running out of time, or in a draw — by agreement, stalemate, threefold repetition, the 50-move rule or insufficient material. This guide sums up all the official rules in plain language.</p>
 <nav class="toc" aria-labelledby="toc-titulo">
   <p class="toc-h" id="toc-titulo">In this guide</p>
   <ol>
@@ -161,34 +201,35 @@
     <li><a href="#empates">Types of draw</a></li>
     <li><a href="#relogio">Time and clock rules</a></li>
     <li><a href="#etiqueta">Conduct and etiquette</a></li>
+    <li><a href="#faq">FAQ</a></li>
   </ol>
 </nav>
 
 <h2 id="tabuleiro">1. The board and the starting position</h2>
-<p>Chess is played on a <a href="/en/learn/chessboard-and-chess-notation">board of 64 squares</a> (8x8) in alternating colors. <strong>The square in each player's right-hand corner must be white</strong>. The pieces start on the first two ranks on each side.</p>
-<p>Order of the pieces on the first rank (from A to H):</p>
+<p>Chess is played on a <a href="/en/learn/chessboard-and-chess-notation">board of 64 squares</a> (8x8) in alternating colors. <strong>The square in each player's right-hand corner must be light</strong>. The pieces start on the first two ranks on each side.</p>
+<p>Order of the pieces on the first rank (from the a-file to the h-file):</p>
 <ul>
 <li>Rook — Knight — Bishop — Queen — King — Bishop — Knight — Rook</li>
 </ul>
-<p><strong>The queen always starts on a square of its own color</strong>: the white queen on a white square, the black queen on a black square. The pawns fill the entire second rank. The player with the white pieces moves first.</p>
+<p><strong>The queen always starts on a square of her own color</strong>: White's queen on a light square, Black's queen on a dark square. The pawns fill the front rank (White's 2nd, Black's 7th). The player with the white pieces moves first.</p>
 <figure class="diagrama"><svg class="tab" viewBox="0 0 480 480" role="img" aria-label="Starting position: the king and queen stand in the middle of the first rank, and the queen goes on her own color. White to move. Highlighted squares: e1, e8, d1, d8." xmlns="http://www.w3.org/2000/svg"><g><rect x="0" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="0" width="60" height="60" fill="#b58863"/><rect x="120" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="0" width="60" height="60" fill="#b58863"/><rect x="240" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="0" width="60" height="60" fill="#b58863"/><rect x="360" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="0" width="60" height="60" fill="#b58863"/><rect x="0" y="60" width="60" height="60" fill="#b58863"/><rect x="60" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="60" width="60" height="60" fill="#b58863"/><rect x="180" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="60" width="60" height="60" fill="#b58863"/><rect x="300" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="60" width="60" height="60" fill="#b58863"/><rect x="420" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="120" width="60" height="60" fill="#b58863"/><rect x="120" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="120" width="60" height="60" fill="#b58863"/><rect x="240" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="120" width="60" height="60" fill="#b58863"/><rect x="360" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="120" width="60" height="60" fill="#b58863"/><rect x="0" y="180" width="60" height="60" fill="#b58863"/><rect x="60" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="180" width="60" height="60" fill="#b58863"/><rect x="180" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="180" width="60" height="60" fill="#b58863"/><rect x="300" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="180" width="60" height="60" fill="#b58863"/><rect x="420" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="240" width="60" height="60" fill="#b58863"/><rect x="120" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="240" width="60" height="60" fill="#b58863"/><rect x="240" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="240" width="60" height="60" fill="#b58863"/><rect x="360" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="240" width="60" height="60" fill="#b58863"/><rect x="0" y="300" width="60" height="60" fill="#b58863"/><rect x="60" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="300" width="60" height="60" fill="#b58863"/><rect x="180" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="300" width="60" height="60" fill="#b58863"/><rect x="300" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="300" width="60" height="60" fill="#b58863"/><rect x="420" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="360" width="60" height="60" fill="#b58863"/><rect x="120" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="360" width="60" height="60" fill="#b58863"/><rect x="240" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="360" width="60" height="60" fill="#b58863"/><rect x="360" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="360" width="60" height="60" fill="#b58863"/><rect x="0" y="420" width="60" height="60" fill="#b58863"/><rect x="60" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="420" width="60" height="60" fill="#b58863"/><rect x="180" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="420" width="60" height="60" fill="#b58863"/><rect x="300" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="420" width="60" height="60" fill="#b58863"/><rect x="420" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="420" width="60" height="60" fill="rgba(255,215,0,0.55)"/><rect x="240" y="0" width="60" height="60" fill="rgba(255,215,0,0.55)"/><rect x="180" y="420" width="60" height="60" fill="rgba(21,120,27,0.45)"/><rect x="180" y="0" width="60" height="60" fill="rgba(21,120,27,0.45)"/></g><g font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700" stroke="#f0d9b5" stroke-width="3" stroke-linejoin="round" paint-order="stroke"><text x="3" y="15" fill="#6b4a2b">8</text><text x="57" y="476" text-anchor="end" fill="#1a1a2e">a</text><text x="3" y="75" fill="#1a1a2e">7</text><text x="117" y="476" text-anchor="end" fill="#6b4a2b">b</text><text x="3" y="135" fill="#6b4a2b">6</text><text x="177" y="476" text-anchor="end" fill="#1a1a2e">c</text><text x="3" y="195" fill="#1a1a2e">5</text><text x="237" y="476" text-anchor="end" fill="#6b4a2b">d</text><text x="3" y="255" fill="#6b4a2b">4</text><text x="297" y="476" text-anchor="end" fill="#1a1a2e">e</text><text x="3" y="315" fill="#1a1a2e">3</text><text x="357" y="476" text-anchor="end" fill="#6b4a2b">f</text><text x="3" y="375" fill="#6b4a2b">2</text><text x="417" y="476" text-anchor="end" fill="#1a1a2e">g</text><text x="3" y="435" fill="#1a1a2e">1</text><text x="477" y="476" text-anchor="end" fill="#6b4a2b">h</text></g><g font-family="'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans','Apple Symbols',sans-serif" font-size="48" text-anchor="middle" dominant-baseline="central"><text x="30" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♜︎</text><text x="90" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♞︎</text><text x="150" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♝︎</text><text x="210" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♛︎</text><text x="270" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♚︎</text><text x="330" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♝︎</text><text x="390" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♞︎</text><text x="450" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♜︎</text><text x="30" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="90" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="150" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="210" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="270" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="330" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="390" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="450" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="30" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="90" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="150" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="210" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="270" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="330" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="390" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="450" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="30" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♜︎</text><text x="90" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♞︎</text><text x="150" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♝︎</text><text x="210" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♛︎</text><text x="270" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♚︎</text><text x="330" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♝︎</text><text x="390" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♞︎</text><text x="450" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♜︎</text></g></svg><figcaption>Starting position: the king and queen stand in the middle of the first rank, and the queen goes on her own color.</figcaption></figure>
 <h2 id="movimentos">2. How the pieces move</h2>
-<p>Each piece has its own <a href="/en/learn/how-chess-pieces-move">way of moving</a>. Here is the summary:</p>
-<div class="box"><span class="glyph" aria-hidden="true">♟</span><span class="label">Pawn</span>
-<p>Moves one square forward. On its first move, it may advance two squares. It captures diagonally, one square forward. It never moves backward.</p></div>
-<div class="box"><span class="glyph" aria-hidden="true">♜</span><span class="label">Rook</span>
-<p>Moves in a straight line (horizontally or vertically), as many squares as it likes. It captures on the destination square. It cannot jump over other pieces.</p></div>
-<div class="box"><span class="glyph" aria-hidden="true">♝</span><span class="label">Bishop</span>
-<p>Moves diagonally, as many squares as it likes. Each bishop always stays on its starting color.</p></div>
-<div class="box"><span class="glyph" aria-hidden="true">♛</span><span class="label">Queen</span>
-<p>Combines the moves of the rook and the bishop. It moves in any direction, in a straight line or diagonally, as many squares as it likes.</p></div>
-<div class="box"><span class="glyph" aria-hidden="true">♞</span><span class="label">Knight</span>
-<p>Moves in an &quot;L&quot; shape: two squares in one direction and one more square perpendicular to it. It is the only piece that can jump over other pieces.</p></div>
-<div class="box"><span class="glyph" aria-hidden="true">♚</span><span class="label">King</span>
-<p>Moves one square in any direction. It cannot move onto a square attacked by an enemy piece.</p></div>
+<p>How each piece moves, with diagrams and exercises, is covered in <a href="/en/learn/how-chess-pieces-move">how chess pieces move</a>. For quick reference:</p>
+<div class="tabela-rolagem"><table class="tabela">
+<thead><tr><th>Piece</th><th>How it moves</th><th>How it captures</th></tr></thead>
+<tbody>
+<tr><td>King</td><td>1 square in any direction, never onto an attacked square</td><td>Same as it moves</td></tr>
+<tr><td>Queen</td><td>Straight line or diagonal, as many squares as you like</td><td>Same as it moves</td></tr>
+<tr><td>Rook</td><td>Straight line (file or rank), as many squares as you like</td><td>Same as it moves</td></tr>
+<tr><td>Bishop</td><td>Diagonal, as many squares as you like; always stays on the same color</td><td>Same as it moves</td></tr>
+<tr><td>Knight</td><td>In an &quot;L&quot; (2 + 1); the only piece that jumps</td><td>Same as it moves</td></tr>
+<tr><td>Pawn</td><td>1 square forward (2 on its first move); never moves back</td><td>1 square diagonally forward</td></tr>
+</tbody>
+</table></div>
+<p>Only the knight jumps over other pieces. No piece can capture a piece of its own color.</p>
 <h2 id="especiais">3. Special moves</h2>
 <h3 id="castling">Castling</h3>
-<p>The king and one rook move together: the king moves two squares toward the rook, and the rook jumps to the other side of the king. There is kingside castling (the king's side, the more common one) and queenside castling (the queen's side).</p>
+<p>The king and one rook move together: the king moves two squares toward the rook, and the rook jumps to the other side of the king. There is <strong>kingside castling</strong> (also called short castling, the more common one) and <strong>queenside castling</strong> (long castling).</p>
 <p><a href="/en/learn/castling-en-passant-and-promotion">Conditions for castling</a>:</p>
 <ul>
 <li>Neither the king nor the chosen rook may have moved earlier in the game.</li>
@@ -198,20 +239,15 @@
 </ul>
 <figure class="diagrama"><svg class="tab" viewBox="0 0 480 480" role="img" aria-label="Black castles queenside: the king goes from e8 to c8 and the rook from a8 to d8. White: King e1, Queen d2, Rook a1, h1, Bishop e3, Knight c3, f3, pawns e4, d3, a2, b2, c2, f2, g2, h2. Black: King e8, Queen d7, Rook a8, h8, Bishop e6, Knight c6, f6, pawns a7, b7, c7, f7, g7, h7, d6, e5. Black to move. Arrows: e8→c8, a8→d8." xmlns="http://www.w3.org/2000/svg"><g><rect x="0" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="0" width="60" height="60" fill="#b58863"/><rect x="120" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="0" width="60" height="60" fill="#b58863"/><rect x="240" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="0" width="60" height="60" fill="#b58863"/><rect x="360" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="0" width="60" height="60" fill="#b58863"/><rect x="0" y="60" width="60" height="60" fill="#b58863"/><rect x="60" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="60" width="60" height="60" fill="#b58863"/><rect x="180" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="60" width="60" height="60" fill="#b58863"/><rect x="300" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="60" width="60" height="60" fill="#b58863"/><rect x="420" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="120" width="60" height="60" fill="#b58863"/><rect x="120" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="120" width="60" height="60" fill="#b58863"/><rect x="240" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="120" width="60" height="60" fill="#b58863"/><rect x="360" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="120" width="60" height="60" fill="#b58863"/><rect x="0" y="180" width="60" height="60" fill="#b58863"/><rect x="60" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="180" width="60" height="60" fill="#b58863"/><rect x="180" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="180" width="60" height="60" fill="#b58863"/><rect x="300" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="180" width="60" height="60" fill="#b58863"/><rect x="420" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="240" width="60" height="60" fill="#b58863"/><rect x="120" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="240" width="60" height="60" fill="#b58863"/><rect x="240" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="240" width="60" height="60" fill="#b58863"/><rect x="360" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="240" width="60" height="60" fill="#b58863"/><rect x="0" y="300" width="60" height="60" fill="#b58863"/><rect x="60" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="300" width="60" height="60" fill="#b58863"/><rect x="180" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="300" width="60" height="60" fill="#b58863"/><rect x="300" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="300" width="60" height="60" fill="#b58863"/><rect x="420" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="360" width="60" height="60" fill="#b58863"/><rect x="120" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="360" width="60" height="60" fill="#b58863"/><rect x="240" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="360" width="60" height="60" fill="#b58863"/><rect x="360" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="360" width="60" height="60" fill="#b58863"/><rect x="0" y="420" width="60" height="60" fill="#b58863"/><rect x="60" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="420" width="60" height="60" fill="#b58863"/><rect x="180" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="420" width="60" height="60" fill="#b58863"/><rect x="300" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="420" width="60" height="60" fill="#b58863"/><rect x="420" y="420" width="60" height="60" fill="#f0d9b5"/></g><g font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700" stroke="#f0d9b5" stroke-width="3" stroke-linejoin="round" paint-order="stroke"><text x="3" y="15" fill="#6b4a2b">8</text><text x="57" y="476" text-anchor="end" fill="#1a1a2e">a</text><text x="3" y="75" fill="#1a1a2e">7</text><text x="117" y="476" text-anchor="end" fill="#6b4a2b">b</text><text x="3" y="135" fill="#6b4a2b">6</text><text x="177" y="476" text-anchor="end" fill="#1a1a2e">c</text><text x="3" y="195" fill="#1a1a2e">5</text><text x="237" y="476" text-anchor="end" fill="#6b4a2b">d</text><text x="3" y="255" fill="#6b4a2b">4</text><text x="297" y="476" text-anchor="end" fill="#1a1a2e">e</text><text x="3" y="315" fill="#1a1a2e">3</text><text x="357" y="476" text-anchor="end" fill="#6b4a2b">f</text><text x="3" y="375" fill="#6b4a2b">2</text><text x="417" y="476" text-anchor="end" fill="#1a1a2e">g</text><text x="3" y="435" fill="#1a1a2e">1</text><text x="477" y="476" text-anchor="end" fill="#6b4a2b">h</text></g><g font-family="'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans','Apple Symbols',sans-serif" font-size="48" text-anchor="middle" dominant-baseline="central"><text x="30" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♜︎</text><text x="270" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♚︎</text><text x="450" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♜︎</text><text x="30" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="90" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="150" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="210" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♛︎</text><text x="330" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="390" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="450" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="150" y="152" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♞︎</text><text x="210" y="152" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="270" y="152" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♝︎</text><text x="330" y="152" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♞︎</text><text x="270" y="212" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="270" y="272" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="150" y="332" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♞︎</text><text x="210" y="332" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="270" y="332" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♝︎</text><text x="330" y="332" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♞︎</text><text x="30" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="90" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="150" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="210" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♛︎</text><text x="330" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="390" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="450" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="30" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♜︎</text><text x="270" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♚︎</text><text x="450" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♜︎</text></g><polygon points="262.0,24.5 178.0,24.5 178.0,15.0 156.0,30.0 178.0,45.0 178.0,35.5 262.0,35.5" fill="#15781b" fill-opacity="0.82"/><polygon points="38.0,35.5 182.0,35.5 182.0,45.0 204.0,30.0 182.0,15.0 182.0,24.5 38.0,24.5" fill="#15781b" fill-opacity="0.82"/></svg><figcaption>Black castles queenside: the king goes from e8 to c8 and the rook from a8 to d8.</figcaption></figure>
 <h3 id="en-passant-the-in-passing-capture">En passant (the &quot;in passing&quot; capture)</h3>
-<p>If an enemy pawn advances two squares on its first move and ends up beside your pawn, you may capture it on your next move as if it had advanced only one square. <strong>It is only valid on the very next move</strong> — if you don't capture, you lose the right.</p>
+<p>If an enemy pawn advances two squares from its starting square and lands beside your pawn, you may capture it on your next move as if it had advanced only one square. <strong>It is only valid on the very next move</strong> — if you don't capture, you lose the right.</p>
 <figure class="diagrama"><svg class="tab" viewBox="0 0 480 480" role="img" aria-label="En passant: after f7–f5, the e5 pawn captures on f6 and the f5 pawn is removed. White: King e1, Queen d1, Rook a1, h1, Bishop c1, f1, Knight b1, g1, pawns e5, a2, b2, c2, d2, f2, g2, h2. Black: King e8, Queen d8, Rook a8, h8, Bishop c8, f8, Knight b8, g8, pawns a7, b7, c7, e7, g7, h7, d5, f5. White to move. Highlighted squares: f5. Arrows: e5→f6." xmlns="http://www.w3.org/2000/svg"><g><rect x="0" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="0" width="60" height="60" fill="#b58863"/><rect x="120" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="0" width="60" height="60" fill="#b58863"/><rect x="240" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="0" width="60" height="60" fill="#b58863"/><rect x="360" y="0" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="0" width="60" height="60" fill="#b58863"/><rect x="0" y="60" width="60" height="60" fill="#b58863"/><rect x="60" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="60" width="60" height="60" fill="#b58863"/><rect x="180" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="60" width="60" height="60" fill="#b58863"/><rect x="300" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="60" width="60" height="60" fill="#b58863"/><rect x="420" y="60" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="120" width="60" height="60" fill="#b58863"/><rect x="120" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="120" width="60" height="60" fill="#b58863"/><rect x="240" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="120" width="60" height="60" fill="#b58863"/><rect x="360" y="120" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="120" width="60" height="60" fill="#b58863"/><rect x="0" y="180" width="60" height="60" fill="#b58863"/><rect x="60" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="180" width="60" height="60" fill="#b58863"/><rect x="180" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="180" width="60" height="60" fill="#b58863"/><rect x="300" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="180" width="60" height="60" fill="#b58863"/><rect x="420" y="180" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="240" width="60" height="60" fill="#b58863"/><rect x="120" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="240" width="60" height="60" fill="#b58863"/><rect x="240" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="240" width="60" height="60" fill="#b58863"/><rect x="360" y="240" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="240" width="60" height="60" fill="#b58863"/><rect x="0" y="300" width="60" height="60" fill="#b58863"/><rect x="60" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="300" width="60" height="60" fill="#b58863"/><rect x="180" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="300" width="60" height="60" fill="#b58863"/><rect x="300" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="300" width="60" height="60" fill="#b58863"/><rect x="420" y="300" width="60" height="60" fill="#f0d9b5"/><rect x="0" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="60" y="360" width="60" height="60" fill="#b58863"/><rect x="120" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="180" y="360" width="60" height="60" fill="#b58863"/><rect x="240" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="360" width="60" height="60" fill="#b58863"/><rect x="360" y="360" width="60" height="60" fill="#f0d9b5"/><rect x="420" y="360" width="60" height="60" fill="#b58863"/><rect x="0" y="420" width="60" height="60" fill="#b58863"/><rect x="60" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="120" y="420" width="60" height="60" fill="#b58863"/><rect x="180" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="240" y="420" width="60" height="60" fill="#b58863"/><rect x="300" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="360" y="420" width="60" height="60" fill="#b58863"/><rect x="420" y="420" width="60" height="60" fill="#f0d9b5"/><rect x="300" y="180" width="60" height="60" fill="rgba(220,40,40,0.5)"/></g><g font-family="Inter,system-ui,sans-serif" font-size="15" font-weight="700" stroke="#f0d9b5" stroke-width="3" stroke-linejoin="round" paint-order="stroke"><text x="3" y="15" fill="#6b4a2b">8</text><text x="57" y="476" text-anchor="end" fill="#1a1a2e">a</text><text x="3" y="75" fill="#1a1a2e">7</text><text x="117" y="476" text-anchor="end" fill="#6b4a2b">b</text><text x="3" y="135" fill="#6b4a2b">6</text><text x="177" y="476" text-anchor="end" fill="#1a1a2e">c</text><text x="3" y="195" fill="#1a1a2e">5</text><text x="237" y="476" text-anchor="end" fill="#6b4a2b">d</text><text x="3" y="255" fill="#6b4a2b">4</text><text x="297" y="476" text-anchor="end" fill="#1a1a2e">e</text><text x="3" y="315" fill="#1a1a2e">3</text><text x="357" y="476" text-anchor="end" fill="#6b4a2b">f</text><text x="3" y="375" fill="#6b4a2b">2</text><text x="417" y="476" text-anchor="end" fill="#1a1a2e">g</text><text x="3" y="435" fill="#1a1a2e">1</text><text x="477" y="476" text-anchor="end" fill="#6b4a2b">h</text></g><g font-family="'Segoe UI Symbol','Noto Sans Symbols 2','DejaVu Sans','Apple Symbols',sans-serif" font-size="48" text-anchor="middle" dominant-baseline="central"><text x="30" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♜︎</text><text x="90" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♞︎</text><text x="150" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♝︎</text><text x="210" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♛︎</text><text x="270" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♚︎</text><text x="330" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♝︎</text><text x="390" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♞︎</text><text x="450" y="32" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♜︎</text><text x="30" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="90" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="150" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="270" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="390" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="450" y="92" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="210" y="212" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="270" y="212" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="330" y="212" class="pp" fill="#1a1a1a" stroke="#1a1a1a" stroke-width="0.6">♟︎</text><text x="30" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="90" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="150" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="210" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="330" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="390" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="450" y="392" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♟︎</text><text x="30" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♜︎</text><text x="90" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♞︎</text><text x="150" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♝︎</text><text x="210" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♛︎</text><text x="270" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♚︎</text><text x="330" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♝︎</text><text x="390" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♞︎</text><text x="450" y="452" class="pb" fill="#fff" stroke="#1a1a1a" stroke-width="1.6" paint-order="stroke">♜︎</text></g><polygon points="279.5,208.2 314.1,173.7 320.8,180.4 325.8,154.2 299.6,159.2 306.3,165.9 271.8,200.5" fill="#15781b" fill-opacity="0.82"/></svg><figcaption>En passant: after f7–f5, the e5 pawn captures on f6 and the f5 pawn is removed.</figcaption></figure>
 <h3 id="pawn-promotion">Pawn promotion</h3>
 <p>When your pawn reaches the last rank of the board (the 8th for White, the 1st for Black), it <strong>must</strong> be turned into another piece of your choice (queen, rook, bishop or knight). Thanks to promotion, there can be more than one queen on the board.</p>
 <h2 id="fim">4. How a game ends</h2>
 <h3 id="check">Check</h3>
-<p>The king is under direct attack. You are required to escape check immediately, in one of three ways:</p>
-<ol>
-<li>Move the king to a safe square.</li>
-<li>Block the attack with another piece (this doesn't work against a knight, which jumps).</li>
-<li>Capture the piece giving check.</li>
-</ol>
+<p>The king is under direct attack. You must get out of check: by moving the king, capturing the checking piece, or blocking (details in <a href="/en/learn/check-checkmate-and-stalemate">check, checkmate and stalemate</a>).</p>
 <h3 id="checkmate">Checkmate</h3>
-<p>The king is in check and <strong>none of the three options above is possible</strong>. The game is over. Whoever delivered the checkmate has won.</p>
+<p>The king is in check and <strong>none of those three escapes is possible</strong>. The game is over. Whoever delivered the checkmate has won.</p>
 <h3 id="resignation">Resignation</h3>
 <p>A player may resign at any moment. This usually happens when the player realizes the game is lost and wants to save time. A resignation counts as a win for the opponent.</p>
 <h2 id="empates">5. Types of draw</h2>
@@ -221,9 +257,9 @@
 <h3 id="draw-by-agreement">Draw by agreement</h3>
 <p>The two players can agree to a draw at any moment. In official tournaments, there are additional rules about when this is allowed.</p>
 <h3 id="the-fifty-move-rule">The fifty-move rule</h3>
-<p>If 50 consecutive moves go by with no capture and no pawn move, <a href="/en/learn/draws-in-chess">either player can claim a draw</a>. The rule exists to prevent endless games in endgames that make no progress.</p>
+<p>If each player makes 50 moves with no capture and no pawn move, <a href="/en/learn/draws-in-chess">the player to move can claim a draw</a>; after 75 moves, the draw is automatic. The rule exists to prevent endless games in endgames that make no progress.</p>
 <h3 id="threefold-repetition">Threefold repetition</h3>
-<p>If the same position occurs three times during the game (with the same player to move), a draw can be claimed. The repetitions do not have to be consecutive.</p>
+<p>If the same position occurs three times during the game (with the same player to move), a draw can be claimed. The repetitions do not have to be consecutive. If the same position appears five times, the draw is automatic.</p>
 <h3 id="insufficient-material">Insufficient material</h3>
 <p>When neither side has enough pieces to deliver checkmate, the game ends in a draw automatically. Examples:</p>
 <ul>
@@ -233,13 +269,13 @@
 <li>King and bishop against king and bishop, when the bishops are on the same color.</li>
 </ul>
 <h2 id="relogio">6. Time and clock rules</h2>
-<p>In games played with a clock, each player has a total amount of time. When a player's time runs out, that player loses — unless the opponent doesn't have enough pieces to deliver mate (in which case it's a draw). The main formats are:</p>
+<p>In games played with a clock, each player has a total amount of time. When a player's time runs out, that player loses — unless the opponent cannot checkmate by any series of legal moves (for example, if they only have a king left); in that case, it's a draw. FIDE's time controls are:</p>
 <ul>
-<li><strong>Classical:</strong> 60 minutes or more per side.</li>
-<li><strong>Rapid:</strong> 10 to 60 minutes.</li>
-<li><strong>Blitz:</strong> 3 to 10 minutes.</li>
-<li><strong>Bullet:</strong> less than 3 minutes.</li>
+<li><strong>Classical:</strong> 60 minutes or more per player.</li>
+<li><strong>Rapid:</strong> more than 10 and less than 60 minutes.</li>
+<li><strong>Blitz:</strong> 10 minutes or less.</li>
 </ul>
+<p>In FIDE's count the increment is multiplied by 60: 10+5 counts as 15 minutes, so it's rapid. <strong>Bullet</strong> (under 3 minutes) isn't a FIDE category; it's an online-site pace.</p>
 <p>See the dedicated article on <a href="/en/learn/classical-rapid-blitz-bullet-chess">Classical, Rapid, Blitz and Bullet Chess</a>.</p>
 <h2 id="etiqueta">7. Conduct and etiquette</h2>
 <p>A few lesser-known but equally valid rules:</p>
@@ -249,7 +285,16 @@
 <li><strong>You may not consult books, a computer or other people</strong> during a game in an official tournament.</li>
 <li><strong>You may not talk to your opponent</strong> beyond what is necessary (a greeting, offering a draw, resigning).</li>
 </ul>
-<div class="tip"><p><strong>💡 Note for online games:</strong> the touch-move rule does not apply in games played over the internet — a move only counts when you confirm it. But the time rules and special moves apply in exactly the same way.</p></div>
+<div class="tip"><p><strong>💡 In online games:</strong> the touch-move rule doesn't apply: a move only counts once you complete it. But the time rules and the special moves apply in exactly the same way.</p></div>
+<h2 id="faq">Frequently asked questions</h2>
+<h3 id="how-many-pieces-does-each-player-have">How many pieces does each player have?</h3>
+<p>Sixteen: eight pawns, two rooks, two knights, two bishops, one queen and one king.</p>
+<h3 id="what-happens-when-a-player-runs-out-of-time">What happens when a player runs out of time?</h3>
+<p>The player whose time ran out loses — unless the opponent cannot checkmate by any possible series of legal moves, in which case the game is a draw (FIDE Laws, Article 6.9).</p>
+<h3 id="is-touch-move-an-official-rule">Is &quot;touch-move&quot; an official rule?</h3>
+<p>Yes. Under Article 4.3 of the FIDE Laws, a player whose turn it is and who deliberately touches one of their own pieces must move it, if it has a legal move; touching an opponent's piece means capturing it, if possible. To straighten a piece on its square, you must say &quot;I adjust&quot; (or &quot;j'adoube&quot;) first.</p>
+<h3 id="can-you-have-two-queens">Can you have two queens?</h3>
+<p>Yes. Through promotion, a pawn that reaches the last rank can become a queen even while the original queen is still on the board. <a href="/en/learn/castling-en-passant-and-promotion#promocao">See how promotion works</a>.</p>
   </article>
   <div class="fim">
 <section class="proximo" aria-labelledby="proximo-titulo">
@@ -257,8 +302,8 @@
   <a class="card" href="/en/learn/how-the-knight-moves">
     <span class="card-num" aria-hidden="true">5</span>
     <span class="card-corpo">
-      <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 5 · 6 min read</span>
-      <span class="card-titulo">How the Knight Moves in Chess: The Definitive Guide</span>
+      <span class="card-meta"><span class="selo nivel-iniciante">Beginner</span> · Lesson 5 · 7 min read</span>
+      <span class="card-titulo">How the Knight Moves in Chess: the L, the Jump and the Fork</span>
       <span class="card-desc">How the knight moves in chess: the L-shape, why it jumps over pieces, forks, tactical patterns and how to master the board's most unpredictable piece.</span>
     </span>
   </a>
@@ -266,7 +311,7 @@
 <section class="cta" aria-labelledby="pratique-titulo">
   <p class="cta-sobre">Practice now</p>
   <h2 id="pratique-titulo">Put the rules into practice</h2>
-  <p>Practice on Chess Online with Learner mode: 12 interactive lessons that teach each rule hands-on.</p>
+  <p>Open the game and pick <strong>🎓 Beginner</strong> in the difficulty menu: 12 interactive lessons that teach each rule hands-on.</p>
   <a href="/en?ia=1" class="cta-btn">▶ Play the AI (Easy)</a>
 </section>
 <nav class="related" aria-labelledby="rel-titulo">
