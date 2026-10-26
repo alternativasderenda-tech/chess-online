@@ -91,7 +91,7 @@ A defesa principal é **4...d5 5.exd5 Ca5!**. O cavalo ataca o bispo e as Pretas
 Existem outros caminhos:
 
 - **4...Bc5**, o **Contra-ataque Traxler**: as Pretas ignoram a ameaça e atacam f2. É arriscado para os dois lados.
-- Do lado branco, **4.d3** evita a teoria aguda e leva a um jogo de manobra parecido com o do Pianissimo. Já **4.d4** abre o centro e entra em linhas igualmente teóricas, como o Ataque Max Lange.
+- Do lado branco, **4.d3** evita a teoria aguda e leva a um jogo de manobra parecido com o do Pianissimo. Já **4.d4** abre o centro e entra em linhas igualmente teóricas (por exemplo, o Ataque Max Lange, depois de 4...exd4 5.O-O Bc5 6.e5).
 
 ## Armadilhas típicas da Italiana {#armadilhas "Armadilhas típicas"}
 

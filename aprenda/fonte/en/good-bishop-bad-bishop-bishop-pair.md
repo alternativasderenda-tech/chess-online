@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [estrategia-posicional, estrutura-de-peoes, valor-das-pecas, finais-de-peao]
 ensina: [Good and bad bishops, Bishop pair, Bishop versus knight, Opposite-colored bishops]
 ---
-A **good bishop** is one whose own pawns are fixed on squares of the opposite color, leaving its diagonals open; a **bad bishop** is one stuck behind its own pawns, fixed on squares of its color. The **bishop pair** — having both bishops against bishop and knight, or against two knights — is a recognized advantage, especially in open positions, because together the two bishops control squares of both colors. These three ideas explain many of the trading decisions in the middlegame and the endgame.
+A **good bishop** is one whose own pawns are fixed on squares of the opposite color, leaving its diagonals open; a **bad bishop** is one stuck behind its own pawns, fixed on squares of its color. The **bishop pair** — having both bishops against bishop and knight, or against two knights — is a recognized advantage, especially in open positions, because together the two bishops control squares of both colors. These three ideas explain many of the trading decisions in the middlegame and the endgame, and they are one of the foundations of [positional strategy](artigo:estrategia-posicional).
 
 ## Why square color matters {#cor}
 

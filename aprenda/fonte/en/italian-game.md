@@ -91,7 +91,7 @@ The main defense is **4...d5 5.exd5 Na5!**. The knight hits the bishop and Black
 There are other paths:
 
 - **4...Bc5**, the **Traxler Counterattack**, ignores the threat and goes after f2. It is risky for both sides.
-- For White, **4.d3** sidesteps the sharp theory and leads to Pianissimo-style maneuvering. **4.d4**, on the other hand, opens the center and leads to equally theoretical lines such as the Max Lange Attack.
+- For White, **4.d3** sidesteps the sharp theory and leads to Pianissimo-style maneuvering. **4.d4**, on the other hand, opens the center and leads to equally theoretical lines (for example, the Max Lange Attack, after 4...exd4 5.O-O Bc5 6.e5).
 
 ## Typical Italian Game traps {#armadilhas "Typical traps"}
 

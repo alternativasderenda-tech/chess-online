@@ -12,7 +12,7 @@ jogar: 2
 relacionados: [relogio-e-psicologia, regras, analisar-partidas, rotina-de-treino]
 ensina: [FIDE time controls, Time control notation and increment, Choosing a time control]
 ---
-In chess, the time control is how much time each player has on the clock for the whole game. Under the FIDE Laws, a game is classical (standard) when each player has 60 minutes or more, rapid when they have more than 10 but less than 60 minutes, and blitz when they have 10 minutes or less — counting, in all three cases, the base time plus 60 times the increment per move. Bullet, under 3 minutes, is not a FIDE category: it is a name used by online chess sites. In the notation 10+5, the 10 is the base time in minutes and the 5 is the increment in seconds.
+In chess, the time control is how much time each player has on the clock for the whole game. In 10+5, 10 is the base time in minutes and 5 the increment, the seconds added after each move. Under the FIDE Laws, a game is classical (standard) when each player has 60 minutes or more, rapid when they have more than 10 but less than 60, and blitz when they have 10 or less — counting the base time plus 60 times the increment. Bullet, under 3 minutes, is not a FIDE category: it is a name used by online chess sites.
 
 ## How time controls are written (3+0, 10+5 etc.) {#notacao}
 
@@ -25,7 +25,7 @@ Examples:
 
 - **3+0:** 3 minutes per side, no increment. This is pure blitz.
 - **5+3:** 5 minutes per side, with 3 seconds added after every move.
-- **10+5:** 10 minutes with a 5-second increment. It's rapid: FIDE adds 60 times the increment to the base time (10 + 5 = 15 minutes).
+- **10+5:** 10 minutes with a 5-second increment. It's rapid: FIDE counts the increment 60 times (5 s × 60 = 5 min), so 10+5 is worth 15 minutes.
 - **60+30:** 60 minutes with a 30-second increment. Classical.
 
 The increment is a safety net: even if your time is running out, every move adds seconds back. This prevents games lost on the clock when you still have a winning position.
@@ -48,7 +48,7 @@ Key traits:
 ## Rapid Chess {#rapido}
 
 :::caixa Time: more than 10 and less than 60 minutes per player
-The most popular format for playing online when you want to think but don't have time for a classical game. Typical time controls: **10+0**, **15+10**, **25+10**.
+The most popular format for playing online when you want to think but don't have time for a classical game. Typical: **15+10**, **25+10** and, on most sites, **10+0**.
 
 <small>On most sites 10+0 counts as rapid; under FIDE rules, 10 minutes with no increment is blitz.</small>
 
@@ -98,8 +98,8 @@ A practical recommendation based on your goal:
 
 | Your goal | Recommended format | Why |
 | --- | --- | --- |
-| Beginner (just learned the rules) | Rapid 15+10 or No limit | Time to think and keep track of your pieces |
-| Learning openings and tactics | Rapid 10+0 or 10+5 | Time to apply what you've studied |
+| Beginner (just learned the rules) | Rapid 15+10 or No limit | Time to think and spot threats |
+| Learning openings and tactics | Rapid 10+5 (or 10+0, which most sites call rapid) | Time to apply what you've studied |
 | Play every day, improve gradually | Blitz 5+3 or 5+0 | Volume of games + reasonable time |
 | Study seriously, become strong | Long rapid (15+10 or 30+20) or classical (60+ min) | Learning from every game |
 | Just for fun, in small doses | Blitz 3+0 or 3+2 | Short games, a big rush of adrenaline |

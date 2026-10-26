@@ -9,7 +9,7 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [como jogar xadrez, xadrez para iniciantes, aprender xadrez, xadrez do zero, tutorial xadrez]
 ensina: [Montagem do tabuleiro, Movimento das peças, Lances especiais, Xeque-mate, Empate]
-jogar: 1
+jogar: 0
 relacionados: [tabuleiro-e-notacao, como-as-pecas-se-movem, lances-especiais, principios-de-abertura]
 ---
 Para jogar xadrez, você precisa saber cinco coisas: como montar o tabuleiro de 64 casas, como cada uma das seis peças se move, os três lances especiais (roque, en passant e promoção), o que é xeque-mate — o objetivo do jogo — e como uma partida pode empatar. As Brancas sempre começam, e cada jogador faz um lance por vez. Este guia explica os cinco passos com diagramas, para você jogar a primeira partida hoje, direto no navegador.
@@ -154,14 +154,14 @@ Aprender as regras é só o começo. O xadrez é um jogo que se aprimora com a p
 :::
 
 :::pratique Pronto para a primeira partida?
-Abra o jogo, escolha **🎓 Aprendiz** no menu de dificuldade e faça as 12 lições interativas, que ensinam cada peça e cada conceito na prática. Sem cadastro, direto no navegador.
+O botão abaixo abre o jogo no modo **🎓 Aprendiz**: faça as 12 lições interativas, que ensinam cada peça e cada conceito na prática. Sem cadastro, direto no navegador.
 :::
 
 ## Perguntas frequentes {#faq "Perguntas frequentes"}
 
 ### Quem começa no xadrez?
 
-As Brancas. Elas sempre fazem o primeiro lance, e depois os jogadores se alternam, um lance de cada vez. Num torneio, quem fica com as Brancas é definido por sorteio ou pelo emparceiramento.
+As Brancas. Elas sempre fazem o primeiro lance, e depois os jogadores se alternam, um lance de cada vez. Num torneio, quem fica com as Brancas é definido por sorteio ou pelo sistema que monta as rodadas (o emparceiramento).
 
 ### Como montar o tabuleiro de xadrez?
 
@@ -173,11 +173,11 @@ Sim. As regras se aprendem lendo e praticando; depois, jogar contra o computador
 
 ## Para onde ir agora {#proximos}
 
-Este guia é a lição 1 da trilha. As próximas lições aprofundam cada parte, nesta ordem:
+Este guia é a lição 1 da trilha. Estas são as lições que aprofundam cada parte:
 
-1. [O tabuleiro e a notação](artigo:tabuleiro-e-notacao): como ler lances como `e4` e `Cf3`.
-2. [Como as peças se movem](artigo:como-as-pecas-se-movem), com exercícios para cada peça.
-3. [Xeque, xeque-mate e afogamento](artigo:xeque-mate-e-afogamento) e [os lances especiais](artigo:lances-especiais).
-4. [Os princípios de abertura](artigo:principios-de-abertura), para jogar bem os primeiros lances.
+1. Lição 2 — [O tabuleiro e a notação](artigo:tabuleiro-e-notacao): como ler lances como `e4` e `Cf3`.
+2. Lição 3 — [Como as peças se movem](artigo:como-as-pecas-se-movem), com exercícios para cada peça.
+3. Lições 7 e 8 — [Xeque, xeque-mate e afogamento](artigo:xeque-mate-e-afogamento) e [os lances especiais](artigo:lances-especiais).
+4. Lição 10 — [Os princípios de abertura](artigo:principios-de-abertura), para jogar bem os primeiros lances.
 
 Terminado o nível Iniciante, a trilha segue para as [táticas](artigo:taticas) (garfo, cravada, ataque descoberto) e, depois, para a estratégia e os finais.

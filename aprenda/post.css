@@ -187,7 +187,8 @@ figure.exercicio figcaption { font-size: 15px; margin-bottom: 12px; line-height:
 .casa.alvo-cap::after { content: ''; position: absolute; inset: 4%; border-radius: 50%; border: 4px solid rgba(20,85,30,0.5); }
 /* foco em anel duplo: o escuro contrasta com as duas casas (12,4:1 na clara, 5,4:1 na escura) e o branco o separa das peças pretas */
 .casa:focus-visible { outline: 3px solid #1a1a2e; outline-offset: -3px; box-shadow: inset 0 0 0 6px #fff; border-radius: 0; z-index: 2; }
-.casa.minha { touch-action: none; cursor: grab; }   /* peça da vez: o toque arrasta em vez de rolar a página */
+.casa.minha { touch-action: pan-y; cursor: grab; }   /* peça da vez: o gesto vertical rola a página; o horizontal arrasta */
+.casa.sel { touch-action: none; }                     /* peça já selecionada (1 toque): arrasta em qualquer direção */
 .casa.arrastando .peca { opacity: 0.3; }
 .peca.fantasma { position: fixed; left: 0; top: 0; z-index: 1000; pointer-events: none; will-change: transform; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.45)); }
 .peca {

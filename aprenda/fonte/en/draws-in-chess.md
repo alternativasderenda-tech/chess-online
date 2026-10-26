@@ -56,13 +56,7 @@ Under FIDE rules, a threefold repetition has to be **claimed**; if the same posi
 
 ### Perpetual check
 
-**Perpetual check** isn't a separate rule: it's when one player keeps giving check and the other can't escape. Since the positions repeat, the game ends in a draw by repetition (or by agreement). It's the classic rescue for a player who's down material but has an active queen near the enemy king.
-
-```tabuleiro
-fen: 6k1/6p1/5p2/8/8/1q6/2r1QPPP/6K1 w - - 0 1
-setas: e2e8 g8h7:azul e8h5
-legenda: Black is a rook up, but White plays Qe8+ Kh7 Qh5+ Kg8 Qe8+… and repeats the checks forever.
-```
+**Perpetual check** isn't a separate rule: it's when one player keeps giving check and the other can't escape. Since the positions repeat, the game ends in a draw by repetition (or by agreement). It's the classic rescue for a player who's down material but has an active queen near the enemy king. See an example in the first exercise below.
 
 ## 5. The 50-move rule {#regra-50 "5. The 50-move rule"}
 

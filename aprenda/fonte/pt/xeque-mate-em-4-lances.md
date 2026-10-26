@@ -89,7 +89,7 @@ O xeque-mate mais rápido possível, em apenas **2 lances**. Só acontece se as 
 
 `1.f3 e5 2.g4?? Dh4#`
 
-Praticamente impossível em partidas reais. Mas é uma curiosidade interessante: o xeque-mate mais rápido teoricamente possível. É a resposta para a pergunta "qual é o xeque-mate mais rápido do xadrez?".
+Na prática, quase nunca acontece, mas é a resposta para a pergunta "qual é o xeque-mate mais rápido do xadrez?".
 
 ## Por que você NÃO deve depender do Mate do Pastor {#aviso "Por que não depender disso"}
 

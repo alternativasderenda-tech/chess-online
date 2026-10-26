@@ -255,9 +255,9 @@
     }
 
     // ---------------- lance a partir da casa selecionada (clique, teclado ou arrasto)
-    function jogarPara(i) {
+    function jogarPara(i, silencioso) {   // silencioso: arrasto de toque que termina em casa ilegal só desfaz a seleção
       var cands = X.legais(estado).filter(function (m) { return m.from === sel && m.to === i; });
-      if (!cands.length) { sel = null; msg(T.ilegal, 'erro'); desenhar(); return; }
+      if (!cands.length) { sel = null; if (!silencioso) msg(T.ilegal, 'erro'); desenhar(); return; }
       if (cands.length > 1) { abrirPromocao(cands, i); return; }   // só a promoção tem mais de um lance de/para
       tentar(cands[0]);
     }
@@ -297,19 +297,23 @@
       focar(Number(tela[lin * 8 + col].dataset.i));
     });
 
-    // arrastar (mouse, toque e caneta): só começa depois de 6 px; sem movimento, quem age é o clique
+    // arrastar (mouse, toque e caneta): só começa depois de 6 px; sem movimento, quem age é o clique.
+    // No toque (LAY-widget-21), a peça da vez tem touch-action: pan-y: o gesto vertical rola a página (o navegador
+    // manda pointercancel) e só o horizontal/diagonal arrasta; a peça já selecionada (.sel) arrasta em qualquer direção.
     grade.addEventListener('pointerdown', function (ev) {
       if (ev.pointerType === 'mouse' && ev.button !== 0) return;
       var b = ev.target.closest('.casa');
       if (!b || ocupado || fim || promo) return;
       var i = Number(b.dataset.i);
       if (!minha(i)) return;
-      arr = { i: i, x: ev.clientX, y: ev.clientY, id: ev.pointerId, fantasma: null };
+      arr = { i: i, x: ev.clientX, y: ev.clientY, id: ev.pointerId, fantasma: null, toque: ev.pointerType === 'touch', jaSel: sel === i };
     });
     grade.addEventListener('pointermove', function (ev) {
       if (!arr || ev.pointerId !== arr.id) return;
       if (!arr.fantasma) {
-        if (Math.abs(ev.clientX - arr.x) + Math.abs(ev.clientY - arr.y) < 6) return;
+        var dx = Math.abs(ev.clientX - arr.x), dy = Math.abs(ev.clientY - arr.y);
+        if (dx + dy < 6) return;
+        if (arr.toque && !arr.jaSel && dy > dx) { arr = null; return; }   // gesto de rolar sobre a peça: não é lance
         try { grade.setPointerCapture(ev.pointerId); } catch (e) { /* sem captura, segue com os eventos da grade */ }
         sel = arr.i; foco = arr.i; marcas = {};
         desenhar();
@@ -329,14 +333,18 @@
       var a = arr; arr = null;
       if (!a.fantasma) return;   // não arrastou: o click resolve
       a.fantasma.remove();
+      var desfaz = a.toque && !a.jaSel;   // toque que não vira lance some sem deixar seleção nem mensagem
       casas[a.i].classList.remove('arrastando');
       ignorarClique = true;
       setTimeout(function () { ignorarClique = false; }, 0);
       var alvo = cancelado ? null : document.elementFromPoint(ev.clientX, ev.clientY);
       var b = alvo && alvo.closest ? alvo.closest('.casa') : null;
-      if (!b || !grade.contains(b) || Number(b.dataset.i) === a.i || ocupado || fim) { desenhar(); return; }   // solta fora ou na mesma casa: fica selecionada
+      if (!b || !grade.contains(b) || Number(b.dataset.i) === a.i || ocupado || fim) {   // solta fora ou na mesma casa: fica selecionada (no toque, desfaz)
+        if (desfaz && sel === a.i) sel = null;
+        desenhar(); return;
+      }
       foco = Number(b.dataset.i);
-      jogarPara(Number(b.dataset.i));
+      jogarPara(Number(b.dataset.i), a.toque);
     }
     grade.addEventListener('pointerup', function (ev) { soltar(ev, false); });
     grade.addEventListener('pointercancel', function (ev) { soltar(ev, true); });
@@ -405,7 +413,7 @@
         promessa = fetch(caixa.getAttribute('data-indice')).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
           .then(function (j) {
             lista = j.map(function (d) {
-              d._t = norm(d.t); d._g = norm(d.g); d._d = norm(d.d);
+              d._t = norm(d.t); d._g = norm(d.g); d._d = norm(d.d); d._u = norm(d.u);
               d._tudo = norm([d.t, d.d, d.g, d.h, d.nr, d.x].join(' '));
               return d;
             });
@@ -417,11 +425,11 @@
     function cartao(d) {
       var li = el('li'), a = el('a', 'card');
       a.href = d.u;
-      var num = el('span', 'card-num', String(d.p)); num.setAttribute('aria-hidden', 'true');
+      var num = el('span', 'card-num', d.p ? String(d.p) : '💡'); num.setAttribute('aria-hidden', 'true');
       var corpo = el('span', 'card-corpo');
       var meta = el('span', 'card-meta');
       meta.appendChild(el('span', 'selo nivel-' + d.n, d.nr));
-      meta.appendChild(document.createTextNode(' · ' + T.licao + ' ' + d.p + ' · ' + T.min(d.m)));
+      meta.appendChild(document.createTextNode(' · ' + (d.p ? T.licao + ' ' + d.p + ' · ' : '') + T.min(d.m)));
       corpo.appendChild(meta);
       corpo.appendChild(el('h3', 'card-titulo', d.t));
       corpo.appendChild(el('span', 'card-desc', d.d));
@@ -461,7 +469,7 @@
           if (nivel && d.n !== nivel) return;
           for (var k = 0; k < termos.length; k++) if (d._tudo.indexOf(termos[k]) < 0) return;
           var s = 0;
-          termos.forEach(function (t) { if (d._t.indexOf(t) >= 0) s += 10; if (d._g.indexOf(t) >= 0) s += 5; if (d._d.indexOf(t) >= 0) s += 3; });
+          termos.forEach(function (t) { if (d._t.indexOf(t) >= 0) s += 10; if (d._g.indexOf(t) >= 0) s += 5; if (d._d.indexOf(t) >= 0) s += 3; if (d._u.indexOf(t) >= 0) s += 4; });   // endereço desempata (SEO-R2-02)
           achados.push({ d: d, s: s });
         });
         achados.sort(function (a, b) { return b.s - a.s; });

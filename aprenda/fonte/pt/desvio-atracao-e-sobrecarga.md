@@ -26,9 +26,9 @@ Uma peça está **sobrecarregada** quando defende duas coisas ao mesmo tempo. Se
 
 ```tabuleiro
 fen: 6k1/3q1ppp/8/1b3n2/8/5Q2/5PPP/1R4K1 w - - 0 1
-setas: b1b5 f3f5 d7b5:azul d7f5:azul
+setas: b1b5 f3a8 d7b5:azul d7d8:azul
 casas: d7:vermelha
-legenda: A dama de d7 defende o bispo de b5 e o cavalo de f5. Depois de 1.Txb5 Dxb5 2.Dxf5, as Brancas ganham material.
+legenda: A dama de d7 tem duas tarefas: defender o bispo de b5 e guardar a oitava fileira. Depois de 1.Txb5!, se 1...Dxb5, vem 2.Da8+ e mate no lance seguinte (2...De8 3.Dxe8#). Sem poder recapturar, as Pretas ficam com uma peça a menos. Cuidado com 2.Dxf5??, que deixaria a dama de b5 capturar em f5.
 ```
 
 Para encontrar sobrecargas, conte: para cada peça defensora do adversário, **quantas coisas ela protege?** Se a resposta for duas ou mais, há uma tática no ar. As peças sobrecarregadas mais comuns são a dama e as torres que guardam a última fileira.

@@ -106,11 +106,11 @@ Both exercises are traps you haven't met yet in this course. Notice that both de
 
 ```exercicio
 fen: rnbqk1nr/ppp2ppp/8/4P3/1BP5/4p3/PP3PPP/RN1QKBNR b KQkq - 0 6
-enunciado: Albin Countergambit: 1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3! 6.Bxb4??. Black to play wins decisive material.
+enunciado: Albin Countergambit: 1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3! 6.Bxb4??. Black to play and win decisive material.
 tipo: tatica
 solucao: e3f2 e1e2 f2g1n
 dica: Start with a pawn check. When you promote, a queen is not the best choice.
-explicacao: 6...exf2+ 7.Ke2 (7.Kxf2? Qxd1) fxg1=N+! — promoting to a knight gives check. If 8.Rxg1, 8...Bg4+ wins the queen; if 8.Ke1, 8...Qh4+ and Black, a piece up, attacks the king. Promoting to a queen (7...fxg1=Q?) would allow 8.Qxd8+. This is the Lasker Trap, a must-know for anyone who plays the Albin.
+explicacao: 6...exf2+ 7.Ke2 (7.Kxf2? Qxd1) fxg1=N+! — promoting to a knight gives check. If 8.Rxg1, 8...Bg4+ wins the queen; if 8.Ke1, 8...Qh4+ and Black, a piece up, attacks the king (8.Kf2 or 8.Ke3? Qxd1). Promoting to a queen (7...fxg1=Q?) would allow 8.Qxd8+. This is the Lasker Trap, a must-know for anyone who plays the Albin.
 ```
 
 ```exercicio

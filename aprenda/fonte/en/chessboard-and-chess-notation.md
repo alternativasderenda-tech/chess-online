@@ -12,7 +12,7 @@ jogar: 1
 relacionados: [jogar-do-zero, como-as-pecas-se-movem, regras, lances-especiais]
 ensina: [Chessboard setup, Square coordinates, Algebraic notation]
 ---
-A chessboard is a square of 64 squares (8 × 8) in alternating light and dark colors, and **algebraic notation** is the system that gives every square a name — a letter from **a** to **h** for the file and a number from **1** to **8** for the rank — so that any move can be written down, like `e4` or `Nf3`. With these two ideas you can set up the game correctly, read books and articles, and follow any game.
+A chessboard is a square of 64 squares (8 × 8) in alternating light and dark colors, and **algebraic notation** is the system that gives every square a name — a letter from **a** to **h** for the file and a number from **1** to **8** for the rank — so that any move can be written down, like `e4` or `Nf3`. With these two ideas you can set up the game correctly, read books and articles, and follow any game. If you've never played, start with [how to play chess for beginners](artigo:jogar-do-zero).
 
 ## How to set up the board {#posicao "How to set up the board"}
 
@@ -145,12 +145,12 @@ explicacao: 2.exd5 — the e-pawn captures the black pawn on d5, moving one squa
 ```
 
 ```exercicio
-fen: rnbqkb1r/ppp2ppp/4pn2/3p4/3P4/4PN2/PPP2PPP/RNBQKB1R w KQkq - 0 4
-enunciado: Both white knights can go to d2. Play **4.Nbd2**.
+fen: k7/8/8/4R3/8/8/8/4R1K1 w - - 0 1
+enunciado: Both white rooks can go to e3. Play **R1e3**.
 tipo: tatica
-solucao: b1d2
-dica: The "b" after the "N" tells you which file the knight starts from.
-explicacao: 4.Nbd2 — it's the knight on the b-file (the one on b1). The knight on f3 could also reach d2, which is why the notation needs the extra letter.
+solucao: e1e3
+dica: The rooks are on the same file, so a letter won't do: the "1" tells you which rank the rook comes from.
+explicacao: 1.R1e3 — it's the rook on the 1st rank (the one on e1). The e5 rook could also reach e3 (that would be 1.R5e3); since both are on the e-file, the notation uses the rank number.
 ```
 
 ## Frequently asked questions {#faq "FAQ"}

@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [estrategia-posicional, estrutura-de-peoes, valor-das-pecas, finais-de-peao]
 ensina: [Bispo bom e bispo ruim, Par de bispos, Bispo contra cavalo, Bispos de cores opostas]
 ---
-Um **bispo bom** é aquele cujos peões estão fixos em casas da cor oposta à dele, deixando suas diagonais livres; um **bispo ruim** é aquele preso atrás dos próprios peões, fixos em casas da mesma cor. O **par de bispos** — ter os dois bispos contra bispo e cavalo, ou contra dois cavalos — é uma vantagem reconhecida, sobretudo em posições abertas, porque os dois juntos controlam casas das duas cores. Essas três ideias explicam boa parte das decisões de troca de peças no meio-jogo e no final.
+Um **bispo bom** é aquele cujos peões estão fixos em casas da cor oposta à dele, deixando suas diagonais livres; um **bispo ruim** é aquele preso atrás dos próprios peões, fixos em casas da mesma cor. O **par de bispos** — ter os dois bispos contra bispo e cavalo, ou contra dois cavalos — é uma vantagem reconhecida, sobretudo em posições abertas, porque os dois juntos controlam casas das duas cores. Essas três ideias explicam boa parte das decisões de troca de peças no meio-jogo e no final, e são uma das bases da [estratégia posicional](artigo:estrategia-posicional).
 
 ## Por que a cor das casas importa {#cor}
 

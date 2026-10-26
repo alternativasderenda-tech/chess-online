@@ -56,13 +56,7 @@ Pelas regras da FIDE, na repetição tripla o empate precisa ser **pedido**; se 
 
 ### O xeque perpétuo
 
-O **xeque perpétuo** não é uma regra separada: é quando um jogador dá xeques sem parar e o adversário não consegue escapar deles. Como as posições se repetem, a partida acaba empatada por repetição (ou por acordo). É a salvação clássica de quem está perdendo material, mas tem uma dama ativa perto do rei adversário.
-
-```tabuleiro
-fen: 6k1/6p1/5p2/8/8/1q6/2r1QPPP/6K1 w - - 0 1
-setas: e2e8 g8h7:azul e8h5
-legenda: As Pretas têm uma torre a mais, mas as Brancas jogam De8+ Rh7 Dh5+ Rg8 De8+… e repetem os xeques para sempre.
-```
+O **xeque perpétuo** não é uma regra separada: é quando um jogador dá xeques sem parar e o adversário não consegue escapar deles. Como as posições se repetem, a partida acaba empatada por repetição (ou por acordo). É a salvação clássica de quem está perdendo material, mas tem uma dama ativa perto do rei adversário. Veja um exemplo no primeiro exercício abaixo.
 
 ## 5. Regra dos 50 lances {#regra-50 "5. Regra dos 50 lances"}
 

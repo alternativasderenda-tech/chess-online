@@ -79,14 +79,7 @@ legenda: The d4 knight stands in front of the d1 rook. With 1.Nf5+ (or 1.Ne6+) i
 
 ### Deflection, decoy and overloading
 
-When the target is well defended, go after the defender: deflect it with a trade or a check, lure the king onto a bad square, or exploit a piece that defends two things at once.
-
-```tabuleiro
-fen: 6k1/3q1ppp/8/1b3n2/8/5Q2/5PPP/1R4K1 w - - 0 1
-setas: b1b5 f3f5 d7b5:azul d7f5:azul
-casas: d7:vermelha
-legenda: The d7 queen defends both the bishop on b5 and the knight on f5. After 1.Rxb5 Qxb5 2.Qxf5, White wins material.
-```
+When the target is well defended, go after the defender: deflect it with a trade or a check, lure the king onto a bad square, or exploit a piece that defends two things at once. The examples are in the article on [deflection, decoy and overloading](artigo:desvio-e-sobrecarga).
 
 ### Back-rank mate
 

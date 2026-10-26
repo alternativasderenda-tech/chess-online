@@ -8,7 +8,7 @@ ordem: 20
 publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [regras do xadrez, regras oficiais xadrez, regras fide, xeque mate regras, regras xadrez para iniciantes]
-jogar: 1
+jogar: 0
 relacionados: [como-as-pecas-se-movem, lances-especiais, xeque-mate-e-afogamento, empates, ritmos-de-jogo]
 ensina: [Regras oficiais da FIDE, Fim de partida, Empates]
 ---
@@ -36,14 +36,14 @@ O movimento de cada peça, com diagramas e exercícios, está em [como as peças
 
 | Peça | Como anda | Como captura |
 |---|---|---|
-| Rei | 1 casa em qualquer direção, nunca para casa atacada | Igual |
-| Dama | Linha reta ou diagonal, quantas casas quiser | Igual |
-| Torre | Linha reta (coluna ou fileira), quantas casas quiser | Igual |
-| Bispo | Diagonal, quantas casas quiser; fica sempre na mesma cor | Igual |
-| Cavalo | Em "L" (2 + 1); é a única peça que salta | Igual |
+| Rei | 1 casa em qualquer direção, nunca para casa atacada | Igual ao movimento |
+| Dama | Linha reta ou diagonal, quantas casas quiser | Igual ao movimento |
+| Torre | Linha reta (coluna ou fileira), quantas casas quiser | Igual ao movimento |
+| Bispo | Diagonal, quantas casas quiser; fica sempre na mesma cor | Igual ao movimento |
+| Cavalo | Em "L" (2 + 1); é a única peça que salta | Igual ao movimento |
 | Peão | 1 casa para a frente (2 na primeira vez); nunca recua | 1 casa na diagonal, para a frente |
 
-Só o cavalo pula outras peças. Nenhuma peça captura peça da própria cor.
+Fora do roque, em que a torre passa por cima do rei, só o cavalo pula outras peças. Nenhuma peça captura peça da própria cor.
 
 ## 3. Lances especiais {#especiais}
 
@@ -97,7 +97,7 @@ Um jogador pode desistir a qualquer momento. Geralmente isso acontece quando o j
 
 ### Afogamento (stalemate)
 
-O jogador da vez não está em xeque, mas não tem nenhum lance legal possível. A partida termina em empate. Essa é uma das regras mais importantes do final de jogo — você pode ter dama de vantagem mas, se [afogar o rei adversário](artigo:xeque-mate-e-afogamento), o jogo termina empate.
+O jogador da vez não está em xeque, mas não tem nenhum lance legal possível. A partida termina em empate. Essa é uma das regras mais importantes do final de jogo — você pode ter dama de vantagem mas, se [afogar o rei adversário](artigo:xeque-mate-e-afogamento), a partida termina empatada.
 
 ```tabuleiro
 fen: 7k/5Q2/6K1/8/8/8/8/8 b - - 0 1
@@ -134,7 +134,7 @@ Em partidas com relógio, cada jogador tem um tempo total. Quando o tempo acaba,
 - **Rápido:** mais de 10 e menos de 60 minutos.
 - **Blitz:** 10 minutos ou menos.
 
-Na conta da FIDE, o incremento entra multiplicado por 60: 10+5 vale 15 minutos e é rápido. O **bullet** (menos de 3 minutos) não é uma categoria da FIDE; é um ritmo dos sites.
+Na conta da FIDE, o incremento conta 60 vezes: 10+5 vale 10 min + 60 × 5 s = 15 minutos, e é rápido. O **bullet** (menos de 3 minutos) não é uma categoria da FIDE; é um ritmo dos sites.
 
 Veja o artigo dedicado em [Xadrez Clássico, Rápido, Blitz e Bullet](artigo:ritmos-de-jogo).
 
@@ -170,5 +170,5 @@ Perde quem deixou o tempo acabar — a menos que o adversário não tenha como d
 Pode. Pela promoção, um peão que chega à última fileira pode virar dama mesmo que a dama original ainda esteja no tabuleiro. [Veja como funciona a promoção](artigo:lances-especiais#promocao).
 
 :::pratique Coloque as regras em prática
-Abra o jogo e escolha **🎓 Aprendiz** no menu de dificuldade: são 12 lições interativas que ensinam cada regra na prática.
+O botão abaixo abre o jogo no modo **🎓 Aprendiz**: são 12 lições interativas que ensinam cada regra na prática.
 :::

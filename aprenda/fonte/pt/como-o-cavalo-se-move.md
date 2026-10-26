@@ -1,7 +1,7 @@
 ---
 id: movimento-do-cavalo
-titulo: Como o Cavalo se Move no Xadrez: o L, o Salto e o Garfo
-titulo_seo: Como o Cavalo se Move no Xadrez: o L, o Salto e o Garfo
+titulo: Como o Cavalo se Move no Xadrez: o L, o Salto e a Cor
+titulo_seo: Como o Cavalo se Move no Xadrez: o L, o Salto e a Cor
 descricao: Tudo sobre o movimento do cavalo no xadrez: o L, por que ele pula peças, garfos, padrões táticos e como dominar a peça mais imprevisível do tabuleiro.
 nivel: iniciante
 ordem: 30
@@ -121,7 +121,7 @@ Em jogo, o ideal é ficar com o seu cavalo bom contra o [bispo ruim](artigo:bisp
 2. **Procure pontos fortes.** Casas que nenhum peão adversário consegue atacar são chamadas de "pontos fortes". Um cavalo num ponto forte avançado pode valer quase tanto quanto uma torre.
 3. **Em posições fechadas, valorize seus cavalos.** Não troque um cavalo por um bispo se o jogo está fechado — o cavalo é melhor.
 4. **Cuidado com cavalos na borda.** Um cavalo em a4, a5, h4 ou h5 controla só 4 casas e pode ser expulso por um peão, perdendo tempo.
-5. **Aprenda os padrões de garfo.** Treine pelo menos 20-30 garfos de cavalo em puzzles. Eles aparecem em quase toda partida.
+5. **Aprenda os padrões de garfo.** Treine pelo menos 20-30 garfos de cavalo em exercícios. Eles aparecem em quase toda partida.
 
 :::pratique Treine o cavalo na prática
 Jogue contra o computador e foque em usar bem os cavalos. Tente fazer um garfo em cada partida — é um treino que rende muito.
@@ -131,7 +131,7 @@ Jogue contra o computador e foque em usar bem os cavalos. Tente fazer um garfo e
 
 - Na notação em português o cavalo é **C**; em inglês, **N** (de *knight*, porque o K é do rei).
 - Existe um problema matemático famoso chamado "passeio do cavalo": o cavalo precisa visitar todas as 64 casas exatamente uma vez. Já foi resolvido de várias formas.
-- Um cavalo sozinho não consegue dar xeque-mate em um rei pelado. Precisa de pelo menos rei + cavalo + bispo (e mesmo assim é um dos finais mais difíceis).
+- Rei e cavalo não conseguem dar mate num rei sozinho, e dois cavalos não conseguem forçá-lo. Com cavalo **e** bispo o mate é forçado, mas é um dos finais mais difíceis.
 - Os saltos do cavalo são os mais fáceis de esquecer no cálculo. Por isso vale treinar a visão dele.
 
 ## Perguntas frequentes {#faq "Perguntas frequentes"}

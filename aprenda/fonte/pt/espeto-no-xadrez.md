@@ -33,7 +33,7 @@ legenda: A torre de e1 dá xeque no rei de e5. Quando o rei sair da coluna, a to
 
 ## Espeto absoluto: o rei na frente {#absoluto "Espeto absoluto"}
 
-Quando a peça da frente é o **rei**, o espeto vem com xeque. O adversário não tem escolha: precisa tirar o rei da linha, e a peça de trás cai. É a forma mais forte do espeto: o adversário não tem tempo para contra-atacar, e a única saída, quando existe, é bloquear o xeque com uma peça protegida.
+Quando a peça da frente é o **rei**, o espeto vem com xeque. O adversário não tem escolha: precisa tirar o rei da linha, e a peça de trás cai. É a forma mais forte do espeto: o adversário não tem tempo para contra-atacar, e as únicas saídas, quando existem, são capturar a peça que dá xeque ou bloquear o xeque com uma peça protegida.
 
 ```tabuleiro
 fen: 7r/8/5k2/8/3B4/8/5PPP/6K1 b - - 0 1
@@ -115,7 +115,7 @@ explicacao: 1.Ta5+ dá xeque pela quinta fileira. O rei sai, e 2.Txh5 captura a 
 
 ```exercicio
 fen: R7/P4k2/8/8/8/1P3K2/8/r7 w - - 0 1
-enunciado: Final de torre. Brancas jogam e **ganham a torre** das Pretas.
+enunciado: Final de torre. Brancas jogam: encontre o lance que prepara o espeto e **ganha a partida**.
 solucao: a8h8
 dica: A torre branca está atrapalhando o próprio peão. Se ela sair de a8 para uma casa de onde possa dar xeque na sétima fileira...
 explicacao: 1.Th8! ameaça 2.a8=D. Se 1...Txa7, 2.Th7+ é um espeto: o rei sai da sétima fileira e 3.Txa7 ganha a torre. Se as Pretas não capturarem, o peão promove (depois de um xeque como 1...Tf1+, basta tirar o rei do xeque) e a torre preta terá de se entregar por ele.

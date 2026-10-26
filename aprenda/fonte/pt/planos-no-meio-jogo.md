@@ -40,7 +40,7 @@ As cadeias de peões apontam o caminho. Aqui, a cadeia preta d6-e5 aponta para o
 
 O mesmo vale para os [**roques opostos**](artigo:defesa-siciliana#dragao): com os reis em flancos diferentes, os peões viram aríetes. Avançar os peões contra o rei adversário não enfraquece o seu próprio rei, e a velocidade decide. Num ataque desse tipo, um tempo vale mais do que um peão.
 
-## Colunas abertas e a 7ª fileira {#colunas}
+## O plano das colunas abertas: ocupar, dobrar, invadir {#colunas}
 
 Você já viu em [estratégia posicional](artigo:estrategia-posicional#colunas) por que as colunas abertas importam: as torres só ganham vida nelas. Como plano, elas pedem três etapas:
 

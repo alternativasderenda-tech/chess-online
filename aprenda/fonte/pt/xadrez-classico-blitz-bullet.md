@@ -12,7 +12,7 @@ jogar: 2
 relacionados: [relogio-e-psicologia, regras, analisar-partidas, rotina-de-treino]
 ensina: [Ritmos de jogo da FIDE, Notação de tempo e incremento, Como escolher o ritmo]
 ---
-No xadrez, o ritmo de jogo é o tempo que cada jogador tem no relógio para a partida inteira. Pelas Leis da FIDE, a partida é clássica quando cada um tem 60 minutos ou mais, rápida quando tem mais de 10 e menos de 60 minutos, e blitz quando tem 10 minutos ou menos — contando, nos três casos, o tempo inicial mais 60 vezes o incremento por lance. O bullet, com menos de 3 minutos, não é uma categoria da FIDE: é um nome usado nos sites de xadrez online. Na notação 10+5, o 10 é o tempo em minutos e o 5, o incremento em segundos.
+No xadrez, o ritmo de jogo é o tempo que cada jogador tem no relógio para a partida inteira. Na notação 10+5, o 10 é o tempo em minutos e o 5, o incremento: segundos somados ao relógio a cada lance. Pelas Leis da FIDE, a partida é clássica quando cada um tem 60 minutos ou mais, rápida quando tem mais de 10 e menos de 60, e blitz quando tem 10 ou menos — contando o tempo inicial mais 60 vezes o incremento. O bullet, com menos de 3 minutos, não é uma categoria da FIDE: é um nome usado nos sites de xadrez online.
 
 ## A notação dos tempos (3+0, 10+5 etc.) {#notacao}
 
@@ -25,7 +25,7 @@ Exemplos:
 
 - **3+0:** 3 minutos para cada lado, sem incremento. É blitz puro.
 - **5+3:** 5 minutos para cada lado, com 3 segundos adicionados depois de cada lance.
-- **10+5:** 10 minutos com 5 segundos de incremento. É rápido: a FIDE soma ao tempo 60 vezes o incremento (10 + 5 = 15 minutos).
+- **10+5:** 10 minutos com 5 segundos de incremento. É rápido: para a FIDE, o incremento conta 60 vezes (5 s × 60 = 5 min), então 10+5 vale 15 minutos.
 - **60+30:** 60 minutos com 30 segundos de incremento. Clássico.
 
 O incremento é uma proteção: mesmo que seu tempo esteja acabando, cada lance adiciona segundos. Isso evita partidas perdidas no relógio quando você ainda tem uma posição ganha.
@@ -48,7 +48,7 @@ Características:
 ## Xadrez Rápido {#rapido}
 
 :::caixa Tempo: mais de 10 e menos de 60 minutos por jogador
-O formato mais popular para jogar online quando você quer pensar mas não tem tempo de uma clássica. Tempos típicos: **10+0**, **15+10**, **25+10**.
+O formato mais popular para jogar online quando você quer pensar mas não tem tempo de uma clássica. Tempos típicos: **15+10**, **25+10** e, nos sites, **10+0**.
 
 <small>Nos sites, 10+0 conta como rápido; pela FIDE, 10 minutos sem incremento já é blitz.</small>
 
@@ -65,7 +65,7 @@ Características:
 ## Blitz {#blitz}
 
 :::caixa Tempo: 10 minutos ou menos por jogador (nos sites, em geral de 3 a 10)
-O formato favorito do xadrez online. Tempos típicos do blitz: **3+0**, **3+2**, **5+0**, **5+3**. Partidas de 5-10 minutos no total.
+O formato favorito do xadrez online. Tempos típicos da blitz: **3+0**, **3+2**, **5+0**, **5+3**. Partidas de 5-10 minutos no total.
 
 <small>Para quem é: a maioria absoluta dos jogadores online. Rápido o bastante para viciar, lento o bastante para pensar um pouco.</small>
 :::
@@ -98,8 +98,8 @@ Recomendação prática segundo o seu objetivo:
 
 | Seu objetivo | Formato recomendado | Por quê |
 | --- | --- | --- |
-| Iniciante (acabei de aprender as regras) | Rápido 15+10 ou Sem limite | Tempo para pensar e identificar suas peças |
-| Aprendendo aberturas e táticas | Rápido 10+0 ou 10+5 | Tempo para aplicar o que estudou |
+| Iniciante (acabei de aprender as regras) | Rápido 15+10 ou Sem limite | Tempo para pensar e enxergar as ameaças |
+| Aprendendo aberturas e táticas | Rápido 10+5 (ou 10+0, que os sites chamam de rápido) | Tempo para aplicar o que estudou |
 | Jogar todo dia, melhorar progressivamente | Blitz 5+3 ou 5+0 | Volume de partidas + tempo razoável |
 | Estudar de verdade, virar forte | Rápido longo (15+10 ou 30+20) ou clássico (60 min ou mais) | Aprender de cada partida |
 | Só por diversão, em doses pequenas | Blitz 3+0 ou 3+2 | Partidas curtas, alta dose de adrenalina |
@@ -108,7 +108,7 @@ Recomendação prática segundo o seu objetivo:
 <small>Contra a IA do Xadrez Online, os ritmos são 5, 10 e 15 minutos (sem incremento) ou sem limite. Para seguir a tabela, use 15 min no lugar do rápido e 5 min no lugar do blitz.</small>
 
 :::dica
-**💡 Conselho honesto para iniciantes:** não comece pelo blitz nem bullet. Você vai jogar mal, perder muito, frustrar-se e talvez desistir. Comece pelo rápido, com pelo menos 15 minutos. Com 100 partidas de rápido bem jogadas, você joga blitz muito melhor do que se tivesse jogado 100 partidas de blitz ruins.
+**💡 Conselho honesto para iniciantes:** não comece pela blitz nem pelo bullet. Você vai jogar mal, perder muito, frustrar-se e talvez desistir. Comece pelo rápido, com pelo menos 15 minutos. Com 100 partidas de rápido bem jogadas, você joga blitz muito melhor do que se tivesse jogado 100 partidas de blitz ruins.
 :::
 
 ## Dicas para cada formato {#dicas}
@@ -129,7 +129,7 @@ Recomendação prática segundo o seu objetivo:
 
 - Tenha um [repertório fixo de aberturas](artigo:preparacao-de-aberturas). Não improvise.
 - Decida rápido em posições normais; só pense de verdade em momentos críticos.
-- Aceite que vai errar. O importante é aproveitar os erros do adversário melhor.
+- Aceite que vai errar. O importante é aproveitar melhor os erros do adversário.
 
 ### No Bullet
 

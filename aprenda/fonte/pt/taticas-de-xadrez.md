@@ -79,14 +79,7 @@ legenda: O cavalo de d4 está na frente da torre de d1. Com 1.Cf5+ (ou 1.Ce6+), 
 
 ### Desvio, atração e sobrecarga
 
-Quando o alvo está bem defendido, ataque o defensor: desvie-o com uma troca ou um xeque, atraia o rei para uma casa ruim ou explore uma peça que defende duas coisas ao mesmo tempo.
-
-```tabuleiro
-fen: 6k1/3q1ppp/8/1b3n2/8/5Q2/5PPP/1R4K1 w - - 0 1
-setas: b1b5 f3f5 d7b5:azul d7f5:azul
-casas: d7:vermelha
-legenda: A dama de d7 defende o bispo de b5 e o cavalo de f5. Depois de 1.Txb5 Dxb5 2.Dxf5, as Brancas ganham material.
-```
+Quando o alvo está bem defendido, ataque o defensor: desvie-o com uma troca ou um xeque, atraia o rei para uma casa ruim ou explore uma peça que defende duas coisas ao mesmo tempo. Os exemplos estão no artigo de [desvio, atração e sobrecarga](artigo:desvio-e-sobrecarga).
 
 ### Mate do corredor
 

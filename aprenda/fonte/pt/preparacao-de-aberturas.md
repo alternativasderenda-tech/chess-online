@@ -110,7 +110,7 @@ enunciado: Contragambito Albin: 1.d4 d5 2.c4 e5 3.dxe5 d4 4.e3? Bb4+ 5.Bd2 dxe3!
 tipo: tatica
 solucao: e3f2 e1e2 f2g1n
 dica: Comece com um xeque do peão. Na promoção, a dama não é a melhor escolha.
-explicacao: 6...exf2+ 7.Re2 (7.Rxf2? Dxd1) fxg1=C+! — a promoção a cavalo dá xeque. Se 8.Txg1, 8...Bg4+ ganha a dama; se 8.Re1, 8...Dh4+ e as Pretas, com peça a mais, atacam o rei. Promover a dama (7...fxg1=D?) permitiria 8.Dxd8+. É a armadilha de Lasker, que todo jogador do Albin precisa conhecer.
+explicacao: 6...exf2+ 7.Re2 (7.Rxf2? Dxd1) fxg1=C+! — a promoção a cavalo dá xeque. Se 8.Txg1, 8...Bg4+ ganha a dama; se 8.Re1, 8...Dh4+ e as Pretas, com peça a mais, atacam o rei (8.Rf2 ou 8.Re3? Dxd1). Promover a dama (7...fxg1=D?) permitiria 8.Dxd8+. É a armadilha de Lasker, que todo jogador do Albin precisa conhecer.
 ```
 
 ```exercicio

@@ -83,7 +83,7 @@ ${extra}<meta name="twitter:card" content="summary_large_image">
 const selo = (idioma, nivel) => `<span class="selo nivel-${nivel}">${T[idioma].nivel[nivel]}</span>`;
 
 /**
- * a: { idioma, id, slug, url, fm, corpo, titulos, pratique, minutos, palavras, temExercicio, imagem, proximo, relacionados[], traducao }
+ * a: { idioma, id, slug, url, fm, corpo, titulos, pratique, minutos, palavras, temExercicio, imagem, proximo, relacionados[], traducao, numerada, inicioTrilha }
  * ativos: { css, js, motor } com ?v=
  */
 function artigo(a, ativos) {
@@ -173,13 +173,13 @@ ${a.titulos.map(h => `    <li><a href="#${h.id}">${h.rotulo}</a></li>`).join('\n
   }
 
   const dif = fm.jogar;
-  const jogarUrl = t.inicio + '?ia=' + dif;
+  const jogarUrl = t.inicio + '?ia=' + (dif === 0 ? 'tutorial' : dif); // 0 = modo Aprendiz (as lições interativas do jogo)
   const pr = a.pratique;
   const blocoPratique = `<section class="cta" aria-labelledby="pratique-titulo">
   <p class="cta-sobre">${t.pratique}</p>
   <h2 id="pratique-titulo">${pr && pr.titulo ? pr.titulo : t.pratique}</h2>
   ${pr && pr.html ? pr.html : `<p>${t.pratiqueTexto}</p>`}
-  <a href="${jogarUrl}" class="cta-btn">${t.pratiqueBotao(t.dificuldade[dif])}</a>
+  <a href="${jogarUrl}" class="cta-btn">${dif === 0 ? t.pratiqueTutorial : t.pratiqueBotao(t.dificuldade[dif])}</a>
 </section>`;
 
   const prox = a.proximo;
@@ -187,9 +187,9 @@ ${a.titulos.map(h => `    <li><a href="#${h.id}">${h.rotulo}</a></li>`).join('\n
     ? `<section class="proximo" aria-labelledby="proximo-titulo">
   <h2 id="proximo-titulo" class="fim-h">${t.proximo}</h2>
   <a class="card" href="${prox.url}">
-    <span class="card-num" aria-hidden="true">${prox.posicaoNivel}</span>
+    <span class="card-num" aria-hidden="true">${prox.numerada ? prox.posicaoNivel : '💡'}</span>
     <span class="card-corpo">
-      <span class="card-meta">${selo(a.idioma, prox.fm.nivel)} · ${t.indice.licao} ${prox.posicaoNivel} · ${t.minLeitura(prox.minutos)}</span>
+      <span class="card-meta">${selo(a.idioma, prox.fm.nivel)} · ${prox.numerada ? `${t.indice.licao} ${prox.posicaoNivel} · ` : ''}${t.minLeitura(prox.minutos)}</span>
       <span class="card-titulo">${esc(prox.fm.titulo)}</span>
       <span class="card-desc">${esc(prox.fm.descricao)}</span>
     </span>
@@ -197,7 +197,7 @@ ${a.titulos.map(h => `    <li><a href="#${h.id}">${h.rotulo}</a></li>`).join('\n
 </section>`
     : `<section class="proximo" aria-labelledby="proximo-titulo">
   <h2 id="proximo-titulo" class="fim-h">${t.proximo}</h2>
-  <p>${t.proximoFim} <a href="${t.base}">${t.verTodos}</a></p>
+  <p>${t.voltarTrilha(a.inicioTrilha, t.base)}</p>
   <p>${t.fimTorneio(t.torneios)}</p>
 </section>`;
 
@@ -224,7 +224,7 @@ ${topo(a.idioma, a.traducao.url)}
   <article>
     <header class="art-cab">
       <h1>${esc(fm.titulo)}</h1>
-      <p class="meta">${a.posicaoNivel ? `<span class="meta-item meta-licao">${t.licaoDe(a.posicaoNivel, a.totalNivel)}</span>` : ''}${selo(a.idioma, fm.nivel)}<span class="meta-item">⏱ ${t.minLeitura(a.minutos)}</span><span class="meta-item"><time datetime="${fm.atualizado}">${t.atualizado(dataPorExtenso(fm.atualizado, a.idioma))}</time></span></p>
+      <p class="meta">${a.numerada ? `<span class="meta-item meta-licao">${t.licaoDe(a.posicaoNivel, a.totalNivel)}</span>` : ''}${selo(a.idioma, fm.nivel)}<span class="meta-item">⏱ ${t.minLeitura(a.minutos)}</span><span class="meta-item"><time datetime="${fm.atualizado}">${t.atualizado(dataPorExtenso(fm.atualizado, a.idioma))}</time></span></p>
     </header>
 ${corpo}
   </article>
@@ -286,9 +286,9 @@ function indice(idioma, lista, ativos, imagem, lastmod) {
     css: ativos.css, og, extra: ld.map(jsonLd).join('\n') + '\n',
   });
   const card = a => `      <li><a class="card" href="${a.url}">
-        <span class="card-num" aria-hidden="true">${a.posicaoNivel}</span>
+        <span class="card-num" aria-hidden="true">${a.numerada ? a.posicaoNivel : '💡'}</span>
         <span class="card-corpo">
-          <span class="card-meta">${I.licao} ${a.posicaoNivel} · ${t.minLeitura(a.minutos)}</span>
+          <span class="card-meta">${a.numerada ? `${I.licao} ${a.posicaoNivel} · ` : ''}${t.minLeitura(a.minutos)}</span>
           <h3 class="card-titulo">${esc(a.fm.titulo)}</h3>
           <span class="card-desc">${esc(a.fm.descricao)}</span>
         </span>

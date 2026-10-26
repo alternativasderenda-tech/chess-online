@@ -9,7 +9,7 @@ publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [how to play chess, chess for beginners, learn chess, chess from scratch, chess tutorial]
 ensina: [Setting up the board, How the pieces move, Special moves, Checkmate, Draws]
-jogar: 1
+jogar: 0
 relacionados: [tabuleiro-e-notacao, como-as-pecas-se-movem, lances-especiais, principios-de-abertura]
 ---
 To play chess, you need to know five things: how to set up the 64-square board, how each of the six pieces moves, the three special moves (castling, en passant and promotion), what checkmate is — the goal of the game — and how a game can end in a draw. White always moves first, and the players take turns, one move each. This guide walks through the five steps with diagrams so you can play your first game today, right in your browser.
@@ -154,7 +154,7 @@ Learning the rules is just the beginning. Chess is a game you get better at thro
 :::
 
 :::pratique Ready for your first game?
-Open the game, pick **🎓 Beginner** in the difficulty menu and work through the 12 interactive lessons, which teach every piece and every concept hands-on. No sign-up, right in your browser.
+The button below opens the game in **🎓 Beginner** (the tutorial mode in the difficulty menu): work through the 12 interactive lessons, which teach every piece and every concept hands-on. No sign-up, right in your browser.
 :::
 
 ## Frequently asked questions {#faq "FAQ"}
@@ -173,11 +173,11 @@ Yes. You can learn the rules by reading and practicing; after that, playing the 
 
 ## Where to go next {#proximos}
 
-This guide is lesson 1 of the path. The next lessons go deeper into each part, in this order:
+This guide is lesson 1 of the path. These are the lessons that go deeper into each part:
 
-1. [The board and notation](artigo:tabuleiro-e-notacao): how to read moves like `e4` and `Nf3`.
-2. [How the pieces move](artigo:como-as-pecas-se-movem), with exercises for each piece.
-3. [Check, checkmate and stalemate](artigo:xeque-mate-e-afogamento) and [the special moves](artigo:lances-especiais).
-4. [The opening principles](artigo:principios-de-abertura), to play your first moves well.
+1. Lesson 2 — [The board and notation](artigo:tabuleiro-e-notacao): how to read moves like `e4` and `Nf3`.
+2. Lesson 3 — [How the pieces move](artigo:como-as-pecas-se-movem), with exercises for each piece.
+3. Lessons 7 and 8 — [Check, checkmate and stalemate](artigo:xeque-mate-e-afogamento) and [the special moves](artigo:lances-especiais).
+4. Lesson 10 — [The opening principles](artigo:principios-de-abertura), to play your first moves well.
 
 Once you finish the Beginner level, the path moves on to [tactics](artigo:taticas) (fork, pin, discovered attack) and then to strategy and endgames.

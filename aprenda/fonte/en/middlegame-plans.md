@@ -40,7 +40,7 @@ The pawn chains point the way. Here, Black's d6-e5 chain points to the kingside,
 
 The same goes for [**opposite-side castling**](artigo:defesa-siciliana#dragao): with the kings on different wings, pawns become battering rams. Pushing pawns at the enemy king doesn't weaken your own king, and speed decides. In that kind of attack, a tempo is worth more than a pawn.
 
-## Open files and the seventh rank {#colunas}
+## The open-file plan: occupy, double, invade {#colunas}
 
 You've already seen in [positional strategy](artigo:estrategia-posicional#colunas) why open files matter: rooks only come alive on them. As a plan, they call for three stages:
 

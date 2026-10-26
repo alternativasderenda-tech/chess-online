@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [ritmos-de-jogo, empates, finais-de-peao, calculo, rotina-de-treino]
 ensina: [Administração do tempo, Como evitar o zeitnot, Controle do nervosismo, Jogar em vantagem e em desvantagem]
 ---
-Administrar o tempo no xadrez é dividir o relógio entre as fases da partida, guardando minutos para os momentos críticos, e controlar o nervosismo para não errar sob pressão. Na prática, isso significa **dividir o tempo** entre as fases da partida e gastar mais nos momentos críticos, **evitar o zeitnot** (a falta de tempo no fim da partida), **controlar o nervosismo** com uma rotina fixa de pensamento e **mudar de atitude conforme o placar do tabuleiro**: em vantagem, simplificar e cortar o contra-jogo; em desvantagem, complicar e procurar recursos como o afogamento. Muitas partidas não são decididas pelo melhor lance, e sim pelo primeiro erro sob pressão.
+Administrar o tempo no xadrez é dividir o relógio entre as fases da partida e controlar o nervosismo para não errar sob pressão. Na prática, isso significa **gastar mais tempo nos momentos críticos**, **evitar o zeitnot** (a falta de tempo no fim da partida), **seguir uma rotina fixa de pensamento** e **mudar de atitude conforme o placar do tabuleiro**: em vantagem, simplificar e cortar o contra-jogo; em desvantagem, complicar e procurar recursos como o afogamento. Muitas partidas são decididas não pelo melhor lance, e sim pelo primeiro erro.
 
 ## Como dividir o tempo {#tempo}
 

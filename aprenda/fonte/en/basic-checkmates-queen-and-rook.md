@@ -96,33 +96,33 @@ If 50 moves pass on each side with no capture and no pawn move, the game can be 
 ## Exercises {#exercicios "Exercises"}
 
 ```exercicio
-fen: 4k3/8/3K1Q2/8/8/8/8/8 w - - 0 1
+fen: 7k/8/6K1/8/8/8/8/5Q2 w - - 0 1
 enunciado: King and queen vs. king. Deliver **mate in 1**.
 tipo: mate
 lances: 1
-solucao: f6e7
-dica: The queen can stand right next to the black king, as long as your king protects her.
-explicacao: 1.Qe7# — the queen checks from right beside the king and is protected by the king on d6. She covers d8, f8, d7 and f7, and the black king can't take her.
+solucao: f1f8
+dica: Your king already covers g7 and h7. The queen has to check along the back rank.
+explicacao: 1.Qf8# — the queen checks along the 8th rank and covers g8; g7 and h7 are covered by the white king. This is the mate "on the edge", with your king taking the squares in front.
 ```
 
 ```exercicio
-fen: 3k4/8/3K4/8/8/8/8/7R w - - 0 1
+fen: 8/8/8/8/8/5K1k/8/R7 w - - 0 1
 enunciado: The kings are in opposition. Deliver **mate in 1** with the rook.
 tipo: mate
 lances: 1
-solucao: h1h8
-dica: The white king already covers c7, d7 and e7. All you need is a check along the back rank.
-explicacao: 1.Rh8# — the rook checks along the 8th rank, and the squares on the 7th rank are covered by the white king.
+solucao: a1h1
+dica: The white king already covers g2, g3 and g4. All you need is a check down the h-file.
+explicacao: 1.Rh1# — the rook checks down the h-file, and the squares on the g-file are covered by the white king.
 ```
 
 ```exercicio
-fen: 8/4k3/R7/8/8/8/8/1R4K1 w - - 0 1
+fen: 8/3k4/7R/8/8/8/8/K5R1 w - - 0 1
 enunciado: Two rooks vs. king. Use the ladder and deliver **mate in 2**.
 tipo: mate
 lances: 2
-solucao: b1b7 e7e8 a6a8
-dica: The rook on a6 already cuts off the 6th rank. Use the other one to push the king back one more rank.
-explicacao: 1.Rb7+ (the king must go to the 8th rank) Ke8 2.Ra8# — the rook on b7 covers the 7th rank and the rook on a8 mates along the 8th. If the king goes to d8 or f8 instead, the mate is the same.
+solucao: g1g7 d7d8 h6h8
+dica: The rook on h6 already cuts off the 6th rank. Use the other one to push the king back one more rank.
+explicacao: 1.Rg7+ (the king must go to the 8th rank) Kd8 2.Rh8# — the rook on g7 covers the 7th rank and the rook on h8 mates along the 8th. If the king goes to c8 or e8, the mate is the same. Beware of 1.Rh7+?: it releases the 6th rank and the king escapes.
 ```
 
 ```exercicio

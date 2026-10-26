@@ -12,7 +12,7 @@ jogar: 1
 relacionados: [jogar-do-zero, como-as-pecas-se-movem, regras, lances-especiais]
 ensina: [Tabuleiro de xadrez, Coordenadas das casas, Notação algébrica]
 ---
-O tabuleiro de xadrez é um quadrado de 64 casas (8 × 8), alternadamente claras e escuras, e a **notação algébrica** é o sistema que dá um nome a cada casa — uma letra de **a** a **h** para a coluna e um número de **1** a **8** para a fileira — para que qualquer lance possa ser escrito, como `e4` ou `Cf3`. Com essas duas ideias você consegue montar o jogo do jeito certo, ler livros e artigos e acompanhar qualquer partida.
+O tabuleiro de xadrez é um quadrado de 64 casas (8 × 8), alternadamente claras e escuras, e a **notação algébrica** é o sistema que dá um nome a cada casa — uma letra de **a** a **h** para a coluna e um número de **1** a **8** para a fileira — para que qualquer lance possa ser escrito, como `e4` ou `Cf3`. Com essas duas ideias você consegue montar o jogo do jeito certo, ler livros e artigos e acompanhar qualquer partida. Se você nunca jogou, comece por [como jogar xadrez do zero](artigo:jogar-do-zero).
 
 ## Como posicionar o tabuleiro {#posicao "Como posicionar o tabuleiro"}
 
@@ -145,12 +145,12 @@ explicacao: 2.exd5 — o peão da coluna e captura o peão preto em d5, andando 
 ```
 
 ```exercicio
-fen: rnbqkb1r/ppp2ppp/4pn2/3p4/3P4/4PN2/PPP2PPP/RNBQKB1R w KQkq - 0 4
-enunciado: Os dois cavalos brancos podem ir para d2. Jogue **4.Cbd2**.
+fen: k7/8/8/4R3/8/8/8/4R1K1 w - - 0 1
+enunciado: As duas torres brancas podem ir para e3. Jogue **T1e3**.
 tipo: tatica
-solucao: b1d2
-dica: A letra "b" depois do "C" indica a coluna de onde o cavalo sai.
-explicacao: 4.Cbd2 — é o cavalo da coluna b (que estava em b1). O cavalo de f3 também chegaria a d2, e por isso a notação precisa da letra extra.
+solucao: e1e3
+dica: As torres estão na mesma coluna, então a letra não basta: o número "1" indica a fileira de onde a torre sai.
+explicacao: 1.T1e3 — é a torre da 1ª fileira (a de e1). A de e5 também chegaria a e3 (seria 1.T5e3); como as duas estão na coluna e, a notação usa o número da fileira.
 ```
 
 ## Perguntas frequentes {#faq "Perguntas frequentes"}

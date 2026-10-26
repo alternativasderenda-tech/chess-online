@@ -48,7 +48,7 @@ ordem: 20                           # posição na trilha dentro do nível (use 
 publicado: 2026-11-02
 atualizado: 2026-11-02              # vira o lastmod do sitemap e o dateModified
 tags: [garfo, cavalo, tática]       # busca, keywords, article:tag
-jogar: 2                            # dificuldade sugerida no "Pratique agora": 1 Fácil, 2 Médio, 3 Difícil, 4 Expert
+jogar: 2                            # dificuldade sugerida no "Pratique agora": 0 modo Aprendiz (lições do jogo), 1 Fácil, 2 Médio, 3 Difícil, 4 Expert
 relacionados: [movimento-do-cavalo] # opcional (ids); sem ele, o gerador escolhe 3 vizinhos de trilha
 ensina: [Garfo, Ataque duplo]       # opcional: "teaches" do JSON-LD (padrão: as tags)
 capa: <FEN>                         # opcional: diagrama da prévia (padrão: 1º tabuleiro, senão 1º exercício)

@@ -33,7 +33,7 @@ legenda: The e1 rook checks the king on e5. Once the king leaves the file, the r
 
 ## Absolute skewer: the king in front {#absoluto "Absolute skewer"}
 
-When the front piece is the **king**, the skewer comes with check. Your opponent has no choice: the king must leave the line, and the piece behind falls. This is the strongest form of skewer: there is no time to counter-attack, and the only way out, when there is one, is to block the check with a protected piece.
+When the front piece is the **king**, the skewer comes with check. Your opponent has no choice: the king must leave the line, and the piece behind falls. This is the strongest form of skewer: there is no time to counter-attack, and the only ways out, when they exist, are capturing the checking piece or blocking the check with a protected piece.
 
 ```tabuleiro
 fen: 7r/8/5k2/8/3B4/8/5PPP/6K1 b - - 0 1
@@ -115,7 +115,7 @@ explicacao: 1.Ra5+ checks along the fifth rank. The king moves away, and 2.Rxh5 
 
 ```exercicio
 fen: R7/P4k2/8/8/8/1P3K2/8/r7 w - - 0 1
-enunciado: Rook endgame. White to move **wins Black's rook**.
+enunciado: Rook endgame. White to play: find the move that sets up the skewer and **wins the game**.
 solucao: a8h8
 dica: White's rook is in the way of its own pawn. What if it leaves a8 for a square from which it can check along the seventh rank?
 explicacao: 1.Rh8! threatens 2.a8=Q. If 1...Rxa7, 2.Rh7+ is a skewer: the king leaves the seventh rank and 3.Rxa7 wins the rook. If Black does not take the pawn, it promotes (after a check such as 1...Rf1+, just step out of check) and Black's rook will have to give itself up for it.

@@ -89,7 +89,7 @@ The fastest possible checkmate, in just **2 moves**. It only happens if White pl
 
 `1.f3 e5 2.g4?? Qh4#`
 
-Practically impossible in real games. But it's an interesting curiosity: the fastest checkmate theoretically possible. It's the answer to the question "what is the fastest checkmate in chess?".
+In practice it almost never happens, but it's the answer to "what's the fastest checkmate in chess?".
 
 ## Why you should NOT rely on the Scholar's Mate {#aviso "Why you shouldn't rely on it"}
 

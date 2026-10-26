@@ -1,7 +1,7 @@
 ---
 id: movimento-do-cavalo
-titulo: How the Knight Moves in Chess: the L, the Jump and the Fork
-titulo_seo: How the Knight Moves in Chess: the L, the Jump and the Fork
+titulo: How the Knight Moves in Chess: the L, the Jump and the Color
+titulo_seo: How the Knight Moves in Chess: the L, the Jump and the Color
 descricao: How the knight moves in chess: the L-shape, why it jumps over pieces, forks, tactical patterns and how to master the board's most unpredictable piece.
 nivel: iniciante
 ordem: 30
@@ -131,7 +131,7 @@ Play against the computer and focus on using your knights well. Try to land a fo
 
 - In English notation the knight is written as **N** (for *knight*, since K is taken by the king).
 - There is a famous mathematical problem called the "knight's tour": the knight must visit all 64 squares exactly once. It has been solved in many different ways.
-- A lone knight cannot deliver checkmate to a bare king. You need at least king + knight + bishop (and even then it is one of the hardest endgames).
+- King and knight can't mate a lone king, and two knights can't force it. Knight **and** bishop can, but it's one of the hardest endgames.
 - Knight jumps are the easiest moves to overlook when calculating. That's why it pays to train your knight vision.
 
 ## Frequently asked questions {#faq "FAQ"}

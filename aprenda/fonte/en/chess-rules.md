@@ -8,7 +8,7 @@ ordem: 20
 publicado: 2026-05-11
 atualizado: 2026-10-26
 tags: [chess rules, official chess rules, fide rules, checkmate rules, chess rules for beginners]
-jogar: 1
+jogar: 0
 relacionados: [como-as-pecas-se-movem, lances-especiais, xeque-mate-e-afogamento, empates, ritmos-de-jogo]
 ensina: [FIDE Laws of Chess, How a game ends, Draws]
 ---
@@ -43,7 +43,7 @@ How each piece moves, with diagrams and exercises, is covered in [how chess piec
 | Knight | In an "L" (2 + 1); the only piece that jumps | Same as it moves |
 | Pawn | 1 square forward (2 on its first move); never moves back | 1 square diagonally forward |
 
-Only the knight jumps over other pieces. No piece can capture a piece of its own color.
+Apart from castling, where the rook passes over the king, only the knight jumps over other pieces. No piece can capture a piece of its own color.
 
 ## 3. Special moves {#especiais}
 
@@ -134,7 +134,7 @@ In games played with a clock, each player has a total amount of time. When a pla
 - **Rapid:** more than 10 and less than 60 minutes.
 - **Blitz:** 10 minutes or less.
 
-In FIDE's count the increment is multiplied by 60: 10+5 counts as 15 minutes, so it's rapid. **Bullet** (under 3 minutes) isn't a FIDE category; it's an online-site pace.
+In FIDE's count the increment counts 60 times: 10+5 is worth 10 min + 60 × 5 s = 15 minutes, so it's rapid. **Bullet** (under 3 minutes) isn't a FIDE category; it's an online-site pace.
 
 See the dedicated article on [Classical, Rapid, Blitz and Bullet Chess](artigo:ritmos-de-jogo).
 
@@ -170,5 +170,5 @@ Yes. Under Article 4.3 of the FIDE Laws, a player whose turn it is and who delib
 Yes. Through promotion, a pawn that reaches the last rank can become a queen even while the original queen is still on the board. [See how promotion works](artigo:lances-especiais#promocao).
 
 :::pratique Put the rules into practice
-Open the game and pick **🎓 Beginner** in the difficulty menu: 12 interactive lessons that teach each rule hands-on.
+The button below opens the game in **🎓 Beginner** (the tutorial mode in the difficulty menu): 12 interactive lessons that teach each rule hands-on.
 :::

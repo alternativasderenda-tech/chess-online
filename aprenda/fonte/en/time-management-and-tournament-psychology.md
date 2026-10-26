@@ -12,7 +12,7 @@ jogar: 3
 relacionados: [ritmos-de-jogo, empates, finais-de-peao, calculo, rotina-de-treino]
 ensina: [Time management, Avoiding time trouble, Handling nerves, Playing when winning and when losing]
 ---
-Time management in chess means budgeting your clock across the phases of the game, saving minutes for the critical moments, and keeping your nerves in check so you don't blunder under pressure. In practice, it means **budgeting your time** across the phases of the game and spending more at critical moments, **avoiding time trouble** (running short of time near the end), **controlling your nerves** with a fixed thinking routine, and **changing your attitude depending on the score on the board**: when winning, simplify and cut out counterplay; when losing, complicate and look for resources such as stalemate. Many games aren't decided by the best move but by the first mistake made under pressure.
+Time management in chess means budgeting your clock across the phases of the game and keeping your nerves in check so you don't blunder under pressure. In practice, that means **spending more time at critical moments**, **avoiding time trouble** (running short of time near the end), **following a fixed thinking routine** and **changing your attitude depending on the score on the board**: when winning, simplify and cut out counterplay; when losing, complicate and look for resources such as stalemate. Many games are decided not by the best move but by the first mistake.
 
 ## How to budget your time {#tempo}
 

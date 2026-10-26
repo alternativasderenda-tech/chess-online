@@ -96,33 +96,33 @@ Se passarem 50 lances de cada lado sem nenhuma captura e sem nenhum movimento de
 ## Exercícios {#exercicios "Exercícios"}
 
 ```exercicio
-fen: 4k3/8/3K1Q2/8/8/8/8/8 w - - 0 1
+fen: 7k/8/6K1/8/8/8/8/5Q2 w - - 0 1
 enunciado: Rei e dama contra rei. Dê **mate em 1**.
 tipo: mate
 lances: 1
-solucao: f6e7
-dica: A dama pode ficar colada no rei preto, desde que o seu rei a proteja.
-explicacao: 1.De7# — a dama dá xeque ao lado do rei e é protegida pelo rei de d6. Ela cobre d8, f8, d7 e f7, e o rei preto não pode capturá-la.
+solucao: f1f8
+dica: O seu rei já tira g7 e h7. A dama precisa dar xeque pela última fileira.
+explicacao: 1.Df8# — a dama dá xeque pela 8ª fileira e cobre g8; g7 e h7 estão com o rei branco. É o mate "na borda", com o seu rei tirando as casas da frente.
 ```
 
 ```exercicio
-fen: 3k4/8/3K4/8/8/8/8/7R w - - 0 1
+fen: 8/8/8/8/8/5K1k/8/R7 w - - 0 1
 enunciado: Os reis estão em oposição. Dê **mate em 1** com a torre.
 tipo: mate
 lances: 1
-solucao: h1h8
-dica: O rei branco já cobre c7, d7 e e7. Basta dar xeque pela última fileira.
-explicacao: 1.Th8# — a torre dá xeque pela 8ª fileira, e as casas da 7ª fileira estão com o rei branco.
+solucao: a1h1
+dica: O rei branco já cobre g2, g3 e g4. Basta dar xeque pela coluna h.
+explicacao: 1.Th1# — a torre dá xeque pela coluna h, e as casas da coluna g estão com o rei branco.
 ```
 
 ```exercicio
-fen: 8/4k3/R7/8/8/8/8/1R4K1 w - - 0 1
+fen: 8/3k4/7R/8/8/8/8/K5R1 w - - 0 1
 enunciado: Duas torres contra o rei. Use a escada e dê **mate em 2**.
 tipo: mate
 lances: 2
-solucao: b1b7 e7e8 a6a8
-dica: A torre de a6 já corta a 6ª fileira. Com a outra, empurre o rei mais uma fileira.
-explicacao: 1.Tb7+ (o rei vai para a 8ª fileira) Re8 2.Ta8# — a torre de b7 cobre a 7ª fileira e a de a8 dá mate pela 8ª. Se o rei for para d8 ou f8, o mate é o mesmo.
+solucao: g1g7 d7d8 h6h8
+dica: A torre de h6 já corta a 6ª fileira. Com a outra, empurre o rei mais uma fileira.
+explicacao: 1.Tg7+ (o rei vai para a 8ª fileira) Rd8 2.Th8# — a torre de g7 cobre a 7ª fileira e a de h8 dá mate pela 8ª. Se o rei for para c8 ou e8, o mate é o mesmo. Cuidado com 1.Th7+?: ele solta a 6ª fileira e o rei escapa.
 ```
 
 ```exercicio

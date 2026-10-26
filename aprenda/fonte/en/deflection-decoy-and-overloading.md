@@ -26,9 +26,9 @@ A piece is **overloaded** when it defends two things at the same time. Attack on
 
 ```tabuleiro
 fen: 6k1/3q1ppp/8/1b3n2/8/5Q2/5PPP/1R4K1 w - - 0 1
-setas: b1b5 f3f5 d7b5:azul d7f5:azul
+setas: b1b5 f3a8 d7b5:azul d7d8:azul
 casas: d7:vermelha
-legenda: The d7 queen defends both the bishop on b5 and the knight on f5. After 1.Rxb5 Qxb5 2.Qxf5, White wins material.
+legenda: The d7 queen has two jobs: guarding the b5 bishop and the eighth rank. After 1.Rxb5!, if 1...Qxb5, 2.Qa8+ mates next move (2...Qe8 3.Qxe8#). Unable to recapture, Black is simply a piece down. Beware of 2.Qxf5??, which would let the queen on b5 capture on f5.
 ```
 
 To find overloads, count: for each enemy defender, **how many things does it protect?** If the answer is two or more, there is a tactic in the air. The most commonly overloaded pieces are the queen and the rooks guarding the back rank.

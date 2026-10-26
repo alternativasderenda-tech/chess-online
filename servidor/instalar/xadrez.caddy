@@ -36,6 +36,7 @@ xadrezonline.app {
 		redir @html {re.html.1}{?query} permanent
 		@indice path_regexp indice ^(/.+)/index$
 		redir @indice {re.indice.1}{?query} permanent
+		redir /index /{?query} permanent
 		@barra path_regexp barra ^(/.+)/$
 		redir @barra {re.barra.1}{?query} permanent
 		# /en/tournaments = a página de torneios em inglês (mesmo arquivo; o idioma sai da URL)
@@ -106,6 +107,7 @@ novo.xadrezonline.app {
 		redir @html {re.html.1}{?query} permanent
 		@indice path_regexp indice ^(/.+)/index$
 		redir @indice {re.indice.1}{?query} permanent
+		redir /index /{?query} permanent
 		@barra path_regexp barra ^(/.+)/$
 		redir @barra {re.barra.1}{?query} permanent
 		# /en/tournaments = a página de torneios em inglês (mesmo arquivo; o idioma sai da URL)

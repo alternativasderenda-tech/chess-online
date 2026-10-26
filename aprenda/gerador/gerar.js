@@ -112,7 +112,7 @@ for (const idioma of IDIOMAS) {
     const fm = f.fm;
     for (const c of OBRIGATORIOS) if (fm[c] === undefined || fm[c] === '') erro(arq, 0, 'falta o campo obrigatório "' + c + '"');
     if (fm.nivel && !NIVEIS.includes(fm.nivel)) erro(arq, 0, 'nivel "' + fm.nivel + '" inválido (use ' + NIVEIS.join(' | ') + ')');
-    if (fm.jogar !== undefined && !(fm.jogar >= 1 && fm.jogar <= 4)) erro(arq, 0, 'jogar tem de ser 1 (Fácil), 2 (Médio), 3 (Difícil) ou 4 (Expert)');
+    if (fm.jogar !== undefined && !(fm.jogar >= 0 && fm.jogar <= 4)) erro(arq, 0, 'jogar tem de ser 0 (modo Aprendiz), 1 (Fácil), 2 (Médio), 3 (Difícil) ou 4 (Expert)');
     if (fm.ordem !== undefined && fm.ordem < 1) erro(arq, 0, 'ordem tem de ser ≥ 1');
     if (fm.publicado && fm.atualizado && fm.atualizado < fm.publicado) erro(arq, 0, 'atualizado (' + fm.atualizado + ') antes de publicado (' + fm.publicado + ')');
     if (fm.id && !/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(fm.id)) erro(arq, 0, 'id só com a-z, 0-9 e hífen');
@@ -160,6 +160,9 @@ for (const idioma of IDIOMAS) {
   lista.forEach((a, k) => {   // posicaoNivel/totalNivel: a numeração que o leitor vê em todo lugar (índice, artigo, próximo passo)
     const doNivel = lista.filter(b => b.fm.nivel === a.fm.nivel);
     a.posicao = k + 1; a.posicaoNivel = doNivel.indexOf(a) + 1; a.totalNivel = doNivel.length;
+    // Dicas não são uma sequência, e um nível de 1 artigo também não: nada de "Lição 1 de 1" (LAY-trilha-23)
+    a.numerada = a.fm.nivel !== 'dicas' && doNivel.length > 1;
+    a.inicioTrilha = lista[0].url;
   });
   trilha[idioma] = lista;
 }
@@ -454,7 +457,7 @@ if (!erros.length) {
     const html = PG.artigo({
       idioma: a.idioma, url: a.url, fm: a.fm, corpo: a.html, titulos: a.titulos, pratique: a.pratique, minutos: a.minutos,
       palavras: a.palavras, temExercicio: a.temExercicio, imagem: a.imagem, proximo: a.proximo, relacionados: a.relacionados,
-      traducao: a.traducao, posicaoNivel: a.posicaoNivel, totalNivel: a.totalNivel, faq: a.faq,
+      traducao: a.traducao, posicaoNivel: a.posicaoNivel, totalNivel: a.totalNivel, numerada: a.numerada, inicioTrilha: a.inicioTrilha, faq: a.faq,
     }, ativos);
     saidas.set(a.saida, html);
     const t = T[a.idioma];
@@ -483,7 +486,7 @@ if (!erros.length) {
       }),
     });
     const busca = lista.map(a => ({
-      u: a.url, t: a.fm.titulo, d: a.fm.descricao, n: a.fm.nivel, nr: t.nivel[a.fm.nivel], p: a.posicaoNivel, m: a.minutos,
+      u: a.url, t: a.fm.titulo, d: a.fm.descricao, n: a.fm.nivel, nr: t.nivel[a.fm.nivel], p: a.numerada ? a.posicaoNivel : 0, m: a.minutos,
       g: (a.fm.tags || []).join(' · '), h: a.titulos.map(h => MD.textoPuro(h.html)).join(' · '), x: a.texto.slice(0, 600),
     }));
     saidas.set(idioma === 'pt' ? 'aprenda/busca.json' : 'en/learn/search.json', '[\n' + busca.map(b => JSON.stringify(b)).join(',\n') + '\n]\n');

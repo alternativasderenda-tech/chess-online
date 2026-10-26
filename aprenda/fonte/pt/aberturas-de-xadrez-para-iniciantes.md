@@ -142,7 +142,7 @@ Jogue contra o computador no Xadrez Online. Sem cadastro, direto no navegador. E
 - **[Mover a dama cedo demais](artigo:erros-de-iniciante#dama).** Ela é perseguida por peças menores e você desperdiça tempo recuando.
 - **Atacar antes de desenvolver.** Uma peça sozinha não derruba um exército. Desenvolva primeiro, ataque depois.
 - **Capturar peões sem motivo.** Muitas vezes o peão é "envenenado": você o ganha, mas perde tempo e posição.
-- **Esquecer do roque.** Rei no meio do tabuleiro é convite para xeque-mate. Faça o roque antes do lance 10.
+- **Esquecer o roque.** Rei no meio do tabuleiro é convite para xeque-mate. Faça o roque antes do lance 10.
 - **Decorar sem entender.** Quando o adversário sair do livro (e ele vai), você fica sem rumo.
 
 ## Perguntas frequentes {#faq "Perguntas frequentes"}
